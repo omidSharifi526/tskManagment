@@ -15,9 +15,9 @@ const LoginPage = () => {
 
   const initialLogin=()=>{
   
-      if (userPass.userName==='admin'&&userPass.password==='tskpass') {
-        navigate("/dashboard");
-      }
+      // if (userPass.userName==='admin'&&userPass.password==='tskpass') {
+        navigate("dashboard");
+      // }
       
   }
 

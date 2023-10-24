@@ -6,4 +6,8 @@
   /* Specify the correct paths to your font files */
   /* Adjust the font-family name and file names accordingly */
 }
+*{
+  margin: 0;
+  padding: 0;
+}
 

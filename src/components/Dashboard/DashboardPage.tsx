@@ -20,6 +20,10 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Outlet } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import Contact from '../Contact/Contact';
+import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
 
 const drawerWidth = 240;
 
@@ -92,6 +96,19 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const itemsList = [
+  {
+    text: "",
+    icon: <EventAvailableOutlinedIcon  />,
+    to: "/" // <-- add link targets
+  },
+  {
+    text: "Add To-do",
+    // icon: <AddBoxTwoToneIcon style={{ fill: "white" }} />,
+    to: "/contact"
+  }
+]
+
 export default function MiniDrawer() {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -141,61 +158,80 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['دشبورد', 'مکاتبات', 'فایل', 'پرسنل'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
+          {itemsList.map((item, index) => {
+               const { text, icon } = item;
+            return(
+              <ListItem component={Link} to={item.to} button key={text}>
+              {icon && <ListItemIcon>{icon}</ListItemIcon>}
+              <ListItemText primary={text}  />
             </ListItem>
-          ))}
+            //   <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            //   <ListItemButton
+            //     sx={{
+            //       minHeight: 48,
+            //       justifyContent: open ? 'initial' : 'center',
+            //       px: 2.5,
+            //     }}
+            //   >
+            //     <ListItemIcon
+            //       sx={{
+            //         minWidth: 0,
+            //         mr: open ? 3 : 'auto',
+            //         justifyContent: 'center',
+            //       }}
+            //     >
+            //       {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            //     </ListItemIcon>
+            //     <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+            //   </ListItemButton>
+            // </ListItem>
+
+            )
+          })}
+
+
         </List>
         <Divider />
         <List>
-          {[ 'تنظیمات', 'خروج'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-              onClick={()=>{
-                initialLogout(text)
-              }}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <LogoutIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {itemsList.map((item, index) => {
+            const { text, } = item;
+            return(
+              <ListItem component={Link} to={item.to} button key={text}>
+                {/* {icon && <ListItemIcon>{icon}</ListItemIcon>} */}
+                <ListItemText primary={text}  />
+              </ListItem>
+
+            //   <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            //   <ListItemButton
+            //   onClick={()=>{
+            //     initialLogout(text)
+            //   }}
+            //     sx={{
+            //       minHeight: 48,
+            //       justifyContent: open ? 'initial' : 'center',
+            //       px: 2.5,
+            //     }}
+            //   >
+            //     <ListItemIcon
+            //       sx={{
+            //         minWidth: 0,
+            //         mr: open ? 3 : 'auto',
+            //         justifyContent: 'center',
+            //       }}
+            //     >
+            //       {index % 2 === 0 ? <InboxIcon /> : <LogoutIcon />}
+            //     </ListItemIcon>
+            //     <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+            //   </ListItemButton>
+            // </ListItem>
+
+            )
+          })}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-
+        {/* <DrawerHeader /> */}
+       {/* <Outlet/> */}
         {/* <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
