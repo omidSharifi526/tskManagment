@@ -1,73 +1,42 @@
-import React from 'react'
-import { Typography } from '@mui/material';
-import { TextField, Button, Container,Box } from '@mui/material';
-// import {NavLink,useNavigate} from 'react-router-dom';
-import { Navigate } from "react-router-dom";
-import { Outlet, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import {useState} from 'react'
+import React,{useState,useEffect} from 'react';
+import Loading from '../Loading/Loading';
+import LoginLyt from '../Layouts/LoginLyt/LoginLyt';
+import LoginForm from '../LoginFrom/LoginForm';
+import ForgetPassword from '../ForgetPassword/ForgetPassword';
+
+
 const LoginPage = () => {
-  const[userPass,setUserPass]=useState({
-    userName:'',
-    password:''
-  })
-  const navigate = useNavigate();
 
-  const initialLogin=()=>{
+  const[contentState,setContentState]=useState({content:'loading'});
+
+
+  const renderContent=():any=>{
+    let{content}=contentState;
+// return <h1>wellCome</h1>
+switch (content) {
+  case 'loading':
+    return <Loading setContentState={setContentState}  />
+    break;
   
-      // if (userPass.userName==='admin'&&userPass.password==='tskpass') {
-        navigate("dashboard");
-      // }
-      
-  }
+    case 'login':
+    return  <LoginForm setContentState={setContentState} />
+    break;
 
-  const initialSetUserPass=(name:string,value:string)=>{
-// console.log(name,value)
-setUserPass(prev=>({...prev,[name]:value}))
-// setCylinderValues(prev=>({...prev,[name]:value}))
+    case 'forgetPassWord':
+    return <ForgetPassword setContentState={setContentState}  />
+    break;
+}
   }
-
+  
 
   return (
     <>
-     <Container maxWidth="sm"sx={{height:'600px',display:'flex',alignItems:'center'}}>
-      <form>
-        <TextField
-          label="نام کاربری"
-          fullWidth
-          margin="normal"
-          variant="outlined"
-          name='userName'
-          value={userPass.userName}
-          onChange={({target})=>{
-            let{name,value}=target
-            // console.log(name,value)
-            initialSetUserPass(name,value)
-            }}
-        />
-        <TextField
-          label="رمز عبور"
-          fullWidth
-          margin="normal"
-          variant="outlined"
-          name='password'
-          type='password'
-          onChange={({target})=>{
-          let{name,value}=target
-          // console.log(name,value)
-          initialSetUserPass(name,value)
-          }}
-        />
-      <Box sx={{width:'100%'}} display='flex' justifyContent='center' >
-      <Button variant="contained" size='large' color="primary"  onClick={()=>{
-          initialLogin()
-        }}>
-          ورود
-      
-        </Button>
-      </Box>
-      </form>
-    </Container>
+    <LoginLyt>
+    {
+      renderContent()
+    }
+    </LoginLyt>
+
     </>
   )
 }

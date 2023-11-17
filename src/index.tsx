@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import createCache from '@emotion/cache';
 import Loading from "./components/Loading/Loading";
 
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,6 +17,8 @@ import DashboardPage from './components/Dashboard/DashboardPage';
 import theme from './theme'; 
 import Home from "./components/Home/Home";
 import Contact from "./components/Contact/Contact";
+import User from './components/User/User'
+
 
 const cacheRtl = createCache({
   key: 'rtl',
@@ -25,7 +28,7 @@ const cacheRtl = createCache({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Loading/>,
+    element: <LoginPage/>,
    
   },
   {

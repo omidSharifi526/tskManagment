@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import CircularProgress, {
   CircularProgressProps,
 } from '@mui/material/CircularProgress';
@@ -8,6 +9,7 @@ import Box from '@mui/material/Box';
 function CircularProgressWithLabel(
   props: CircularProgressProps & { value: number },
 ) {
+  // console.log(props)
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
       <CircularProgress variant="determinate" {...props} />
@@ -33,16 +35,32 @@ function CircularProgressWithLabel(
   );
 }
 
-export default function CircularWithValueLabel() {
+export default function CircularWithValueLabel({setContentState}:any) {
   const [progress, setProgress] = React.useState(10);
+  useEffect(() => {
+    
+    testLog()
+   
+  }, [progress])
+  
+
+  const testLog=():void=>{
+   
+   if (progress===30) {
+    setContentState((prev:object)=>({...prev,content:'login'}))
+   }
+  }
+ 
 
   React.useEffect(() => {
     const timer = setInterval(() => {
+      console.log('tetst')
       setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
     }, 800);
     return () => {
       clearInterval(timer);
     };
+   
   }, []);
 
   return <CircularProgressWithLabel  value={progress} sx={{color:'white'}}  color='error' />;
