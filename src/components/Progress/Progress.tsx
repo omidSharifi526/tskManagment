@@ -46,7 +46,7 @@ export default function CircularWithValueLabel({setContentState}:any) {
 
   const testLog=():void=>{
    
-   if (progress===30) {
+   if (progress===80) {
     setContentState((prev:object)=>({...prev,content:'login'}))
    }
   }
