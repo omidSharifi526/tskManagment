@@ -6,11 +6,11 @@ import createCache from '@emotion/cache';
 import Mrouter from './Routes/MRoutes/MRoutes';
 import './index.css';
 import theme from './theme'; 
+
+
+
 // import theme from './theme';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+
 
 const cacheRtl = createCache({
   key: 'rtl',
@@ -22,9 +22,11 @@ const App = () => {
   return (
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
+     
         <CssBaseline />
+      
     {/* <MainRoutes/> */}
-    <RouterProvider router={Mrouter} />
+    {/* <RouterProvider router={Mrouter} /> */}
       </ThemeProvider>
     </CacheProvider>
   );

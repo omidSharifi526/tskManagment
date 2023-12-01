@@ -6,9 +6,9 @@ const LoginLyt = (props:any) => {
     <>
     <Box width={'100%'} height={'700px'} sx={{
         display:'flex',
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundImage: ' radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2% );'}}  >
+        alignItems:'start',
+        justifyContent:'start',
+        backgroundImage:'radial-gradient( circle farthest-corner at 10% 20%,  rgba(255,94,247,1) 17.8%, rgba(2,245,255,1) 100.2% );'}}  >
         {
             props.children
         }

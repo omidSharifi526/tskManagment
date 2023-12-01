@@ -17,18 +17,22 @@ export default function DyTextField(props:any):any {
         {label}
         </InputLabel> */}
         <TextField 
-        variant='filled'
+        value={props.value}
+        variant='outlined'
         label={props.label}
-sx={{borderRadius:'10px'}}
+        sx={{borderRadius:'10px'}}
         InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                {/* <Icon /> */}
                 {
                     props.Icon
                 }
               </InputAdornment>
             ),
+          }}
+
+          onChange={({target}:any)=>{
+            props.onchangee(target.value)
           }}
         
         />

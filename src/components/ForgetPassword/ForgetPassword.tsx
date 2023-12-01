@@ -12,7 +12,7 @@ const ForgetPassword = ({setContentState}:any) => {
     }
   return (
     <Grid  container >
-    <Grid item md={4} xs={10} mx={'auto'} bgcolor={'white'} height={'400px'} >
+    <Grid item md={8} xs={10} mx={'auto'} bgcolor={'white'} height={'400px'} >
      <Grid container  >
      <Grid>
      <Button onClick={initialBack} >بازگشت</Button>
@@ -34,7 +34,8 @@ const ForgetPassword = ({setContentState}:any) => {
 
      <Grid  item xs={12} >
         <Box px={5} py={3} >
-        <DyButton onClick={()=>{console.log('sendCode')}} color={'primary'} caption={'ارسال کد'} />
+        <DyButton 
+        onClick={()=>{console.log('sendCode')}} color={'primary'} caption={'ارسال کد'} />
         </Box>
      </Grid>
 
