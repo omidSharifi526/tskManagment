@@ -9,7 +9,14 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 // import UserPhoneNum from '../../Login/Statics/Icons/UserPhoneNum/UserPhoneNum';
 
 
-export default function DyTextField(props:any):any {
+export default function DyTextField(props:any) {
+
+  const initialOnchange=(target:any)=>{
+    let{name,value}=target;
+    props.onchangee((prev:any)=>({...prev,[name]:value}))
+
+console.log(name,value)
+  }
   return (
     <Box>
       <FormControl variant="standard" fullWidth >
@@ -17,7 +24,10 @@ export default function DyTextField(props:any):any {
         {label}
         </InputLabel> */}
         <TextField 
+        size='small'
         value={props.value}
+        type={props.type}
+        name={props.name}
         variant='outlined'
         label={props.label}
         sx={{borderRadius:'10px'}}
@@ -32,7 +42,7 @@ export default function DyTextField(props:any):any {
           }}
 
           onChange={({target}:any)=>{
-            props.onchangee(target.value)
+            initialOnchange(target)
           }}
         
         />

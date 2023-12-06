@@ -13,8 +13,9 @@ const initialState: LoginState = {
     userPhoneNumber: '',
 }
 
-const setUserPhoneNumber=(state:any,{payload}:any)=>{
-    console.log(payload)
+const setUserPhoneNumber=(state:any,action:PayloadAction<string>)=>{
+  let{payload}=action;
+    // console.log(action)
 state.userPhoneNumber=payload;
 }
 

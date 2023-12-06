@@ -4,6 +4,7 @@ import DyTextField from '../../GlobalComponents/DyTextField/DyTextField';
 import DyButton from '../../GlobalComponents/DyButton/DyButton';
 import DySingleCharTextField from '../../GlobalComponents/DySingleCharTextField/DySingleCharTextField';
 import { useAppSelector } from '../../../Store/Store';
+import CountdownTimer from '../../GlobalComponents/TimerD/Timer';
 
 const ConfirmCode = ({setContentState}:any) => {
   const userPhoneNumber=useAppSelector(state=>state.loign.userPhoneNumber)
@@ -11,6 +12,10 @@ const ConfirmCode = ({setContentState}:any) => {
 const[codeValuesState,setCodeValuesState]=useState(initialValue);
 const initialgoBack=()=>{
   setContentState((prev:any):any=>({...prev,content:'login'}))
+}
+
+const initialLogin=()=>{
+  setContentState((prev:any):any=>({...prev,content:'typeofMembership'}))
 }
 // console.log(codeValuesState)
   return (
@@ -22,7 +27,7 @@ const initialgoBack=()=>{
      </Grid>
      <Grid item xs={12}   >
     <Box py={3}  >
-      <Typography variant='h6' textAlign={'center'} color={'red'}  >کد تایید</Typography></Box>
+      <Typography variant='h6' textAlign={'center'} color={'red'} fontWeight={800}  >کد تایید</Typography></Box>
      </Grid>
      <Grid item xs={12}  >
     <Box textAlign={'center'} py={4}>
@@ -63,6 +68,7 @@ const initialgoBack=()=>{
         })
       }
    </Stack>
+   <CountdownTimer initialMinutes={2} />
   
   
      </Grid>
@@ -70,7 +76,7 @@ const initialgoBack=()=>{
      <Grid  item xs={12} >
         <Box px={5} py={3} >
         <DyButton 
-        onClick={()=>{console.log('sendCode')}}
+        onClick={initialLogin}
          color={'primary'} 
          caption={'ورود'} 
          variant={'contained'}

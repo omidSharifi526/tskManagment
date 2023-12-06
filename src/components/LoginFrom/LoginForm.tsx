@@ -21,7 +21,7 @@ const LoginForm = ({setContentState}:any) => {
   const userPhoneNumber=useAppSelector(state=>state.loign.userPhoneNumber)
   // const{mutate:LoginReq,data}=useLogin()
   const navigate = useNavigate();
-  const [phoneNum,setPhoneNum]=useState<String>(userPhoneNumber);
+  const [phoneNum,setPhoneNum]=useState<string>(userPhoneNumber||'');
 
 
 
@@ -34,12 +34,12 @@ const LoginForm = ({setContentState}:any) => {
   const loginHandler=()=>{
     // LoginReq()
     setContentState((prev:any)=>({...prev,content:'confirmCode'}));
-    dispatch(setUserPhoneNumberR(phoneNum))
+    dispatch(setUserPhoneNumberR(phoneNum ||''))
     console.log(phoneNum)
   }
 
   const initSetPhoneNum=()=>{
-    dispatch(setUserPhoneNumberR(phoneNum))
+    // dispatch(setUserPhoneNumberR(phoneNum))
   }
   // console.log(data)
   return (
@@ -75,21 +75,9 @@ const LoginForm = ({setContentState}:any) => {
 
             </Grid>
 
-            {/* <Grid item xs={12} mt={1} px={3} >
-             <DyTextField 
-             label={'رمز عبور'}
-             Icon={<PassIcon/>}
-             />
-            </Grid> */}
-          
+           
 
-            {/* <Grid item xs={12}  >
-            <Box my={1} px={3} >
-            <Button onClick={initialForgetPass} >
-            فراموشی رمز عبور؟
-            </Button>
-            </Box>
-            </Grid> */}
+          
 
             <Grid item xs={12} >
             <Box px={3} py={5} >
@@ -97,15 +85,12 @@ const LoginForm = ({setContentState}:any) => {
              caption={'ارسال کد'}
              color={'primary'} 
              onClick={loginHandler}
-             disbled={phoneNum.length<11}
+            //  disbled={phoneNum.length<11}
              variant={'contained'}
              />
             </Box>
             </Grid>
-  {/* caption,onClick,color */}
-  {/* <Grid item xs={12} mx={'auto'} borderRadius={'0 0 15px 15px'} height={'200px'} bgcolor={'rgba(0, 56, 124, 1)'}   >
 
-  </Grid> */}
 
 
             </Grid>
