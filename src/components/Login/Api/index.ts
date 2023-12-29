@@ -1,24 +1,47 @@
 import axios from "axios";
 
 
-const userBody={
-    "phoneNumber": "09911461820",
-    "password":"123456"
-  }
-  
-  let axiosConfig = {
-    headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        "Access-Control-Allow-Origin": "*",
-        "Transfer-Encoding":"chunked"
-    }
-  };
+// const userBody = {
+//   "phoneNumber": "09911461820",
+//   "password": "123456",
+//   "smsCode": "",
+//   "isOTP": false
+// }
 
-const login=async()=>{
-    const login_URL='https://37.32.10.227:475/api/Account/Login'
-    return await axios.post(login_URL,userBody)
+
+
+// {
+//   "phoneNumber": "09911461820",
+//   "password":"123456"
+// }
+const existToken=localStorage.getItem('accessToken');
+const baseURL='https://api.myokr.ir/api/';
+const axiosInstance = axios.create({
+  baseURL: baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+    'authorization':`Bearer ${existToken}`,
+    "Access-Control-Allow-Origin":'*'
+  },
+});
+
+
+
+
+const login = async (userBody:any) => {
+  console.log(userBody,'kghgh')
+  return await axiosInstance.post('Account/Login',userBody)
 }
 
-export{
-    login
+
+const getPriodById=async({queryKey:info}:any)=>{
+  let tId=info[1];
+
+return await axiosInstance.get(`OKR/GetAllPeriodsByTenantId/?tenantId=${tId}`)
+}
+
+
+export {
+  login,
+  getPriodById
 }

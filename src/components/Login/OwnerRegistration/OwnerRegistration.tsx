@@ -1,12 +1,20 @@
 import React from 'react';
-import {Grid,Box,Typography,} from '@mui/material';
+import {Grid,Box,Typography,IconButton} from '@mui/material';
 import DyTextField from '../../GlobalComponents/DyTextField/DyTextField';
 import DyButton from '../../GlobalComponents/DyButton/DyButton';
 import DySelect from '../../GlobalComponents/DySelect/DySelect';
 import {useState,useEffect} from 'react';
-import {countOfEmployees} from './StaticData/index'
-const OwnerRegistration = () => {
+import {countOfEmployees} from './StaticData/index';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
+const OwnerRegistration = ({setContentState}:any) => {
+  const navigate = useNavigate();
+
+  const handleBack=()=>{
+    setContentState((prev:any)=>({...prev,content:'typeofMembership'}))
+  }
     const initialValues={
         fName:'',
         lName:'',
@@ -19,13 +27,25 @@ const OwnerRegistration = () => {
       }
     const [registerInfo,setRegisterInfo]=useState(initialValues);
 
+    const handleCompletingRegister=()=>{
+      navigate('/dashboard',{replace:true})
+    }
+
 
 
   return (
     <Grid container >
    
-    <Grid item xs={10} md={8}  mx={'auto'} bgcolor={'white'} boxShadow={8} borderRadius={4}  >
-       <Grid container  rowGap={2} >
+    <Grid item xs={10} md={8}  mx={'auto'} bgcolor={'white'}  borderRadius={4}  >
+       <Grid container  rowGap={1} >
+       <Grid item xs={12} >
+        <Box px={2}>
+      <IconButton  onClick={handleBack} >
+        <ArrowForwardIcon/>
+      </IconButton>
+        </Box>
+       </Grid>
+
        <Grid item xs={12} >
        <Typography fontWeight={900} fontSize={'1.2rem'} sx={{p:1}} color={'red'} textAlign={'center'} mt={2} >
        تکمیل ثبت نام
@@ -114,10 +134,11 @@ const OwnerRegistration = () => {
 
        <Grid item xs={12} >
        <Box px={3} py={5} >
+        <Link to='dashboard' >test</Link>
        <DyButton 
         caption={'ثبت نام '}
         color={'primary'} 
-        // onClick={handleRegister}
+        onClick={handleCompletingRegister}
         // disbled={phoneNum.length<11}
         variant={'contained'}
         />

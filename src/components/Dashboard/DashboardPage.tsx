@@ -18,12 +18,26 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { useNavigate } from "react-router-dom";
-import LogoutIcon from '@mui/icons-material/Logout';
-import { Outlet } from 'react-router-dom';
-import { Link } from "react-router-dom";
-import Contact from '../Contact/Contact';
-import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined";
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import CropFreeIcon from '@mui/icons-material/CropFree';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { Link, Outlet } from 'react-router-dom';
+import {SideBarLogo,OKRtext} from './StaticsData/index';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import PersonIcon from '@mui/icons-material/Person';
+import Avatar from '@mui/material/Avatar';
+import Useimg from './StaticsData/SVG/3.jpg';
+// import {IconButton} from '@mui/material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import GridViewIcon from '@mui/icons-material/GridView';
+
+
+import DateObject from "react-date-object";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+
+import Badge from '@mui/material/Badge';
+import MeetingSlider from '../../scenes/Meeting/LComponents/MeetingSlider/MeetingSlider';
 
 const drawerWidth = 240;
 
@@ -97,20 +111,24 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const itemsList = [
+  // {
+  //   text: "داشبورد",
+  //   icon: <DashboardIcon  />,
+  //   to: "/dashboard" 
+  // },
   {
-    text: "",
-    icon: <EventAvailableOutlinedIcon  />,
-    to: "/" // <-- add link targets
+    text: "جلسات",
+    icon: <GridViewIcon  />,
+    to: "/dashboard/meetings" 
   },
   {
-    text: "Add To-do",
-    // icon: <AddBoxTwoToneIcon style={{ fill: "white" }} />,
-    to: "/contact"
+    text: "خروج",
+    icon: <ExitToAppIcon  />,
+    to: "/"
   }
 ]
 
 export default function MiniDrawer() {
-  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -121,121 +139,109 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const initialLogout=(text:string)=>{
-  console.log(text)
-    if (text==='خروج') {
-      navigate("/");
-    }
-  }
 
+  var date = new DateObject({ calendar: persian, locale: persian_fa });
+    date.calendar = persian;
+    date.locale = persian_fa; //جمعه 31 مرداد
+    const now=date.format("dddd DD MMMM  ");
+
+
+// sx={{backgroundColor:'#00387C',height:'100%'}}
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' ,}} >
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{backgroundColor:'gray'}} >
-        <Toolbar>
+      <AppBar sx={{bgcolor:'white'}} position="fixed" open={open}>
+
+        <Toolbar sx={{bgcolor:"whitesmoke",height:'100%'}}  >
+         
           <IconButton
+          
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
+              
               marginRight: 5,
+              color:'black',
               ...(open && { display: 'none' }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-           شنبه 18 اردیبهشت
-          </Typography>
+
+            <Box sx={{width:'100%',display:'flex',justifyContent:'space-between'}}  >
+            <Box p={2} >
+                      <Typography fontWeight={700} color={'black'} variant="body2" noWrap component="div">
+                      {now}
+                      </Typography>
+
+                      </Box>
+
+                      <Box sx={{display:'flex'}} columnGap={2} alignItems={'center'} > 
+                    
+                     <IconButton>
+                     <Badge overlap="circular"  variant="dot"  color="success" >
+                      <NotificationsNoneIcon color="action" />
+                      </Badge>
+                     </IconButton>
+                      <Box>
+                     <Avatar alt="Cindy Baker" src={Useimg} />
+                      </Box>
+                      <Typography color={'black'}>
+                      زهراامینی پاشاکی
+                      </Typography>
+                      
+                      </Box>
+            </Box>
+
+
         </Toolbar>
+
+
+
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+
+
+      <Drawer variant="permanent" open={open} >
+      
+        <DrawerHeader sx={{backgroundColor:'#00387C'}}>
+        <Box width={'300px'} display={'flex'} alignItems={'center'}  >
+         
+          <SideBarLogo width={'50px'} style={{padding:'0px 5px'}}  />
+          <OKRtext/>
+        </Box>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === 'rtl' ? <ChevronRightIcon color='secondary' /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-          {itemsList.map((item, index) => {
-               const { text, icon } = item;
-            return(
-              <ListItem component={Link} to={item.to} button key={text}>
-              {icon && <ListItemIcon>{icon}</ListItemIcon>}
-              <ListItemText primary={text}  />
-            </ListItem>
-            //   <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-            //   <ListItemButton
-            //     sx={{
-            //       minHeight: 48,
-            //       justifyContent: open ? 'initial' : 'center',
-            //       px: 2.5,
-            //     }}
-            //   >
-            //     <ListItemIcon
-            //       sx={{
-            //         minWidth: 0,
-            //         mr: open ? 3 : 'auto',
-            //         justifyContent: 'center',
-            //       }}
-            //     >
-            //       {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            //     </ListItemIcon>
-            //     <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            //   </ListItemButton>
-            // </ListItem>
-
-            )
-          })}
-
-
-        </List>
-        <Divider />
-        <List>
+      
+       
+        <List sx={{backgroundColor:'#00387C',height:'100%'}}>
           {itemsList.map((item, index) => {
             const { text, } = item;
             return(
-              <ListItem component={Link} to={item.to}  key={text}>
-                {/* {icon && <ListItemIcon>{icon}</ListItemIcon>} */}
-                <ListItemText primary={text}  />
+              <ListItem color='white ' sx={{fontSize:'0.7 rem'}} component={Link} to={item.to}  key={text}>
+               <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon>
+              <Typography variant='body2' sx={{color:'white',fontWeight:600}} >{item.text}</Typography>
               </ListItem>
 
-            //   <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-            //   <ListItemButton
-            //   onClick={()=>{
-            //     initialLogout(text)
-            //   }}
-            //     sx={{
-            //       minHeight: 48,
-            //       justifyContent: open ? 'initial' : 'center',
-            //       px: 2.5,
-            //     }}
-            //   >
-            //     <ListItemIcon
-            //       sx={{
-            //         minWidth: 0,
-            //         mr: open ? 3 : 'auto',
-            //         justifyContent: 'center',
-            //       }}
-            //     >
-            //       {index % 2 === 0 ? <InboxIcon /> : <LogoutIcon />}
-            //     </ListItemIcon>
-            //     <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            //   </ListItemButton>
-            // </ListItem>
 
             )
           })}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* <DrawerHeader /> */}
-       {/* <Outlet/> */}
-       <Outlet />
-     
-      
+      <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
+      {/* <Box>
+        <MeetingSlider/>
+        </Box> */}
+        <DrawerHeader />
+       
+        <Outlet  />
+        
       </Box>
     </Box>
   );
 }
+

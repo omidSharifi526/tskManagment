@@ -61,9 +61,9 @@ setMEmbershipId(target.value||'')
   return (
    
       
-        <Grid  container  >
+        <Grid  container mt={8} >
     <Grid item md={8} xs={10} mx={'auto'} bgcolor={'white'} height={'400px'} >
-     <Grid container boxShadow={8} borderRadius={4}  >
+     <Grid container  borderRadius={4}  >
    
      <Grid item xs={12}  >
     <Box py={2}  ><Typography variant='h6' fontWeight={800} textAlign={'center'} color={'red'}  >انتخاب نوع عضویت</Typography></Box>
@@ -71,7 +71,7 @@ setMEmbershipId(target.value||'')
 
 
      <Grid item xs={12 } >
- <Box px={2} >
+ <Box px={6} >
  <FormControl>
         <FormLabel id="demo-controlled-radio-buttons-group">کاربران سازمانی</FormLabel>
         <RadioGroup

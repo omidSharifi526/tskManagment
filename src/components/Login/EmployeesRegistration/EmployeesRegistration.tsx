@@ -1,19 +1,33 @@
 import React from 'react';
-import{Grid,Typography,Box} from '@mui/material';
+import{Grid,Typography,Box,IconButton} from '@mui/material';
 import DyTextField from '../../GlobalComponents/DyTextField/DyTextField';
 import DyButton from '../../GlobalComponents/DyButton/DyButton';
-
-const EmployeesRegistration = () => {
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+const EmployeesRegistration = ({setContentState}:any) => {
+  const handleBack=()=>{
+    setContentState((prev:any)=>({...prev,content:'typeofMembership'}))
+  }
+  //  setContentState((prev:any):any=>({...prev,content:'login'}))
   return (
     <Grid container >
    
-    <Grid item xs={10} md={8}  mx={'auto'} bgcolor={'white'} boxShadow={8} borderRadius={4}  >
+    <Grid item xs={10} md={8}  mx={'auto'} bgcolor={'white'}  borderRadius={4}  >
        <Grid container  rowGap={2} >
+
+       <Grid item xs={12} >
+        <Box px={2}>
+      <IconButton  onClick={handleBack} >
+        <ArrowForwardIcon/>
+      </IconButton>
+        </Box>
+       </Grid>
+
        <Grid item xs={12} >
        <Typography fontWeight={900} fontSize={'1.2rem'} sx={{p:1}} color={'red'} textAlign={'center'} mt={2} >
        تکمیل ثبت نام
        </Typography>
        </Grid>
+      
 
        <Grid item xs={12}  >
        <Box textAlign={'center'} py={1}>

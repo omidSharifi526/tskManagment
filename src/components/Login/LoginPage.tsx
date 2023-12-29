@@ -9,6 +9,8 @@ import TypeofMembership from './TypeofMembership/TypeofMembership';
 import PersonalUseRegistration from './PersonalUseRegistration/PersonalUseRegistration';
 import EmployeesRegistration from './EmployeesRegistration/EmployeesRegistration';
 import OwnerRegistration from './OwnerRegistration/OwnerRegistration';
+import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
+import LyBackdrop from '../Layouts/BackDrop/BackDrop';
 const LoginPage = () => {
 
   const[contentState,setContentState]=useState({content:'login'});
@@ -40,18 +42,24 @@ switch (content) {
       break;
       
 
+
       case 'personalUseRegistration':
-      return <PersonalUseRegistration  />
+      return <PersonalUseRegistration setContentState={setContentState}  />
       break;
 
       case 'employeesRegistration':
-      return <EmployeesRegistration  />
+      return <EmployeesRegistration setContentState={setContentState} />
       break;
 
       case 'ownerRegistration':
-        return <OwnerRegistration/>
+        return <OwnerRegistration setContentState={setContentState}/>
         break;
 
+
+
+        case 'userTypeSelection':
+       return <UserTypeSelection   />
+      break;
 
 
 
@@ -62,15 +70,21 @@ switch (content) {
 
 }
   }
+
+  if (contentState.content==='userTypeSelection') {
+    return <LyBackdrop visible={true} >
+      <UserTypeSelection/>
+    </LyBackdrop>
+  } 
   
 
   return (
     <>
 <Grid container >
-  <Grid item xs={12} md={5} height={'700px'}  bgcolor={'red'} >
+  <Grid item xs={12} md={5}  >
 <Loading loading={false} setContentState={setContentState}  />
   </Grid>
-  <Grid item xs={12} md={7} height={'700px'} display={'flex'} alignItems={'center'}   mt={'10px'} >
+  <Grid item xs={12} md={6} height={'600px'} display={'flex'} alignItems={'start'}   mt={'50px'} >
 {
   renderContent()
 }

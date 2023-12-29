@@ -5,35 +5,54 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 // Define a type for the slice state
 interface LoginState {
-  userPhoneNumber: string
+  userPhoneNumber:string
+  userInfo: UserInfo
 }
+type UserInfo = {
+  userTenants: any[]; // This could be an array of a specific type, e.g., UserTenant[]
+  // Add more properties here if needed
+};
 
 // Define the initial state using that type
 const initialState: LoginState = {
-    userPhoneNumber: '',
+   userPhoneNumber:'',
+   userInfo:{
+    userTenants:[]
+   }
 }
 
-const setUserPhoneNumber=(state:any,action:PayloadAction<string>)=>{
+const setUserPhoneNumber=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-    // console.log(action)
-state.userPhoneNumber=payload;
+state.userPhoneNumber=payload.phoneNumber;
 }
 
-export const counterSlice = createSlice({
+const setUserData=(state:LoginState,action:PayloadAction<any>):any=>{
+  let{payload}=action;
+  // console.log(payload)
+  state.userInfo.userTenants=payload.tenantInfoDtos;
+// console.log(payload)
+}
+
+export const loginSlice = createSlice({
   name: 'Login',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    setUserData,
     setUserPhoneNumber
-   
-    // Use the PayloadAction type to declare the contents of `action.payload`
+  
    
   },
 })
 
-export const {setUserPhoneNumber:setUserPhoneNumberR } = counterSlice.actions
+export const {
+  setUserPhoneNumber:setUserPhoneNumberR,
+  setUserData:setUserDataR
+ } = loginSlice.actions
 
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value
 
-export default counterSlice.reducer
+
+export default loginSlice.reducer
+
+// export default interface Person {
+//   name: string;
+// }

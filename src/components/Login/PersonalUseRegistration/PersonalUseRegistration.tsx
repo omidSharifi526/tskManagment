@@ -1,9 +1,10 @@
 import React from 'react';
-import {Grid,Typography,Box} from '@mui/material';
+import {Grid,Typography,Box,IconButton} from '@mui/material';
 import DyButton from '../../GlobalComponents/DyButton/DyButton';
 import DyTextField from '../../GlobalComponents/DyTextField/DyTextField';
-import {useState,useEffect} from 'react'
-const EmployeeCompletingRegistraton = () => {
+import {useState,useEffect} from 'react';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+const EmployeeCompletingRegistraton = ({setContentState}:any) => {
   const initialValues={
     fName:'',
     lName:'',
@@ -13,6 +14,9 @@ const EmployeeCompletingRegistraton = () => {
 
   }
 const [registerInfo,setRegisterInfo]=useState(initialValues);
+const handleBack=()=>{
+  setContentState((prev:any)=>({...prev,content:'typeofMembership'}))
+}
 
 const handleRegister=()=>{
 console.log(registerInfo)
@@ -20,8 +24,16 @@ console.log(registerInfo)
   return (
     <Grid container >
    
-    <Grid item xs={10} md={8}  mx={'auto'} bgcolor={'white'} boxShadow={8} borderRadius={4}  >
+    <Grid item xs={10} md={8}  mx={'auto'} bgcolor={'white'}  borderRadius={4}  >
        <Grid container  rowGap={2} >
+       <Grid item xs={12} >
+        <Box px={2}>
+      <IconButton  onClick={handleBack} >
+        <ArrowForwardIcon/>
+      </IconButton>
+        </Box>
+       </Grid>
+
        <Grid item xs={12} >
        <Typography fontWeight={900} fontSize={'1.2rem'} sx={{p:1}} color={'red'} textAlign={'center'} mt={2} >
        تکمیل ثبت نام

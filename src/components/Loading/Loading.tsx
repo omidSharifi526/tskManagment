@@ -14,16 +14,16 @@ const Loading = ({setContentState,loading}:any) => {
   return (
     <Grid container sx={{
         width:'100%',
-        height:'700px',
+        height:'685px',
         overflowY:'auto',
         backgroundImage:`url(${BackGround})`,
         backgroundSize:'cover'
     }}   >
-<Stack spacing={4} alignItems='center'  justifyContent='center' sx={{width:'400px',height:'100%'}} mx="auto" >
-<Box   >
+<Stack spacing={4} alignItems='center'  justifyContent='center'  sx={{width:'800px',height:'100%'}} mx="auto" >
+
 <Box width='100%' >
 <Box sx={{width:'100%',display:'flex',justifyContent:'center'}} mt={2}>
-<Img2/>
+<Img2  />
 </Box>
 </Box>
 <Box>
@@ -36,7 +36,7 @@ loading && <Progress setContentState={setContentState} />
 }
 </Box>
 
-</Box>
+
 
 <Box width='100%'  >
    <Box width='100%' display='flex' flexDirection='row-reverse' >

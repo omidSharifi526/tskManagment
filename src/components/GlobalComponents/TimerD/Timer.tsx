@@ -30,14 +30,14 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ initialMinutes }) => {
   return (
     <div>
       {seconds === 0 ? (
-     <Box mx={'auto'}  px={5} py={3} display={'flex'} justifyContent={'center'} alignItems={'center'}  >
+     <Box mx={'auto'}  px={5} py={1} display={'flex'} justifyContent={'center'} alignItems={'center'}  >
            <Button color='info' variant='outlined'  >
           ارسال مجدد
            </Button>
         </Box>
       ) : (
         <Box mx={'auto'}  px={5} py={3} display={'flex'} justifyContent={'center'} alignItems={'center'}  >
-            <Typography fontWeight={800} fontSize={'2.5rem'} color={'InfoText'}  > {formatTime(seconds)}</Typography>
+            <Typography fontWeight={800} fontSize={'1.1rem'} color={'gray'}  >ارسال دوباره کد تا {formatTime(seconds)}</Typography>
         </Box>
         
       )}
