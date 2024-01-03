@@ -1,18 +1,17 @@
 import React from 'react';
-import { useAuth } from '../../Context/AuthProvider';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthProvider';
 
-const RequierAuth = ({children}:any) => {
-    const auth=useAuth();
-    console.log(auth)
-    if (!auth.auth) {
-       return <Navigate to={'/'}  />
-    }
-   
-   
-    return children
-   
-  
-}
+const RequierAuth = ({ children }: { children: React.ReactNode }) => {
+  const token=localStorage.getItem('accessToken');
+  console.log(token)
+  const { auth } = useAuth();
+  console.log(auth)
+  if (!token) {
+    return <Navigate to={'/'} replace={true} />;
+  }
 
-export default RequierAuth
+  return <>{children}</>; 
+};
+
+export default RequierAuth;

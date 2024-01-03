@@ -40,7 +40,9 @@ const[tenantId,setTenantId]=useState<any>(null)
 
 
     const LoginMeeting=()=>{   
-      setTenantId('eb781974-3cb0-4c3a-881e-97af686ce7f5');  // info.id
+      setTenantId(info.tenantId); 
+      console.log(info.tenantId) // info.id
+      // console.log(info)
     }
 
 
@@ -120,13 +122,13 @@ const[tenantId,setTenantId]=useState<any>(null)
             از {info?.fromTime} تا {info?.toTime}
           </Typography>
         </Box>
-        <Box px={2} py={1}  >
+        {/* <Box px={2} py={1}  >
           <Typography>
             {
               info?.definitionLevel
             }
           </Typography>
-        </Box>
+        </Box> */}
         <Box py={2}  >
        {/* to={"/companyTeams"}  */}
        {/* <ListItem onClick={()=>{

@@ -1,10 +1,11 @@
 import React, { useEffect,useState } from 'react';
-import {Box, Typography} from '@mui/material';
+import {Box, Typography,Grid} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 import {useGetAllMeetings} from '../../../scenes/Meeting/Hooks/index';
 import{setProfileTenantIdR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice'
 import { useDispatch } from 'react-redux';
+
 
 export const UserProfileTypeCart = (props:any) => {
   const dispatch=useDispatch();
@@ -46,14 +47,19 @@ useEffect(() => {
 
 
   return (
-    <Box onClick={handleClickCart} width={'150px'} height={'120px'} borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}  >
-    <Box>
+    <Grid item xs={9} mx={'auto'}  md={3} py={2}  onClick={handleClickCart}    >
+    <Box  borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} >
+    <Box py={3}  display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
     <AccountCircleIcon fontSize='large' />
-    </Box>
-    <Typography color={'black'} fontWeight={600} variant='caption'  >
+    <Box   >
+ <Typography color={'black'} fontWeight={600} variant='caption'  >
     {item.tenantName}
     </Typography>
+ </Box>
     </Box>
+    </Box>
+ 
+    </Grid>
   )
 }
 

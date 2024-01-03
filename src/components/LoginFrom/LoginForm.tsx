@@ -9,33 +9,38 @@ import PassIcon from '../Login/Statics/Icons/PassIcon/PassIcon';
 import DyButton from '../GlobalComponents/DyButton/DyButton';
 import LyBackdrop from '../Layouts/BackDrop/BackDrop';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import KeyIcon from '@mui/icons-material/Key';
+import PhoneIcon from '@mui/icons-material/Phone';
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from '../../Store/Store';
 import {setUserPhoneNumberR} from '../Login/LoginSlice/LoginSlice';
 import{useState,useEffect} from 'react';
 import { useAppSelector } from '../../Store/Store';
-
+import { useSelector } from 'react-redux';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 import {useLogin} from '../Login/Hooks/Index';
 // userInfo:{
 //   userPhoneNumber:''
 
 const LoginForm = ({setContentState}:any) => {
+  const loginStatus:any=useSelector((state:any)=>state.loign.loginStatus);
   const dispatch:any=useAppDispatch();
   // const userInfo:any=useAppSelector(state=>state.loign.userInfo.userPhoneNumber)
   const loginSuccess=()=>{
         // navigate('/dashboard',{replace:true})
+        console.log(logdata)
+      // if (loginStatus?.hasOwnProperty('accessToken')) {
         setContentState((prev:any)=>({...prev,content:'userTypeSelection'}));
+      // }
   }
 
   const loginFailed=()=>{
 
   }
-  const{mutate:LoginReq,isLoading}=useLogin(loginSuccess,loginFailed)
-  const navigate = useNavigate();
+  const{data:logdata,mutate:LoginReq,isLoading}=useLogin(loginSuccess,loginFailed)
+
   const userBody = {
-    phoneNumber: "",
+    phoneNumber: "09121223615",
     password: "",
     smsCode: "",
     isOTP: false
@@ -46,7 +51,7 @@ const LoginForm = ({setContentState}:any) => {
   }
   const [userInfoState,setUserInfoState]=useState<any>(userBody  || null);
 
-
+// console.log(logdata)
 
 
   const initialForgetPass=()=>{
@@ -81,9 +86,9 @@ const LoginForm = ({setContentState}:any) => {
     <Grid container >
    
          <Grid item xs={10} md={8}  mx={'auto'} bgcolor={'white'}  borderRadius={4}  >
-            <Grid container  rowGap={2} >
+            <Grid container  rowGap={1} >
             <Grid item xs={12} >
-            <Typography fontWeight={900} fontSize={'1.2rem'} sx={{p:4}} color={'red'} textAlign={'center'} mt={2} >
+            <Typography px={4} fontWeight={900} fontSize={'1.4rem'} color={'blue'} sx={{p:4}}  textAlign={'left'} mt={2} >
             خوش آمدید
             </Typography>
             </Grid>
@@ -91,10 +96,10 @@ const LoginForm = ({setContentState}:any) => {
             <Grid item xs={12}  >
            <Grid container  px={3} >
            <Grid item xs={12} my={1} display={'flex'} alignItems={'center'}  >
-          <Typography fontWeight={800} color={'primary'} >سلام</Typography>
+          <Typography px={4}  fontWeight={600} >سلام</Typography>
            </Grid>
            <Grid item xs={12} my={1}  display={'flex'} alignItems={'center'} >
-           <Typography color={'primary'} >برای ورود /ثبت نام شماره موبایل خود را وارد کنید</Typography>
+           <Typography px={4} >برای ورود /ثبت نام شماره موبایل خود را وارد کنید</Typography>
             </Grid>
            
            </Grid>
@@ -107,10 +112,11 @@ const LoginForm = ({setContentState}:any) => {
               <FormControl  fullWidth>
               <DyTextField 
               label={'شماره موبایل'}
-              Icon={<UserPhoneNum/>}
+              // Icon={<PhoneIcon/>}
               onchangee={setUserInfoState}
               value={userInfoState.phoneNumber || ''}
               name={'phoneNumber'}
+              type={'text'}
               />
             </FormControl>
             </Grid>
@@ -123,7 +129,7 @@ const LoginForm = ({setContentState}:any) => {
               <FormControl fullWidth  >
                 <DyTextField 
                 label={'رمز عبور'}
-                Icon={<UserPhoneNum/>}
+                // Icon={<KeyIcon/>}
                 onchangee={setUserInfoState}
                 value={userInfoState.passWord || ''}
                 name={'passWord'}

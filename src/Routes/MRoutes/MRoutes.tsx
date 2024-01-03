@@ -18,8 +18,10 @@ import Dashboard from "../../components/Dashboard";
 const Mrouter=createBrowserRouter(createRoutesFromElements(
  <>
  <Route path="/" element={<LoginPage/>} />
+ {/* <RequierAuth><CompanyTeams/></RequierAuth> */}
+ {/* <RequierAuth><Dashboard/></RequierAuth> */}
   <Route path="/companyTeams"  element={<RequierAuth><CompanyTeams/></RequierAuth>} />
-  <Route  path="/dashboard" element={<RequierAuth><Dashboard/></RequierAuth>} >
+  <Route  path="/dashboard" element={<RequierAuth><Dashboard/></RequierAuth>}>
   <Route index path="/dashboard/meetings"  element={<MeetingTabsContainer/>} />
   {/* <Route  element={<OverView/>} /> */}
   

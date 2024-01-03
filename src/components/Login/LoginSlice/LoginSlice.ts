@@ -6,7 +6,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 // Define a type for the slice state
 interface LoginState {
   userPhoneNumber:string
-  userInfo: UserInfo
+  userInfo: UserInfo,
+  loginStatus:any
 }
 type UserInfo = {
   userTenants: any[]; // This could be an array of a specific type, e.g., UserTenant[]
@@ -16,6 +17,7 @@ type UserInfo = {
 // Define the initial state using that type
 const initialState: LoginState = {
    userPhoneNumber:'',
+   loginStatus:null,
    userInfo:{
     userTenants:[]
    }
@@ -28,8 +30,9 @@ state.userPhoneNumber=payload.phoneNumber;
 
 const setUserData=(state:LoginState,action:PayloadAction<any>):any=>{
   let{payload}=action;
-  // console.log(payload)
-  state.userInfo.userTenants=payload.tenantInfoDtos;
+  console.log(payload)
+  state.loginStatus=payload?.data
+  state.userInfo.userTenants=payload?.tenantInfoDtos;
 // console.log(payload)
 }
 

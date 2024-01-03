@@ -30,6 +30,7 @@ import Useimg from './StaticsData/SVG/3.jpg';
 // import {IconButton} from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GridViewIcon from '@mui/icons-material/GridView';
+import { useAuth } from "../../Context/AuthProvider";
 
 
 import DateObject from "react-date-object";
@@ -120,15 +121,17 @@ const itemsList = [
     text: "جلسات",
     icon: <GridViewIcon  />,
     to: "/dashboard/meetings" 
-  },
-  {
-    text: "خروج",
-    icon: <ExitToAppIcon  />,
-    to: "/"
   }
+  // ,
+  // {
+  //   text: "خروج",
+  //   icon: <ExitToAppIcon  />,
+  //   to: "/"
+  // }
 ]
 
 export default function MiniDrawer() {
+  const newAuth=useAuth()
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -186,7 +189,7 @@ export default function MiniDrawer() {
                       </Badge>
                      </IconButton>
                       <Box>
-                     <Avatar alt="Cindy Baker" src={Useimg} />
+                     {/* <Avatar alt="Cindy Baker" src={Useimg} /> */}
                       </Box>
                       <Typography color={'black'}>
                       زهراامینی پاشاکی
@@ -230,6 +233,13 @@ export default function MiniDrawer() {
 
             )
           })}
+             <ListItem onClick={()=>{
+             newAuth.logout();
+             }} color='white ' sx={{fontSize:'0.7 rem'}}    >
+               {/* <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon> */}
+              <Typography variant='body2' sx={{color:'white',fontWeight:600}} >خروج</Typography>
+              </ListItem>
+
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 1 }}>

@@ -62,10 +62,11 @@ const queryClient = new QueryClient()
 
 
 ReactDOM.createRoot(document.getElementById("root")as HTMLElement).render(
-  <React.StrictMode>
+
+      <AuthProvider>
     <Provider store={store}>
      <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+    
     <LocalizationProvider dateAdapter={AdapterDateFnsJalali}  >
        <CacheProvider value={cacheRtl}> 
          <ThemeProvider theme={theme}>
@@ -74,10 +75,11 @@ ReactDOM.createRoot(document.getElementById("root")as HTMLElement).render(
          </ThemeProvider>
       </CacheProvider> 
       </LocalizationProvider>
-      </AuthProvider>
+      
       </QueryClientProvider>
       </Provider>
-  </React.StrictMode>
+      </AuthProvider>
+ 
 
 );
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-
+// 09121223615
 // const userBody = {
 //   "phoneNumber": "09911461820",
 //   "password": "123456",
@@ -29,7 +29,7 @@ const axiosInstance = axios.create({
 
 
 const login = async (userBody:any) => {
-  console.log(userBody,'kghgh')
+  // console.log(userBody,'kghgh')
   return await axiosInstance.post('Account/Login',userBody)
 }
 

@@ -8,13 +8,35 @@ import {EmptyDataIcon} from '../StataicData/index'
 
 const ObjectiveKeyResults:React.FC=()=> {
   const keyResults:any=useSelector((state:any)=>state.meetings.keyResults);
+  const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
   const objectivies=useSelector((state:any)=>state.meetings.objectivie);
     const[objectiveId,setObjectiveId]=useState<any>(objectivies.length>4?'fb7cc4ea-7162-4916-9aa8-834b14308e10':null);
     const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
     
+
+    
+  const [getCustomerBody, setGetCustomerBody] = useState<any>({
+    pageSize: 10,
+    page: 1,
+    searchTerm: "",
+  });
+
   
-   
+  const [counter, setCounter] = useState(1); // Initialize the counter for row index
+
     const objectiveColumns: any = [
+      {
+        field: "rowid",
+        headerName: "ردیف",
+        width: 50,
+        sortable: false,
+        align: "center",
+        renderCell: (params:any) => {
+          const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.id);
+         
+          return <span>{rowIndex+1}</span>;
+        },
+      },
         { field: 'name',
          headerName: 'نام هدف',
          align:'center',
@@ -202,28 +224,40 @@ const ObjectiveKeyResults:React.FC=()=> {
     <>
     <Grid container  >
        <Grid item xs={12}  >
-       <Box py={3} bgcolor={'gray'} my={2} borderRadius={2} boxShadow={2} >
+       <Box py={1} my={2} borderRadius={2} boxShadow={2} >
             <Grid container >
                 <Grid item xs={12} md={3}  >
-                <Typography px={3}  variant='body1'   >
-                نام شرکت :
-               </Typography>
+                <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
+                <Typography variant='button' px={1}>نام شرکت:</Typography>
+                  <Typography  fontWeight={800} variant='body1'  >{teamInfo?.name}</Typography>
+
+                </Box>
                 </Grid>
                 <Grid item xs={12} md={3}  >
-                <Typography px={3}  variant='body1'   >
-                مدیر شرکت :
-               </Typography>
+                <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
+                <Typography variant='button' px={1}>مدیر شرکت :</Typography>
+                  <Typography  fontWeight={800} variant='body1'  >{teamInfo?.managerName}</Typography>
+
+                </Box>
                 </Grid>
-                <Grid item xs={12} md={3} bgcolor={'gray'} >
-                <Typography px={3}  variant='body1'   >
-                تعداد اهداف کل شرکت:
-               </Typography>
+
+                <Grid item xs={12} md={3}  >
+                <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
+                <Typography variant='button' px={1}>تعداد اهداف کل شرکت:</Typography>
+                  <Typography  fontWeight={800} variant='body1'  >{teamInfo?.objectiveCount}</Typography>
+
+                </Box>
                 </Grid>
-                <Grid item xs={12} md={3} bgcolor={'gray'} >
-                <Typography px={3}  variant='body1'   >
-                تعداد نتایج کل شرکت:
-               </Typography>
+
+                <Grid item xs={12} md={3}  >
+                <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
+                <Typography variant='button' px={1}>تعداد نتایج کل شرکت:</Typography>
+                  <Typography  fontWeight={800} variant='body1'  >{teamInfo?.keyResultCount}</Typography>
+
+                </Box>
                 </Grid>
+              
+               
             </Grid>
        </Box>
        </Grid>

@@ -45,21 +45,17 @@ useEffect(() => {
       </LyBackdrop>
     }
   return (
-    <Grid container  >
-    <Grid item xs={11} md={8} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >
+   
+    <Grid item xs={11} md={12} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >
    <Grid container  >
    <Grid item xs={12}  >
-   <Box width={'100%'} px={3} py={2}  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
+   <Box width={'100%'}  py={2}  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
   <Box>
   <Typography color={'blue'} variant='h5'  >
   انتخاب اکانت
   </Typography>
   </Box>
-  {/* <Box>
-   <IconButton onClick={initialClose}  >
-  <HighlightOffIcon fontSize='large'  />
-   </IconButton>
-  </Box> */}
+
    </Box>
    </Grid>
    
@@ -79,8 +75,10 @@ useEffect(() => {
    </Box>
    </Grid>
 
-  <Grid item xs={12} md={10} mx={'auto'} >
-    <Box display={'flex'} gap={1} px={3} py={1} flexWrap={'wrap'} >
+ 
+    <Grid container mx={'auto'} display={'flex'} gap={1} py={1} flexWrap={'wrap'}  >
+<Grid item xs={12} md={6} mx={'auto'}  >
+<Grid container spacing={2}  >
 {
 userTenantsData && userTenantsData?.map((item:any,i:number)=>{
         return(
@@ -93,7 +91,8 @@ userTenantsData && userTenantsData?.map((item:any,i:number)=>{
         )
     })
 }
-<Box width={'150px'} height={'120px'} borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}  >
+</Grid>
+<Grid item xs={9} px={2} mx={'auto'} md={3} borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}  >
 
     <Typography py={1} color={'black'} fontWeight={600} variant='caption'  >
     افزودن اکانت
@@ -102,10 +101,12 @@ userTenantsData && userTenantsData?.map((item:any,i:number)=>{
     <IconButton size='medium' sx={{boxShadow:'0px 3px 5px  black'}}  >
      <AddIcon/>
     </IconButton>
-</Box>
+</Grid>
+</Grid>
 
 
-</Box>
+
+
 
 
   </Grid>
@@ -119,7 +120,7 @@ userTenantsData && userTenantsData?.map((item:any,i:number)=>{
 
    </Grid>
     </Grid>
-    </Grid>
+
   )
 }
 

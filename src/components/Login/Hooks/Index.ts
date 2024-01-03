@@ -17,12 +17,15 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
       onSuccess: (data) => {
         // console.log(data.data.data);
         loginSuccess()
+        console.log(data.data)
         // console.log(data.data.data)
-        let userData=data?.data.data
+        let userData=data?.data?.data;
+        console.log(userData)
+        // console.log(userData)
         dispatch(setUserDataR(userData))
-        localStorage.setItem('accessToken',data?.data.data);
+        localStorage.setItem('accessToken',userData?.accessToken);
         
-        newAuth.login(data?.data.data)
+        newAuth.login(userData)
       },
 
 
@@ -47,6 +50,7 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
    refetchOnWindowFocus:false,
    onSuccess:(data:any):void=>{
     let rawData=data;
+    
     dispatch(setPriodListR(rawData))
     navigate('/dashboard/meetings',{replace:true})
    },

@@ -15,7 +15,7 @@ export default function DyTextField(props:any) {
     let{name,value}=target;
     props.onchangee((prev:any)=>({...prev,[name]:value}))
 
-console.log(name,value)
+// console.log(name,value)
   }
   return (
     <Box>

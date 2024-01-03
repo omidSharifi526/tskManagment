@@ -10,15 +10,16 @@ import DyLoadingCircular from '../DyLoadingCircular/DyLoadingCircular';
 import { useSelector } from 'react-redux';
 import { useEffect,useState } from 'react';
 import { Box } from '@mui/material';
-import {useGetTeamsByTenantId,useGetTeamDetailsById,useGetAllObjectiveByTeamId} from '../../../scenes/Meeting/Hooks/index'
+import {useGetTeamsByTenantId,useGetTeamDetailsById,useGetAllObjectiveByTeamId,useGetAllTeamStatusByTenantId} from '../../../scenes/Meeting/Hooks/index'
 export default function DyTreeView({setTabIndex}:any) {
 
 const teamsData=useSelector((state:any)=>state.meetings.teamsData);
-console.log(teamsData);
+// console.log(teamsData);
 const[nodeId,setNodeId]=useState<any>('');
 const[company,setCompanys]=useState<any|null>({});
 const[teams,setTeams]=useState<any|null>([])
-const {data}=useGetAllObjectiveByTeamId(nodeId)
+const {data}=useGetAllObjectiveByTeamId(nodeId);
+const{data:teamStatusData}=useGetAllTeamStatusByTenantId(nodeId)
 
   
 useEffect(() => {
@@ -70,6 +71,7 @@ setNodeId(node.id)
           teams && teams.map((item:any,i:number)=>{
             return (
               <TreeItem 
+              sx={{fontSize:'10px !important  '}}
               nodeId={`t${i}`} 
               key={i} label={item.name} 
               onClick={()=>{

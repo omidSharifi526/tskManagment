@@ -4,7 +4,7 @@ import {getAllMeetingByIds,
     getTeamDetailsById,
     getAllObjectiveByTeamId,
     getAllKeyResultByObjectiveId,
-    
+    getAllTeamStatusByTenantId
 
 } from '../Api/Index';
 import {setMeetingsListR,setObjectivieR,setKeyResultsR} from '../MeetingsSlice/MeetingsSlice';
@@ -107,10 +107,27 @@ return useQuery(['GetAllKeyResultByObjectiveId',objectiveId],getAllKeyResultByOb
 })
 }
 
+const useGetAllTeamStatusByTenantId=(id:any)=>{
+    return useQuery(['getAllTeamStatusByTenantId','f64c1efe-4213-4502-ab8a-018c88bc9f2d'],getAllTeamStatusByTenantId,{
+      refetchOnWindowFocus:false,
+      cacheTime:Infinity,
+      enabled:!!id,
+      onSuccess:(data)=>{
+     console.log(data)
+      }
+      ,
+      onError:(err)=>{
+       console.log(err)
+      }
+
+    })
+}
+
 export{
     useGetAllMeetings,
     useGetTeamsByTenantId,
     useGetTeamDetailsById,
     useGetAllObjectiveByTeamId,
-    useGetAllKeyResultByObjectiveId
+    useGetAllKeyResultByObjectiveId,
+    useGetAllTeamStatusByTenantId
 }

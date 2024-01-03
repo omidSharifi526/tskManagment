@@ -72,9 +72,11 @@ switch (content) {
   }
 
   if (contentState.content==='userTypeSelection') {
-    return <LyBackdrop visible={true} >
-      <UserTypeSelection/>
-    </LyBackdrop>
+  
+  return    <Grid container  >
+    <UserTypeSelection/>
+  </Grid>
+  
   } 
   
 

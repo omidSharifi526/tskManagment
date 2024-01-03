@@ -12,9 +12,11 @@ type meetingsStateType = {
     periodList: any[],
     meetingsList:any[],
     teamsData:any[],
+    teamInfo:any,
     objectivie:any[],
     keyResults:any[],
-    loading:boolean
+    loading:boolean,
+    
  
 };
 
@@ -24,6 +26,7 @@ profileTenantId:'',
 periodList:[],
 meetingsList:[],
 teamsData:[],
+teamInfo:{},
 objectivie:[],
 keyResults:[],
 loading:false
@@ -54,6 +57,8 @@ const setLoading=(state:any,action:PayloadAction<any>)=>{
 
 const setTeamsData=(state:any,action:PayloadAction<any>)=>{
 let{payload}=action;
+console.log(payload)
+state.teamInfo=payload[0];
 state.teamsData=payload;
 }
 
