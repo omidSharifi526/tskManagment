@@ -235,7 +235,7 @@ export default function MiniDrawer() {
           })}
              <ListItem onClick={()=>{
              newAuth.logout();
-             }} color='white ' sx={{fontSize:'0.7 rem'}}    >
+             }} color='white ' sx={{fontSize:'0.7 rem',cursor:'pointer'}}    >
                {/* <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon> */}
               <Typography variant='body2' sx={{color:'white',fontWeight:600}} >خروج</Typography>
               </ListItem>

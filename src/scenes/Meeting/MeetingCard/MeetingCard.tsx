@@ -8,7 +8,7 @@ import {Typography,Box,ListItem} from '@mui/material';
 import {HeldIcon,PerformingIcon,ReadyPerformIcon} from './StaticData/index';
 import ProgressMeeting from '../LComponents/ProgressMeeting/ProgressMeeting';
 import DyStyledBadge from '../../../components/GlobalComponents/DyStyledBadge/DyStyledBadge';
-import {useGetTeamsByTenantId} from '../Hooks/index';
+import {useGetTeamsByTenantId,UseGetWebCheckinMeetingDetailsByMeetingId} from '../Hooks/index';
 import { useState } from 'react';
 import * as moment from 'jalali-moment';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -20,19 +20,20 @@ import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
 
 export default function MeetingCard(props:any) {
   
-const getTeamsSuccess=()=>{
+const getDetSuccess=()=>{
 navigate('/companyTeams',{replace:true})
 }
 
-const getTeamsFailed=()=>{
+const getDetFailed=()=>{
 
 }
 
 const[tenantId,setTenantId]=useState<any>(null)
-
-     const navigate=useNavigate();
-       const{isError,isLoading,refetch:getTeams}=useGetTeamsByTenantId(getTeamsSuccess,getTeamsFailed,tenantId);
-
+const navigate=useNavigate();
+// const{isError,isLoading,refetch:getTeams}=useGetTeamsByTenantId(getTeamsSuccess,getTeamsFailed,tenantId);
+// getDetSuccess:any,getDetFailed:any,id:string
+const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,tenantId)
+  
     let {info}=props;
     // console.log(info)
     let todayJalali = moment.default("2023-12-03T07:19:38.4563725Z").locale('fa').format('YYYY/M/D');
@@ -40,7 +41,7 @@ const[tenantId,setTenantId]=useState<any>(null)
 
 
     const LoginMeeting=()=>{   
-      setTenantId(info.tenantId); 
+      setTenantId(info.id); 
       console.log(info.tenantId) // info.id
       // console.log(info)
     }
@@ -56,12 +57,12 @@ const[tenantId,setTenantId]=useState<any>(null)
 
 
   return (
-    <Card sx={{ width: '100%' }}>
+    <Card sx={{ width:'100%',boxShadow:6,borderRadius:5}}>
     
       <CardContent>
-        <Box mb={2}  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
+        <Box mb={1}  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
         <Box display={'flex'} justifyContent={'space-between'} >
-        <Box px={1}>
+        <Box >
            {
                 info.type==1 && <HeldIcon/>
                
@@ -74,14 +75,22 @@ const[tenantId,setTenantId]=useState<any>(null)
             }
            </Box>
            <Box>
-          <Typography>
+          <Typography sx={{fontSize:'14px'}}  >
             {info.status}
             </Typography>
           </Box>
         </Box>
 
-        <Box width={'100px'} display={'flex'} alignItems={'center'} justifyContent={'center'} >
-       <Typography textAlign={'center'} width={'100%'} color={'info'} border={1}  borderColor={'blueviolet'} p={1} borderRadius={1} >
+        <Box width={'80px'} display={'flex'} alignItems={'center'} justifyContent={'center'} >
+       <Typography 
+       fontWeight={500}
+        py={1} 
+        textAlign={'center'} 
+        width={'100%'} 
+        color={'info'} 
+        border={1}  
+        borderColor={'blueviolet'}  
+        borderRadius={1} >
        {
         info?.name
        }
@@ -117,19 +126,30 @@ const[tenantId,setTenantId]=useState<any>(null)
         // moment.default(info.createDate).locale('fa').format('YYYY/M/D')
          }
         </Box> */}
-        <Box>
+        <Box 
+         display={'flex'}
+          justifyContent={'space-between'} 
+          columnGap={1} 
+          p={1}
+          >
+          <Typography>
+            درتاریخ
+            {
+              info?.meetingDate
+            }
+          </Typography>
           <Typography>
             از {info?.fromTime} تا {info?.toTime}
           </Typography>
         </Box>
-        {/* <Box px={2} py={1}  >
-          <Typography>
+        <Box px={1} py={1}  >
+          <Typography sx={{fontSize:'12px'}} color={'gray'}  >
             {
               info?.definitionLevel
             }
           </Typography>
-        </Box> */}
-        <Box py={2}  >
+        </Box>
+        
        {/* to={"/companyTeams"}  */}
        {/* <ListItem onClick={()=>{
         console.log('hihi')
@@ -137,12 +157,20 @@ const[tenantId,setTenantId]=useState<any>(null)
         <Typography color={'GrayText'} variant='body2' sx={{fontWeight:600}} >ورود به جلسه</Typography>
       </ListItem> */}
 
-      <Button onClick={()=>{
+    <Box display={'flex'} justifyContent={'space-between'} px={3}  mt={1}  >
+   <Box>
+    <ProgressMeeting prog={info?.evaluationPercentage} />
+   </Box>
+
+  <Box>
+  <Button onClick={()=>{
         LoginMeeting()
       }}  >
       ورود به جلسه
-      </Button>
-           </Box>
+  </Button>
+  </Box>
+    </Box>
+           {/*  */}
       </CardContent>
       {/* <CardActions>
         <Button size="small">Share</Button>

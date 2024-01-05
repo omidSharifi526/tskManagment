@@ -72,8 +72,8 @@ const CompanyTeams = () => {
     <Grid container  >
         <Grid item xs={12}  >
         <Grid container sx={{bgcolor:'#F9F9F9'}} >
-        <Grid item xs={12}  md={6}   >
-               <Box py={2}  >
+        <Grid item xs={12}  md={1}   >
+               <Box py={2} >
        
     <ListItem  sx={{fontSize:'0.7 rem'}} component={Link} to={'/dashboard/meetings'}  >
            
@@ -92,14 +92,14 @@ const CompanyTeams = () => {
         <Grid container   >
           
         <Grid item xs={12} md={2}   >
-        <Box px={2} py={1}  >
+        <Box boxShadow={2} borderRadius={2}   >
         <DyTreeView 
         setTabIndex={setTabIndex} 
         />
         </Box>
         </Grid>
         <Grid item xs={12} md={10}  >
-       <Box  px={1}  >
+       <Box    >
        {/* <DyDataGrid/> */}
        <DyTabs tabs={tabData} 
          tabIndex={tabIndex} />

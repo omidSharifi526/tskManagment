@@ -45,5 +45,5 @@ export default function ProgressMeeting(props:any) {
 //     };
 //   }, []);
 
-  return <CircularProgressWithLabel value={props.prog*10+40} />;
+  return <CircularProgressWithLabel value={props.prog} />;
 }

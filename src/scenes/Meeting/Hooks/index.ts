@@ -4,7 +4,9 @@ import {getAllMeetingByIds,
     getTeamDetailsById,
     getAllObjectiveByTeamId,
     getAllKeyResultByObjectiveId,
-    getAllTeamStatusByTenantId
+    getAllTeamStatusByTenantId,
+    getWebCheckinMeetingDetailsByMeetingId,
+    getWebObjectiveDetailsCheckinMeetingByTeamId
 
 } from '../Api/Index';
 import {setMeetingsListR,setObjectivieR,setKeyResultsR} from '../MeetingsSlice/MeetingsSlice';
@@ -36,14 +38,13 @@ const useGetAllMeetings=(meetIds:any|null)=>{
 
 
 const useGetTeamsByTenantId=(getTeamsSuccess:any,getTeamsFailed:any,id:string)=>{
-    const dispatch=useDispatch()
+   
 return useQuery(['getTeamsByTenantId',id],getAllTeamsByTenantId,{
     refetchOnWindowFocus:false,
     cacheTime:Infinity,
     enabled:!!id,
     onSuccess:(data)=>{
-        let teamData=data?.data?.data;
-        dispatch(setTeamsDataR(teamData));
+       
         getTeamsSuccess();
 
     },
@@ -123,11 +124,64 @@ const useGetAllTeamStatusByTenantId=(id:any)=>{
     })
 }
 
+const UseGetWebCheckinMeetingDetailsByMeetingId=(getDetSuccess:any,getDetFailed:any,id:string)=>{
+    const dispatch=useDispatch()
+return useQuery(['getWebCheckinMeetingDetailsByMeetingId',id],getWebCheckinMeetingDetailsByMeetingId,{
+enabled:!!id,
+cacheTime:Infinity,
+refetchOnWindowFocus:false,
+onSuccess:(data:any)=>{
+    // console.log(data)
+    getDetSuccess();
+    // 
+}
+,
+onError:(er)=>{
+console.log(er)
+getDetFailed()
+}
+,
+select:(data)=>{
+ console.log(data)
+ let teamData=data?.data?.data;
+    console.log(teamData)
+    dispatch(setTeamsDataR(teamData));
+}
+})
+}
+
+const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(id:String)=>{
+    console.log(id)
+    const dispatch=useDispatch();
+    return useQuery(['getWebObjectiveDetailsCheckinMeetingByTeamId',id]
+    ,getWebObjectiveDetailsCheckinMeetingByTeamId,{
+    cacheTime:Infinity,
+    refetchOnWindowFocus:false,
+    enabled:!!id,
+    onSuccess:(data)=>{
+        let rawData=data?.data?.data
+        console.log(rawData)
+        dispatch(setObjectivieR(rawData))
+    // console.log(data)
+    }
+    ,
+    onError:(err)=>[
+     console.log(err)
+    ]
+    })
+}
+
+
+
+// https://api.myokr.ir/api/Meeting/GetWebObjectiveDetailsCheckinMeetingByTeamId?teamId=7e2a4838-c318-42b9-b874-56f61afeec39
+
 export{
     useGetAllMeetings,
     useGetTeamsByTenantId,
     useGetTeamDetailsById,
     useGetAllObjectiveByTeamId,
     useGetAllKeyResultByObjectiveId,
-    useGetAllTeamStatusByTenantId
+    useGetAllTeamStatusByTenantId,
+    UseGetWebCheckinMeetingDetailsByMeetingId,
+    useGetWebObjectiveDetailsCheckinMeetingByTeamId
 }

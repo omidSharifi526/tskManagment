@@ -56,9 +56,17 @@ return await axios.get(`https://api.myokr.ir/api/Meeting/GetCheckinMeetingDetail
 // https://api.myokr.ir/api/Meeting/GetWebCheckinMeetingDetailsByMeetingId?meetingId=34eb3909-a296-448e-b0f5-dc068984c945
 
 
-const getWebCheckinMeetingDetailsByMeetingId=async()=>{
-return await axios.get(`https://api.myokr.ir/api/Meeting/GetWebCheckinMeetingDetailsByMeetingId?meetingId=34eb3909-a296-448e-b0f5-dc068984c945`)
+const getWebCheckinMeetingDetailsByMeetingId=async({queryKey}:any)=>{
+  let id:string=queryKey[1];
+return await axios.get(`https://api.myokr.ir/api/Meeting/GetWebCheckinMeetingDetailsByMeetingId?meetingId=${id}`)
 }
+ // https://api.myokr.ir/api/Meeting/GetWebObjectiveDetailsCheckinMeetingByTeamId?teamId=7e2a4838-c318-42b9-b874-56f61afeec39
+
+ const getWebObjectiveDetailsCheckinMeetingByTeamId=async({queryKey}:any)=>{
+  let id:string=queryKey[1];
+  console.log(id)
+return await axios.get(`https://api.myokr.ir/api/Meeting/GetWebObjectiveDetailsCheckinMeetingByTeamId?teamId=${id}`)
+ }
 
 export{
     getAllMeetingByIds,
@@ -67,5 +75,6 @@ export{
     getAllObjectiveByTeamId,
     getAllKeyResultByObjectiveId,
     getAllTeamStatusByTenantId,
-    getWebCheckinMeetingDetailsByMeetingId
+    getWebCheckinMeetingDetailsByMeetingId,
+    getWebObjectiveDetailsCheckinMeetingByTeamId
 }

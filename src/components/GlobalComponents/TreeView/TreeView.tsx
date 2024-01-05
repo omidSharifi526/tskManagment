@@ -8,29 +8,61 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DyLoadingCircular from '../DyLoadingCircular/DyLoadingCircular';
 import { useSelector } from 'react-redux';
-import { useEffect,useState } from 'react';
+import { useEffect,useState,useLayoutEffect } from 'react';
 import { Box } from '@mui/material';
-import {useGetTeamsByTenantId,useGetTeamDetailsById,useGetAllObjectiveByTeamId,useGetAllTeamStatusByTenantId} from '../../../scenes/Meeting/Hooks/index'
+import {useGetTeamsByTenantId,useGetTeamDetailsById,
+  useGetAllObjectiveByTeamId,
+  useGetAllTeamStatusByTenantId,
+  useGetWebObjectiveDetailsCheckinMeetingByTeamId} from '../../../scenes/Meeting/Hooks/index'
 export default function DyTreeView({setTabIndex}:any) {
 
-const teamsData=useSelector((state:any)=>state.meetings.teamsData);
-// console.log(teamsData);
+const teamsData=useSelector((state:any)=>state.meetings.teamInfo);
+console.log(teamsData);
 const[nodeId,setNodeId]=useState<any>('');
-const[company,setCompanys]=useState<any|null>({});
+const[companys,setCompanys]=useState<any|null>([]);
 const[teams,setTeams]=useState<any|null>([])
-const {data}=useGetAllObjectiveByTeamId(nodeId);
-const{data:teamStatusData}=useGetAllTeamStatusByTenantId(nodeId)
-
+// const {data}=useGetAllObjectiveByTeamId(nodeId);
+// const{data:teamStatusData}=useGetAllTeamStatusByTenantId(nodeId);
+const{data:objectiveDataaa}=useGetWebObjectiveDetailsCheckinMeetingByTeamId(nodeId);
+const[treeNodes,setTreeNodes]=useState<any>([]);
+const [renderContent,setRenderContent]=useState<any>(null)
   
-useEffect(() => {
-let teamData=[...teamsData];
-let company=teamData.find((item)=>item.name=='شرکت');
-let teams=teamData.filter((item)=>item.name!='شرکت');
-setTeams(teams)
-setCompanys(company)
+useLayoutEffect(() => {
+let teamData={...teamsData};
+let renderStatus=teamData?.webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos;
+setRenderContent(renderStatus)
+// setTreeNodes(teamData)
+console.log(teamData)
+// let company=teamData.find((item)=>item.name=='شرکت');
+// let teams=teamData.filter((item)=>item.name!='شرکت');
+// setTeams(teams)
+// setCompanys(company)
+// webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos
 
  
 }, [])
+
+useEffect(() => {
+
+
+  if (renderContent===null) {
+    // console.log(teamsData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos)
+    let treeNodes=teamsData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos
+  //  setTeams(teams)
+// webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos
+  setCompanys(treeNodes)
+
+  }
+  else {
+    let teams=teamsData?.webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos
+    setTeams(teams)
+    console.log(teams)
+  }
+  // const[companys,setCompanys]=useState<any|null>([]);
+   
+  }, [])
+
+
 
 
 
@@ -48,6 +80,84 @@ setNodeId(node.id)
 
 }
 
+const renderContentUi=()=>{
+switch (renderContent) {
+  case null:
+ return (
+  <Box minHeight={'100vh'}  >
+    <TreeView
+    defaultExpanded={['1']}
+      aria-label="file system navigator"
+      defaultCollapseIcon={<ArrowDropDownIcon fontSize='large' />}
+      defaultExpandIcon={<ArrowLeftIcon fontSize='large' />}
+      sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto',minHeight:800}}
+    >
+      {
+         companys?.map((company:any,i:number)=>{
+          return <TreeItem  
+          key={i}
+          sx={{mt:1,'& .rtl-305k3i-MuiTreeItem-content .MuiTreeItem-label':{fontSize:'0.7rem',fontWeight:800,py:1}}}  
+          nodeId="1" 
+          onClick={()=>{
+            console.log(company.id)
+          setNodeId(company.id)
+          }} label={company?.name}
+          >
+          
+          {/* {
+            company.webTeamCheckinMeetingDetailsQueryResultDtos.map((team:any,i:number)=>{
+              return <TreeItem 
+              style={{ fontSize: '14px' }}
+              label={team.name} 
+              nodeId={team.id} 
+              key={i}  
+              sx={{mt:1}}
+              onClick={()=>{
+                console.log(team.name)
+              }}
+              />
+            })
+          } */}
+          
+          </TreeItem>
+        })
+      }
+
+    </TreeView>
+  </Box>
+ ) 
+
+
+    case null:
+      return (
+    
+        <Box minHeight={'100vh'} bgcolor={'red'} >
+          <h1>fsdfs</h1>
+        {/* {
+              teams.map((team:any,i:number)=><TreeItem 
+              nodeId={i.toString()} 
+              label={team.name}  
+              sx={{mt:1,'& .rtl-305k3i-MuiTreeItem-content .MuiTreeItem-label':{fontSize:'0.7rem',fontWeight:800}}}  
+              />)
+        } */}
+        {
+          teamsData && teamsData.webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos.map((team:any)=>{
+            return <h5>hih</h5>
+          })
+        }
+        </Box>
+        
+      )
+      break;
+    
+
+ 
+}
+
+
+  // return <h1>hi</h1>
+}
+
 
 
 
@@ -55,7 +165,7 @@ setNodeId(node.id)
 
   return (
    <Box  sx={{boxShadow:1,borderRadius:1}} >
-     <TreeView
+     {/* <TreeView
     defaultExpanded={['1']}
       aria-label="file system navigator"
       defaultCollapseIcon={<ArrowDropDownIcon fontSize='large' />}
@@ -63,9 +173,9 @@ setNodeId(node.id)
       sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto',minHeight:800}}
     >
 
-   <TreeItem sx={{mt:1}}   nodeId="1" onClick={()=>{
-    setNodeId(company.id)
-   }} label={company?.name}>
+    <TreeItem sx={{mt:1}}   nodeId="1" onClick={()=>{
+    setNodeId(companys.id)
+   }} label={companys?.name}>
 
         {
           teams && teams.map((item:any,i:number)=>{
@@ -81,10 +191,39 @@ setNodeId(node.id)
             )
           })
         }
-      </TreeItem>
+      </TreeItem> 
+
+      {
+    treeNodes && treeNodes.map((company:any,i:number)=>{
+         
+        return   <TreeItem 
+                  sx={{mt:1,'& .rtl-305k3i-MuiTreeItem-content .MuiTreeItem-label':{fontSize:'0.7rem',fontWeight:800}}}   nodeId="1" 
+                  onClick={()=>{
+                  setNodeId(company.id)
+                  }} label={company?.name}
+                  >
+                  {
+                    company.webTeamCheckinMeetingDetailsQueryResultDtos.map((team:any,i:number)=>{
+                      return <TreeItem 
+                      style={{ fontSize: '14px' }}
+                      label={team.name} 
+                      nodeId={team.id} 
+                      key={i}  
+                      sx={{mt:1}}
+                      onClick={()=>{
+                        console.log(team.name)
+                      }}
+                      />
+                    })
+                  } 
+            
+                </TreeItem> 
+         
+        })
+      }
 
               
-{/* 
+
    
 
       <TreeItem sx={{mt:1}} nodeId="4" label="تولید">
@@ -124,10 +263,20 @@ setNodeId(node.id)
         <TreeItem nodeId="32" label="MUI">
           <TreeItem nodeId="170" label="index.js" />
         </TreeItem>
-      </TreeItem> */}
+      </TreeItem>
 
 
-    </TreeView>
+    </TreeView> */}
+
+
+
+    {
+      renderContentUi()
+    }
+
+
+
+
    </Box>
   );
 }

@@ -58,8 +58,8 @@ const setLoading=(state:any,action:PayloadAction<any>)=>{
 const setTeamsData=(state:any,action:PayloadAction<any>)=>{
 let{payload}=action;
 console.log(payload)
-state.teamInfo=payload[0];
-state.teamsData=payload;
+state.teamInfo=payload;
+// state.teamsData=[];
 }
 
 

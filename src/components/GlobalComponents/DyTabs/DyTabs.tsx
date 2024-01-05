@@ -11,7 +11,7 @@ const DyTabs = ({ tabs,tabIndex }:any) => {
   };
 
   return (
-    <Grid   >
+    <Grid bgcolor={'#F9F9F9'} px={1} minHeight={'100vh'}   >
       <Tabs value={value} onChange={handleChange} sx={{padding:'0px !important'}}>
         {tabs.map((tab:any, index:number) => (
           <Tab key={index} label={tab.label} />

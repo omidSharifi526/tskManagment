@@ -37,7 +37,7 @@ initialComponentRendred()
 },[props.priodsIds])
 
 useEffect(() => {
-  console.log(meetinsIds)
+  // console.log(meetinsIds)
 //  console.log(meetingData)
 }, [meetinsIds])
 

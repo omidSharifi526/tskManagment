@@ -8,13 +8,14 @@ import { Box,Grid } from '@mui/material';
 
 // تعداد اهداف
 // امتیاز
-export default function DyDataGrid({data,columns,setObjectiveId,hideFooter,selectionModel}:any) {
+export default function DyDataGrid({data,columns,hideFooter,selectionModel,initialOnRowClick}:any) {
     
       // console.log(data)
 
-      const initialOnRowClick=(id:string)=>{
-       console.log(id)
-       setObjectiveId(id)
+      const initOnRowClick=(row:any)=>{
+       console.log(row)
+       initialOnRowClick(row)
+      //  setObjectiveId(id)
       }
   return (
  
@@ -56,7 +57,7 @@ export default function DyDataGrid({data,columns,setObjectiveId,hideFooter,selec
       columns={columns} 
       // sx={{my:2}}
       onRowClick={(param)=>{
-        initialOnRowClick(param.row.id)
+        initOnRowClick(param.row)
         // console.log(param.row.id)
         // setObjectiveId(param.row.id)
       }}
