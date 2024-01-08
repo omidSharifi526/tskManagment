@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // accessToken
 
   const login = (data:any) => {
-    console.log(data)
+    // console.log(data)
     setAuth(data);
     localStorage.setItem('accessToken', data?.accessToken);
   };

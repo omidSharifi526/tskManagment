@@ -31,6 +31,9 @@ import Useimg from './StaticsData/SVG/3.jpg';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { useAuth } from "../../Context/AuthProvider";
+import { useDispatch } from 'react-redux';
+import{resetRValuesR} from '../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
+import { useSelector } from 'react-redux';
 
 
 import DateObject from "react-date-object";
@@ -131,6 +134,10 @@ const itemsList = [
 ]
 
 export default function MiniDrawer() {
+  // const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
+  const tenantName=useSelector((state:any)=>state.meetings.profileName);
+  const dispatch=useDispatch()
+  
   const newAuth=useAuth()
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -149,7 +156,12 @@ export default function MiniDrawer() {
     const now=date.format("dddd DD MMMM  ");
 
 
-// sx={{backgroundColor:'#00387C',height:'100%'}}
+const initiaLogOut=()=>{
+  newAuth.logout();
+  // const token=localStorage.getItem('accessToken');
+  localStorage.setItem('accessToken','')
+  dispatch(resetRValuesR())
+}
   return (
     <Box sx={{ display: 'flex' ,}} >
       <CssBaseline />
@@ -191,8 +203,8 @@ export default function MiniDrawer() {
                       <Box>
                      {/* <Avatar alt="Cindy Baker" src={Useimg} /> */}
                       </Box>
-                      <Typography color={'black'}>
-                      زهراامینی پاشاکی
+                      <Typography  fontSize={'0.8rem'} fontWeight={600} pr={3}  color={'black'}>
+                    {tenantName}
                       </Typography>
                       
                       </Box>
@@ -234,7 +246,8 @@ export default function MiniDrawer() {
             )
           })}
              <ListItem onClick={()=>{
-             newAuth.logout();
+              initiaLogOut()
+            
              }} color='white ' sx={{fontSize:'0.7 rem',cursor:'pointer'}}    >
                {/* <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon> */}
               <Typography variant='body2' sx={{color:'white',fontWeight:600}} >خروج</Typography>

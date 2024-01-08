@@ -30,7 +30,7 @@ state.userPhoneNumber=payload.phoneNumber;
 
 const setUserData=(state:LoginState,action:PayloadAction<any>):any=>{
   let{payload}=action;
-  console.log(payload)
+  // console.log(payload)
   state.loginStatus=payload?.data
   state.userInfo.userTenants=payload?.tenantInfoDtos;
 // console.log(payload)

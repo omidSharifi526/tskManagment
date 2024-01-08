@@ -28,7 +28,7 @@ const LoginForm = ({setContentState}:any) => {
   // const userInfo:any=useAppSelector(state=>state.loign.userInfo.userPhoneNumber)
   const loginSuccess=()=>{
         // navigate('/dashboard',{replace:true})
-        console.log(logdata)
+        // console.log(logdata)
       // if (loginStatus?.hasOwnProperty('accessToken')) {
         setContentState((prev:any)=>({...prev,content:'userTypeSelection'}));
       // }
@@ -41,7 +41,7 @@ const LoginForm = ({setContentState}:any) => {
 
   const userBody = {
     phoneNumber: "09121223615",
-    password: "",
+    password: "123456",
     smsCode: "",
     isOTP: false
   }
@@ -63,7 +63,7 @@ const LoginForm = ({setContentState}:any) => {
     LoginReq(userInfoState)
 
     dispatch(setUserPhoneNumberR(userInfoState ||''))
-    console.log(userInfoState)
+    // console.log(userInfoState)
   }
 
   const initSetPhoneNum=()=>{

@@ -4,7 +4,7 @@ import { useAuth } from '../../Context/AuthProvider';
 
 const RequierAuth = ({ children }: { children: React.ReactNode }) => {
   const token=localStorage.getItem('accessToken');
-  console.log(token)
+  // console.log(token)
   const { auth } = useAuth();
   // console.log(auth)
   if (!token) {

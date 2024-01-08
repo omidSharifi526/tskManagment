@@ -7,12 +7,14 @@ import DyTabs from '../../components/GlobalComponents/DyTabs/DyTabs';
 import Example from '../../components/GlobalComponents/Charts/Liner/LinerChart';
 import { useSelector } from 'react-redux';
 import { DataGrid, GridRowsProp, GridColDef,faIR } from '@mui/x-data-grid';
+import { useDispatch } from 'react-redux';
+import {resetRValuesR} from '../Meeting/MeetingsSlice/MeetingsSlice'
 
 import ObjectiveKeyResults from './ObjectiveKeyResults/ObjectiveKeyResults';
 // import DyTabs from '../../components/GlobalComponents/DyTabs/DyTabs';
 
 const CompanyTeams = () => {
-
+  const dispatch=useDispatch();
   
 
 
@@ -67,6 +69,11 @@ const CompanyTeams = () => {
     },
   
   ];
+
+  const clickInitial=()=>{
+     dispatch(resetRValuesR())
+    // console.log('exittttt')
+  }
   
   return (
     <Grid container  >
@@ -75,7 +82,7 @@ const CompanyTeams = () => {
         <Grid item xs={12}  md={1}   >
                <Box py={2} >
        
-    <ListItem  sx={{fontSize:'0.7 rem'}} component={Link} to={'/dashboard/meetings'}  >
+    <ListItem onClick={clickInitial}  sx={{fontSize:'0.7 rem'}} component={Link} to={'/dashboard/meetings'}  >
            
               <Typography color={'GrayText'} variant='body2' sx={{fontWeight:600}} >خروج از جلسه</Typography>
               </ListItem>
@@ -118,7 +125,7 @@ const CompanyTeams = () => {
        </Grid>
         </Grid> */}
 
-        <Example/>
+        {/* <Example/> */}
        
     </Grid>
   )

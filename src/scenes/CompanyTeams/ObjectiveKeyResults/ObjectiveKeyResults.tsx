@@ -29,9 +29,11 @@ const ObjectiveKeyResults:React.FC=()=> {
       {
         field: "rowid",
         headerName: "ردیف",
-        width: 50,
+        width: 75,
+      
         sortable: false,
-        align: "center",
+        align:'center',
+        headerAlign:'center',
         renderCell: (params:any) => {
           const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.id);
          
@@ -39,11 +41,11 @@ const ObjectiveKeyResults:React.FC=()=> {
         },
       },
         { field: 'name',
+         align:'left',
          headerName: 'نام هدف',
-         align:'center',
          headerAlign:'center',
          sortable:false,
-          width: 150 },
+          width: 300 },
       
         { field: 'responsibleName',
          headerName: 'مسئول هدف',
@@ -89,7 +91,7 @@ const ObjectiveKeyResults:React.FC=()=> {
            sortable:false,
            headerAlign:'center',
            align:'center',
-            width: 150,
+            width: 80,
             //  renderCell: ({ value }:any):any => {
             //     return (
                   
@@ -101,23 +103,20 @@ const ObjectiveKeyResults:React.FC=()=> {
             //   } 
             
             },
-            ,
-      
-           { field: 'evaluationPercentage',
-           headerName: 'درصد ارزیابی',
-           align:'center',
-           sortable:false,
-           headerAlign:'center',
-            width: 150 ,
-         
+            { field: 'evaluationPercentage',
+            headerName: 'درصد ارزیابی',
+            align:'center',
+            sortable:false,
+            headerAlign:'center',
+             width:120 ,
           }
-          ,
+            ,
           { field: 'score',
            headerName: 'امتیاز',
            align:'center',
            sortable:false,
            headerAlign:'center',
-            width: 150 ,
+            width: 75 ,
             // renderCell:({value}:any)=>{
             //   return<Box m={3} 
               
@@ -139,24 +138,15 @@ const ObjectiveKeyResults:React.FC=()=> {
       ];
 
       const keyResultColumn: any = [
-        // {
-        //   field: "rowid",
-        //   headerName: "ردیف",
-        //   width: 70,
-        //   sortable: false,
-        //   align: "center",
-        //   renderCell: (params:any) => {
-        //     const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.id)
-        //     return <span>{rowIndex+1}</span> || 1
-        //   },
-        // }
-        // ,
+     
         { field: 'name',
          headerName: 'شرح نتیجه کلیدی',
-         align:'right',
+         align:'left',
          headerAlign:'center',
          sortable:false,
-          minWidth: 250 },
+          minWidth: 350 ,
+        fontsize:'14px',
+        },
       
         { field: 'okrStateName',
          headerName: 'وضعیت',
@@ -187,32 +177,34 @@ const ObjectiveKeyResults:React.FC=()=> {
           align:'center',
           sortable:false,
           headerAlign:'center',
-           width: 100 },
+           width: 180 },
           //  
           { field:'currentState',
           headerName: 'وضعیت فعلی',
           sortable:false,
           headerAlign:'center',
           align:'center',
-           width: 150 },
-      
-           { field: 'rate',
-           headerName: 'درصدارزیابی',
-           sortable:false,
-           headerAlign:'center',
-           align:'center',
-            width: 150 },
-            ,
-      
-           { field: 'score',
-           headerName: 'امتیاز',
-           align:'center',
-           sortable:false,
-           headerAlign:'center',
-           width: 100 ,
-    
-          }
-          ,
+           width: 150 ,
+           renderCell:({value}:any)=>{
+            return<Box m={3} 
+            
+            borderRadius={2} 
+            width={'100%'} 
+            display={'flex'} 
+            justifyContent={'center'} 
+            alignItems={'center'} 
+            height={'75%'}   
+            bgcolor={value==='در مسیر مناسب'?'#D5F7D4':value==='نیازمند توجه'?'#FFEBEF':'#F0F1F2'}  >
+      {/* grade == "A" ? "Superb": grade == "B" ? "Best": grade == "C" ? "Good": "Fair"; */}
+              <Typography px={8} color={value==='نیازمند توجه'?'#F95700':value==='خارج از مسیر مناسب'?'#CC0030':'black'} >
+              {value}
+              </Typography>
+            </Box>
+                } 
+          
+          
+          },
+           ,
       
            { field: '-',
            headerName: 'وضعیت آتی',
@@ -222,6 +214,16 @@ const ObjectiveKeyResults:React.FC=()=> {
            width: 100 ,
     
           }
+          ,
+           { field: 'score',
+           headerName: 'امتیاز',
+           align:'center',
+           sortable:false,
+           headerAlign:'center',
+           width: 150 ,
+    
+          }
+         
       ];
 
 // وضعیت آتی
@@ -233,7 +235,7 @@ const ObjectiveKeyResults:React.FC=()=> {
       }, [objectivee])
       
       const setKeysResultsList=():any=>{
-        console.log(objectivee)
+        // console.log(objectivee)
         let targetObjective=objectivies?.find((objective:any)=>objective.id===objectivee?.id);
         let keyrs=targetObjective?.keyResultCheckingMeetingQueryResultDto;
         setKeyR(keyrs)
@@ -283,7 +285,7 @@ const ObjectiveKeyResults:React.FC=()=> {
           data={keyR || []}
           columns={keyResultColumn}
           initialOnRowClick={()=>{}}   
-          hiefooter={true}       
+          hideFooter={true}  
           selectionModel={[]}
           />
            </Grid>

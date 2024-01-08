@@ -15,12 +15,15 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
     {
       mutationFn: (data:any) => login(data),
       onSuccess: (data) => {
-        // console.log(data.data.data);
-        loginSuccess()
-        console.log(data.data)
+        console.log(data.data.isSuccess);
+        let isSuccess=data.data.isSuccess
+        if (isSuccess) {
+          loginSuccess()
+        }
+        // console.log(data.data)
         // console.log(data.data.data)
         let userData=data?.data?.data;
-        console.log(userData)
+        // console.log(userData)
         // console.log(userData)
         dispatch(setUserDataR(userData))
         localStorage.setItem('accessToken',userData?.accessToken);
@@ -43,7 +46,7 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
   const useGetPriodById=(id:string|null)=>{
     const dispatch=useDispatch();
     const navigate=useNavigate();
-    console.log(id)
+    // console.log(id)
     return useQuery(['getPeriodById',id],getPriodById,{
    enabled:!!id,
    cacheTime:Infinity,

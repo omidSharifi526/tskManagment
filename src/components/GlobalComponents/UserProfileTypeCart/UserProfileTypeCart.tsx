@@ -3,23 +3,27 @@ import {Box, Typography,Grid} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 import {useGetAllMeetings} from '../../../scenes/Meeting/Hooks/index';
-import{setProfileTenantIdR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice'
+import{setProfileTenantIdR,setProfileNameR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice'
 import { useDispatch } from 'react-redux';
 
 
 export const UserProfileTypeCart = (props:any) => {
+  
   const dispatch=useDispatch();
   const [meetinsIds,setMeetingsIds]=useState<any>(null)
   // const{data:meetingData}=useGetAllMeetings(meetinsIds);
   let{setTenantId}=props
   const navigate=useNavigate();
-  let{item}=props;
+  let{item,tenantName}=props;
+  console.log(item)
 
 const handleClickCart=()=>{
-  console.log(item.tenantId)
+  // console.log(item.tenantId)
   setTenantId(item.tenantId);
-  dispatch(setProfileTenantIdR(item.tenantId))
-
+  console.log('hi from cartttttt')
+  dispatch(setProfileTenantIdR(item))
+  // dispatch()
+  
   // setMeetingsIds({tenantId:item.tenantId,priodId:props.priodsIds.priodId})
 
 
@@ -54,7 +58,7 @@ useEffect(() => {
     <Box   >
  <Typography color={'black'} fontWeight={600} variant='caption'  >
     {item.tenantName}
-    </Typography>
+ </Typography>
  </Box>
     </Box>
     </Box>

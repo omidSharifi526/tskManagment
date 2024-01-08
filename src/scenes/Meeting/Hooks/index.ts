@@ -22,7 +22,7 @@ const useGetAllMeetings=(meetIds:any|null)=>{
         cacheTime:Infinity,
         enabled:!!meetIds.priodId,
         onSuccess:(data)=>{
-        console.log(data)
+        // console.log(data)
         }
         ,
         onError:(err)=>{
@@ -137,12 +137,12 @@ onSuccess:(data:any)=>{
 }
 ,
 onError:(er)=>{
-console.log(er)
+// console.log(er)
 getDetFailed()
 }
 ,
 select:(data)=>{
- console.log(data)
+//  console.log(data)
  let teamData=data?.data?.data;
     console.log(teamData)
     dispatch(setTeamsDataR(teamData));
@@ -150,7 +150,7 @@ select:(data)=>{
 })
 }
 
-const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(id:String)=>{
+const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(getObjectiveSuccess:any,getObjectiveError:any,id:String)=>{
     console.log(id)
     const dispatch=useDispatch();
     return useQuery(['getWebObjectiveDetailsCheckinMeetingByTeamId',id]
@@ -162,12 +162,17 @@ const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(id:String)=>{
         let rawData=data?.data?.data
         console.log(rawData)
         dispatch(setObjectivieR(rawData))
+        getObjectiveSuccess()
+        
     // console.log(data)
     }
     ,
-    onError:(err)=>[
-     console.log(err)
-    ]
+    onError:(err)=>{
+        console.log(err)
+     
+     getObjectiveError()
+    
+     }
     })
 }
 

@@ -46,7 +46,7 @@ useEffect(() => {
     }
   return (
    
-    <Grid item xs={11} md={12} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >
+    <Grid item xs={11} md={12} minHeight={'100vh'} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >
    <Grid container  >
    <Grid item xs={12}  >
    <Box width={'100%'}  py={2}  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >

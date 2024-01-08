@@ -42,7 +42,7 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
 
     const LoginMeeting=()=>{   
       setTenantId(info.id); 
-      console.log(info.tenantId) // info.id
+      // console.log(info.tenantId)
       // console.log(info)
     }
 
@@ -157,13 +157,15 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
         <Typography color={'GrayText'} variant='body2' sx={{fontWeight:600}} >ورود به جلسه</Typography>
       </ListItem> */}
 
-    <Box display={'flex'} justifyContent={'space-between'} px={3}  mt={1}  >
+    <Box display={'flex'} justifyContent={'space-between'} px={1}  mt={1}  >
    <Box>
     <ProgressMeeting prog={info?.evaluationPercentage} />
    </Box>
 
-  <Box>
-  <Button onClick={()=>{
+  <Box >
+  <Button 
+  variant='outlined'
+  onClick={()=>{
         LoginMeeting()
       }}  >
       ورود به جلسه

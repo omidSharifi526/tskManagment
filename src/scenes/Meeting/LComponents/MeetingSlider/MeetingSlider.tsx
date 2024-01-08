@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useLayoutEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {setLoadingR} from '../../MeetingsSlice/MeetingsSlice'
 import 'swiper/swiper-bundle.css';
@@ -14,11 +14,14 @@ SwiperCore.use([Navigation]);
 
 
 const MeetingSlider = () => {
+  const priods=useSelector((state:any)=>state.meetings.periodList);
   const dispatch=useDispatch();
+  const[currentPriod,setCurrentPriod]=useState<any>(priods?.map((e:any) => e.isCurrent).indexOf(true));
+
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
   // console.log(profileTenantId)
   const [priodIds,setPriodIds]=useState({tenantId:profileTenantId,priodId:'8f4a58ba-ae5f-4c54-89a6-ac643f5ced68'});
-  const priods=useSelector((state:any)=>state.meetings.periodList);
+
   const{isFetched,isLoading}=useGetAllMeetings(priodIds);
 
 
@@ -30,7 +33,10 @@ const MeetingSlider = () => {
   } else {
     dispatch(setLoadingR(false))
   } 
-  }, [isLoading,isFetched])
+  }, [isLoading,isFetched]);
+
+
+  
   
 
 
@@ -52,19 +58,19 @@ const MeetingSlider = () => {
     </Typography>
    </Box>
      <Swiper
-     initialSlide={2}
+     initialSlide={currentPriod}
      style={{textAlign:'center',fontSize:'2rem'}}
       spaceBetween={30}
       slidesPerView={1}
       navigation
       onRealIndexChange={()=>{
-        console.log('hhhhi')
+        // console.log('hhhhi')
       }}
       // onSlideChange={(swiper) => {
       // console.log(swiper)
       // }}
       onSwiper={(swiper) => {
-        console.log(swiper.realIndex)
+        // console.log(swiper.realIndex)
       }}
       onSlideChange={(swiper) => handleSlideChange(swiper)}
     >

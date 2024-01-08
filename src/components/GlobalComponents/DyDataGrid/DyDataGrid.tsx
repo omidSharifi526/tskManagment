@@ -22,6 +22,7 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
     
    <Grid  width={'100%'} >
    <DataGrid 
+   rowHeight={40}
       sx={{
         cursor:'pointer',
         border:0,
@@ -30,10 +31,11 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
           color: 'white',
           borderRadius:4,
           cursor:'pointer',
-          border:0
-          // Add other global styles for the Data Grid root
-     
-        // Add more styles for different components as needed
+          border:0,
+          '& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell': {
+            fontSize: '10px', // Adjust the font size as needed
+          },
+        
       },
       "& .MuiDataGrid-columnHeaders": {
         width: "100%",
@@ -55,6 +57,8 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
     // disableColumnMenu
       rows={data?data:[]} 
       columns={columns} 
+      disableColumnMenu
+      disableColumnFilter
       // sx={{my:2}}
       onRowClick={(param)=>{
         initOnRowClick(param.row)
@@ -62,6 +66,7 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
         // setObjectiveId(param.row.id)
       }}
       />
+      
    </Grid>
 
   

@@ -6,6 +6,7 @@ const theme = createTheme({
   
   typography:{
     fontFamily:'yekan !important  ',
+    fontSize:12
 
   },
 },faIR);

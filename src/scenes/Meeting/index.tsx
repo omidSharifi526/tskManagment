@@ -21,13 +21,13 @@ const Meeting :React.FC=function(){
 // console.log(meetingData)
 
   useEffect(() => {
-   console.log(isLoading)
+  //  console.log(isLoading)
   //   // setUserTenants(meetingData)
   //  setLoadinFlag(true)
   //  setTimeout(() => {
   //   setLoadinFlag(false)
   //  }, 2);
-  console.log(meetingsDataa)
+  // console.log(meetingsDataa)
   setLoadinFlag(true)
   }, [meetingsDataa])
   

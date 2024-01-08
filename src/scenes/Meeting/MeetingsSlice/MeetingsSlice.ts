@@ -8,7 +8,9 @@ interface LoginState {
 
 }
 type meetingsStateType = {
+
   profileTenantId:string,
+  profileName:string,
     periodList: any[],
     meetingsList:any[],
     teamsData:any[],
@@ -23,6 +25,7 @@ type meetingsStateType = {
 
 const initialState:meetingsStateType = {
 profileTenantId:'',
+profileName:'',
 periodList:[],
 meetingsList:[],
 teamsData:[],
@@ -35,13 +38,14 @@ loading:false
 
 const setPriodList=(state:any,action:PayloadAction<any>)=>{
     let {payload}=action
-console.log(payload);
+// console.log(payload);
 state.periodList=payload;
 }
 
 const setProfileTenantId=(state:any,action:PayloadAction<any>)=>{
   let {payload}=action
-state.profileTenantId=payload;
+state.profileTenantId=payload.tenantId;
+state.profileName=payload.tenantName;
 // console.log('ihihhihi')
 }
 
@@ -74,6 +78,16 @@ const setKeyResults=(state:any,action:PayloadAction<any>)=>{
   state.keyResults=payload;
 }
 
+const resetRValues=(state:any)=>{
+state.teamInfo={};
+state.objectivie=[]
+}
+
+const setProfileName=(state:any,action:PayloadAction<any>)=>{
+  let{payload}=action;
+  console.log(payload)
+}
+
 
 
 
@@ -84,11 +98,13 @@ export const meetingsSlice = createSlice({
   reducers: {
     setPriodList,
     setProfileTenantId,
+    setProfileName,
     setMeetingsList,
     setLoading,
     setTeamsData,
     setObjectivie,
-    setKeyResults
+    setKeyResults,
+    resetRValues
   
    
   },
@@ -97,11 +113,13 @@ export const meetingsSlice = createSlice({
 export const {
     setPriodList:setPriodListR,
     setProfileTenantId:setProfileTenantIdR,
+    setProfileName:setProfileNameR,
     setMeetingsList:setMeetingsListR,
     setLoading:setLoadingR,
     setTeamsData:setTeamsDataR,
     setObjectivie:setObjectivieR,
-    setKeyResults:setKeyResultsR
+    setKeyResults:setKeyResultsR,
+    resetRValues:resetRValuesR
  } = meetingsSlice.actions
 
 
