@@ -18,6 +18,7 @@ type meetingsStateType = {
     objectivie:any[],
     keyResults:any[],
     loading:boolean,
+    objUpdated:boolean
     
  
 };
@@ -32,7 +33,8 @@ teamsData:[],
 teamInfo:{},
 objectivie:[],
 keyResults:[],
-loading:false
+loading:false,
+objUpdated:false
 }
 
 
@@ -68,6 +70,8 @@ state.teamInfo=payload;
 
 
 
+
+
 const setObjectivie=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
   state.objectivie=payload;
@@ -88,6 +92,14 @@ const setProfileName=(state:any,action:PayloadAction<any>)=>{
   console.log(payload)
 }
 
+const updateObj=(state:any)=>{
+state.objUpdated=!state.objUpdated
+}
+
+const resetTeamInfo=(state:any)=>{
+  state.teamInfo={};
+}
+
 
 
 
@@ -104,7 +116,9 @@ export const meetingsSlice = createSlice({
     setTeamsData,
     setObjectivie,
     setKeyResults,
-    resetRValues
+    resetRValues,
+    updateObj,
+    resetTeamInfo
   
    
   },
@@ -119,7 +133,9 @@ export const {
     setTeamsData:setTeamsDataR,
     setObjectivie:setObjectivieR,
     setKeyResults:setKeyResultsR,
-    resetRValues:resetRValuesR
+    resetRValues:resetRValuesR,
+    updateObj:updateObjR,
+    resetTeamInfo:resetTeamInfoR
  } = meetingsSlice.actions
 
 

@@ -46,20 +46,11 @@ useEffect(() => {
     }
   return (
    
-    <Grid item xs={11} md={12} minHeight={'100vh'} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >
+    <Grid py={'1rem'}  item  xs={12} md={12} minHeight={'100vh'} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >
    <Grid container  >
-   <Grid item xs={12}  >
-   <Box width={'100%'}  py={2}  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
-  <Box>
-  <Typography color={'blue'} variant='h5'  >
-  انتخاب اکانت
-  </Typography>
-  </Box>
-
-   </Box>
-   </Grid>
+  
    
-   <Grid item xs={12}  >
+   <Grid item xs={12} >
    <Box mx={'auto'}   >
     <Typography color={'black'} variant='h6' textAlign={'center'}  >لطفا اکانت مورد نظر خود را انتخاب کنید.</Typography>
    </Box>
@@ -92,7 +83,7 @@ userTenantsData && userTenantsData?.map((item:any,i:number)=>{
     })
 }
 </Grid>
-<Grid item xs={9} px={2} mx={'auto'} md={3} borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}  >
+{/* <Grid item xs={9} px={2} mx={'auto'} md={3} borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}  >
 
     <Typography py={1} color={'black'} fontWeight={600} variant='caption'  >
     افزودن اکانت
@@ -101,7 +92,7 @@ userTenantsData && userTenantsData?.map((item:any,i:number)=>{
     <IconButton size='medium' sx={{boxShadow:'0px 3px 5px  black'}}  >
      <AddIcon/>
     </IconButton>
-</Grid>
+</Grid> */}
 </Grid>
 
 

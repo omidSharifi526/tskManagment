@@ -155,7 +155,7 @@ const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(getObjectiveSuccess:any,g
     const dispatch=useDispatch();
     return useQuery(['getWebObjectiveDetailsCheckinMeetingByTeamId',id]
     ,getWebObjectiveDetailsCheckinMeetingByTeamId,{
-    cacheTime:Infinity,
+    // cacheTime:Infinity,
     refetchOnWindowFocus:false,
     enabled:!!id,
     onSuccess:(data)=>{

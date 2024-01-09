@@ -11,6 +11,8 @@ const ObjectiveKeyResults:React.FC=()=> {
   // const keyResults:any=useSelector((state:any)=>state.meetings.teamInfo);
   const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
   const objectivies=useSelector((state:any)=>state.meetings.objectivie);
+  const objUpdated=useSelector((state:any)=>state.meetings.objUpdated);
+
     const[objectivee,setObjectivee]=useState<any>(objectivies?.length>4?'fb7cc4ea-7162-4916-9aa8-834b14308e10':null);
     // const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
     const[keyR,setKeyR]=useState<any>([])
@@ -21,6 +23,13 @@ const ObjectiveKeyResults:React.FC=()=> {
     page: 1,
     searchTerm: "",
   });
+  useEffect(() => {
+    
+  setKeyR([])
+  setObjectivee({})
+  
+  }, [objUpdated])
+  
 
   
   const [counter, setCounter] = useState(1); // Initialize the counter for row index
@@ -230,11 +239,12 @@ const ObjectiveKeyResults:React.FC=()=> {
 
       useEffect(() => {
      
-      
+        
         setKeysResultsList()
       }, [objectivee])
       
       const setKeysResultsList=():any=>{
+        // setKeyR([])
         // console.log(objectivee)
         let targetObjective=objectivies?.find((objective:any)=>objective.id===objectivee?.id);
         let keyrs=targetObjective?.keyResultCheckingMeetingQueryResultDto;
@@ -244,7 +254,7 @@ const ObjectiveKeyResults:React.FC=()=> {
 
       const renderContents=()=>{
 
-      if (!objectivee) {
+      if (!keyR) {
         return <Box 
         width={'100%'} 
         height={'100%'} 
