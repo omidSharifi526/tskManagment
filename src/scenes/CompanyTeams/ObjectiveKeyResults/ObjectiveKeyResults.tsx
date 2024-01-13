@@ -5,7 +5,8 @@ import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGr
 import { useSelector } from 'react-redux';
 import {useGetAllKeyResultByObjectiveId} from '../../Meeting/Hooks/index';
 import { DataGrid, GridRowsProp, GridColDef,faIR } from '@mui/x-data-grid';
-import {EmptyDataIcon} from '../StataicData/index'
+import {EmptyDataIcon} from '../StataicData/index';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ObjectiveKeyResults:React.FC=()=> {
   // const keyResults:any=useSelector((state:any)=>state.meetings.teamInfo);
@@ -153,7 +154,7 @@ const ObjectiveKeyResults:React.FC=()=> {
          align:'left',
          headerAlign:'center',
          sortable:false,
-          minWidth: 350 ,
+          minWidth: 300 ,
         fontsize:'14px',
         },
       
@@ -186,7 +187,7 @@ const ObjectiveKeyResults:React.FC=()=> {
           align:'center',
           sortable:false,
           headerAlign:'center',
-           width: 180 },
+           width: 120 },
           //  
           { field:'currentState',
           headerName: 'وضعیت فعلی',
@@ -215,12 +216,12 @@ const ObjectiveKeyResults:React.FC=()=> {
           },
            ,
       
-           { field: '-',
+           { field: 'nextState',
            headerName: 'وضعیت آتی',
            align:'center',
            sortable:false,
            headerAlign:'center',
-           width: 100 ,
+           width:250 ,
     
           }
           ,
@@ -248,6 +249,7 @@ const ObjectiveKeyResults:React.FC=()=> {
         // console.log(objectivee)
         let targetObjective=objectivies?.find((objective:any)=>objective.id===objectivee?.id);
         let keyrs=targetObjective?.keyResultCheckingMeetingQueryResultDto;
+        console.log(keyR)
         setKeyR(keyrs)
       }
 
@@ -371,14 +373,16 @@ const ObjectiveKeyResults:React.FC=()=> {
        <Typography px={3} py={1} textAlign={'left'} fontSize={'16px'} color={'blue'}  >
        لیست اهداف
        </Typography>
-       <DyDataGrid  
-      initialOnRowClick={setObjectivee}
-      data={objectivies} 
-      columns={objectiveColumns} 
-      hideFooter={true}
-      selectionModel={[]}
+ <DyDataGrid  
+   initialOnRowClick={setObjectivee}
+   data={objectivies} 
+   columns={objectiveColumns} 
+   hideFooter={true}
+   selectionModel={[]}
+   
+    />
+ 
       
-       />
        </Grid>
     </Box>
 

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { DataGrid, GridRowsProp, GridColDef,faIR } from '@mui/x-data-grid';
+import { DataGrid, GridRowsProp, GridColDef,faIR,GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Box,Grid } from '@mui/material';
+import './style.css'
 
 
 
@@ -22,6 +23,9 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
     
    <Grid  width={'100%'} >
    <DataGrid 
+  // className='MuiDataGrid-toolbarContainer'+/
+   slots={{ toolbar:GridToolbar}}
+//  filterModel={<h1>hi</h1>}
    rowHeight={40}
       sx={{
         cursor:'pointer',
@@ -35,6 +39,10 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
           '& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell': {
             fontSize: '10px', // Adjust the font size as needed
           },
+          '& .rtl-128fb87-MuiDataGrid-toolbarContainer':{
+            alignSelf:'end',
+            pb:2
+          }
         
       },
       "& .MuiDataGrid-columnHeaders": {
@@ -65,6 +73,8 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
         // console.log(param.row.id)
         // setObjectiveId(param.row.id)
       }}
+
+      
       />
       
    </Grid>

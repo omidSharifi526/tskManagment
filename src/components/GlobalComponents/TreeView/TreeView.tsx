@@ -72,9 +72,9 @@ if (TeamWithoutParent===null) {
 
 useEffect(() => {
   
-  setNodeId(companys[0]?.id)
+  setNodeId(teamsData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos[0]?.id)
 
-}, [nodeId])
+}, [])
 
 
 
@@ -112,7 +112,7 @@ const renderContentUi=()=>{
     case 'companyAndTeams':
       return  <TreeView 
     
-    
+      defaultExpanded={['0']}
       aria-label="file system navigator"
       defaultCollapseIcon={<ArrowDropDownIcon fontSize='large' />}
       defaultExpandIcon={<ArrowLeftIcon fontSize='large' />}
@@ -152,7 +152,7 @@ const renderContentUi=()=>{
       
       break;
   
-    default:
+     case 'teams' :
       return  <TreeView 
       // onNodeToggle={handleNodeToggle}
       defaultExpanded={['0']}
