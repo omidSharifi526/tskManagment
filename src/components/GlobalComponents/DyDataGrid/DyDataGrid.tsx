@@ -5,31 +5,45 @@ import { Box,Grid } from '@mui/material';
 import './style.css'
 
 
-
-
-// تعداد اهداف
-// امتیاز
-export default function DyDataGrid({data,columns,hideFooter,selectionModel,initialOnRowClick}:any) {
+export default function DyDataGrid(
+  {data,
+    columns,
+    hideFooter,
+    selectionModel
+    ,initialOnRowClick,
+    rowSelection,
+    rowHeight
+  }:any) {
     
       // console.log(data)
+      // const getRowId(row)=> {
+      //   return row.internalId;
+      // }
+      const getRowId=(row:any,i:number)=>{
+        return i
+      }
 
       const initOnRowClick=(row:any)=>{
        console.log(row)
        initialOnRowClick(row)
       //  setObjectiveId(id)
       }
+     
   return (
  
     
    <Grid  width={'100%'} >
    <DataGrid 
-  // className='MuiDataGrid-toolbarContainer'+/
+    // pageSizeOptions={[10]}
    slots={{ toolbar:GridToolbar}}
-//  filterModel={<h1>hi</h1>}
+
    rowHeight={40}
       sx={{
         cursor:'pointer',
         border:0,
+        '& .MuiDataGrid-columnSeparator': {
+          display: 'none!important',
+        },
         '& .MuiDataGrid-root': {
           backgroundColor: '#00387C !important',
           color: 'white',
@@ -62,19 +76,17 @@ export default function DyDataGrid({data,columns,hideFooter,selectionModel,initi
        autoHeight
        localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
        rowSelectionModel={selectionModel}
-    // disableColumnMenu
       rows={data?data:[]} 
       columns={columns} 
       disableColumnMenu
       disableColumnFilter
-      // sx={{my:2}}
+      checkboxSelection={rowSelection?rowSelection:false}
+      rowSelection={true}
       onRowClick={(param)=>{
         initOnRowClick(param.row)
-        // console.log(param.row.id)
-        // setObjectiveId(param.row.id)
       }}
-
       
+     
       />
       
    </Grid>

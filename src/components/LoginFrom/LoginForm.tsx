@@ -139,16 +139,17 @@ const LoginForm = ({setContentState}:any) => {
 
                 </Grid> 
 
-          
+          {/* 00387C */}
               
              <Grid item xs={12} >
             <Box px={3} py={5} >
             <DyButton 
              caption={'ورود'}
-             color={'primary'} 
+             color={'#00387C'} 
              onClick={loginHandler}
              disbled={userInfoState.phoneNumber.length<11}
              variant={'contained'}
+             bgColor={'#00387C'}
             //  type={'submit'}
              />
             </Box>

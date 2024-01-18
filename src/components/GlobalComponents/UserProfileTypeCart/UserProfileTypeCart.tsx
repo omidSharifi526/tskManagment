@@ -15,7 +15,7 @@ export const UserProfileTypeCart = (props:any) => {
   let{setTenantId}=props
   const navigate=useNavigate();
   let{item,tenantName}=props;
-  console.log(item)
+  // console.log(item)
 
 const handleClickCart=()=>{
   // console.log(item.tenantId)

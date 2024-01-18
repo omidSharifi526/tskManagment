@@ -15,15 +15,21 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
-import CropFreeIcon from '@mui/icons-material/CropFree';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+// import ListItemText from '@mui/material/ListItemText';
+
 import { Link, Outlet } from 'react-router-dom';
 import {SideBarLogo,OKRtext} from './StaticsData/index';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import {ReactComponent as BaseInfoIcon} from './StaticsData/Icons/BaseInfoIcon.svg';
+import {ReactComponent as MeetingIcon} from './StaticsData/Icons/MeetingIcon.svg';
+
+import Collapse from '@mui/material/Collapse';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import SendIcon from '@mui/icons-material/Send';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import Avatar from '@mui/material/Avatar';
 import Useimg from './StaticsData/SVG/3.jpg';
@@ -79,6 +85,7 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
@@ -122,7 +129,7 @@ const itemsList = [
   // },
   {
     text: "جلسات",
-    icon: <GridViewIcon  />,
+    icon: <MeetingIcon  />,
     to: "/dashboard/meetings" 
   }
   // ,
@@ -134,20 +141,40 @@ const itemsList = [
 ]
 
 export default function MiniDrawer() {
+  const userPhone=useSelector((state:any)=>state.loign.userPhoneNumber);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+const handleListItemClick = (
+  event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  index: number,
+) => {
+  setSelectedIndex(index);
+};
+
+
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = (event:any) => {
+    handleListItemClick(event, 0)
+    setOpenItem(!openItem)
+  };
   // const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
   const tenantName=useSelector((state:any)=>state.meetings.profileName);
   const dispatch=useDispatch()
   
   const newAuth=useAuth()
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [openItem, setOpenItem] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
+
   };
 
   const handleDrawerClose = () => {
+    console.log('run')
     setOpen(false);
+    setOpenItem(false)
   };
 
   var date = new DateObject({ calendar: persian, locale: persian_fa });
@@ -217,7 +244,7 @@ const initiaLogOut=()=>{
 
       </AppBar>
 
-
+{/*  variant="persistent" */}
       <Drawer variant="permanent" open={open} >
       
         <DrawerHeader sx={{backgroundColor:'#00387C'}}>
@@ -233,7 +260,11 @@ const initiaLogOut=()=>{
         <Divider />
       
        
-        <List sx={{backgroundColor:'#00387C',height:'100%'}}>
+        <List 
+        component={'nav'} 
+        // subheader={}
+        sx={{backgroundColor:'#00387C',height:'100%'}}
+        >
           {itemsList.map((item, index) => {
             const { text, } = item;
             return(
@@ -245,6 +276,47 @@ const initiaLogOut=()=>{
 
             )
           })}
+
+
+{
+  userPhone==='09121223615' && <List
+  sx={{ width: '100%', maxWidth: 360, }}
+  component="nav"
+  aria-labelledby="nested-list-subheader"
+>
+
+  
+  <ListItemButton onClick={(e:any)=>{
+    handleClick(e)
+  }}  selected={selectedIndex === 0} sx={{color:'white',fontWeight:600}}  >
+    <ListItemIcon>
+    <BaseInfoIcon/>
+    </ListItemIcon>
+    <Typography variant='body2' pr={4}  sx={{color:'white',fontWeight:600}}   >اطلاعات پایه</Typography> 
+    {openItem ? <ExpandLess /> : <ExpandMore />}
+  </ListItemButton>
+  <Collapse in={openItem} timeout="auto" unmountOnExit>
+    <List component="div" disablePadding>
+      <ListItemButton selected={selectedIndex === 1} onClick={(event:any)=>{
+          handleListItemClick(event, 1)
+      }} sx={{ pl: 4,color:'white' }} component={Link} to={'/dashboard/tenants'} >
+      <Typography variant='body2' pr={8}  sx={{color:'white',fontWeight:600}}>لیست تننت ها</Typography> 
+      
+      </ListItemButton>
+    </List>
+  </Collapse>
+
+
+
+
+  
+  
+</List>
+}
+
+
+
+
              <ListItem onClick={()=>{
               initiaLogOut()
             
@@ -255,7 +327,7 @@ const initiaLogOut=()=>{
 
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
       {/* <Box>
         <MeetingSlider/>
         </Box> */}

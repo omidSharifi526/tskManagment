@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     setAuth(null);
-    localStorage.removeItem('accessToken'); // Remove auth data from Local Storage on logout
+    localStorage.removeItem('accessToken'); 
   };
 
   return (

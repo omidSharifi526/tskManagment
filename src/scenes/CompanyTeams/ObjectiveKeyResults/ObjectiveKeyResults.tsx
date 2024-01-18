@@ -1,12 +1,18 @@
-import React,{useState,useEffect} from 'react';
-import{Grid,Box,Typography} from '@mui/material';
+import React,{useState,useEffect,useMemo} from 'react';
+import{Grid,Box,Typography, IconButton} from '@mui/material';
+import ModalLyt from '../../../components/Layouts/ModalLyt/ModalLyt';
+
 // import { v4 as uuidv4 } from 'uuid';
 import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
 import { useSelector } from 'react-redux';
 import {useGetAllKeyResultByObjectiveId} from '../../Meeting/Hooks/index';
-import { DataGrid, GridRowsProp, GridColDef,faIR } from '@mui/x-data-grid';
+import { DataGrid, GridRowsProp, GridColDef,faIR,GridRenderCellParams  } from '@mui/x-data-grid';
 import {EmptyDataIcon} from '../StataicData/index';
 import CircularProgress from '@mui/material/CircularProgress';
+import {ReactComponent as SmileSt} from '../../../Asset/Svgs/Emojys/smile 1.svg';
+import {ReactComponent as NeutralSt} from '../../../Asset/Svgs/Emojys/neutral 2.svg';
+import {ReactComponent as SadSt} from '../../../Asset/Svgs/Emojys/sad 1.svg';
+import {ReactComponent as InfoIcon} from '../StataicData/Icons/InfoIcon.svg';
 
 const ObjectiveKeyResults:React.FC=()=> {
   // const keyResults:any=useSelector((state:any)=>state.meetings.teamInfo);
@@ -16,7 +22,8 @@ const ObjectiveKeyResults:React.FC=()=> {
 
     const[objectivee,setObjectivee]=useState<any>(objectivies?.length>4?'fb7cc4ea-7162-4916-9aa8-834b14308e10':null);
     // const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
-    const[keyR,setKeyR]=useState<any>([])
+    const[keyR,setKeyR]=useState<any>([]);
+    const[showModal,setShowModal]=useState(false)
 
     
   const [getCustomerBody, setGetCustomerBody] = useState<any>({
@@ -34,8 +41,93 @@ const ObjectiveKeyResults:React.FC=()=> {
 
   
   const [counter, setCounter] = useState(1); // Initialize the counter for row index
+     
 
-    const objectiveColumns: any = [
+// const CylinderColumn = useMemo(()=>
+//       [
+//         {
+//           field:'index',
+//           minWidth:100,
+//           flex:1,
+//           align:'center',
+//           headerName:'',
+//           sortable:false,
+//           menubar:false,
+//           renderCell: (params)=>{
+        
+//             return (
+//             // radioChecked[0] === params.id
+//               <Radio checked={machineInfo.cylinderInfoId==params.id} value={params.id}  />
+//             )
+//           },
+          
+//         }
+//         ,
+        
+//         {  
+//             field:'aroundCylinder',
+//             minWidth:100,
+//             flex:1,
+//             align:'center',
+//             headerName:'پیرامون سیلندر',
+//             sortable:false,
+//             menubar:false,
+//             editable:true,
+//         }
+//         ,
+//         {  
+//             field:'numberOfCylinders',
+//             minWidth:100,
+//             flex:1,
+//             align:'center',
+//             headerName:'تعداد سیلندر',
+//             sortable:false,
+//             menubar:false,
+//             editable:true
+//         }
+//         ,
+//         {
+//             field:'gearStep',
+//             minWidth:100,
+//             flex:1,
+//             align:'center',
+//             headerName:'گام دنده',
+//             sortable:false,
+//             menubar:false,
+//             editable:true
+           
+            
+//         }
+       
+        
+//         ,
+//         {  
+//             field:'reactionary',
+//             minWidth:100,
+//             flex:1,
+//             align:'center',
+//             headerName:'ارتجاعی',
+//             sortable:false,
+//             menubar:false,
+//             editable:true
+//         }
+        
+       
+  
+           
+    
+        
+//       ],[])
+  
+const initGetKRinfo=()=>{
+  setShowModal(true)
+  console.log('getReport')
+}
+
+
+
+    const objectiveColumns: any = useMemo(()=>
+    [
       {
         field: "rowid",
         headerName: "ردیف",
@@ -44,18 +136,24 @@ const ObjectiveKeyResults:React.FC=()=> {
         sortable: false,
         align:'center',
         headerAlign:'center',
-        renderCell: (params:any) => {
-          const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.id);
-         
-          return <span>{rowIndex+1}</span>;
-        },
+        renderCell: (params:any) => params.api.getAllRowIds().indexOf(params.id)+1
       },
         { field: 'name',
          align:'left',
          headerName: 'نام هدف',
          headerAlign:'center',
          sortable:false,
-          width: 300 },
+         wrap:'wrap',
+        //  over
+          width: 290
+          ,
+        //   renderCell:(params:any)=>{
+        //    return  <div style={{ whiteSpace: 'normal', wordWrap: 'break-word', maxWidth: '100%',margin:'-10px 1px' }}>
+        //    {params.value}
+        //  </div>
+        //   }
+        
+        },
       
         { field: 'responsibleName',
          headerName: 'مسئول هدف',
@@ -127,34 +225,65 @@ const ObjectiveKeyResults:React.FC=()=> {
            sortable:false,
            headerAlign:'center',
             width: 75 ,
-            // renderCell:({value}:any)=>{
-            //   return<Box m={3} 
+            renderCell:(par:any)=>{
+              let value:number=par?.row?.score;
+         
+               console.log(par.row.score)
+               let color='';
+               let fColor=''
+               switch (true) {
+                case value>70:
+                  color='#D5F7D4';
+                  fColor='#125610'
+                  break;
+                  case value<70 &&  value>30:
+                  color='#FFF8D0';
+                  fColor='#6B6440'
+                  break
+                default:
+                  color='#FFEEE5'
+                  fColor='#993600'
+                  break;
+               }
+                return <Box m={3} 
+                borderRadius={2} 
+                width={'100%'} 
+                display={'flex'} 
+                justifyContent={'center'} 
+                alignItems={'center'} 
+                height={'75%'}   
+                bgcolor={color}
+                 >
+          
+                  <Typography px={8} color={fColor} fontWeight={400} >
+                  {value}
+                  </Typography>
+                </Box>
               
-            //   borderRadius={2} 
-            //   width={'100%'} 
-            //   display={'flex'} 
-            //   justifyContent={'center'} 
-            //   alignItems={'center'} 
-            //   height={'75%'}   
-            //   bgcolor={value==='فعال'?'#D5F7D4':'#E5F1FF'}  >
-        
-            //     <Typography px={8}  >
-            //     36
-            //     </Typography>
-            //   </Box>
-            //       }
+             }
          
           }
-      ];
+      ],[]);
 
-      const keyResultColumn: any = [
+      const keyResultColumn: any = useMemo(()=>[
+        {
+          field: "rowid",
+          headerName: "ردیف",
+          width: 75,
+        
+          sortable: false,
+          align:'center',
+          headerAlign:'center',
+          renderCell: (params:any) => params.api.getAllRowIds().indexOf(params.id)+1
+        }
+        ,
      
         { field: 'name',
          headerName: 'شرح نتیجه کلیدی',
          align:'left',
          headerAlign:'center',
          sortable:false,
-          minWidth: 300 ,
+          minWidth: 260 ,
         fontsize:'14px',
         },
       
@@ -183,11 +312,11 @@ const ObjectiveKeyResults:React.FC=()=> {
               },
       
           { field: 'currentValue',
-          headerName: 'مقدار فعلی',
+          headerName: 'مقدار جدید',
           align:'center',
           sortable:false,
           headerAlign:'center',
-           width: 120 },
+           width: 110 },
           //  
           { field:'currentState',
           headerName: 'وضعیت فعلی',
@@ -205,7 +334,7 @@ const ObjectiveKeyResults:React.FC=()=> {
             alignItems={'center'} 
             height={'75%'}   
             bgcolor={value==='در مسیر مناسب'?'#D5F7D4':value==='نیازمند توجه'?'#FFEBEF':'#F0F1F2'}  >
-      {/* grade == "A" ? "Superb": grade == "B" ? "Best": grade == "C" ? "Good": "Fair"; */}
+   
               <Typography px={8} color={value==='نیازمند توجه'?'#F95700':value==='خارج از مسیر مناسب'?'#CC0030':'black'} >
               {value}
               </Typography>
@@ -221,7 +350,28 @@ const ObjectiveKeyResults:React.FC=()=> {
            align:'center',
            sortable:false,
            headerAlign:'center',
-           width:250 ,
+           width:100 ,
+           renderCell:(par:any)=>{
+            // انتظار داریم به نتیجه درست برسیم
+            // با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد
+            let value:string=par?.row?.nextState;
+             switch (value) {
+              case 'انتظار داریم به نتیجه درست برسیم':
+                return <Box sx={{width:'100%',textAlign:'center'}}  ><SmileSt/></Box>
+                break;
+
+                case 'با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد':
+                return <Box sx={{width:'100%',textAlign:'center'}}  ><NeutralSt/></Box>
+                break;
+             
+              default:
+                return <Box sx={{width:'100%',textAlign:'center'}}  ><SadSt/></Box>
+                break;
+             }
+            // console.log(par)
+
+            // return <Box><SmileSt/></Box>
+           }
     
           }
           ,
@@ -231,10 +381,65 @@ const ObjectiveKeyResults:React.FC=()=> {
            sortable:false,
            headerAlign:'center',
            width: 150 ,
+           renderCell:(par:any)=>{
+            let value:string=par?.row?.score.slice(0,par.row.score.length-1);
+            //  console.log(+value)
+             let intVal=+value;
+            //  console.log(intVal)
+             let color='';
+             let fColor=''
+             switch (true) {
+              case intVal>70:
+                color='#D5F7D4';
+                fColor='#125610'
+                break;
+                case intVal<70 &&  intVal>30:
+                color='#FFF8D0';
+                fColor='#6B6440'
+                break
+              default:
+                color='#FFEEE5'
+                fColor='#993600'
+                break;
+             }
+              return <Box m={3} 
+              borderRadius={2} 
+              width={'100%'} 
+              display={'flex'} 
+              justifyContent={'center'} 
+              alignItems={'center'} 
+              height={'75%'}   
+              bgcolor={color}
+               >
+        
+                <Typography px={8} color={fColor} fontWeight={400} >
+                {intVal}
+                </Typography>
+              </Box>
+            
+           }
     
           }
+          // InfoIcon
+          ,
+          { field: '-',
+          headerName: 'اطلاعات',
+          align:'center',
+          headerAlign:'center',
+          sortable:false,
+           minWidth: 100 ,
+           renderCell:()=>{
+            return <Box  p={2} >
+              <IconButton onClick={initGetKRinfo}  >
+                <InfoIcon/>
+              </IconButton>
+            </Box>
+           }
+         },
          
-      ];
+      ],[]);
+
+      
 
 // وضعیت آتی
 
@@ -245,8 +450,6 @@ const ObjectiveKeyResults:React.FC=()=> {
       }, [objectivee])
       
       const setKeysResultsList=():any=>{
-        // setKeyR([])
-        // console.log(objectivee)
         let targetObjective=objectivies?.find((objective:any)=>objective.id===objectivee?.id);
         let keyrs=targetObjective?.keyResultCheckingMeetingQueryResultDto;
         console.log(keyR)
@@ -334,6 +537,7 @@ const ObjectiveKeyResults:React.FC=()=> {
        <Box py={1} my={2} borderRadius={2} boxShadow={2} bgcolor={'white'} >
             <Grid container >
                 <Grid item xs={12} md={3}  >
+               
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
                 <Typography variant='button' px={1}>نام شرکت:</Typography>
                   <Typography  fontWeight={600} fontSize={'14px'}  >{teamInfo?.companyName}</Typography>
@@ -373,7 +577,7 @@ const ObjectiveKeyResults:React.FC=()=> {
        <Typography px={3} py={1} textAlign={'left'} fontSize={'16px'} color={'blue'}  >
        لیست اهداف
        </Typography>
- <DyDataGrid  
+   <DyDataGrid  
    initialOnRowClick={setObjectivee}
    data={objectivies} 
    columns={objectiveColumns} 
@@ -407,6 +611,7 @@ const ObjectiveKeyResults:React.FC=()=> {
 
 
      <Grid item xs={12} minHeight={'78vh'} >
+      
      <Grid container  >
      {
         renderContents()
@@ -416,7 +621,16 @@ const ObjectiveKeyResults:React.FC=()=> {
       
 
 
+
+
+
    </Box>
+   {
+    showModal && 
+      <ModalLyt  showModal={showModal} setShowModal={setShowModal}  >
+      </ModalLyt>
+ 
+   }
 
     
 
