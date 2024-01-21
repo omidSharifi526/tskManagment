@@ -4,24 +4,29 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
+import {Typography,IconButton,Grid} from '@mui/material';
+import Close from '@mui/icons-material/Close';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 800,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+ borderRadius:'10px',
   boxShadow: 24,
-  p: 4,
+  p: 1,
 };
 
-export default function ModalLyt({showModal,setShowModal}:any) {
+export default function ModalLyt({showModal,setShowModal,title,children}:any) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setShowModal(false);
+
+  const initOnClose=()=>{
+    handleClose()
+  }
 
   return (
     <div>
@@ -40,13 +45,25 @@ export default function ModalLyt({showModal,setShowModal}:any) {
         }}
       >
         <Fade in={showModal}>
+      
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+          <Grid container>
+           <Grid item xs={12} >
+            <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
+           <Box>
+            <Typography  color={'#00387C'} variant='body1'  >{title}</Typography>
+           </Box>
+           <Box>
+            <IconButton size={'small'} onClick={initOnClose}><HighlightOffIcon/></IconButton>
+           </Box>
+            </Box>
+           </Grid>
+           <Grid item xs={12}  >
+          {
+            children
+          } 
+           </Grid>
+          </Grid>
           </Box>
         </Fade>
       </Modal>

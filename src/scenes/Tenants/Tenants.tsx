@@ -5,7 +5,17 @@ import {Grid, Box,Typography} from '@mui/material';
 import LyBackdrop from '../../components/Layouts/BackDrop/BackDrop';
 // import ProgressMeeting from '../Meeting/LComponents/ProgressMeeting/ProgressMeeting';
 import CircularProgress from '@mui/material/CircularProgress';
+import Skeleton from '@mui/material/Skeleton';
 const Tenants = () => {
+  // if (loading) {
+  //   return <Box columnGap={4} sx={{ width:'100%',display:'flex',justifyContent:'start',flexWrap:'wrap' }}>
+  //     {
+  //       scletList.map(()=>{
+  //         return <Skeleton sx={{my:2}} variant="rounded" width={200} height={180} />
+  //       })
+  //     }
+  //    </Box>
+  // }
 
   const {data:tenantData,isLoading:tenantsDataLoading,isError:tenantsDataError}=useGetAllTenantsInfo();
   // console.log(tenantData)
@@ -117,7 +127,7 @@ const Tenants = () => {
   ],[]);
   const renderContent=()=>{
     if (tenantsDataLoading) {
-      return <CircularProgress/>
+      return (<Skeleton sx={{my:1,mx:'auto'}} variant="rounded"  width={'90%'} height={'700px'} />)
     }
     else {
       return <>
@@ -135,11 +145,7 @@ const Tenants = () => {
   }
    
 
-  // if (tenantsDataLoading) {
-  //    return <LyBackdrop  visible={tenantsDataLoading}  >
-  //     <CircularProgress sx={{color:'white'}}   />
-  //    </LyBackdrop>
-  // }
+ 
 
 // data,columns,hideFooter,selectionModel,initialOnRowClick
   return (

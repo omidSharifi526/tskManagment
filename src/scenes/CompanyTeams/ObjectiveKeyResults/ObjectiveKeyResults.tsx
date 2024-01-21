@@ -1,6 +1,7 @@
 import React,{useState,useEffect,useMemo} from 'react';
 import{Grid,Box,Typography, IconButton} from '@mui/material';
 import ModalLyt from '../../../components/Layouts/ModalLyt/ModalLyt';
+import KrDetails from '../LComponents/KrDetails/KrDetails';
 
 // import { v4 as uuidv4 } from 'uuid';
 import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
@@ -23,14 +24,19 @@ const ObjectiveKeyResults:React.FC=()=> {
     const[objectivee,setObjectivee]=useState<any>(objectivies?.length>4?'fb7cc4ea-7162-4916-9aa8-834b14308e10':null);
     // const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
     const[keyR,setKeyR]=useState<any>([]);
-    const[showModal,setShowModal]=useState(false)
+    const[showModal,setShowModal]=useState(false);
+    const[krRowData,setKrRowData]=useState(null);
 
+    const[objcSelectionModel,setObjSelectionModel]=useState('')
+    const[krSelectionModel,setKrSelectionModel]=useState('')
     
   const [getCustomerBody, setGetCustomerBody] = useState<any>({
     pageSize: 10,
     page: 1,
     searchTerm: "",
   });
+
+  
   useEffect(() => {
     
   setKeyR([])
@@ -43,85 +49,11 @@ const ObjectiveKeyResults:React.FC=()=> {
   const [counter, setCounter] = useState(1); // Initialize the counter for row index
      
 
-// const CylinderColumn = useMemo(()=>
-//       [
-//         {
-//           field:'index',
-//           minWidth:100,
-//           flex:1,
-//           align:'center',
-//           headerName:'',
-//           sortable:false,
-//           menubar:false,
-//           renderCell: (params)=>{
-        
-//             return (
-//             // radioChecked[0] === params.id
-//               <Radio checked={machineInfo.cylinderInfoId==params.id} value={params.id}  />
-//             )
-//           },
-          
-//         }
-//         ,
-        
-//         {  
-//             field:'aroundCylinder',
-//             minWidth:100,
-//             flex:1,
-//             align:'center',
-//             headerName:'پیرامون سیلندر',
-//             sortable:false,
-//             menubar:false,
-//             editable:true,
-//         }
-//         ,
-//         {  
-//             field:'numberOfCylinders',
-//             minWidth:100,
-//             flex:1,
-//             align:'center',
-//             headerName:'تعداد سیلندر',
-//             sortable:false,
-//             menubar:false,
-//             editable:true
-//         }
-//         ,
-//         {
-//             field:'gearStep',
-//             minWidth:100,
-//             flex:1,
-//             align:'center',
-//             headerName:'گام دنده',
-//             sortable:false,
-//             menubar:false,
-//             editable:true
-           
-            
-//         }
-       
-        
-//         ,
-//         {  
-//             field:'reactionary',
-//             minWidth:100,
-//             flex:1,
-//             align:'center',
-//             headerName:'ارتجاعی',
-//             sortable:false,
-//             menubar:false,
-//             editable:true
-//         }
-        
-       
-  
-           
-    
-        
-//       ],[])
+
   
 const initGetKRinfo=()=>{
   setShowModal(true)
-  console.log('getReport')
+  // console.log('getReport')
 }
 
 
@@ -147,12 +79,6 @@ const initGetKRinfo=()=>{
         //  over
           width: 290
           ,
-        //   renderCell:(params:any)=>{
-        //    return  <div style={{ whiteSpace: 'normal', wordWrap: 'break-word', maxWidth: '100%',margin:'-10px 1px' }}>
-        //    {params.value}
-        //  </div>
-        //   }
-        
         },
       
         { field: 'responsibleName',
@@ -228,7 +154,7 @@ const initGetKRinfo=()=>{
             renderCell:(par:any)=>{
               let value:number=par?.row?.score;
          
-               console.log(par.row.score)
+              //  console.log(par.row.score)
                let color='';
                let fColor=''
                switch (true) {
@@ -277,6 +203,7 @@ const initGetKRinfo=()=>{
           renderCell: (params:any) => params.api.getAllRowIds().indexOf(params.id)+1
         }
         ,
+        // responsibleName
      
         { field: 'name',
          headerName: 'شرح نتیجه کلیدی',
@@ -284,6 +211,14 @@ const initGetKRinfo=()=>{
          headerAlign:'center',
          sortable:false,
           minWidth: 260 ,
+        fontsize:'14px',
+        },
+        { field: 'responsibleName',
+         headerName: 'مسئول ',
+         align:'center',
+         headerAlign:'center',
+         sortable:false,
+          minWidth: 100 ,
         fontsize:'14px',
         },
       
@@ -310,6 +245,7 @@ const initGetKRinfo=()=>{
             </Box>
                 } 
               },
+              // currentValue,
       
           { field: 'currentValue',
           headerName: 'مقدار جدید',
@@ -374,48 +310,104 @@ const initGetKRinfo=()=>{
            }
     
           }
+          // pointingSystemType
+          ,
+          { field: 'pointingSystemType',
+          align:'center',
+          headerName: 'نوع نتیجه گیری',
+          headerAlign:'center',
+          sortable:false,
+           width: 100,
+           hideable: true,
+           hide:true
+           
+         },
+        //  startValue
+        { field: 'startValue',
+          align:'center',
+          headerName: 'شروع',
+          headerAlign:'center',
+          sortable:false,
+           width: 80,
+           hideable: true,
+           hide:true
+           
+         },
+
+          { field: 'threeTenthsValue',
+          align:'center',
+          headerName: '30%',
+          headerAlign:'center',
+          sortable:false,
+           width: 80,
+           hideable: true,
+           hide:true
+           
+         },
+         { field: 'sevenTenthsValue',
+          align:'center',
+          headerName: '70%',
+          headerAlign:'center',
+          sortable:false,
+           width: 80,
+           hideable: true,
+           hide:true
+           
+         },
+         { field: 'oneValue',
+          align:'center',
+          headerName: '100%',
+          headerAlign:'center',
+          sortable:false,
+           width: 80,
+           hideable: true,
+           hide:true
+           
+         },
+         
           ,
            { field: 'score',
            headerName: 'امتیاز',
            align:'center',
            sortable:false,
            headerAlign:'center',
-           width: 150 ,
+           width: 80 ,
            renderCell:(par:any)=>{
-            let value:string=par?.row?.score.slice(0,par.row.score.length-1);
-            //  console.log(+value)
-             let intVal=+value;
-            //  console.log(intVal)
-             let color='';
-             let fColor=''
-             switch (true) {
-              case intVal>70:
-                color='#D5F7D4';
-                fColor='#125610'
-                break;
-                case intVal<70 &&  intVal>30:
-                color='#FFF8D0';
-                fColor='#6B6440'
-                break
-              default:
-                color='#FFEEE5'
-                fColor='#993600'
-                break;
-             }
-              return <Box m={3} 
-              borderRadius={2} 
-              width={'100%'} 
-              display={'flex'} 
-              justifyContent={'center'} 
-              alignItems={'center'} 
-              height={'75%'}   
-              bgcolor={color}
-               >
+            console.log(par?.row?.score)
+            // let value:string=par?.row?.score.slice(0,par.row.score.length-1);
+           
+            //  let intVal=+value;
+            
+            //  let color='';
+            //  let fColor=''
+            //  switch (true) {
+            //   case intVal>70:
+            //     color='#D5F7D4';
+            //     fColor='#125610'
+            //     break;
+            //     case intVal<70 &&  intVal>30:
+            //     color='#FFF8D0';
+            //     fColor='#6B6440'
+            //     break
+            //   default:
+            //     color='#FFEEE5'
+            //     fColor='#993600'
+            //     break;
+            //  }
+            //   return <Box m={3} 
+            //   borderRadius={2} 
+            //   width={'100%'} 
+            //   display={'flex'} 
+            //   justifyContent={'center'} 
+            //   alignItems={'center'} 
+            //   height={'75%'}   
+            //   bgcolor={color}
+            //    >
         
-                <Typography px={8} color={fColor} fontWeight={400} >
-                {intVal}
-                </Typography>
-              </Box>
+            //     <Typography px={8} color={fColor} fontWeight={400} >
+            //     {intVal}
+            //     </Typography>
+            //   </Box>
             
            }
     
@@ -439,6 +431,18 @@ const initGetKRinfo=()=>{
          
       ],[]);
 
+  let KRinitialState={
+    columns: {
+      columnVisibilityModel: {
+        // Hide columns status and traderName, the other columns will remain visible
+        sevenTenthsValue: false,
+        threeTenthsValue: false,
+        oneValue:false,
+        startValue:false
+      },
+    },
+  }
+
       
 
 // وضعیت آتی
@@ -450,9 +454,11 @@ const initGetKRinfo=()=>{
       }, [objectivee])
       
       const setKeysResultsList=():any=>{
-        let targetObjective=objectivies?.find((objective:any)=>objective.id===objectivee?.id);
-        let keyrs=targetObjective?.keyResultCheckingMeetingQueryResultDto;
-        console.log(keyR)
+        // console.log(objectivee)
+        // console.log(objectivies);
+        // let targetObjective=objectivies?.find((objective:any)=>objective.id===objectivee?.id);
+        let keyrs=objectivee?.keyResultCheckingMeetingQueryResultDto
+        // console.log(keyR)
         setKeyR(keyrs)
       }
 
@@ -497,11 +503,15 @@ const initGetKRinfo=()=>{
         </Grid>
             <Grid item xs={12}  >
            <DyDataGrid 
+     
           data={keyR || []}
           columns={keyResultColumn}
-          initialOnRowClick={()=>{}}   
+          initialOnRowClick={setKrRowData}   
           hideFooter={true}  
-          selectionModel={[]}
+          // krSelectionModel,setKrSelectionModel
+          setSelectionModel={setKrSelectionModel}
+          selectionModel={krSelectionModel}
+          initState={KRinitialState}
           />
            </Grid>
           
@@ -510,19 +520,6 @@ const initGetKRinfo=()=>{
         
       }
 
-   
-
-
-
-
-
-
-
-        // if (KeyRDataLoading) {
-        //   return <></>
-        // } else {
-        //   return 
-        // }
 
 
       }
@@ -582,7 +579,9 @@ const initGetKRinfo=()=>{
    data={objectivies} 
    columns={objectiveColumns} 
    hideFooter={true}
-   selectionModel={[]}
+  //  objcSelectionModel,setObjSelectionModel
+  setSelectionModel={setObjSelectionModel}
+   selectionModel={objcSelectionModel}
    
     />
  
@@ -626,8 +625,12 @@ const initGetKRinfo=()=>{
 
    </Box>
    {
-    showModal && 
-      <ModalLyt  showModal={showModal} setShowModal={setShowModal}  >
+    showModal && krRowData &&
+      <ModalLyt  title={'اطلاعات نتیجه کلیدی'}  
+      showModal={showModal} 
+      setShowModal={setShowModal} 
+       >
+        <KrDetails data={krRowData}   />
       </ModalLyt>
  
    }

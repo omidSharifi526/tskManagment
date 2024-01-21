@@ -19,7 +19,7 @@ import {useGetTeamsByTenantId,useGetTeamDetailsById,
   useGetAllObjectiveByTeamId,
   useGetAllTeamStatusByTenantId,
   useGetWebObjectiveDetailsCheckinMeetingByTeamId} from '../../../scenes/Meeting/Hooks/index';
-  import {updateObjR,resetTeamInfoR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
+  import {updateObjR,resetTeamInfoR,setTeamsDataR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
   import { useDispatch } from 'react-redux';
 export default function DyTreeView({setTabIndex}:any) {
 const dispatch=useDispatch();
@@ -72,7 +72,11 @@ if (TeamWithoutParent===null) {
 
 useEffect(() => {
   
-  setNodeId(teamsData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos[0]?.id)
+  console.log(teamsData)
+//  webTeamCheckinMeetingDetailsQueryResultDtos
+
+    // setNodeId(teamsData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos[0]?.id)
+  
 
 }, [])
 
@@ -96,7 +100,10 @@ useEffect(() => {
 
 
 const initNodeSelected=(node:any,i:number)=>{
-
+// let {name}=node;
+// let iniName={...node,name:name};
+// console.log(iniName)
+dispatch(setTeamsDataR(node))
 console.log(node,i)
 setNodeId(node.id)
 
@@ -135,6 +142,7 @@ const renderContentUi=()=>{
                       teams && teams.map((team:any,i:number)=>{
                         return <TreeItem 
                         onClick={()=>{
+                          
                           initNodeSelected(team,i)
                          }}
                         key={i}

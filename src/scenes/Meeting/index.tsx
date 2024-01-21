@@ -7,9 +7,11 @@ import { useState,useEffect } from 'react';
 import { useGetAllMeetings } from './Hooks';
 import CircularProgress from '@mui/material/CircularProgress';
 import Loading from '../../components/Loading/Loading';
+import Skeleton from '@mui/material/Skeleton';
 
 
 const Meeting :React.FC=function(){
+  let scletList=['1','2','3','4','5','6','7','8','9','10']
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
   const{data:meetingData,isLoading,isError}=useGetAllMeetings({});
   const[userTenants,setUserTenants]=useState<any[]>()
@@ -35,13 +37,13 @@ const Meeting :React.FC=function(){
     setLoadinFlag(false)
   }, 2000);
 
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
   if (meetingsDataa?.length==0) {
   return (
@@ -52,6 +54,17 @@ const Meeting :React.FC=function(){
     </Box>
   )
   }
+  if (loading) {
+    return <Box columnGap={4} sx={{ width:'100%',display:'flex',justifyContent:'center',flexWrap:'wrap' }}>
+      {
+        scletList.map(()=>{
+          return <Skeleton sx={{my:2}} variant="rounded" width={200} height={250} />
+        })
+      }
+     </Box>
+  }
+
+
 
   return (
     <Grid container  spacing={1} >

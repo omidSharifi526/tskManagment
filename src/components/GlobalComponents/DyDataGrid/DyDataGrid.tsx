@@ -2,7 +2,21 @@ import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef,faIR,GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Box,Grid } from '@mui/material';
-import './style.css'
+import './style.css';
+import {
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarDensitySelector,
+} from '@mui/x-data-grid';
+
+  //  export default function CustomToolbarGrid() {
+  //       const { data } = useDemoData({
+  //         dataSet: 'Commodity',
+  //         rowLength: 10,
+  //         maxColumns: 6,
+  //       });
 
 
 export default function DyDataGrid(
@@ -12,30 +26,39 @@ export default function DyDataGrid(
     selectionModel
     ,initialOnRowClick,
     rowSelection,
-    rowHeight
+    rowHeight,
+    onRowSelectionEvent,
+    initState,
+    setSelectionModel
   }:any) {
     
-      // console.log(data)
-      // const getRowId(row)=> {
-      //   return row.internalId;
-      // }
-      const getRowId=(row:any,i:number)=>{
-        return i
-      }
+    function CustomToolbar() {
+      return (
+        <GridToolbarContainer>
+          <GridToolbarColumnsButton />
+          {/* <GridToolbarFilterButton /> */}
+          <GridToolbarDensitySelector />
+          {/* <GridToolbarExport /> */}
+        </GridToolbarContainer>
+      );
+    }
 
       const initOnRowClick=(row:any)=>{
+        setSelectionModel(row.id)
        console.log(row)
        initialOnRowClick(row)
       //  setObjectiveId(id)
       }
+   
      
   return (
  
     
    <Grid  width={'100%'} >
    <DataGrid 
+   initialState={initState}
     // pageSizeOptions={[10]}
-   slots={{ toolbar:GridToolbar}}
+   slots={{ toolbar:CustomToolbar}}
 
    rowHeight={40}
       sx={{

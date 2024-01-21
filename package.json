@@ -28,6 +28,7 @@
     "date-fns": "^3.0.0-rc.2",
     "date-fns-jalali": "^2.30.0-0",
     "dayjs": "^1.11.10",
+    "framer-motion": "^4.1.17",
     "jalali-moment": "^3.3.11",
     "jss-rtl": "^0.3.0",
     "moment-jalaali": "^0.10.0",
