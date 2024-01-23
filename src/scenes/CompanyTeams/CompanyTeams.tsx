@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import {Box,Grid,Typography,ListItem} from '@mui/material';
+import {Box,Grid,Typography,ListItem, IconButton} from '@mui/material';
 import { NavLink,Link } from 'react-router-dom';
 import DyTreeView from '../../components/GlobalComponents/TreeView/TreeView';
 import DyDataGrid from '../../components/GlobalComponents/DyDataGrid/DyDataGrid';
@@ -8,22 +8,29 @@ import Example from '../../components/GlobalComponents/Charts/Liner/LinerChart';
 import { useSelector } from 'react-redux';
 import { DataGrid, GridRowsProp, GridColDef,faIR } from '@mui/x-data-grid';
 import { useDispatch } from 'react-redux';
-import {resetRValuesR} from '../Meeting/MeetingsSlice/MeetingsSlice'
+import {resetRValuesR} from '../Meeting/MeetingsSlice/MeetingsSlice';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import Fade from '@mui/material/Fade';
+import Timer from '../../components/GlobalComponents/MeetingTimer/MeetingTimer';
+
 
 import ObjectiveKeyResults from './ObjectiveKeyResults/ObjectiveKeyResults';
 // import DyTabs from '../../components/GlobalComponents/DyTabs/DyTabs';
 
 const CompanyTeams = () => {
+
   const dispatch=useDispatch();
+  const [runTimer,setRunTimer]=useState<any>(false)
   
 
 
   const[tabIndex,setTabIndex]=useState(0);
   
  
-  // console.log(tabIndex);
- 
-  // 
+const initialRunTimer=()=>{
+  console.log('run timer')
+  setRunTimer(!runTimer)
+}
 
 
   const tabData = [
@@ -80,7 +87,7 @@ const CompanyTeams = () => {
         <Grid item xs={12}  >
         <Grid container sx={{bgcolor:'#F9F9F9'}} >
         <Grid item xs={12}  md={1}   >
-               <Box py={2} >
+               <Box  >
        
     <ListItem onClick={clickInitial}  sx={{fontSize:'0.7 rem'}} component={Link} to={'/dashboard/meetings'}  >
            
@@ -89,7 +96,20 @@ const CompanyTeams = () => {
         </Box>
          
         </Grid>
+        <Grid item xs={12}  md={11}  >
+         <Box  textAlign={'right'}  >
+         <IconButton onClick={initialRunTimer}   ><AccessAlarmIcon/></IconButton>
+         </Box>
         </Grid>
+        </Grid>
+
+        {
+          runTimer && 
+           <Box sx={{position:'absolute',top:'50px',right:'50px'}}   >
+             <Timer show={runTimer} close={setRunTimer}/> 
+           </Box>
+
+        }
 
 
 

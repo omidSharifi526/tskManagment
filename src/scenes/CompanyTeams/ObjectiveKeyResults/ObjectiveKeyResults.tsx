@@ -53,7 +53,7 @@ const ObjectiveKeyResults:React.FC=()=> {
   
 const initGetKRinfo=()=>{
   setShowModal(true)
-  // console.log('getReport')
+
 }
 
 

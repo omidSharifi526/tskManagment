@@ -56,6 +56,8 @@ export default function DyDataGrid(
     
    <Grid  width={'100%'} >
    <DataGrid 
+   density="compact"
+  //  filterMode={true}
    initialState={initState}
     // pageSizeOptions={[10]}
    slots={{ toolbar:CustomToolbar}}
