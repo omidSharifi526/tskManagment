@@ -62,14 +62,14 @@ export default function Timer({close,show}:any) {
   const renderOption=()=>{
     if (!playMode) {
       // 
-      return <Box display={'flex'} alignItems={'center'} sx={{p:1}}   >
+      return <Box display={'flex'} alignItems={'start'} sx={{p:1}}   >
            <IconButton  sx={{bgcolor:'#E5F1FF'}}  onClick={initialPlay}   ><PlayArrowOutlinedIcon sx={{color:'#00387c !important'}}  fontSize='medium'   /></IconButton>
              </Box>
       
 
     }
     else{
-      return <Box  display={'flex'} columnGap={2} alignItems={'center'} sx={{p:1}}>
+      return <Box  display={'flex'} columnGap={2}  sx={{p:1}}>
            <IconButton  sx={{bgcolor:'#E5F1FF'}} onClick={initialStop}     ><StopOutlinedIcon/></IconButton>
            <IconButton sx={{bgcolor:'#E5F1FF'}} ><PauseOutlinedIcon/></IconButton>
           </Box>

@@ -23,14 +23,15 @@ import {useGetTeamsByTenantId,useGetTeamDetailsById,
   import { useDispatch } from 'react-redux';
 export default function DyTreeView({setTabIndex}:any) {
 const dispatch=useDispatch();
-const teamsData=useSelector((state:any)=>state.meetings.teamInfo);
+const teamsData:any=useSelector((state:any)=>state.meetings.teamInfo);
+console.log(teamsData)
 // console.log(teamsData);
 
 const[companys,setCompanys]=useState<any|null>([]);
 const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
 const[teams,setTeams]=useState<any|null>([]);
 
-const [expanded, setExpanded] = useState([]);
+// const [expanded, setExpanded] = useState([]);
 
 const getObjectiveSuccess=()=>{
   dispatch(updateObjR())
@@ -46,11 +47,16 @@ const [renderContent,setRenderContent]=useState<any>(null);
 const[toastMessage,setToastMessage]=useState<any>(false)
   
 useLayoutEffect(() => {
+// webTeamCheckinMeetingDetailsQueryResultDtos
+// webTeamHaveParentCheckinMeetingDetailsQueryResultDtos
 
 let teamData={...teamsData};
+clg
+// let {isCompany}=teamData;
 let TeamWithoutParent:any=teamData?.webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos;
 if (TeamWithoutParent===null) {
   let company=teamData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos;
+  console.log(company)
   let teams=teamData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos[0]?.webTeamCheckinMeetingDetailsQueryResultDtos;
    setCompanys(company);
    setTeams(teams);

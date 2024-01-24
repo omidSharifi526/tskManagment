@@ -537,7 +537,7 @@ const initGetKRinfo=()=>{
                
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
                 <Typography variant='button' px={1}>نام شرکت:</Typography>
-                  <Typography  fontWeight={600} fontSize={'14px'}  >{teamInfo?.companyName}</Typography>
+                  <Typography  fontWeight={600} fontSize={'14px'}  >{teamInfo?.name}</Typography>
 
                 </Box>
                 </Grid>
