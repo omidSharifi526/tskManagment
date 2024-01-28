@@ -144,16 +144,16 @@ getDetFailed()
 select:(data)=>{
 //  console.log(data)
  let teamData=data?.data?.data;
-    console.log(teamData)
+    // console.log(teamData)
     dispatch(setTeamsDataR(teamData));
 }
 })
 }
 
-const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(getObjectiveSuccess:any,getObjectiveError:any,id:String)=>{
-    console.log(id)
+const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(getObjectiveSuccess:any,getObjectiveError:any,id:String,priodId:string,meetingId:string)=>{
+    // console.log(priodId)
     const dispatch=useDispatch();
-    return useQuery(['getWebObjectiveDetailsCheckinMeetingByTeamId',id]
+    return useQuery(['getWebObjectiveDetailsCheckinMeetingByTeamId',id,priodId,meetingId]
     ,getWebObjectiveDetailsCheckinMeetingByTeamId,{
     // cacheTime:Infinity,
     refetchOnWindowFocus:false,

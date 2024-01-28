@@ -7,13 +7,15 @@ import { Box,Typography } from '@mui/material';
 import{useGetPriodById} from '../../../../components/Login/Hooks/Index';
 import { useSelector } from 'react-redux';
 import { useGetAllMeetings } from '../../Hooks';
-import {useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux';
+import {setPriodIdR} from '../../MeetingsSlice/MeetingsSlice'
 
 import SwiperCore, { Navigation } from 'swiper';
 SwiperCore.use([Navigation]);
 
 
 const MeetingSlider = () => {
+  // const dispatch=useDispatch();
   const priods=useSelector((state:any)=>state.meetings.periodList);
   const dispatch=useDispatch();
   const[currentPriod,setCurrentPriod]=useState<any>(priods?.map((e:any) => e.isCurrent).indexOf(true));
@@ -42,10 +44,11 @@ const MeetingSlider = () => {
 
   // handleSlideChange
   const handleSlideChange = (swiper: any) => {
+    
     const currentSlideIndex = swiper.activeIndex; // Get the active slide index
     const currentSlideData = priods[currentSlideIndex]; // Get data from the periods array
-
-     
+  
+    dispatch(setPriodIdR(currentSlideData?.id))
     setPriodIds((prev)=>({...prev,priodId:currentSlideData?.id}))
   };
 

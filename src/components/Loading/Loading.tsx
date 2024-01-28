@@ -22,8 +22,10 @@ const Loading = ({setContentState,loading}:any) => {
 <Stack spacing={2} alignItems='center'  justifyContent='center'  sx={{width:'800px',height:'100%'}} mx="auto" >
 
 <Box width='100%' >
-<Box  mx={'auto'} mt={10}  display={'flex'} justifyContent={'center'}>
-<Img2 style={{width:'400px'}} />
+<Box  mx={'auto'}  mt={10}  display={'flex'} justifyContent={'center'}>
+<Img2 onClick={()=>{
+// confirm('test')
+}} style={{width:'400px'}} />
 </Box>
 </Box>
 {/* <Box>

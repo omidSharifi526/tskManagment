@@ -5,6 +5,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 // Define a type for the slice state
 interface LoginState {
+  rBaseUrl:string,
   userPhoneNumber:string
   userInfo: UserInfo,
   loginStatus:any
@@ -17,6 +18,7 @@ type UserInfo = {
 // Define the initial state using that type
 const initialState: LoginState = {
    userPhoneNumber:'',
+   rBaseUrl:'https://api.myokr.ir/api/',
    loginStatus:null,
    userInfo:{
     userTenants:[]

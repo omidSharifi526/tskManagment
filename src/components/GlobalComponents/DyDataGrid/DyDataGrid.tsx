@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef,faIR,GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
-import { Box,Grid } from '@mui/material';
+import { Box,Grid, IconButton } from '@mui/material';
 import './style.css';
 import {
   GridToolbarContainer,
@@ -36,9 +36,11 @@ export default function DyDataGrid(
       return (
         <GridToolbarContainer>
           <GridToolbarColumnsButton />
-          {/* <GridToolbarFilterButton /> */}
+          {/* <span>hi</span> */}
+          <IconButton></IconButton>
+          <GridToolbarFilterButton />
           <GridToolbarDensitySelector />
-          {/* <GridToolbarExport /> */}
+          <GridToolbarExport />
         </GridToolbarContainer>
       );
     }
@@ -92,6 +94,11 @@ export default function DyDataGrid(
         color:'white',
         borderRadius:5
       },
+      // "& .MuiDataGrid-root .MuiDataGrid-cell":{
+      //   wordWrap: 'break-word !important',
+      //   whiteSpace:'normal !important'
+      // }
+  
     
     
     }
@@ -110,6 +117,8 @@ export default function DyDataGrid(
       onRowClick={(param)=>{
         initOnRowClick(param.row)
       }}
+    // cell
+
       
      
       />

@@ -1,35 +1,14 @@
 import axios from "axios";
-
-// 09121223615
-// const userBody = {
-//   "phoneNumber": "09911461820",
-//   "password": "123456",
-//   "smsCode": "",
-//   "isOTP": false
-// }
+import axiosInstance from "../../../Axios/Axios";
 
 
 
-// {
-//   "phoneNumber": "09911461820",
-//   "password":"123456"
-// }
-const existToken=localStorage.getItem('accessToken');
-const baseURL='https://api.myokr.ir/api/';
-const axiosInstance = axios.create({
-  baseURL: baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-    'authorization':`Bearer ${existToken}`,
-    "Access-Control-Allow-Origin":'*'
-  },
-});
 
 
 
 
 const login = async (userBody:any) => {
-  // console.log(userBody,'kghgh')
+
   return await axiosInstance.post('Account/Login',userBody)
 }
 

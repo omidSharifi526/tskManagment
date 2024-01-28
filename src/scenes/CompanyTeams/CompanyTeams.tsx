@@ -91,7 +91,7 @@ const initialRunTimer=()=>{
        
     <ListItem onClick={clickInitial}  sx={{fontSize:'0.7 rem'}} component={Link} to={'/dashboard/meetings'}  >
            
-              <Typography color={'GrayText'} variant='body2' sx={{fontWeight:600}} >خروج از جلسه</Typography>
+              <Typography color={'red'} variant='body1' sx={{fontWeight:600}} >خروج از جلسه</Typography>
               </ListItem>
         </Box>
          

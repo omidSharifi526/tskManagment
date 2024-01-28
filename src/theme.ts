@@ -9,6 +9,19 @@ const theme = createTheme({
     fontSize:12
 
   },
+  components: {
+    MuiTooltip: {
+        styleOverrides: {
+            tooltip: {
+                fontSize: '0.8rem !important'
+            }
+        }
+    }
+}
+
+  
+
+
 },faIR);
 
 

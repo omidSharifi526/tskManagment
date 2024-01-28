@@ -24,11 +24,13 @@ export default function DyTextField(props:any) {
         {label}
         </InputLabel> */}
         <TextField 
+        // InputLabelProps={{ shrink: true }}
         size='small'
         value={props.value}
         type={props.type}
         name={props.name}
         variant='outlined'
+
         label={props.label}
         sx={{borderRadius:'10px'}}
         InputProps={{

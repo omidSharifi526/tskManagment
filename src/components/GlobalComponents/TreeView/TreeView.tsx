@@ -15,76 +15,43 @@ import CustomDataGrid from './newTreeView'
 // import dyPro
 import { Box } from '@mui/material';
 import LyBackdrop from '../../Layouts/BackDrop/BackDrop';
-import {useGetTeamsByTenantId,useGetTeamDetailsById,
+import {useGetTeamsByTenantId,
   useGetAllObjectiveByTeamId,
   useGetAllTeamStatusByTenantId,
   useGetWebObjectiveDetailsCheckinMeetingByTeamId} from '../../../scenes/Meeting/Hooks/index';
-  import {updateObjR,resetTeamInfoR,setTeamsDataR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
+  import {updateObjR,resetTeamInfoR,setTeamsDataR,setTeamInfoR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
   import { useDispatch } from 'react-redux';
 export default function DyTreeView({setTabIndex}:any) {
 const dispatch=useDispatch();
 const teamsData:any=useSelector((state:any)=>state.meetings.teamInfo);
-console.log(teamsData)
-// console.log(teamsData);
+const companyNode:any=useSelector((state:any)=>state.meetings.companyList);
+const teamList:any=useSelector((state:any)=>state.meetings.teamList);
+const priodId:any=useSelector((state:any)=>state.meetings.priodId);
+const meetingId:any=useSelector((state:any)=>state.meetings.meetingId);
+
+
+
 
 const[companys,setCompanys]=useState<any|null>([]);
 const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
 const[teams,setTeams]=useState<any|null>([]);
 
-// const [expanded, setExpanded] = useState([]);
 
 const getObjectiveSuccess=()=>{
   dispatch(updateObjR())
-  // dispatch(resetTeamInfoR())
 }
 
 const getObjectiveError=()=>{
   setToastMessage(true)
 }
-const{data,isError:getObjectiveErrorFlag,isLoading:getObjLoading}=useGetWebObjectiveDetailsCheckinMeetingByTeamId(getObjectiveSuccess,getObjectiveError,nodeId);
+console.log(priodId)
+const{data,isError:getObjectiveErrorFlag,isLoading:getObjLoading}=useGetWebObjectiveDetailsCheckinMeetingByTeamId(getObjectiveSuccess,getObjectiveError,nodeId,priodId,meetingId);
 
-const [renderContent,setRenderContent]=useState<any>(null);
+const [renderContent,setRenderContent]=useState<any>('companyAndTeams');
 const[toastMessage,setToastMessage]=useState<any>(false)
   
-useLayoutEffect(() => {
-// webTeamCheckinMeetingDetailsQueryResultDtos
-// webTeamHaveParentCheckinMeetingDetailsQueryResultDtos
-
-let teamData={...teamsData};
-clg
-// let {isCompany}=teamData;
-let TeamWithoutParent:any=teamData?.webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos;
-if (TeamWithoutParent===null) {
-  let company=teamData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos;
-  console.log(company)
-  let teams=teamData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos[0]?.webTeamCheckinMeetingDetailsQueryResultDtos;
-   setCompanys(company);
-   setTeams(teams);
-   setRenderContent('companyAndTeams')
-  //  console.log(company);
-  //  console.log(teams)
-
-} else {
-  // console.log(teamData);
-  let teams=teamData?.webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos;
-  setTeams(teams);
-  console.log(teams)
-  setRenderContent('teams')
-
-}
 
 
-}, [])
-
-useEffect(() => {
-  
-  console.log(teamsData)
-//  webTeamCheckinMeetingDetailsQueryResultDtos
-
-    // setNodeId(teamsData?.webTeamHaveParentCheckinMeetingDetailsQueryResultDtos[0]?.id)
-  
-
-}, [])
 
 
 
@@ -109,9 +76,11 @@ const initNodeSelected=(node:any,i:number)=>{
 // let {name}=node;
 // let iniName={...node,name:name};
 // console.log(iniName)
-dispatch(setTeamsDataR(node))
-console.log(node,i)
+dispatch(setTeamsDataR(node));
+dispatch(setTeamInfoR(node))
+// console.log(node,i)
 setNodeId(node.id)
+// console.log('hihiih')
 
 
 }
@@ -125,44 +94,85 @@ const renderContentUi=()=>{
     case 'companyAndTeams':
       return  <TreeView 
     
-      defaultExpanded={['0']}
-      aria-label="file system navigator"
-      defaultCollapseIcon={<ArrowDropDownIcon fontSize='large' />}
-      defaultExpandIcon={<ArrowLeftIcon fontSize='large' />}
-      sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto',minHeight:800}}
-      >
-        {
-          companys && companys.map((company:any,i:number)=>{
-            return <TreeItem 
-            
-             key={i}
-             onClick={()=>{
-              // console.log(company)
-              initNodeSelected(company,i)
-              // console.log(company.id)
-            
-             }}
-            nodeId={i.toString()} 
-            label={company.name} >
-                    {
-                      teams && teams.map((team:any,i:number)=>{
-                        return <TreeItem 
-                        onClick={()=>{
-                          
-                          initNodeSelected(team,i)
-                         }}
-                        key={i}
-                        sx={{mt:1,'& .rtl-305k3i-MuiTreeItem-content .MuiTreeItem-label':{fontSize:'0.7rem',fontWeight:800,py:1}}}  
-                        nodeId={team.id} 
-                        label={team.name} 
-                         />
-                      })
-                    }
-                   </TreeItem>
-          })
-        }
+       defaultExpanded={['0']}
+       aria-label="file system navigator"
+       defaultCollapseIcon={<ArrowDropDownIcon fontSize='large' />}
+       defaultExpandIcon={<ArrowLeftIcon fontSize='large' />}
+       sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto',minHeight:800,py:3}}
+       >
+      <TreeItem 
+                   onClick={()=>{
+                    // console.log(company)
+                    initNodeSelected(companyNode,1)
+                    // console.log(company.id)
+                  
+                   }}
+                  nodeId={'0'} 
+                  label={companyNode?.name} >
 
-      </TreeView>
+                   {
+                 teamList && teamList.map((team:any,i:number)=>{
+                  return <TreeItem 
+
+                  onClick={()=>{     
+                    initNodeSelected(team,i)
+                   }}
+                  key={i}
+                  sx={{mt:1,'& .rtl-305k3i-MuiTreeItem-content .MuiTreeItem-label':{fontSize:'0.7rem',fontWeight:800,py:1}}}  
+                  nodeId={team.id} 
+                  label={team.name} 
+
+
+                  
+                  />
+                 })
+                   }
+
+      </TreeItem>
+    </TreeView>
+
+      // return  <TreeView 
+    
+      // defaultExpanded={['0']}
+      // aria-label="file system navigator"
+      // defaultCollapseIcon={<ArrowDropDownIcon fontSize='large' />}
+      // defaultExpandIcon={<ArrowLeftIcon fontSize='large' />}
+      // sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto',minHeight:800}}
+      // >
+      //   {
+      //     companys && companys.map((company:any,i:number)=>{
+      //       return <TreeItem 
+            
+      //        key={i}
+      //        onClick={()=>{
+      //         // console.log(company)
+      //         initNodeSelected(company,i)
+      //         // console.log(company.id)
+            
+      //        }}
+      //       nodeId={i.toString()} 
+      //       label={company.name} >
+      //               {
+      //                 teams && teams.map((team:any,i:number)=>{
+      //                   return <TreeItem 
+      //                   onClick={()=>{
+                          
+      //                     initNodeSelected(team,i)
+      //                    }}
+      //                   key={i}
+      //                   sx={{mt:1,'& .rtl-305k3i-MuiTreeItem-content .MuiTreeItem-label':{fontSize:'0.7rem',fontWeight:800,py:1}}}  
+      //                   nodeId={team.id} 
+      //                   label={team.name} 
+      //                    />
+      //                 })
+      //               }
+      //              </TreeItem>
+      //     })
+      //   }
+
+      // </TreeView>
+    
+      
       
       break;
   

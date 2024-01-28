@@ -5,3 +5,8 @@
     padding-bottom: '20px' !important;
     /* background-color: :blue; */
 }
+.custom-cell {
+    white-space: pre-line;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

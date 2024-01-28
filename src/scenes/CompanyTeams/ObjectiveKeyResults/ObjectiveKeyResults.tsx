@@ -1,7 +1,8 @@
 import React,{useState,useEffect,useMemo} from 'react';
-import{Grid,Box,Typography, IconButton} from '@mui/material';
+import{Grid,Box,Typography, IconButton, Tooltip} from '@mui/material';
 import ModalLyt from '../../../components/Layouts/ModalLyt/ModalLyt';
 import KrDetails from '../LComponents/KrDetails/KrDetails';
+import { HistoryIcon } from '../StataicData/index';
 
 // import { v4 as uuidv4 } from 'uuid';
 import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
@@ -16,15 +17,18 @@ import {ReactComponent as SadSt} from '../../../Asset/Svgs/Emojys/sad 1.svg';
 import {ReactComponent as InfoIcon} from '../StataicData/Icons/InfoIcon.svg';
 
 const ObjectiveKeyResults:React.FC=()=> {
+  // state.teamInfo=teamInfoor
   // const keyResults:any=useSelector((state:any)=>state.meetings.teamInfo);
-  const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
+  // const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
   const objectivies=useSelector((state:any)=>state.meetings.objectivie);
   const objUpdated=useSelector((state:any)=>state.meetings.objUpdated);
+  const teamInfo=useSelector((state:any)=>state.meetings.teamInfo);
 
     const[objectivee,setObjectivee]=useState<any>(objectivies?.length>4?'fb7cc4ea-7162-4916-9aa8-834b14308e10':null);
     // const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
     const[keyR,setKeyR]=useState<any>([]);
     const[showModal,setShowModal]=useState(false);
+    const[historyModal,setHistoryModal]=useState(false)
     const[krRowData,setKrRowData]=useState(null);
 
     const[objcSelectionModel,setObjSelectionModel]=useState('')
@@ -56,6 +60,10 @@ const initGetKRinfo=()=>{
 
 }
 
+const initialGetHistoryKR=()=>{
+  setHistoryModal(true)
+}
+
 
 
     const objectiveColumns: any = useMemo(()=>
@@ -63,7 +71,7 @@ const initGetKRinfo=()=>{
       {
         field: "rowid",
         headerName: "ردیف",
-        width: 75,
+        width: 35,
       
         sortable: false,
         align:'center',
@@ -72,13 +80,22 @@ const initGetKRinfo=()=>{
       },
         { field: 'name',
          align:'left',
-         headerName: 'نام هدف',
+         headerName: 'شرح هدف',
          headerAlign:'center',
          sortable:false,
          wrap:'wrap',
-        //  over
-          width: 290
-          ,
+          minWidth: 290,
+          fontsize:'12px !important',
+          renderCell:({value}:any)=>{
+            return <Box>
+             {
+              value.length>40? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography fontSize={'13px'} >{value}</Typography>
+             }
+            </Box>
+          }
         },
       
         { field: 'responsibleName',
@@ -195,7 +212,7 @@ const initGetKRinfo=()=>{
         {
           field: "rowid",
           headerName: "ردیف",
-          width: 75,
+          width: 35,
         
           sortable: false,
           align:'center',
@@ -210,8 +227,21 @@ const initGetKRinfo=()=>{
          align:'left',
          headerAlign:'center',
          sortable:false,
-          minWidth: 260 ,
-        fontsize:'14px',
+          minWidth: 250 ,
+        // fontsize:'12px',
+      
+        renderCell:({value}:any)=>{
+          return <Box>
+     
+          
+           {
+            value.length>40? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+            {value}
+          </Tooltip>:
+          <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+           }
+          </Box>
+        }
         },
         { field: 'responsibleName',
          headerName: 'مسئول ',
@@ -252,7 +282,20 @@ const initGetKRinfo=()=>{
           align:'center',
           sortable:false,
           headerAlign:'center',
-           width: 110 },
+           width: 110 ,
+           renderCell:({value}:any)=>{
+            return <Box>
+       
+            
+             {
+              value.length>20? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+             }
+            </Box>
+          }
+          },
           //  
           { field:'currentState',
           headerName: 'وضعیت فعلی',
@@ -304,24 +347,45 @@ const initGetKRinfo=()=>{
                 return <Box sx={{width:'100%',textAlign:'center'}}  ><SadSt/></Box>
                 break;
              }
-            // console.log(par)
 
-            // return <Box><SmileSt/></Box>
            }
     
           }
-          // pointingSystemType
+
           ,
-          { field: 'pointingSystemType',
+          { field: 'okR_KeyResultType',
           align:'center',
-          headerName: 'نوع نتیجه گیری',
+          headerName: 'نوع نتیجه کلیدی',
           headerAlign:'center',
           sortable:false,
-           width: 100,
+           width: 110,
            hideable: true,
-           hide:true
+           hide:true,
+           renderCell:({value}:any)=>{
+           switch (value) {
+            case 'درصدی':
+            return <Box>
+              <Typography fontWeight={900}>%</Typography>
+            </Box>
+              break;
+           
+            default:
+              return <Typography  fontSize={'12px'}  >{value}</Typography>
+              break;
+           }
+           }
            
          },
+         { field: 'pointingSystemType',
+         align:'center',
+         headerName: 'سیستم امتیاز دهی',
+         headerAlign:'center',
+         sortable:false,
+          width: 100,
+          hideable: true,
+          hide:true
+          
+        },
         //  startValue
         { field: 'startValue',
           align:'center',
@@ -373,41 +437,55 @@ const initGetKRinfo=()=>{
            headerAlign:'center',
            width: 80 ,
            renderCell:(par:any)=>{
-            console.log(par?.row?.score)
-            // let value:string=par?.row?.score.slice(0,par.row.score.length-1);
-           
-            //  let intVal=+value;
-            
-            //  let color='';
-            //  let fColor=''
-            //  switch (true) {
-            //   case intVal>70:
-            //     color='#D5F7D4';
-            //     fColor='#125610'
-            //     break;
-            //     case intVal<70 &&  intVal>30:
-            //     color='#FFF8D0';
-            //     fColor='#6B6440'
-            //     break
-            //   default:
-            //     color='#FFEEE5'
-            //     fColor='#993600'
-            //     break;
-            //  }
-            //   return <Box m={3} 
-            //   borderRadius={2} 
-            //   width={'100%'} 
-            //   display={'flex'} 
-            //   justifyContent={'center'} 
-            //   alignItems={'center'} 
-            //   height={'75%'}   
-            //   bgcolor={color}
-            //    >
+            // console.log(par?.row?.score)
+            let score:string=par?.row?.score;
+            // console.log(score);
+            if ( typeof score==='string' &&  score.includes('%')) {
+              let pureNum=score.slice(0,score.length-1);
+              let intVal=+pureNum;
+              let color='';
+             let fColor=''
+             switch (true) {
+              case intVal>=70:
+                color='#D5F7D4';
+                fColor='#125610'
+                break;
+                case intVal<70 &&  intVal>30:
+                color='#FFF8D0';
+                fColor='#6B6440'
+                break
+              default:
+                color='#FFEEE5'
+                fColor='#993600'
+                break;
+             }
+              return <Box m={3} 
+              borderRadius={2} 
+              width={'100%'} 
+              display={'flex'} 
+              justifyContent={'center'} 
+              alignItems={'center'} 
+              height={'65%'}   
+              bgcolor={color}
+              my={1}
+               >
         
-            //     <Typography px={8} color={fColor} fontWeight={400} >
-            //     {intVal}
-            //     </Typography>
-            //   </Box>
+                <Typography px={8} color={fColor} fontWeight={400} >
+                {intVal}
+                </Typography>
+              </Box>
+              
+            }
+
+            else{
+              return<Box>
+                <Typography>{score}</Typography>
+              </Box>
+            }
+
+
+            
+         
             
            }
     
@@ -419,15 +497,29 @@ const initGetKRinfo=()=>{
           align:'center',
           headerAlign:'center',
           sortable:false,
-           minWidth: 100 ,
+           width: 50 ,
            renderCell:()=>{
-            return <Box  p={2} >
+            return <Box   >
               <IconButton onClick={initGetKRinfo}  >
                 <InfoIcon/>
               </IconButton>
             </Box>
            }
          },
+         { field: '--',
+         headerName: 'تاریخچه',
+         align:'center',
+         headerAlign:'center',
+         sortable:false,
+          width: 50 ,
+          renderCell:()=>{
+           return <Box   >
+             <IconButton onClick={initialGetHistoryKR}  >
+               <HistoryIcon/>
+             </IconButton>
+           </Box>
+          }
+        },
          
       ],[]);
 
@@ -438,7 +530,8 @@ const initGetKRinfo=()=>{
         sevenTenthsValue: false,
         threeTenthsValue: false,
         oneValue:false,
-        startValue:false
+        startValue:false,
+        pointingSystemType:false
       },
     },
   }
@@ -536,14 +629,14 @@ const initGetKRinfo=()=>{
                 <Grid item xs={12} md={3}  >
                
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
-                <Typography variant='button' px={1}>نام شرکت:</Typography>
+                <Typography variant='button' px={1}>{teamInfo.isCompany?'نام شرکت':'نام تیم'}</Typography>
                   <Typography  fontWeight={600} fontSize={'14px'}  >{teamInfo?.name}</Typography>
 
                 </Box>
                 </Grid>
                 <Grid item xs={12} md={3}  >
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
-                <Typography variant='button' px={1}>مدیر شرکت :</Typography>
+                <Typography variant='button' px={1}>{teamInfo.isCompany?'مدیر شرکت':'مدیر تیم'}</Typography>
                   <Typography  fontWeight={600} fontSize={'14px'}  >{teamInfo?.managerCompanyName}</Typography>
 
                 </Box>
@@ -551,7 +644,7 @@ const initGetKRinfo=()=>{
 
                 <Grid item xs={12} md={3}  >
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
-                <Typography variant='button' px={1}>تعداد اهداف کل شرکت:</Typography>
+                <Typography variant='button' px={1}>{`تعداد اهداف ${teamInfo.isCompany?'شرکت':'تیم'}`}</Typography>
                   <Typography  fontWeight={600} fontSize={'14px'}  >{teamInfo?.objectivesCount}</Typography>
 
                 </Box>
@@ -559,7 +652,7 @@ const initGetKRinfo=()=>{
 
                 <Grid item xs={12} md={3}  >
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'}  >
-                <Typography variant='button' px={1}>تعداد نتایج کل شرکت:</Typography>
+                <Typography variant='button' px={1}>{`تعداد نتایج ${teamInfo.isCompany?'شرکت':'تیم'}`}</Typography>
                   <Typography fontWeight={600} fontSize={'14px'}   >{teamInfo?.keyResultsCount}</Typography>
 
                 </Box>
@@ -582,7 +675,7 @@ const initGetKRinfo=()=>{
   //  objcSelectionModel,setObjSelectionModel
   setSelectionModel={setObjSelectionModel}
    selectionModel={objcSelectionModel}
-   
+ 
     />
  
       
@@ -627,12 +720,22 @@ const initGetKRinfo=()=>{
    {
     showModal && krRowData &&
       <ModalLyt  title={'اطلاعات نتیجه کلیدی'}  
-      showModal={showModal} 
+      showModal={Boolean(showModal)} 
       setShowModal={setShowModal} 
        >
         <KrDetails data={krRowData}   />
       </ModalLyt>
  
+   }
+
+   {
+   historyModal && <ModalLyt  
+   title={'تاریخچه نتیجه کلیدی'} 
+   showModal={Boolean(historyModal)}
+   setShowModal={setHistoryModal}
+    >
+    <h1>historyOfKR</h1>
+   </ModalLyt>
    }
 
     

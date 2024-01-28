@@ -14,12 +14,14 @@ import * as moment from 'jalali-moment';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
+import { useDispatch } from 'react-redux';
+import {setMeetingIdR} from '../MeetingsSlice/MeetingsSlice'
 
 
 
 
 export default function MeetingCard(props:any) {
-  
+const dispatch=useDispatch();
 const getDetSuccess=()=>{
 navigate('/companyTeams',{replace:true})
 }
@@ -41,9 +43,11 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
 
 
     const LoginMeeting=()=>{   
+
       setTenantId(info.id); 
-      // console.log(info.tenantId)
-      // console.log(info)
+      
+      dispatch(setMeetingIdR(info.id))
+      console.log(info)
     }
 
 
@@ -164,7 +168,7 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
 
   <Box >
   <Button 
-  variant='outlined'
+  variant='text'
   onClick={()=>{
         LoginMeeting()
       }}  >

@@ -55,12 +55,13 @@ const Meeting :React.FC=function(){
   )
   }
   if (loading) {
-    return <Box columnGap={4} sx={{ width:'100%',display:'flex',justifyContent:'center',flexWrap:'wrap' }}>
-      {
-        scletList.map(()=>{
-          return <Skeleton sx={{my:2}} variant="rounded" width={200} height={250} />
-        })
-      }
+    return <Box display={'flex'} 
+    alignItems={'center'} 
+    justifyContent={'center'} 
+    width={'100%'} 
+    height={'500px'} 
+    boxShadow={4} borderRadius={3}>
+      <CircularProgress  />
      </Box>
   }
 
