@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import {Typography,IconButton,Grid} from '@mui/material';
 import Close from '@mui/icons-material/Close';
+import CircularProgress from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 const style = {
   position: 'absolute' as 'absolute',
@@ -16,10 +17,9 @@ const style = {
   bgcolor: 'background.paper',
  borderRadius:'10px',
   boxShadow: 24,
-  p: 1,
 };
 
-export default function ModalLyt({showModal,setShowModal,title,children}:any) {
+export default function ModalLyt({showModal,setShowModal,title,children,KRHLoading}:any) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setShowModal(false);
@@ -29,7 +29,7 @@ export default function ModalLyt({showModal,setShowModal,title,children}:any) {
   }
 
   return (
-    <div>
+    <>
 
       <Modal
         aria-labelledby="transition-modal-title"
@@ -47,8 +47,8 @@ export default function ModalLyt({showModal,setShowModal,title,children}:any) {
         <Fade in={showModal}>
       
           <Box sx={style}>
-          <Grid container>
-           <Grid item xs={12} >
+          <Grid container sx={{backgroundColor:'#F9F9F9',p:2}}>
+           <Grid item xs={12} mb={1} >
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
            <Box>
             <Typography  color={'#00387C'} variant='body1'  >{title}</Typography>
@@ -58,7 +58,7 @@ export default function ModalLyt({showModal,setShowModal,title,children}:any) {
            </Box>
             </Box>
            </Grid>
-           <Grid item xs={12}  >
+           <Grid item xs={12} sx={{backgroundColor:'#FFFFFF',borderRadius:2,pt:1}}  >
           {
             children
           } 
@@ -67,6 +67,6 @@ export default function ModalLyt({showModal,setShowModal,title,children}:any) {
           </Box>
         </Fade>
       </Modal>
-    </div>
+    </>
   );
 }

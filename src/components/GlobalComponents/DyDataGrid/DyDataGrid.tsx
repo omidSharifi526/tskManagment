@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef,faIR,GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
-import { Box,Grid, IconButton } from '@mui/material';
+import { Box,Grid, IconButton,Button } from '@mui/material';
+import {ReactComponent as KrChartIcon} from './Static/KrChartIcon.svg';
 import './style.css';
 import {
   GridToolbarContainer,
@@ -29,7 +30,9 @@ export default function DyDataGrid(
     rowHeight,
     onRowSelectionEvent,
     initState,
-    setSelectionModel
+    setSelectionModel,
+    setShowToolbarModal,
+    additionalToolbar
   }:any) {
     
     function CustomToolbar() {
@@ -37,7 +40,22 @@ export default function DyDataGrid(
         <GridToolbarContainer>
           <GridToolbarColumnsButton />
           {/* <span>hi</span> */}
-          <IconButton></IconButton>
+          <div>
+          {/* <IconButton size='small'  onClick={()=>{
+          setShowToolbarModal((prev:any)=>!prev)
+          }}   >
+            <KrChartIcon style={{color:'red',backgroundColor:'red !important'}}  />
+          </IconButton> */}
+       
+          {
+            additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
+              setShowToolbarModal((prev:any)=>!prev)
+              }}  startIcon={<KrChartIcon style={{color:'red',backgroundColor:'red !important'}}  />}   >
+              نمودار  نتایج
+                              </Button>
+          }
+
+          </div>
           <GridToolbarFilterButton />
           <GridToolbarDensitySelector />
           <GridToolbarExport />
@@ -46,8 +64,9 @@ export default function DyDataGrid(
     }
 
       const initOnRowClick=(row:any)=>{
+        console.log(row)
         setSelectionModel(row.id)
-       console.log(row)
+  
        initialOnRowClick(row)
       //  setObjectiveId(id)
       }
@@ -58,6 +77,7 @@ export default function DyDataGrid(
     
    <Grid  width={'100%'} >
    <DataGrid 
+   
    density="compact"
   //  filterMode={true}
    initialState={initState}

@@ -79,7 +79,7 @@ let{webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos:treeStatus}=treeDat
 if (treeStatus===null) {
   let{webTeamHaveParentCheckinMeetingDetailsQueryResultDtos:companyy}=treeData;
   let companyInfo=companyy[0];
-  console.log(treeData);
+  // console.log(treeData);
   // keyResultsCount
   // : 
   // 202
@@ -124,7 +124,7 @@ if (treeStatus===null) {
 
 const setTeamInfo=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  console.log(payload)
+  // console.log(payload)
 
 
 let teamInfoor={
@@ -139,7 +139,7 @@ let teamInfoor={
 }
 
   state.teamInfo=teamInfoor
-console.log(payload)
+// console.log(payload)
 }
 
 
@@ -163,7 +163,7 @@ state.objectivie=[]
 
 const setProfileName=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  console.log(payload)
+  // console.log(payload)
 }
 
 const updateObj=(state:any)=>{
@@ -181,7 +181,7 @@ const setPriodId=(state:any,action:PayloadAction<any>)=>{
 
 const setMeetingId=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  console.log(payload)
+  // console.log(payload)
   state.meetingId=payload;
 }
 

@@ -3,7 +3,8 @@ import{Grid,Box,Typography, IconButton, Tooltip} from '@mui/material';
 import ModalLyt from '../../../components/Layouts/ModalLyt/ModalLyt';
 import KrDetails from '../LComponents/KrDetails/KrDetails';
 import { HistoryIcon } from '../StataicData/index';
-
+import {useGetKeyResultMeetingHistory} from '../Hooks/index';
+import KrHistoryModalContent from '../LComponents/KrHistoryModalContent/KrHistoryModalContent';
 // import { v4 as uuidv4 } from 'uuid';
 import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
 import { useSelector } from 'react-redux';
@@ -17,9 +18,9 @@ import {ReactComponent as SadSt} from '../../../Asset/Svgs/Emojys/sad 1.svg';
 import {ReactComponent as InfoIcon} from '../StataicData/Icons/InfoIcon.svg';
 
 const ObjectiveKeyResults:React.FC=()=> {
-  // state.teamInfo=teamInfoor
-  // const keyResults:any=useSelector((state:any)=>state.meetings.teamInfo);
-  // const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
+  const priodId:any=useSelector((state:any)=>state.meetings.priodId);
+  const meetingId:any=useSelector((state:any)=>state.meetings.meetingId);
+
   const objectivies=useSelector((state:any)=>state.meetings.objectivie);
   const objUpdated=useSelector((state:any)=>state.meetings.objUpdated);
   const teamInfo=useSelector((state:any)=>state.meetings.teamInfo);
@@ -30,6 +31,7 @@ const ObjectiveKeyResults:React.FC=()=> {
     const[showModal,setShowModal]=useState(false);
     const[historyModal,setHistoryModal]=useState(false)
     const[krRowData,setKrRowData]=useState(null);
+    const [showToolbarModal,setShowToolbarModal]=useState(false)
 
     const[objcSelectionModel,setObjSelectionModel]=useState('')
     const[krSelectionModel,setKrSelectionModel]=useState('')
@@ -39,8 +41,9 @@ const ObjectiveKeyResults:React.FC=()=> {
     page: 1,
     searchTerm: "",
   });
-
-  
+  const[krId,setKrId]=useState(null)
+  const{data:KrHistoryData,isLoading:KRHLoading,isError:KRHError,isFetched:KRHFetched}=useGetKeyResultMeetingHistory(krId,priodId,meetingId)
+  // console.log(KrHistoryData)
   useEffect(() => {
     
   setKeyR([])
@@ -56,11 +59,16 @@ const ObjectiveKeyResults:React.FC=()=> {
 
   
 const initGetKRinfo=()=>{
+
   setShowModal(true)
 
 }
 
-const initialGetHistoryKR=()=>{
+const initialGetHistoryKR=(row:any)=>{
+  let{id}=row;
+  console.log(id)
+  //  let{id}=row;
+   setKrId(id);
   setHistoryModal(true)
 }
 
@@ -220,7 +228,7 @@ const initialGetHistoryKR=()=>{
           renderCell: (params:any) => params.api.getAllRowIds().indexOf(params.id)+1
         }
         ,
-        // responsibleName
+ 
      
         { field: 'name',
          headerName: 'شرح نتیجه کلیدی',
@@ -257,9 +265,9 @@ const initialGetHistoryKR=()=>{
          align:'center',
          sortable:false,
          headerAlign:'center',
-          width: 150,
+          width: 140,
           renderCell:({value}:any)=>{
-            return<Box m={3} 
+            return<Box  
             
             borderRadius={2} 
             width={'100%'} 
@@ -269,20 +277,28 @@ const initialGetHistoryKR=()=>{
             height={'75%'}   
             bgcolor={value==='فعال'?'#D5F7D4':'#E5F1FF'}  >
       
-              <Typography px={8}  >
+              <Typography   >
               {value}
               </Typography>
             </Box>
                 } 
               },
-              // currentValue,
-      
+              
+              { 
+                field: '-0--',
+                headerName: 'مقدار قبلی',
+                align:'center',
+                sortable:false,
+                headerAlign:'center',
+                width: 100 ,
+              }
+          ,
           { field: 'currentValue',
           headerName: 'مقدار جدید',
           align:'center',
           sortable:false,
           headerAlign:'center',
-           width: 110 ,
+           width: 100 ,
            renderCell:({value}:any)=>{
             return <Box>
        
@@ -302,7 +318,7 @@ const initialGetHistoryKR=()=>{
           sortable:false,
           headerAlign:'center',
           align:'center',
-           width: 150 ,
+           width: 120 ,
            renderCell:({value}:any)=>{
             return<Box m={3} 
             
@@ -329,7 +345,7 @@ const initialGetHistoryKR=()=>{
            align:'center',
            sortable:false,
            headerAlign:'center',
-           width:100 ,
+           width:90 ,
            renderCell:(par:any)=>{
             // انتظار داریم به نتیجه درست برسیم
             // با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد
@@ -355,7 +371,7 @@ const initialGetHistoryKR=()=>{
           ,
           { field: 'okR_KeyResultType',
           align:'center',
-          headerName: 'نوع نتیجه کلیدی',
+          headerName: 'نوع',
           headerAlign:'center',
           sortable:false,
            width: 110,
@@ -376,6 +392,23 @@ const initialGetHistoryKR=()=>{
            }
            
          },
+         ,{ 
+          field: '-0-0-',
+          headerName: 'امتیاز قبلی',
+          align:'center',
+          sortable:false,
+          headerAlign:'center',
+          width: 80 ,
+        },
+        { 
+          field: '-0--00',
+          headerName: 'امتیاز جدید',
+          align:'center',
+          sortable:false,
+          headerAlign:'center',
+          width: 80 ,
+        }
+        ,
          { field: 'pointingSystemType',
          align:'center',
          headerName: 'سیستم امتیاز دهی',
@@ -392,9 +425,21 @@ const initialGetHistoryKR=()=>{
           headerName: 'شروع',
           headerAlign:'center',
           sortable:false,
-           width: 80,
+           width: 50,
            hideable: true,
-           hide:true
+           hide:true,
+           renderCell:({value}:any)=>{
+            return <Box>
+       
+            
+             {
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+             }
+            </Box>
+          }
            
          },
 
@@ -403,9 +448,21 @@ const initialGetHistoryKR=()=>{
           headerName: '30%',
           headerAlign:'center',
           sortable:false,
-           width: 80,
+           width: 50,
            hideable: true,
-           hide:true
+           hide:true,
+           renderCell:({value}:any)=>{
+            return <Box>
+       
+            
+             {
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+             }
+            </Box>
+          }
            
          },
          { field: 'sevenTenthsValue',
@@ -413,9 +470,21 @@ const initialGetHistoryKR=()=>{
           headerName: '70%',
           headerAlign:'center',
           sortable:false,
-           width: 80,
+           width: 50,
            hideable: true,
-           hide:true
+           hide:true,
+           renderCell:({value}:any)=>{
+            return <Box>
+       
+            
+             {
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+             }
+            </Box>
+          }
            
          },
          { field: 'oneValue',
@@ -425,7 +494,19 @@ const initialGetHistoryKR=()=>{
           sortable:false,
            width: 80,
            hideable: true,
-           hide:true
+           hide:true,
+           renderCell:({value}:any)=>{
+            return <Box>
+       
+            
+             {
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+             }
+            </Box>
+          }
            
          },
          
@@ -497,7 +578,7 @@ const initialGetHistoryKR=()=>{
           align:'center',
           headerAlign:'center',
           sortable:false,
-           width: 50 ,
+           width: 70 ,
            renderCell:()=>{
             return <Box   >
               <IconButton onClick={initGetKRinfo}  >
@@ -511,10 +592,17 @@ const initialGetHistoryKR=()=>{
          align:'center',
          headerAlign:'center',
          sortable:false,
-          width: 50 ,
-          renderCell:()=>{
+          width:70 ,
+          renderCell:(param:any)=>{
+
+            let{row}=param;
+            // console.log(param)
            return <Box   >
-             <IconButton onClick={initialGetHistoryKR}  >
+             <IconButton onClick={()=>{
+            //  console.log(row)
+            //  console.log(hi)
+              initialGetHistoryKR(row)
+             }}  >
                <HistoryIcon/>
              </IconButton>
            </Box>
@@ -526,14 +614,13 @@ const initialGetHistoryKR=()=>{
   let KRinitialState={
     columns: {
       columnVisibilityModel: {
-        // Hide columns status and traderName, the other columns will remain visible
-        sevenTenthsValue: false,
-        threeTenthsValue: false,
-        oneValue:false,
-        startValue:false,
-        pointingSystemType:false
+        rowid:false,
+        okrStateName:false,
+        pointingSystemType:false,
+
       },
     },
+
   }
 
       
@@ -596,7 +683,7 @@ const initialGetHistoryKR=()=>{
         </Grid>
             <Grid item xs={12}  >
            <DyDataGrid 
-     
+          
           data={keyR || []}
           columns={keyResultColumn}
           initialOnRowClick={setKrRowData}   
@@ -605,6 +692,8 @@ const initialGetHistoryKR=()=>{
           setSelectionModel={setKrSelectionModel}
           selectionModel={krSelectionModel}
           initState={KRinitialState}
+          additionalToolbar={true}
+          setShowToolbarModal={setShowToolbarModal}
           />
            </Grid>
           
@@ -622,7 +711,7 @@ const initialGetHistoryKR=()=>{
       }
   return (
     <>
-    <Grid container sx={{bgcolor:'#F9F9F9'}} >
+    <Grid container sx={{bgcolor:'#F9F9F9'}} style={{ height: 350, width: '100%' }} >
        <Grid item xs={12}>
        <Box py={1} my={2} borderRadius={2} boxShadow={2} bgcolor={'white'} >
             <Grid container >
@@ -675,6 +764,8 @@ const initialGetHistoryKR=()=>{
   //  objcSelectionModel,setObjSelectionModel
   setSelectionModel={setObjSelectionModel}
    selectionModel={objcSelectionModel}
+   
+   additionalToolbar={false}
  
     />
  
@@ -729,13 +820,29 @@ const initialGetHistoryKR=()=>{
    }
 
    {
-   historyModal && <ModalLyt  
+   historyModal  && <ModalLyt  
+  //  loadingFlag={KRHLoading}
    title={'تاریخچه نتیجه کلیدی'} 
    showModal={Boolean(historyModal)}
    setShowModal={setHistoryModal}
     >
-    <h1>historyOfKR</h1>
+
+
+
+    
+    <KrHistoryModalContent loadingFlag={KRHLoading} data={KrHistoryData}   />
+    
    </ModalLyt>
+   }
+
+   {
+    showToolbarModal && <ModalLyt  
+    title={'نتیجه کلی'} 
+    showModal={Boolean(showToolbarModal)}
+    setShowModal={setShowToolbarModal}
+     >
+     {/* <h1>ModaLOfDatagRid</h1> */}
+    </ModalLyt>
    }
 
     

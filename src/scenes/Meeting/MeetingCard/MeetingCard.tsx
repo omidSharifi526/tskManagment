@@ -47,7 +47,7 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
       setTenantId(info.id); 
       
       dispatch(setMeetingIdR(info.id))
-      console.log(info)
+      // console.log(info)
     }
 
 

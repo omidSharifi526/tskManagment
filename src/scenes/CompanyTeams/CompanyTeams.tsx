@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import {Box,Grid,Typography,ListItem, IconButton} from '@mui/material';
+import React, { useState,useEffect,lazy,Suspense } from 'react';
+import {Box,Grid,Typography,ListItem, IconButton,Tabs,Tab} from '@mui/material';
 import { NavLink,Link } from 'react-router-dom';
 import DyTreeView from '../../components/GlobalComponents/TreeView/TreeView';
 import DyDataGrid from '../../components/GlobalComponents/DyDataGrid/DyDataGrid';
@@ -12,11 +12,12 @@ import {resetRValuesR} from '../Meeting/MeetingsSlice/MeetingsSlice';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import Fade from '@mui/material/Fade';
 import Timer from '../../components/GlobalComponents/MeetingTimer/MeetingTimer';
-
+// import TeamStatus from './LComponents/TeamStatus/TeamStatus';
+import {TabPanelProps} from './Interfaces/interfaces'
 
 import ObjectiveKeyResults from './ObjectiveKeyResults/ObjectiveKeyResults';
 // import DyTabs from '../../components/GlobalComponents/DyTabs/DyTabs';
-
+const TeamStatus = lazy(() => import('./LComponents/TeamStatus/TeamStatus'));
 const CompanyTeams = () => {
 
   const dispatch=useDispatch();
@@ -39,14 +40,10 @@ const initialRunTimer=()=>{
       content:<ObjectiveKeyResults/>
      
     },
-    // {
-    //   label: 'وضعیت تیم ها',
-    //   content:<Box width={'100%'}  > 
-    //   <DyDataGrid 
-    //   data={[]} 
-    //   columns={[]}/>
-    //   </Box>,
-    // },
+    {
+      label: 'وضعیت تیم ها',
+      content:<TeamStatus/>
+    },
     // Add more tabs as needed
   ];
   const rows: GridRowsProp = [
@@ -79,8 +76,42 @@ const initialRunTimer=()=>{
 
   const clickInitial=()=>{
      dispatch(resetRValuesR())
-    // console.log('exittttt')
+
   }
+
+
+  function CustomTabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box sx={{ p: 3 }}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+
+
+  function a11yProps(index: number) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
   
   return (
     <Grid container  >
@@ -119,34 +150,49 @@ const initialRunTimer=()=>{
         <Grid container   >
           
         <Grid item xs={12} md={2}   >
+
         <Box boxShadow={2} borderRadius={2}   >
         <DyTreeView 
         setTabIndex={setTabIndex} 
         />
         </Box>
+
         </Grid>
+
         <Grid item xs={12} md={10}  >
-       <Box    >
-       {/* <DyDataGrid/> */}
-       <DyTabs tabs={tabData} 
-         tabIndex={tabIndex} />
+      
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="اهداف و نتایج کلیدی" {...a11yProps(0)} />
+          <Tab label="وضعیت تیم ها" {...a11yProps(1)} />
+        </Tabs>
        </Box>
-        </Grid>
-        </Grid>
-
-
-
-
-        {/* <Grid container height={'100px'}  >
-       <Grid item xs={12} md={7} mx={'auto'}  >
-         <Box bgcolor={'red'} display={'flex'}  justifyContent={'center'} >
-          <DyTabs tabs={tabData}   />
-         </Box>
-       </Grid>
-        </Grid> */}
-
-        {/* <Example/> */}
+       <CustomTabPanel value={value} index={0}>
+        <Suspense  fallback={<div>درحال بارگزاری...</div>}  >
+        <ObjectiveKeyResults/>
+        
+        </Suspense>
+       </CustomTabPanel>
+       <CustomTabPanel value={value} index={1}>
+        <Suspense fallback={<div>درحال بارگزاری...</div>}>
+       <TeamStatus/>
+        </Suspense>
        
+      </CustomTabPanel>
+    </Box>
+
+
+
+       
+
+        </Grid>
+
+        </Grid>
+
+
+
+
     </Grid>
   )
 }
