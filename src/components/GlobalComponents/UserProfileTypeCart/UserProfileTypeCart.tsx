@@ -20,14 +20,11 @@ export const UserProfileTypeCart = (props:any) => {
 const handleClickCart=()=>{
   // console.log(item.tenantId)
   setTenantId(item.tenantId);
-  // console.log('hi from cartttttt')
+console.log(item)
+
+
   dispatch(setProfileTenantIdR(item))
-  // dispatch()
-  
-  // setMeetingsIds({tenantId:item.tenantId,priodId:props.priodsIds.priodId})
 
-
-  // navigate('/dashboard',{replace:true})
 }
 const initialComponentRendred=():void=>{
 // console.log('priodsData',props.priodsData)
@@ -51,7 +48,9 @@ useEffect(() => {
 
 
   return (
-    <Grid item xs={9} mx={'auto'}  md={3} py={2}  onClick={handleClickCart}    >
+    <Grid item xs={9} mx={'auto'}  md={3} py={2}  onClick={()=>{
+      handleClickCart()
+    }}    >
     <Box  borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} >
     <Box py={3}  display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
     <AccountCircleIcon fontSize='large' />

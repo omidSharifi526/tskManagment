@@ -127,7 +127,9 @@ const Tenants = () => {
   ],[]);
   const renderContent=()=>{
     if (tenantsDataLoading) {
-      return (<Skeleton sx={{my:1,mx:'auto'}} variant="rounded"  width={'90%'} height={'700px'} />)
+      return (<Box  width={'100%'} py={16}   >
+        <CircularProgress   />
+      </Box>)
     }
     else {
       return <>

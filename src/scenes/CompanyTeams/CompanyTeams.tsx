@@ -2,15 +2,15 @@ import React, { useState,useEffect,lazy,Suspense } from 'react';
 import {Box,Grid,Typography,ListItem, IconButton,Tabs,Tab} from '@mui/material';
 import { NavLink,Link } from 'react-router-dom';
 import DyTreeView from '../../components/GlobalComponents/TreeView/TreeView';
-import DyDataGrid from '../../components/GlobalComponents/DyDataGrid/DyDataGrid';
-import DyTabs from '../../components/GlobalComponents/DyTabs/DyTabs';
-import Example from '../../components/GlobalComponents/Charts/Liner/LinerChart';
-import { useSelector } from 'react-redux';
-import { DataGrid, GridRowsProp, GridColDef,faIR } from '@mui/x-data-grid';
+import DateObject from "react-date-object";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+
+import {GridRowsProp} from '@mui/x-data-grid';
 import { useDispatch } from 'react-redux';
 import {resetRValuesR} from '../Meeting/MeetingsSlice/MeetingsSlice';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import Fade from '@mui/material/Fade';
+
 import Timer from '../../components/GlobalComponents/MeetingTimer/MeetingTimer';
 // import TeamStatus from './LComponents/TeamStatus/TeamStatus';
 import {TabPanelProps} from './Interfaces/interfaces'
@@ -78,6 +78,10 @@ const initialRunTimer=()=>{
      dispatch(resetRValuesR())
 
   }
+  var date = new DateObject({ calendar: persian, locale: persian_fa });
+  date.calendar = persian;
+  date.locale = persian_fa; //جمعه 31 مرداد
+  const now=date.format("dddd DD MMMM  ");
 
 
   function CustomTabPanel(props: TabPanelProps) {
@@ -92,7 +96,7 @@ const initialRunTimer=()=>{
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ p:1 }}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -127,20 +131,29 @@ const initialRunTimer=()=>{
         </Box>
          
         </Grid>
+        {/* <Box>
+        
+        </Box> */}
         <Grid item xs={12}  md={11}  >
-         <Box  textAlign={'right'}  >
-         <IconButton onClick={initialRunTimer}   ><AccessAlarmIcon/></IconButton>
+       
+         <Box   display={'flex'} flexDirection={'row-reverse'}  >
+        <Box display={'flex'}  alignItems={'center'} pr={2}  >
+        <Timer/> 
+        <Box>
+        <Typography fontWeight={700} color={'black'} variant="body2" noWrap component="div">
+                      {now}
+        </Typography>
+        </Box>
+        </Box>
          </Box>
         </Grid>
         </Grid>
+ 
+      
+            
+        
 
-        {
-          runTimer && 
-           <Box sx={{position:'absolute',top:'50px',right:'50px'}}   >
-             <Timer show={runTimer} close={setRunTimer}/> 
-           </Box>
-
-        }
+      
 
 
 
@@ -149,9 +162,9 @@ const initialRunTimer=()=>{
 
         <Grid container   >
           
-        <Grid item xs={12} md={2}   >
+        <Grid item xs={12} md={1.5}   >
 
-        <Box boxShadow={2} borderRadius={2}   >
+        <Box boxShadow={2} borderRadius={2}  mt={2}  >
         <DyTreeView 
         setTabIndex={setTabIndex} 
         />
@@ -159,7 +172,7 @@ const initialRunTimer=()=>{
 
         </Grid>
 
-        <Grid item xs={12} md={10}  >
+        <Grid item xs={12} md={10.5}  >
       
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

@@ -98,7 +98,7 @@ const renderContentUi=()=>{
        aria-label="file system navigator"
        defaultCollapseIcon={<ArrowDropDownIcon fontSize='large' />}
        defaultExpandIcon={<ArrowLeftIcon fontSize='large' />}
-       sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto',minHeight:800,py:3}}
+       sx={{ flexGrow: 0, maxWidth: 400, overflowY: 'auto',minHeight:50,py:1}}
        >
       <TreeItem 
                    onClick={()=>{

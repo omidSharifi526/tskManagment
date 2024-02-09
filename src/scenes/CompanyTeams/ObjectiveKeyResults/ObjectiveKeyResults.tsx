@@ -239,13 +239,14 @@ const initialGetHistoryKR=(row:any)=>{
         // fontsize:'12px',
       
         renderCell:({value}:any)=>{
+          let length=value.length;
           return <Box>
      
           
            {
-            value.length>40? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-            {value}
-          </Tooltip>:
+            value.length>20?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+            <Box>{value.slice(0,20)}{length>20?'...':''}</Box>
+          </Tooltip></> :
           <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
            }
           </Box>
@@ -285,12 +286,24 @@ const initialGetHistoryKR=(row:any)=>{
               },
               
               { 
-                field: '-0--',
+                field: 'oldValue',
                 headerName: 'مقدار قبلی',
                 align:'center',
                 sortable:false,
                 headerAlign:'center',
                 width: 100 ,
+                renderCell:({value}:any)=>{
+                  return <Box>
+             
+                  
+                   {
+                    value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+                    {value}
+                  </Tooltip>:
+                  <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+                   }
+                  </Box>
+                }
               }
           ,
           { field: 'currentValue',
@@ -304,7 +317,7 @@ const initialGetHistoryKR=(row:any)=>{
        
             
              {
-              value.length>20? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
               {value}
             </Tooltip>:
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
@@ -330,7 +343,7 @@ const initialGetHistoryKR=(row:any)=>{
             height={'75%'}   
             bgcolor={value==='در مسیر مناسب'?'#D5F7D4':value==='نیازمند توجه'?'#FFEBEF':'#F0F1F2'}  >
    
-              <Typography px={8} color={value==='نیازمند توجه'?'#F95700':value==='خارج از مسیر مناسب'?'#CC0030':'black'} >
+              <Typography fontSize={'12px'} px={8} color={value==='نیازمند توجه'?'#F95700':value==='خارج از مسیر مناسب'?'#CC0030':'black'} >
               {value}
               </Typography>
             </Box>
@@ -367,6 +380,30 @@ const initialGetHistoryKR=(row:any)=>{
            }
     
           }
+          ,
+          {
+            // name:'startDate',
+            field:'startDate',
+            headerName: 'تاریخ شروع',
+            align:'center',
+            sortable:false,
+            headerAlign:'center',
+            width: 100 ,
+
+          }
+          ,
+          {
+            // name:'startDate',
+            field:'forceEndDate',
+            headerName: 'حداکثر تاریخ انجام',
+            align:'center',
+            sortable:false,
+            headerAlign:'center',
+            width: 100 ,
+
+          }
+
+          
 
           ,
           { field: 'okR_KeyResultType',
@@ -393,22 +430,22 @@ const initialGetHistoryKR=(row:any)=>{
            
          },
          ,{ 
-          field: '-0-0-',
+          field:'oldScore',
           headerName: 'امتیاز قبلی',
           align:'center',
           sortable:false,
           headerAlign:'center',
           width: 80 ,
         },
-        { 
-          field: '-0--00',
-          headerName: 'امتیاز جدید',
-          align:'center',
-          sortable:false,
-          headerAlign:'center',
-          width: 80 ,
-        }
-        ,
+        // { 
+        //   field: 'score',
+        //   headerName: 'امتیاز جدید',
+        //   align:'center',
+        //   sortable:false,
+        //   headerAlign:'center',
+        //   width: 80 ,
+        // }
+        // ,
          { field: 'pointingSystemType',
          align:'center',
          headerName: 'سیستم امتیاز دهی',
@@ -444,7 +481,7 @@ const initialGetHistoryKR=(row:any)=>{
          },
 
           { field: 'threeTenthsValue',
-          align:'center',
+          align:'right',
           headerName: '30%',
           headerAlign:'center',
           sortable:false,
@@ -466,7 +503,7 @@ const initialGetHistoryKR=(row:any)=>{
            
          },
          { field: 'sevenTenthsValue',
-          align:'center',
+          align:'right',
           headerName: '70%',
           headerAlign:'center',
           sortable:false,
@@ -488,7 +525,7 @@ const initialGetHistoryKR=(row:any)=>{
            
          },
          { field: 'oneValue',
-          align:'center',
+          align:'right',
           headerName: '100%',
           headerAlign:'center',
           sortable:false,
@@ -512,7 +549,7 @@ const initialGetHistoryKR=(row:any)=>{
          
           ,
            { field: 'score',
-           headerName: 'امتیاز',
+           headerName: 'امتیاز جدید',
            align:'center',
            sortable:false,
            headerAlign:'center',
@@ -617,6 +654,8 @@ const initialGetHistoryKR=(row:any)=>{
         rowid:false,
         okrStateName:false,
         pointingSystemType:false,
+        forceEndDate:false,
+        startDate:false
 
       },
     },
@@ -647,13 +686,16 @@ const initialGetHistoryKR=(row:any)=>{
 
       if (!keyR) {
         return <Box 
-        width={'100%'} 
-        height={'100%'} 
+        width={'50%'} 
+      
+        mx={'auto'}
         display={'flex'} 
         flexDirection={'column'} 
         justifyContent={'center'} 
         alignItems={'center'} >
-       <EmptyDataIcon/>
+    
+        <EmptyDataIcon  style={{width:'80px',height:'80px'}}   />
+     
        <Typography mt={2} color={'blue'} textAlign={'center'}  >
        برای نمایش نتایج کلیدی از جدول بالا یک هدف را انتخاب نمایید.
        </Typography>
@@ -692,7 +734,7 @@ const initialGetHistoryKR=(row:any)=>{
           setSelectionModel={setKrSelectionModel}
           selectionModel={krSelectionModel}
           initState={KRinitialState}
-          additionalToolbar={true}
+          additionalToolbar={false}
           setShowToolbarModal={setShowToolbarModal}
           />
            </Grid>
@@ -711,7 +753,7 @@ const initialGetHistoryKR=(row:any)=>{
       }
   return (
     <>
-    <Grid container sx={{bgcolor:'#F9F9F9'}} style={{ height: 350, width: '100%' }} >
+    <Grid container sx={{bgcolor:'#F9F9F9'}} style={{ width: '100%' }} >
        <Grid item xs={12}>
        <Box py={1} my={2} borderRadius={2} boxShadow={2} bgcolor={'white'} >
             <Grid container >
@@ -774,12 +816,14 @@ const initialGetHistoryKR=(row:any)=>{
     </Box>
 
       <Box 
-      bgcolor={'white'} 
+      // bgcolor={'red'} 
       mt={2} 
       width={'100%'} 
       borderRadius={3} 
       boxShadow={2} 
-      rowGap={3} > 
+      bgcolor={'white'}
+      // rowGap={1} 
+      > 
      
        <Grid item xs={12}  >
        <Typography px={3} 
@@ -793,7 +837,7 @@ const initialGetHistoryKR=(row:any)=>{
        </Grid>
 
 
-     <Grid item xs={12} minHeight={'78vh'} >
+     <Grid item xs={12} py={1}    >
       
      <Grid container  >
      {

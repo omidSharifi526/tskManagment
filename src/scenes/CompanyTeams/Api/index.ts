@@ -14,7 +14,9 @@ const GetAllTeamChildByParentId=async({queryKey}:any)=>{
     // let 
     let ids=queryKey[1];
     console.log(ids)
+   if (ids.teamId.length>2) {
     return await axiosInstance.get(`Meeting/GetAllTeamChildByParentId?teamId=${ids.teamId}&periodId=${ids.priodId}&meetingId=${ids.meetingId}`)
+   }
 
 }
 

@@ -16,6 +16,7 @@ import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import {Stack} from '@mui/material';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 // import 
 
 
@@ -26,15 +27,9 @@ export default function Timer({close,show}:any) {
   const[initialMinutes,setInitialMinutes]=useState<number>(1)
 
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+ 
 
-  const handleClose = () => {
-    close()
-    // setRunTimer(!runTimer)
-
-  };
+ 
 
   const initialPlay=()=>{
     setPlayMode(!playMode)
@@ -75,15 +70,24 @@ export default function Timer({close,show}:any) {
           </Box>
     }
   }
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div>
-    
+        <Box>
+       <IconButton onClick={handleClick}><AccessAlarmIcon/></IconButton>
+       </Box>
       <Popover
         id={id}
-        open={show}
+        open={open}
         anchorEl={anchorEl}
-        // onClose={handleClose}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',

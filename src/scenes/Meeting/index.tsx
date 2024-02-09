@@ -8,30 +8,31 @@ import { useGetAllMeetings } from './Hooks';
 import CircularProgress from '@mui/material/CircularProgress';
 import Loading from '../../components/Loading/Loading';
 import Skeleton from '@mui/material/Skeleton';
+import { useDispatch } from 'react-redux';
+import { setLoadingR } from './MeetingsSlice/MeetingsSlice';
+
+
 
 
 const Meeting :React.FC=function(){
   let scletList=['1','2','3','4','5','6','7','8','9','10']
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
-  const{data:meetingData,isLoading,isError}=useGetAllMeetings({});
+  // const{data:meetingData,isLoading,isError}=useGetAllMeetings({});
   const[userTenants,setUserTenants]=useState<any[]>()
   const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
   const[LoadingFlag,setLoadinFlag]=useState<boolean>(false);
+  
 
   const loading=useSelector((state:any)=>state.meetings.loading);
+  const dispatch=useDispatch();
 
 // console.log(meetingData)
 
-  useEffect(() => {
-  //  console.log(isLoading)
-  //   // setUserTenants(meetingData)
-  //  setLoadinFlag(true)
-  //  setTimeout(() => {
-  //   setLoadinFlag(false)
-  //  }, 2);
-  // console.log(meetingsDataa)
-  setLoadinFlag(true)
-  }, [meetingsDataa])
+  // useEffect(() => {
+ 
+  // dispatch(setLoadingR(true))
+
+  // }, [meetingsDataa])
   
   setTimeout(() => {
     setLoadinFlag(false)

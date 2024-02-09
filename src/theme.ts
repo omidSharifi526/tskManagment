@@ -6,14 +6,16 @@ const theme = createTheme({
   
   typography:{
     fontFamily:'yekan !important  ',
-    fontSize:12
+    fontSize:12,
+    // fontWeightBold:900
 
   },
   components: {
     MuiTooltip: {
         styleOverrides: {
             tooltip: {
-                fontSize: '0.8rem !important'
+                fontSize: '0.8rem !important',
+                
             }
         }
     }

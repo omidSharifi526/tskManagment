@@ -19,12 +19,22 @@ const MeetingSlider = () => {
   const priods=useSelector((state:any)=>state.meetings.periodList);
   const dispatch=useDispatch();
   const[currentPriod,setCurrentPriod]=useState<any>(priods?.map((e:any) => e.isCurrent).indexOf(true));
-
+  const currentPriodId=priods.find((priod:any)=>priod.isCurrent).id;
+  console.log(currentPriodId)
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
-  // console.log(profileTenantId)
-  const [priodIds,setPriodIds]=useState({tenantId:profileTenantId,priodId:'8f4a58ba-ae5f-4c54-89a6-ac643f5ced68'});
+  console.log(profileTenantId)
+  const[ids,setIds]=useState<any>({tenantId:profileTenantId,priodId:currentPriodId})
+  const [priodIds,setPriodIds]=useState(ids);
 
-  const{isFetched,isLoading}=useGetAllMeetings(priodIds);
+  const{isFetched,isLoading}=useGetAllMeetings(ids);
+
+  useEffect(() => {
+   console.log(profileTenantId)
+    // setIds({tenantId:profileTenantId,priodId:currentPriodId})
+  
+   
+  }, [profileTenantId])
+  
 
 
 
@@ -47,9 +57,12 @@ const MeetingSlider = () => {
     
     const currentSlideIndex = swiper.activeIndex; // Get the active slide index
     const currentSlideData = priods[currentSlideIndex]; // Get data from the periods array
-  
-    dispatch(setPriodIdR(currentSlideData?.id))
-    setPriodIds((prev)=>({...prev,priodId:currentSlideData?.id}))
+    let{id}=currentSlideData;
+    dispatch(setPriodIdR(id))
+    setPriodIds((prev:any)=>({...prev,priodId:id}));
+    setIds((prev:any)=>({tenantId:profileTenantId,priodId:id}));
+    dispatch(setLoadingR(true))
+    console.log(ids)
   };
 
  

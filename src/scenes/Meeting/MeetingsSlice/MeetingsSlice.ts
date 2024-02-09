@@ -21,7 +21,9 @@ type meetingsStateType = {
     objectivie:any[],
     keyResults:any[],
     loading:boolean,
-    objUpdated:boolean
+    objUpdated:boolean,
+    changeTenantMode:boolean
+
     
  
 };
@@ -41,7 +43,8 @@ teamList:[],
 objectivie:[],
 keyResults:[],
 loading:false,
-objUpdated:false
+objUpdated:false,
+changeTenantMode:false
 }
 
 
@@ -163,6 +166,8 @@ state.objectivie=[]
 
 const setProfileName=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
+  console.log(payload)
+  state.profileName=payload;
   // console.log(payload)
 }
 
@@ -183,6 +188,12 @@ const setMeetingId=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
   // console.log(payload)
   state.meetingId=payload;
+}
+// changeTenantMode
+
+const setChangeTenantMode=(state:any,action:PayloadAction<any>)=>{
+  let{payload}=action;
+  state.changeTenantMode=payload;
 }
 
 
@@ -206,7 +217,8 @@ export const meetingsSlice = createSlice({
     resetTeamInfo,
     setTeamInfo,
     setPriodId,
-    setMeetingId
+    setMeetingId,
+    setChangeTenantMode
   
    
   },
@@ -226,7 +238,8 @@ export const {
     updateObj:updateObjR,
     resetTeamInfo:resetTeamInfoR,
     setPriodId:setPriodIdR,
-    setMeetingId:setMeetingIdR
+    setMeetingId:setMeetingIdR,
+    setChangeTenantMode:setChangeTenantModeR
  } = meetingsSlice.actions
 
 

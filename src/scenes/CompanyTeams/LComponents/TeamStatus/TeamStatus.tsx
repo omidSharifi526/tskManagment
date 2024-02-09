@@ -58,7 +58,7 @@ const TeamStatus:React.FC=()=> {
        width: 150 
        ,renderCell:()=>{
         return <Box>
-              <Typography>{'خالی'}</Typography>
+              <Typography>{'-'}</Typography>
         </Box>
        }
       }

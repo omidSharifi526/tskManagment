@@ -9,20 +9,24 @@ import {getAllMeetingByIds,
     getWebObjectiveDetailsCheckinMeetingByTeamId
 
 } from '../Api/Index';
-import {setMeetingsListR,setObjectivieR,setKeyResultsR} from '../MeetingsSlice/MeetingsSlice';
-import { useDispatch } from 'react-redux';
+import {setMeetingsListR,setObjectivieR,setKeyResultsR,setLoadingR} from '../MeetingsSlice/MeetingsSlice';
+import { useDispatch,useSelector } from 'react-redux';
 import{setTeamsDataR} from '../MeetingsSlice/MeetingsSlice'
 // useQuery
 
 
 const useGetAllMeetings=(meetIds:any|null)=>{
     const dispatch=useDispatch();
-    // console.log(meetIds)
+    const changeTenantMode=useSelector((state:any)=>state.meetings.changeTenantMode);
+    console.log(meetIds)
     return useQuery(['getAllMeetingByIds',meetIds],getAllMeetingByIds,{
         cacheTime:Infinity,
-        enabled:!!meetIds.priodId,
+        enabled:!!meetIds,
+        refetchOnWindowFocus:false,
         onSuccess:(data)=>{
-        // console.log(data)
+    //    if (changeTenantMode) {
+        dispatch(setLoadingR(false))
+    //    }
         }
         ,
         onError:(err)=>{

@@ -11,18 +11,26 @@ import {useGetPriodById} from '../../../../components/Login/Hooks/Index';
 import LyBackdrop from '../../../../components/Layouts/BackDrop/BackDrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
+import { setLoadingR } from '../../MeetingsSlice/MeetingsSlice';
+import { useDispatch } from 'react-redux';
+
 // useNavigate
 // useEffect
 
 const UserTypeSelection = (props:any) => {
-  
+  const dispatch=useDispatch()
   const[tenantId,setTenantId]=useState<string>();
+  // useEffect(() => {
+    
+  //   setLoadingR(false)
+   
+  // }, [])
+  
 
  
   const {data:priodData,isLoading}=useGetPriodById(tenantId||null);
   const[currenPriod,setCurrentPeriod]=useState<object|null>({});
-  // console.log(currenPriod)
-  // console.log(currenPriod)
+
   // console.log(priodData)
 
 const userTenantsData=useSelector((state:any)=>state.loign.userInfo.userTenants);
@@ -76,6 +84,7 @@ userTenantsData && userTenantsData?.map((item:any,i:number)=>{
           <UserProfileTypeCart 
           priodsIds={currenPriod}
           setTenantId={setTenantId}  
+          changeTenant={props.changeT}
           key={i} 
           item={item}  
           />

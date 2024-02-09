@@ -15,6 +15,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import{Popover} from '@mui/material';
+import TenantsList from './LComponents/TenantList/TenantList';
+import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 // import ListItemText from '@mui/material/ListItemText';
 
 import { Link, Outlet } from 'react-router-dom';
@@ -29,13 +32,7 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
-import PersonIcon from '@mui/icons-material/Person';
-import Avatar from '@mui/material/Avatar';
-import Useimg from './StaticsData/SVG/3.jpg';
-// import {IconButton} from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import GridViewIcon from '@mui/icons-material/GridView';
+
 import { useAuth } from "../../Context/AuthProvider";
 import { useDispatch } from 'react-redux';
 import{resetRValuesR} from '../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
@@ -140,7 +137,10 @@ const itemsList = [
   // }
 ]
 
+
 export default function MiniDrawer() {
+const[showTenantItem,setShowTenantItem]=React.useState(false)
+  // const [showTenantList,setShowTenantList]=React.useState(false)
   const userPhone=useSelector((state:any)=>state.loign.userPhoneNumber);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
@@ -158,7 +158,7 @@ const handleListItemClick = (
     handleListItemClick(event, 0)
     setOpenItem(!openItem)
   };
-  // const teamInfo:any=useSelector((state:any)=>state.meetings.teamInfo);
+  const tenantList=useSelector((state:any)=>state.loign.userInfo.userTenants);
   const tenantName=useSelector((state:any)=>state.meetings.profileName);
   const dispatch=useDispatch()
   
@@ -188,6 +188,14 @@ const initiaLogOut=()=>{
   // const token=localStorage.getItem('accessToken');
   localStorage.setItem('accessToken','')
   dispatch(resetRValuesR())
+}
+
+// const initialShowTenantList=()=>{
+//   // console.log('ihhihihi')
+// setShowTenantList(true)
+// }
+if (showTenantItem) {
+  return <UserTypeSelection changeT={setShowTenantItem}    />
 }
   return (
     <Box sx={{ display: 'flex' ,}} >
@@ -230,9 +238,26 @@ const initiaLogOut=()=>{
                       <Box>
                      {/* <Avatar alt="Cindy Baker" src={Useimg} /> */}
                       </Box>
-                      <Typography  fontSize={'0.8rem'} fontWeight={600} pr={3}  color={'black'}>
+                      {/* <Typography  fontSize={'0.8rem'} fontWeight={600} pr={3}  color={'black'}>
                     {tenantName}
-                      </Typography>
+                      </Typography> */}
+                      {/* <IconButton   onClick={initialShowTenantList}   >
+                     <Typography sx={{fontSize:'15px',fontWeight:600}}>
+                     {tenantName}
+                     </Typography>
+                      </IconButton> */}
+                
+                      
+                        <TenantsList 
+                        setShowTenantItem={setShowTenantItem} 
+                        tenantList={tenantList} 
+                         ButtonCaption={tenantName} 
+                          />
+
+                        
+                        
+                      
+                     
                       
                       </Box>
             </Box>
