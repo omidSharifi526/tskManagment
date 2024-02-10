@@ -20,7 +20,7 @@ export const UserProfileTypeCart = (props:any) => {
 const handleClickCart=()=>{
   // console.log(item.tenantId)
   setTenantId(item.tenantId);
-console.log(item)
+// console.log(item)
 
 
   dispatch(setProfileTenantIdR(item))

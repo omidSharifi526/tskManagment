@@ -18,15 +18,16 @@ import{setTeamsDataR} from '../MeetingsSlice/MeetingsSlice'
 const useGetAllMeetings=(meetIds:any|null)=>{
     const dispatch=useDispatch();
     const changeTenantMode=useSelector((state:any)=>state.meetings.changeTenantMode);
-    console.log(meetIds)
+    // console.log(meetIds)
     return useQuery(['getAllMeetingByIds',meetIds],getAllMeetingByIds,{
-        cacheTime:Infinity,
+        staleTime:1000,
+        // cacheTime:Infinity,
         enabled:!!meetIds,
         refetchOnWindowFocus:false,
         onSuccess:(data)=>{
-    //    if (changeTenantMode) {
-        dispatch(setLoadingR(false))
-    //    }
+      
+        // dispatch(setLoadingR(false))
+     
         }
         ,
         onError:(err)=>{
@@ -62,7 +63,7 @@ return useQuery(['getTeamsByTenantId',id],getAllTeamsByTenantId,{
 const useGetTeamDetailsById=()=>{
     return useQuery(['getTeamDetailsById'],getTeamDetailsById,{
         onSuccess:(data)=>{
-       console.log(data)
+    //    console.log(data)
         },
         onError:(err)=>{
         console.log(err)
@@ -82,7 +83,7 @@ const useGetAllObjectiveByTeamId=(nodeId:any)=>{
        ,
         onSuccess:(data:any)=>{
             let rawData=data?.data?.data
-       console.log(rawData)
+    //    console.log(rawData)
        dispatch(setObjectivieR(rawData))
         },
         onError:(err)=>{
@@ -103,9 +104,9 @@ return useQuery(['GetAllKeyResultByObjectiveId',objectiveId],getAllKeyResultByOb
     console.log(err)
    },
    onSuccess:(data)=>{
-   console.log(data)
+//    console.log(data)
    let rawdata=data?.data.data;
-   console.log(rawdata);
+//    console.log(rawdata);
    dispatch(setKeyResultsR(rawdata))
    },
   
@@ -119,7 +120,7 @@ const useGetAllTeamStatusByTenantId=(id:any)=>{
       cacheTime:Infinity,
       enabled:!!id,
       onSuccess:(data)=>{
-     console.log(data)
+    //  console.log(data)
       }
       ,
       onError:(err)=>{

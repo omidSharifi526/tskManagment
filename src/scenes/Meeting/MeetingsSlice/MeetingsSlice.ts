@@ -67,7 +67,9 @@ const setMeetingsList=(state:any,action:PayloadAction<any>)=>{
 }
 
 const setLoading=(state:any,action:PayloadAction<any>)=>{
+  
   let {payload}=action;
+  // console.log(payload)
   state.loading=payload
 }
 
@@ -166,7 +168,7 @@ state.objectivie=[]
 
 const setProfileName=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  console.log(payload)
+  // console.log(payload)
   state.profileName=payload;
   // console.log(payload)
 }

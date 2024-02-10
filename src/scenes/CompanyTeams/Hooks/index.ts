@@ -12,7 +12,7 @@ return useQuery(['GetKeyResultMeetingHistory',krId,prId,meetId],GetKeyResultMeet
     ,
 
     onError:(err)=>{
-     console.log(err)
+    //  console.log(err)
     }
     ,
     onSuccess:(data)=>{
@@ -37,7 +37,7 @@ const useGetAllTeamChildByParentId=(teamId:string | null,meetingId:string | null
     cacheTime:Infinity,
     refetchOnWindowFocus:false,
     onError:(err)=>{
-    console.log(err)
+    // console.log(err)
     }
     ,
     select:(data:any)=>{

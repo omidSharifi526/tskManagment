@@ -225,7 +225,7 @@ const renderContentUi=()=>{
 
 
   return (
-   <Box  sx={{boxShadow:1,borderRadius:1}} >
+   <Box  sx={{boxShadow:1,borderRadius:1,minHeight:500}} >
     {
       getObjLoading && <LyBackdrop visible={true}  >
       <CircularProgress sx={{color:'white'}}  />

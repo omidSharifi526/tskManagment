@@ -20,31 +20,24 @@ import TenantsList from './LComponents/TenantList/TenantList';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 // import ListItemText from '@mui/material/ListItemText';
 
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet,useLocation } from 'react-router-dom';
 import {SideBarLogo,OKRtext} from './StaticsData/index';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {ReactComponent as BaseInfoIcon} from './StaticsData/Icons/BaseInfoIcon.svg';
 import {ReactComponent as MeetingIcon} from './StaticsData/Icons/MeetingIcon.svg';
 
 import Collapse from '@mui/material/Collapse';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-
 import { useAuth } from "../../Context/AuthProvider";
 import { useDispatch } from 'react-redux';
 import{resetRValuesR} from '../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
 import { useSelector } from 'react-redux';
-
-
 import DateObject from "react-date-object";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-
 import Badge from '@mui/material/Badge';
-import MeetingSlider from '../../scenes/Meeting/LComponents/MeetingSlider/MeetingSlider';
+
 
 const drawerWidth = 240;
 
@@ -143,6 +136,10 @@ const[showTenantItem,setShowTenantItem]=React.useState(false)
   // const [showTenantList,setShowTenantList]=React.useState(false)
   const userPhone=useSelector((state:any)=>state.loign.userPhoneNumber);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const location = useLocation();
+  const { pathname} = location;
+  let meetingRoute=pathname.includes('meeting')
+  // console.log(pathname)
 
 const handleListItemClick = (
   event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -172,7 +169,7 @@ const handleListItemClick = (
   };
 
   const handleDrawerClose = () => {
-    console.log('run')
+    // console.log('run')
     setOpen(false);
     setOpenItem(false)
   };
@@ -248,11 +245,13 @@ if (showTenantItem) {
                       </IconButton> */}
                 
                       
-                        <TenantsList 
-                        setShowTenantItem={setShowTenantItem} 
-                        tenantList={tenantList} 
-                         ButtonCaption={tenantName} 
-                          />
+                      {
+                       meetingRoute && <TenantsList 
+                          setShowTenantItem={setShowTenantItem} 
+                          tenantList={tenantList} 
+                           ButtonCaption={tenantName} 
+                            />
+                      }
 
                         
                         

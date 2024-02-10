@@ -8,7 +8,7 @@ const TeamStatus:React.FC=()=> {
   const priodId:any=useSelector((state:any)=>state.meetings.priodId);
   const meetingId:any=useSelector((state:any)=>state.meetings.meetingId);
   const teamId:any=useSelector((state:any)=>state.meetings.teamInfo.id);
-  console.log(priodId,meetingId,teamId);
+  // console.log(priodId,meetingId,teamId);
 
     const{data:teamStatusData,isLoading}=useGetAllTeamChildByParentId(teamId,meetingId,priodId);
 
@@ -90,11 +90,11 @@ const TeamStatus:React.FC=()=> {
          
       ],[]);
 
-    useEffect(() => {
+    // useEffect(() => {
       
-    console.log(teamStatusData)
+    // console.log(teamStatusData)
       
-    }, [teamStatusData])
+    // }, [teamStatusData])
 
     if (isLoading) {
       return <Box height={'300px'} display={'flex'} alignItems={'center'} justifyContent={'center'}  >
@@ -123,7 +123,7 @@ const TeamStatus:React.FC=()=> {
    <DyDataGrid 
    data={teamStatusData}
    columns={teamsColumns}
-   hideFooter={true}
+   hideFooter={false}
    selectionModel={''}
    initialOnRowClick={()=>{}}
 

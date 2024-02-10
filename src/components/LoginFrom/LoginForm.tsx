@@ -55,7 +55,7 @@ const LoginForm = ({setContentState}:any) => {
 
 
   const initialForgetPass=()=>{
-    console.log('runnn')
+    // console.log('runnn')
     setContentState((prev:any)=>({...prev,content:'forgetPassWord'}))
   }
 
@@ -72,7 +72,7 @@ const LoginForm = ({setContentState}:any) => {
   // console.log(data)
 
   const initSetUserInfoState=({target}:any)=>{
-  console.log(target)
+  // console.log(target)
   }
 
   

@@ -8,7 +8,8 @@ import{useGetPriodById} from '../../../../components/Login/Hooks/Index';
 import { useSelector } from 'react-redux';
 import { useGetAllMeetings } from '../../Hooks';
 import {useDispatch} from 'react-redux';
-import {setPriodIdR} from '../../MeetingsSlice/MeetingsSlice'
+import {setPriodIdR} from '../../MeetingsSlice/MeetingsSlice';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import SwiperCore, { Navigation } from 'swiper';
 SwiperCore.use([Navigation]);
@@ -16,24 +17,46 @@ SwiperCore.use([Navigation]);
 
 const MeetingSlider = () => {
   // const dispatch=useDispatch();
-  const priods=useSelector((state:any)=>state.meetings.periodList);
   const dispatch=useDispatch();
-  const[currentPriod,setCurrentPriod]=useState<any>(priods?.map((e:any) => e.isCurrent).indexOf(true));
-  const currentPriodId=priods.find((priod:any)=>priod.isCurrent).id;
-  console.log(currentPriodId)
-  const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
-  console.log(profileTenantId)
-  const[ids,setIds]=useState<any>({tenantId:profileTenantId,priodId:currentPriodId})
-  const [priodIds,setPriodIds]=useState(ids);
 
+  // const priods=useSelector((state:any)=>state.meetings.periodList);
+ 
+  
+  
+
+
+  const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
+  // console.log(profileTenantId)
+  
+
+
+
+
+
+
+
+
+
+  const{data:perData,isLoading:perLoading}=useGetPriodById(profileTenantId);
+  // console.log(perData);
+  const[currentPriod,setCurrentPriod]=useState<any>(perData?.map((e:any) => e.isCurrent).indexOf(true));
+  const currentPriodId=perData?.find((priod:any)=>priod.isCurrent).id;
+  const[ids,setIds]=useState<any>(null)
   const{isFetched,isLoading}=useGetAllMeetings(ids);
 
   useEffect(() => {
-   console.log(profileTenantId)
+  //  console.log(profileTenantId)
     // setIds({tenantId:profileTenantId,priodId:currentPriodId})
-  
+    
    
-  }, [profileTenantId])
+  }, [profileTenantId]);
+
+
+  useEffect(() => {
+    
+// console.log(perData)
+  }, [perData])
+  
   
 
 
@@ -55,15 +78,22 @@ const MeetingSlider = () => {
   // handleSlideChange
   const handleSlideChange = (swiper: any) => {
     
-    const currentSlideIndex = swiper.activeIndex; // Get the active slide index
-    const currentSlideData = priods[currentSlideIndex]; // Get data from the periods array
+    const currentSlideIndex:any = swiper.activeIndex; // Get the active slide index
+    const currentSlideData:any = perData?perData[currentSlideIndex]:null; // Get data from the periods array
     let{id}=currentSlideData;
     dispatch(setPriodIdR(id))
-    setPriodIds((prev:any)=>({...prev,priodId:id}));
+    // setPriodIds((prev:any)=>({...prev,priodId:id}));
     setIds((prev:any)=>({tenantId:profileTenantId,priodId:id}));
     dispatch(setLoadingR(true))
-    console.log(ids)
+    // console.log(ids)
   };
+  if (perLoading) {
+    return <Box width={'100%'} py={4} textAlign={'center'}  >
+      <CircularProgress sx={{color:'blue'}}  />
+    </Box>
+  }
+
+
 
  
   return (
@@ -74,7 +104,7 @@ const MeetingSlider = () => {
     </Typography>
    </Box>
      <Swiper
-     initialSlide={currentPriod}
+     initialSlide={3}
      style={{textAlign:'center',fontSize:'2rem'}}
       spaceBetween={30}
       slidesPerView={1}
@@ -90,24 +120,9 @@ const MeetingSlider = () => {
       }}
       onSlideChange={(swiper) => handleSlideChange(swiper)}
     >
-      {/* <SwiperSlide  >
-      <Typography fontWeight={700}  >
-      پاییز 1402
-      </Typography>
-      </SwiperSlide>
-      <SwiperSlide>
-      <Typography fontWeight={700}  >
-      زمستان 1402
-      </Typography>
-      </SwiperSlide>
-
-      <SwiperSlide>
-       <Typography fontWeight={700}  >
-       بهار1403
-      </Typography>
-      </SwiperSlide> */}
+    
       {
-        priods && priods.map((prd:any,i:number)=>{
+        perData && perData.map((prd:any,i:number)=>{
           return (
             <SwiperSlide key={i}  >
             <Typography fontWeight={700}  >

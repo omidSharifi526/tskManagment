@@ -10,41 +10,37 @@ import Loading from '../../components/Loading/Loading';
 import Skeleton from '@mui/material/Skeleton';
 import { useDispatch } from 'react-redux';
 import { setLoadingR } from './MeetingsSlice/MeetingsSlice';
+// import { useGetAllMeetings } from './Hooks';
 
 
 
 
 const Meeting :React.FC=function(){
-  let scletList=['1','2','3','4','5','6','7','8','9','10']
+//  const{isLoading:meetLoadin,data:meetdata}=useGetAllMeetings(null)
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
+  const changeTenant=useSelector((state:any)=>state.meetings.profileTenantId);
   // const{data:meetingData,isLoading,isError}=useGetAllMeetings({});
   const[userTenants,setUserTenants]=useState<any[]>()
   const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
   const[LoadingFlag,setLoadinFlag]=useState<boolean>(false);
+  const{data:meetData,isLoading:meetLoad}=useGetAllMeetings(null)
   
 
   const loading=useSelector((state:any)=>state.meetings.loading);
   const dispatch=useDispatch();
 
-// console.log(meetingData)
-
-  // useEffect(() => {
- 
-  // dispatch(setLoadingR(true))
-
-  // }, [meetingsDataa])
+  useEffect(() => {
   
-  setTimeout(() => {
-    setLoadinFlag(false)
-  }, 2000);
+    setTimeout(() => {
+     dispatch(setLoadingR(false))
+    }, 5000);
+     },[loading,meetingsDataa]);
+  
 
-  // if (loading) {
-  //   return (
-  //     <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
+
+
+
+  
 
   if (meetingsDataa?.length==0) {
   return (
@@ -55,7 +51,7 @@ const Meeting :React.FC=function(){
     </Box>
   )
   }
-  if (loading) {
+  if (loading ) {
     return <Box display={'flex'} 
     alignItems={'center'} 
     justifyContent={'center'} 

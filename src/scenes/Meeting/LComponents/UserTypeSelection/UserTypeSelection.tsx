@@ -13,11 +13,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 import { setLoadingR } from '../../MeetingsSlice/MeetingsSlice';
 import { useDispatch } from 'react-redux';
+import useWindowDimensions from '../../../../components/DeviceSize/DeviceSize';
 
 // useNavigate
 // useEffect
 
 const UserTypeSelection = (props:any) => {
+  const {width } = useWindowDimensions();
+  let authDevice=width>600;
+  // console.log(width)
   const dispatch=useDispatch()
   const[tenantId,setTenantId]=useState<string>();
   // useEffect(() => {
@@ -52,6 +56,17 @@ useEffect(() => {
         <CircularProgress sx={{color:'white'}}  />
       </LyBackdrop>
     }
+
+    if (!authDevice) {
+      return<Box width={'100%'} py={5} textAlign={'center'}  >
+    <Typography fontWeight={900}  mt={4} >
+      لطفا از نسخه موبایل استفاده کنید  
+    </Typography>
+      </Box>
+    } 
+
+
+
   return (
    
     <Grid py={'1rem'}  item  xs={12} md={12} minHeight={'100vh'} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >

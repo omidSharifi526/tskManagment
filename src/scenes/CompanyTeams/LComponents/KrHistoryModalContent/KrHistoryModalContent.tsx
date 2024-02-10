@@ -16,19 +16,37 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
         headerAlign:'center',
         renderCell: (params:any) => params.api.getAllRowIds().indexOf(params.id)+1
       },
-        { field: 'meetingNumber',
-         align:'center',
-         headerName: 'شماره جلسه',
-         headerAlign:'center',
-         sortable:false,
-         wrap:'wrap',
-          minWidth: 130,
-          fontsize:'12px !important',
-    }
-    ,
+      { field: 'meetingDate',
+           headerName: 'تاریخ جلسه',
+           sortable:false,
+           headerAlign:'center',
+           align:'center',
+            width: 100,
+            
+            }
+            ,
       
-        { field: 'currentState',
-         headerName: 'وضعیت فعلی',
+          { field: 'newValue',
+          headerName: 'مقدار اعلام شده',
+          align:'center',
+          sortable:false,
+          headerAlign:'center',
+           width: 130,
+           renderCell:({value}:any)=>{
+            return <Box>
+             {
+              value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+             }
+            </Box>
+          }
+           
+           }
+           ,
+           { field: 'currentState',
+         headerName: 'وضعیت ',
          align:'center',
          sortable:false,
          headerAlign:'center',
@@ -44,13 +62,26 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
             height={'75%'}   
             bgcolor={value==='در مسیر مناسب'?'#D5F7D4':value==='نیازمند توجه'?'#FFEBEF':'#F0F1F2'}  >
    
-              <Typography px={8} color={value==='نیازمند توجه'?'#F95700':value==='خارج از مسیر مناسب'?'#CC0030':'black'} >
+              <Typography fontSize={'12px'} px={8} color={value==='نیازمند توجه'?'#F95700':value==='خارج از مسیر مناسب'?'#CC0030':'black'} >
               {value}
               </Typography>
             </Box>
-                } 
+                }
         
-        },
+        }
+            ,
+        { field: 'meetingNumber',
+         align:'center',
+         headerName: 'شماره جلسه',
+         headerAlign:'center',
+         sortable:false,
+         wrap:'wrap',
+          minWidth: 130,
+          fontsize:'12px !important',
+    }
+    ,
+      
+        
       
           { field: 'newValue',
           headerName: 'مقدار اعلام شده',
@@ -151,15 +182,7 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
            }
     
           }
-          ,
-          { field: 'meetingDate',
-           headerName: 'جلسه',
-           sortable:false,
-           headerAlign:'center',
-           align:'center',
-            width: 80,
-            
-            },
+        
       ],[]);
 
     if(loadingFlag){
@@ -179,6 +202,19 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
     // setSelectionModel,
     // setShowToolbarModal,
     // additionalToolbar
+    let KRHistoryinitialState={
+      columns: {
+        columnVisibilityModel: {
+          meetingNumber:false,
+          startValue:false,
+          // pointingSystemType:false,
+          // forceEndDate:false,
+          // startDate:false
+  
+        },
+      },
+  
+    }
 
   return (
     <Grid container  >
@@ -193,7 +229,8 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
       initialOnRowClick={()=>{}}
       additionalToolbar={false}
       setSelectionModel={()=>{}}
-      initState={{}}
+      initState={KRHistoryinitialState}
+      // import 'meetingNumber'
       />
     </Box>
     </Grid>

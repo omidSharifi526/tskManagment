@@ -68,7 +68,7 @@ export default function BasicTabs() {
     <Box sx={{ width: '100%' }}>
        
 
-      <Box sx={{ borderBottom: 1, borderColor: 'transparent',display:'flex',justifyContent:'space-between' }}  >
+      <Box sx={{ borderBottom: 1, borderColor: 'transparent',display:'flex',justifyContent:'space-between'}}  >
         
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="جلسات همه" {...a11yProps(0)} />

@@ -92,15 +92,18 @@ const initialGetHistoryKR=(row:any)=>{
          headerAlign:'center',
          sortable:false,
          wrap:'wrap',
-          minWidth: 290,
+          minWidth: 150,
           fontsize:'12px !important',
           renderCell:({value}:any)=>{
+            let length=value.length;
             return <Box>
+       
+            
              {
-              value.length>40? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              {value}
-            </Tooltip>:
-            <Typography fontSize={'13px'} >{value}</Typography>
+              value.length>20?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,20)}{length>20?'...':''}</Typography>
+            </Tooltip></> :
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
           }
@@ -235,17 +238,15 @@ const initialGetHistoryKR=(row:any)=>{
          align:'left',
          headerAlign:'center',
          sortable:false,
-          minWidth: 250 ,
+          minWidth: 150 ,
         // fontsize:'12px',
       
         renderCell:({value}:any)=>{
           let length=value.length;
           return <Box>
-     
-          
            {
             value.length>20?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-            <Box>{value.slice(0,20)}{length>20?'...':''}</Box>
+            <Typography sx={{fontSize:'12px'}}  >{value.slice(0,20)}{length>20?'...':''}</Typography>
           </Tooltip></> :
           <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
            }
@@ -293,16 +294,20 @@ const initialGetHistoryKR=(row:any)=>{
                 headerAlign:'center',
                 width: 100 ,
                 renderCell:({value}:any)=>{
+                if (typeof value ==='string') {
                   return <Box>
-             
-                  
-                   {
-                    value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-                    {value}
-                  </Tooltip>:
-                  <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
-                   }
-                  </Box>
+                  {
+                   value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+                   <Typography fontSize={'12px'}  >  {value}</Typography>
+                 </Tooltip>:
+                 <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+                  }
+                 </Box>
+
+               }
+               else{
+                return value
+               }
                 }
               }
           ,
@@ -327,7 +332,7 @@ const initialGetHistoryKR=(row:any)=>{
           },
           //  
           { field:'currentState',
-          headerName: 'وضعیت فعلی',
+          headerName: 'وضعیت ',
           sortable:false,
           headerAlign:'center',
           align:'center',
@@ -350,7 +355,7 @@ const initialGetHistoryKR=(row:any)=>{
                 } 
           
           
-          },
+          }
            ,
       
            { field: 'nextState',
@@ -415,37 +420,17 @@ const initialGetHistoryKR=(row:any)=>{
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
-           switch (value) {
-            case 'درصدی':
-            return <Box>
-              <Typography fontWeight={900}>%</Typography>
-            </Box>
-              break;
+
+  
+              return (
+                <Typography  fontSize={'12px'}  >{value}</Typography>
+              )
+            
+           }
            
-            default:
-              return <Typography  fontSize={'12px'}  >{value}</Typography>
-              break;
-           }
-           }
            
          },
-         ,{ 
-          field:'oldScore',
-          headerName: 'امتیاز قبلی',
-          align:'center',
-          sortable:false,
-          headerAlign:'center',
-          width: 80 ,
-        },
-        // { 
-        //   field: 'score',
-        //   headerName: 'امتیاز جدید',
-        //   align:'center',
-        //   sortable:false,
-        //   headerAlign:'center',
-        //   width: 80 ,
-        // }
-        // ,
+         
          { field: 'pointingSystemType',
          align:'center',
          headerName: 'سیستم امتیاز دهی',
@@ -458,7 +443,7 @@ const initialGetHistoryKR=(row:any)=>{
         },
         //  startValue
         { field: 'startValue',
-          align:'center',
+          align:'left',
           headerName: 'شروع',
           headerAlign:'center',
           sortable:false,
@@ -466,13 +451,12 @@ const initialGetHistoryKR=(row:any)=>{
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
+            let length=value.length;
             return <Box>
-       
-            
              {
-              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              {value}
-            </Tooltip>:
+              value.length>4?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>4?'...':''}</Typography>
+            </Tooltip></> :
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
@@ -481,21 +465,20 @@ const initialGetHistoryKR=(row:any)=>{
          },
 
           { field: 'threeTenthsValue',
-          align:'right',
+          align:'left',
           headerName: '30%',
           headerAlign:'center',
           sortable:false,
-           width: 50,
+           width: 70,
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
+            let length=value.length;
             return <Box>
-       
-            
              {
-              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              {value}
-            </Tooltip>:
+              value.length>6?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>6?'...':''}</Typography>
+            </Tooltip></> :
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
@@ -503,21 +486,20 @@ const initialGetHistoryKR=(row:any)=>{
            
          },
          { field: 'sevenTenthsValue',
-          align:'right',
+          align:'left',
           headerName: '70%',
           headerAlign:'center',
           sortable:false,
-           width: 50,
+           width: 70,
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
+            let length=value.length;
             return <Box>
-       
-            
              {
-              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              {value}
-            </Tooltip>:
+              value.length>6?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>6?'...':''}</Typography>
+            </Tooltip></> :
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
@@ -525,7 +507,7 @@ const initialGetHistoryKR=(row:any)=>{
            
          },
          { field: 'oneValue',
-          align:'right',
+          align:'left',
           headerName: '100%',
           headerAlign:'center',
           sortable:false,
@@ -533,21 +515,28 @@ const initialGetHistoryKR=(row:any)=>{
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
+            let length=value.length;
             return <Box>
-       
-            
              {
-              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              {value}
-            </Tooltip>:
-            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+              value.length>6?<><Tooltip   sx={{fontSize:'1.5rem !important'}} title={value}>
+              <Typography textAlign={'left'} sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>6?'...':''}</Typography>
+            </Tooltip></> :
+            <Typography textAlign={'left'}  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
           }
            
-         },
+         }
          
-          ,
+         ,
+         { 
+          field:'oldScore',
+          headerName: 'امتیاز قبلی',
+          align:'center',
+          sortable:false,
+          headerAlign:'center',
+          width: 80 ,
+        },
            { field: 'score',
            headerName: 'امتیاز جدید',
            align:'center',
@@ -608,6 +597,34 @@ const initialGetHistoryKR=(row:any)=>{
            }
     
           }
+          ,
+         { field: 'problems',
+         headerName: 'موانع',
+          align:'center',
+          // headerName: '100%',
+          headerAlign:'center',
+          sortable:false,
+           width: 80,
+           hideable: true,
+           hide:true,
+           renderCell:({value}:any)=>{
+           if (typeof value ==='string' ) {
+            let length=value.length;
+            return <Box>
+             {
+              value.length>6?<><Tooltip   sx={{fontSize:'1.5rem !important'}} title={value}>
+              <Typography textAlign={'left'} sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>6?'...':''}</Typography>
+            </Tooltip></> :
+            <Typography textAlign={'left'}  sx={{fontSize:'12px'}} >{value}</Typography>
+             }
+            </Box>
+           }
+           else{
+            return value
+           }
+          }
+           
+         }
           // InfoIcon
           ,
           { field: '-',

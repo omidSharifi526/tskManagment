@@ -5,7 +5,7 @@ import DyTreeView from '../../components/GlobalComponents/TreeView/TreeView';
 import DateObject from "react-date-object";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-
+import { useSelector } from 'react-redux';
 import {GridRowsProp} from '@mui/x-data-grid';
 import { useDispatch } from 'react-redux';
 import {resetRValuesR} from '../Meeting/MeetingsSlice/MeetingsSlice';
@@ -19,7 +19,7 @@ import ObjectiveKeyResults from './ObjectiveKeyResults/ObjectiveKeyResults';
 // import DyTabs from '../../components/GlobalComponents/DyTabs/DyTabs';
 const TeamStatus = lazy(() => import('./LComponents/TeamStatus/TeamStatus'));
 const CompanyTeams = () => {
-
+  const tenantName=useSelector((state:any)=>state.meetings.profileName);
   const dispatch=useDispatch();
   const [runTimer,setRunTimer]=useState<any>(false)
   
@@ -29,7 +29,7 @@ const CompanyTeams = () => {
   
  
 const initialRunTimer=()=>{
-  console.log('run timer')
+  // console.log('run timer')
   setRunTimer(!runTimer)
 }
 
@@ -131,21 +131,24 @@ const initialRunTimer=()=>{
         </Box>
          
         </Grid>
-        {/* <Box>
-        
-        </Box> */}
+     
         <Grid item xs={12}  md={11}  >
        
          <Box   display={'flex'} flexDirection={'row-reverse'}  >
         <Box display={'flex'}  alignItems={'center'} pr={2}  >
         <Timer/> 
-        <Box>
-        <Typography fontWeight={700} color={'black'} variant="body2" noWrap component="div">
-                      {now}
-        </Typography>
-        </Box>
+       
         </Box>
          </Box>
+         <Box>
+        
+         </Box>
+         <Box>
+        <Typography fontWeight={700} color={'black'} variant="body2" noWrap component="div">
+                      {now} 
+        </Typography>
+        {/* <Typography>{tenantName}</Typography> */}
+        </Box>
         </Grid>
         </Grid>
  

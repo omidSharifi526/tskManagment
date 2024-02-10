@@ -49,7 +49,7 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
     // console.log(id)
     return useQuery(['getPeriodById',id],getPriodById,{
    enabled:!!id,
-   cacheTime:Infinity,
+  //  cacheTime:Infinity,
    refetchOnWindowFocus:false,
    onSuccess:(data:any):void=>{
     let rawData=data;

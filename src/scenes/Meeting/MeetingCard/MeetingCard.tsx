@@ -63,8 +63,8 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
   return (
     <Card sx={{ width:'100%',boxShadow:6,borderRadius:5}}>
     
-      <CardContent>
-        <Box mb={1}  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
+      <CardContent  >
+        <Box  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
         <Box display={'flex'} justifyContent={'space-between'} >
         <Box >
            {
@@ -88,7 +88,7 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
         <Box width={'80px'} display={'flex'} alignItems={'center'} justifyContent={'center'} >
        <Typography 
        fontWeight={500}
-        py={1} 
+        py={info?.name.length150?0:1} 
         textAlign={'center'} 
         width={'100%'} 
         color={'info'} 
@@ -134,7 +134,7 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
          display={'flex'}
           justifyContent={'space-between'} 
           columnGap={1} 
-          p={1}
+          p={info?.name.length150?0:1} 
           >
           <Typography>
             درتاریخ
@@ -146,7 +146,7 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
             از {info?.fromTime} تا {info?.toTime}
           </Typography>
         </Box>
-        <Box px={1} py={1}  >
+        <Box px={1} py={info?.name.length150?0:1}   >
           <Typography sx={{fontSize:'12px'}} color={'gray'}  >
             {
               info?.definitionLevel
@@ -154,12 +154,7 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
           </Typography>
         </Box>
         
-       {/* to={"/companyTeams"}  */}
-       {/* <ListItem onClick={()=>{
-        console.log('hihi')
-       }}  sx={{fontSize:'0.7 rem'}} component={Link}  >
-        <Typography color={'GrayText'} variant='body2' sx={{fontWeight:600}} >ورود به جلسه</Typography>
-      </ListItem> */}
+    
 
     <Box display={'flex'} justifyContent={'space-between'} px={1}  mt={1}  >
    <Box>
@@ -176,12 +171,9 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
   </Button>
   </Box>
     </Box>
-           {/*  */}
+          
       </CardContent>
-      {/* <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
+     
     </Card>
   );
 }
