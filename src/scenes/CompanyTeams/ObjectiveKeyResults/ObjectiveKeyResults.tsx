@@ -92,17 +92,16 @@ const initialGetHistoryKR=(row:any)=>{
          headerAlign:'center',
          sortable:false,
          wrap:'wrap',
-          minWidth: 150,
+          minWidth: 250,
           fontsize:'12px !important',
           renderCell:({value}:any)=>{
-            let length=value.length;
             return <Box>
        
             
              {
-              value.length>20?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,20)}{length>20?'...':''}</Typography>
-            </Tooltip></> :
+              value.length>40? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
@@ -238,16 +237,17 @@ const initialGetHistoryKR=(row:any)=>{
          align:'left',
          headerAlign:'center',
          sortable:false,
-          minWidth: 150 ,
+          minWidth: 250 ,
         // fontsize:'12px',
       
         renderCell:({value}:any)=>{
-          let length=value.length;
           return <Box>
+     
+          
            {
-            value.length>20?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-            <Typography sx={{fontSize:'12px'}}  >{value.slice(0,20)}{length>20?'...':''}</Typography>
-          </Tooltip></> :
+            value.length>40? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+            {value}
+          </Tooltip>:
           <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
            }
           </Box>
@@ -297,7 +297,7 @@ const initialGetHistoryKR=(row:any)=>{
                 if (typeof value ==='string') {
                   return <Box>
                   {
-                   value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+                   value.length>10? <Tooltip  sx={{fontSize:'12px !important'}} title={value}>
                    <Typography fontSize={'12px'}  >  {value}</Typography>
                  </Tooltip>:
                  <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
@@ -306,7 +306,7 @@ const initialGetHistoryKR=(row:any)=>{
 
                }
                else{
-                return value
+                return  <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
                }
                 }
               }
@@ -451,12 +451,13 @@ const initialGetHistoryKR=(row:any)=>{
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
-            let length=value.length;
             return <Box>
+       
+            
              {
-              value.length>4?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>4?'...':''}</Typography>
-            </Tooltip></> :
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
@@ -473,12 +474,13 @@ const initialGetHistoryKR=(row:any)=>{
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
-            let length=value.length;
             return <Box>
+       
+            
              {
-              value.length>6?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>6?'...':''}</Typography>
-            </Tooltip></> :
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
@@ -494,12 +496,13 @@ const initialGetHistoryKR=(row:any)=>{
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
-            let length=value.length;
             return <Box>
+       
+            
              {
-              value.length>6?<><Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              <Typography sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>6?'...':''}</Typography>
-            </Tooltip></> :
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
             <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
@@ -515,13 +518,14 @@ const initialGetHistoryKR=(row:any)=>{
            hideable: true,
            hide:true,
            renderCell:({value}:any)=>{
-            let length=value.length;
             return <Box>
+       
+            
              {
-              value.length>6?<><Tooltip   sx={{fontSize:'1.5rem !important'}} title={value}>
-              <Typography textAlign={'left'} sx={{fontSize:'12px'}}  >{value.slice(0,3)}{length>6?'...':''}</Typography>
-            </Tooltip></> :
-            <Typography textAlign={'left'}  sx={{fontSize:'12px'}} >{value}</Typography>
+              value.length>5? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+              {value}
+            </Tooltip>:
+            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
              }
             </Box>
           }
@@ -678,6 +682,17 @@ const initialGetHistoryKR=(row:any)=>{
     },
 
   }
+  // ObjInitial
+  let ObjInitial={
+    columns: {
+      columnVisibilityModel: {
+        weight:false,
+      
+
+      },
+    },
+
+  }
 
       
 
@@ -823,6 +838,7 @@ const initialGetHistoryKR=(row:any)=>{
   //  objcSelectionModel,setObjSelectionModel
   setSelectionModel={setObjSelectionModel}
    selectionModel={objcSelectionModel}
+   initState={ObjInitial}
    
    additionalToolbar={false}
  

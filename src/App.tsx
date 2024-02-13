@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import MUIWrapper from './ThemeWrapper/ThemeWrapper';
 import Mrouter from './Routes/MRoutes/MRoutes';
 import './index.css';
 import theme from './theme'; 

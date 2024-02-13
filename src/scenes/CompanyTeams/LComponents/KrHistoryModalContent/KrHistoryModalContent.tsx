@@ -31,7 +31,7 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
           align:'center',
           sortable:false,
           headerAlign:'center',
-           width: 130,
+           width: 350,
            renderCell:({value}:any)=>{
             return <Box>
              {
@@ -83,24 +83,24 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
       
         
       
-          { field: 'newValue',
-          headerName: 'مقدار اعلام شده',
-          align:'center',
-          sortable:false,
-          headerAlign:'center',
-           width: 130,
-           renderCell:({value}:any)=>{
-            return <Box>
-             {
-              value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-              {value}
-            </Tooltip>:
-            <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
-             }
-            </Box>
-          }
+          // { field: 'newValue',
+          // headerName: 'مقدار اعلام شده',
+          // align:'center',
+          // sortable:false,
+          // headerAlign:'center',
+          //  width: 130,
+          //  renderCell:({value}:any)=>{
+          //   return <Box>
+          //    {
+          //     value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+          //     {value}
+          //   </Tooltip>:
+          //   <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+          //    }
+          //   </Box>
+          // }
            
-           },
+          //  },
            
           { field: 'startValue',
           headerName: 'مقدار شروع',

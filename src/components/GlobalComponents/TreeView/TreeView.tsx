@@ -66,7 +66,7 @@ const[toastMessage,setToastMessage]=useState<any>(false)
 
 
 
-// const [companySelected,setCompanySelected]=React.useState<any>(null)
+
 
 
 
@@ -76,6 +76,8 @@ const initNodeSelected=(node:any,i:number)=>{
 // let {name}=node;
 // let iniName={...node,name:name};
 // console.log(iniName)
+
+console.log(node)
 dispatch(setTeamsDataR(node));
 dispatch(setTeamInfoR(node))
 // console.log(node,i)

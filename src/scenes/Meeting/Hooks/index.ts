@@ -46,7 +46,7 @@ const useGetTeamsByTenantId=(getTeamsSuccess:any,getTeamsFailed:any,id:string)=>
    
 return useQuery(['getTeamsByTenantId',id],getAllTeamsByTenantId,{
     refetchOnWindowFocus:false,
-    cacheTime:Infinity,
+    // cacheTime:Infinity,
     enabled:!!id,
     onSuccess:(data)=>{
        

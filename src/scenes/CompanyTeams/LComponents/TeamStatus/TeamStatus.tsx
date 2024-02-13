@@ -121,12 +121,12 @@ const TeamStatus:React.FC=()=> {
    <Grid item xs={12} >
    <Box width={'100%'} height={'100%'} >
    <DyDataGrid 
-   data={teamStatusData}
+   data={teamStatusData || []}
    columns={teamsColumns}
    hideFooter={false}
    selectionModel={''}
    initialOnRowClick={()=>{}}
-
+   setSelectionModel={()=>{}}
 
    />
    </Box>

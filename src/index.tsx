@@ -67,16 +67,25 @@ ReactDOM.createRoot(document.getElementById("root")as HTMLElement).render(
       <AuthProvider>
     <Provider store={store}>
      <QueryClientProvider client={queryClient}>
+
+
     
     <LocalizationProvider dateAdapter={AdapterDateFnsJalali}  >
        <CacheProvider value={cacheRtl}> 
          <ThemeProvider theme={theme}>
+
+
+          
             <RouterProvider router={Mrouter} />
         
          </ThemeProvider>
       </CacheProvider> 
       </LocalizationProvider>
       
+
+
+
+
       </QueryClientProvider>
       </Provider>
       </AuthProvider>
@@ -86,10 +95,3 @@ ReactDOM.createRoot(document.getElementById("root")as HTMLElement).render(
 
 
 
-{/* <CacheProvider value={cacheRtl}>
-<ThemeProvider theme={theme}>
-  <CssBaseline />
-
- 
-</ThemeProvider>
-</CacheProvider> */}

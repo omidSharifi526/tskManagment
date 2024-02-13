@@ -43,10 +43,15 @@ const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getD
 
 
     const LoginMeeting=()=>{   
-
-      setTenantId(info.id); 
-      
-      dispatch(setMeetingIdR(info.id))
+     console.log(info)
+     let{meetingDate,id}=info;
+     console.log(meetingDate)
+      setTenantId(id); 
+      let meetDetail={
+        id:id,
+        meetingDate:meetingDate
+      }
+      dispatch(setMeetingIdR(meetDetail))
       // console.log(info)
     }
 

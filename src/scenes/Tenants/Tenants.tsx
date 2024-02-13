@@ -101,6 +101,15 @@ const Tenants = () => {
        width:110,
        flex:1
       }
+      ,
+      { field: 'lastLoginDate',
+      align:'center',
+      headerName: 'تاریخ آخرین لاگین',
+      headerAlign:'center',
+      sortable:false,
+       width:110,
+       flex:1
+      }
       
       ,
       { field: 'addLastPersonDate',
@@ -108,7 +117,7 @@ const Tenants = () => {
       headerName: 'آخرین کاربر اضافه شده ',
       headerAlign:'center',
       sortable:false,
-       width:130,
+       width:120,
        
       }
       // addLastPersonDate

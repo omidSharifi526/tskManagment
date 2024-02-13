@@ -22,7 +22,8 @@ type meetingsStateType = {
     keyResults:any[],
     loading:boolean,
     objUpdated:boolean,
-    changeTenantMode:boolean
+    changeTenantMode:boolean,
+    meetSelectedDate:string,
 
     
  
@@ -44,7 +45,8 @@ objectivie:[],
 keyResults:[],
 loading:false,
 objUpdated:false,
-changeTenantMode:false
+changeTenantMode:false,
+meetSelectedDate:''
 }
 
 
@@ -189,7 +191,8 @@ const setPriodId=(state:any,action:PayloadAction<any>)=>{
 const setMeetingId=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
   // console.log(payload)
-  state.meetingId=payload;
+  state.meetingId=payload.id;
+  state.meetSelectedDate=payload.meetingDate;
 }
 // changeTenantMode
 
