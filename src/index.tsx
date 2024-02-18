@@ -24,6 +24,8 @@ import { CacheProvider } from '@emotion/react';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import createCache from '@emotion/cache';
 import Loading from "./components/Loading/Loading";
+import MUIWrapper from "./ThemeWrapper/ThemeWrapper";
+import App from "./App";
 
 
 
@@ -70,17 +72,27 @@ ReactDOM.createRoot(document.getElementById("root")as HTMLElement).render(
 
 
     
+    <MUIWrapper>
+
+   
     <LocalizationProvider dateAdapter={AdapterDateFnsJalali}  >
-       <CacheProvider value={cacheRtl}> 
-         <ThemeProvider theme={theme}>
+
+       {/* <CacheProvider value={cacheRtl}> 
+         <ThemeProvider theme={theme}> */}
 
 
-          
-            <RouterProvider router={Mrouter} />
+
+           <App/>
+
+
         
-         </ThemeProvider>
-      </CacheProvider> 
+         {/* </ThemeProvider>
+      </CacheProvider>  */}
+
+
       </LocalizationProvider>
+
+      </MUIWrapper>
       
 
 

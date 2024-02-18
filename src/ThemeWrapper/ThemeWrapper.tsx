@@ -1,3 +1,4 @@
+import React from "react";
 import { createTheme, ThemeProvider, PaletteMode } from "@mui/material";
 import { createContext, useMemo, useState, useEffect } from "react";
 import rtlPlugin from "stylis-plugin-rtl";
@@ -52,6 +53,22 @@ export default function MUIWrapper({
           palette: {
             mode,
           },
+          typography:{
+            fontFamily:'yekan !important  ',
+            fontSize:12,
+        
+          },
+          components: {
+            MuiTooltip: {
+                styleOverrides: {
+                    tooltip: {
+                        fontSize: '0.8rem !important',
+                        
+                    }
+                }
+            }
+        }
+        ,
           direction: locale.direction,
         },
         locale.muiCore,

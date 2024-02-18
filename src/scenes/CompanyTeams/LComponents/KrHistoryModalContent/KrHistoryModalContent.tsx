@@ -31,7 +31,7 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
           align:'center',
           sortable:false,
           headerAlign:'center',
-           width: 350,
+           width: 150,
            renderCell:({value}:any)=>{
             return <Box>
              {
@@ -42,6 +42,8 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
              }
             </Box>
           }
+          // problems: 
+// "موانعی برای نصب وجود ندارد . فقط باید اطلاع رسانی کمپین گسترده تر برگزار گردد"revenue
            
            }
            ,
@@ -80,6 +82,48 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
           fontsize:'12px !important',
     }
     ,
+
+    {
+      field: 'problems',
+      headerName: 'موانع',
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      minWidth: 110,
+      // fontsize:'12px',
+
+      renderCell: ({ value }: any) => {
+        return <Box>
+          {
+            value.length > 50 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
+              {value}
+            </Tooltip> :
+              <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
+          }
+        </Box>
+      }
+    },
+    // revenue
+    {
+      field: 'revenue',
+      headerName: 'عملکرد',
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      minWidth: 110,
+      renderCell: ({ value }: any) => {
+      if (value) {
+        return <Box>
+        {
+          value.length > 40 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
+            {value}
+          </Tooltip> :
+            <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
+        }
+      </Box>
+      }
+      }
+    },
       
         
       

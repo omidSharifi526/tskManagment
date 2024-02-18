@@ -36,6 +36,16 @@ const[companys,setCompanys]=useState<any|null>([]);
 const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
 const[teams,setTeams]=useState<any|null>([]);
 
+useEffect(() => {
+  if (companyNode) {
+    let{id}=companyNode;
+    console.log(id)
+    setNodeId(id)
+  }
+
+
+}, [])
+
 
 const getObjectiveSuccess=()=>{
   dispatch(updateObjR())

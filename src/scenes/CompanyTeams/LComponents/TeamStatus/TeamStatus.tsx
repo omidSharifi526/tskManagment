@@ -49,19 +49,6 @@ const TeamStatus:React.FC=()=> {
       headerAlign:'center',
        width: 150 
       }
-      ,
-       { field: '-',
-      headerName: 'وزن',
-      align:'center',
-      sortable:false,
-      headerAlign:'center',
-       width: 150 
-       ,renderCell:()=>{
-        return <Box>
-              <Typography>{'-'}</Typography>
-        </Box>
-       }
-      }
        ,
        { field: 'evaluationPercentage',
       headerName: 'درصد ارزیابی',

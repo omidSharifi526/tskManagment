@@ -48,6 +48,7 @@ const english: MUILocaleData = {
 
 
 export const supportedLocales: MUILocaleData[] = [
-  english,
-  persian
+  persian,
+  english
+ 
 ];

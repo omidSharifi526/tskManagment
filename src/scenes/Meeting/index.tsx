@@ -11,17 +11,30 @@ import Skeleton from '@mui/material/Skeleton';
 import { useDispatch } from 'react-redux';
 import { setLoadingR } from './MeetingsSlice/MeetingsSlice';
 // import { useGetAllMeetings } from './Hooks';
-
+import { UseGetWebCheckinMeetingDetailsByMeetingId } from './Hooks';
+import{useNavigate} from 'react-router-dom';
+import LyBackdrop from '../../components/Layouts/BackDrop/BackDrop';
 
 
 
 const Meeting :React.FC=function(){
+  const[meetId,setMeetId]=useState<any>('')
+  const navigate=useNavigate();
+  const getDetSuccess=()=>{
+  navigate('/companyTeams',{replace:true})
+  }
+  const getDetFailed=()=>{
+
+  }
+
+  const{data:MeetDetData,isLoading:meetLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,meetId);
 //  const{isLoading:meetLoadin,data:meetdata}=useGetAllMeetings(null)
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
   const changeTenant=useSelector((state:any)=>state.meetings.profileTenantId);
   // const{data:meetingData,isLoading,isError}=useGetAllMeetings({});
   const[userTenants,setUserTenants]=useState<any[]>()
   const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
+  const[meetingCardData,setMeetingCardData]=useState(meetingsDataa)
   const[LoadingFlag,setLoadinFlag]=useState<boolean>(false);
   const{data:meetData,isLoading:meetLoad}=useGetAllMeetings(null)
   
@@ -38,6 +51,11 @@ const Meeting :React.FC=function(){
   
 
 
+ if (meetLoading) {
+   return <LyBackdrop visible={true}  >
+     <CircularProgress sx={{color:'white'}}  />
+   </LyBackdrop>
+ }
 
 
   
@@ -68,11 +86,14 @@ const Meeting :React.FC=function(){
     <Grid container  spacing={1} >
     
    {
-       meetingsDataa && meetingsDataa?.map((data:any,i:number):any=>{
+ meetingsDataa && meetingsDataa.map((data:any,i:number):any=>{
         return (<Grid item md={3}  key={i}>
 
   
-          <MeetingCard info={data} prog={i}   />
+          <MeetingCard 
+          setMeetId={setMeetId}
+          info={data}
+           prog={i}   />
           
           
           </Grid>)

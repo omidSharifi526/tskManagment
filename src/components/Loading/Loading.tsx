@@ -6,8 +6,9 @@ import BackGround from '../Login/Statics/Imgs/bg3.png'
 import {ReactComponent as Img1} from '../Loading/svg/Group 4242492.svg';
 import {ReactComponent as Img2} from '../Loading/svg/MainLogoOKR.svg';
 import {ReactComponent as Img3} from '../Loading/svg/Group 4242492.svg';
+import {ReactComponent as OKRText} from '../Loading/svg/OKRText.svg';
 
-
+import mainLgo from '../Loading/svg/logo192.png'
 
 
 const Loading = ({setContentState,loading}:any) => {
@@ -28,6 +29,9 @@ const Loading = ({setContentState,loading}:any) => {
 }} style={{width:'400px'}} />
 </Box>
 </Box>
+<Box>
+  <OKRText/>
+</Box>
 {/* <Box>
 <Img1/>
 </Box> */}
@@ -36,6 +40,7 @@ const Loading = ({setContentState,loading}:any) => {
 {
 loading && <Progress setContentState={setContentState} />
 }
+
 </Box>
 
 

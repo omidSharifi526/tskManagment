@@ -18,7 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import{Popover} from '@mui/material';
 import TenantsList from './LComponents/TenantList/TenantList';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
-// import ListItemText from '@mui/material/ListItemText';
+
 
 import { Link, Outlet,useLocation } from 'react-router-dom';
 import {SideBarLogo,OKRtext} from './StaticsData/index';
@@ -36,7 +36,10 @@ import { useSelector } from 'react-redux';
 import DateObject from "react-date-object";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import Badge from '@mui/material/Badge';
+import {Badge,FormControl,InputLabel,MenuItem} from '@mui/material';
+import {MUIWrapperContext} from '../../ThemeWrapper/ThemeWrapper'
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { supportedLocales,MUILocaleData } from '../../SupportedLocales';
 
 
 const drawerWidth = 240;
@@ -132,6 +135,12 @@ const itemsList = [
 
 
 export default function MiniDrawer() {
+  // const theme=useTheme();
+
+
+  const { locale, setLocale, toggleColorMode }:any =
+    React.useContext(MUIWrapperContext);
+
 const[showTenantItem,setShowTenantItem]=React.useState(false)
   // const [showTenantList,setShowTenantList]=React.useState(false)
   const userPhone=useSelector((state:any)=>state.loign.userPhoneNumber);
@@ -197,9 +206,9 @@ if (showTenantItem) {
   return (
     <Box sx={{ display: 'flex' ,}} >
       <CssBaseline />
-      <AppBar sx={{bgcolor:'white'}} position="fixed" open={open}>
+      <AppBar position="fixed" open={open}>
 
-        <Toolbar sx={{bgcolor:"whitesmoke",height:'100%'}}  >
+        <Toolbar sx={{height:'100%',bgcolor:theme.palette.mode==='dark'?'#1E1E1E':'whitesmoke'}}  >
          
           <IconButton
           
@@ -210,7 +219,7 @@ if (showTenantItem) {
             sx={{
               
               marginRight: 5,
-              color:'black',
+              color:theme.palette.mode==='dark'?'white':'black',
               ...(open && { display: 'none' }),
             }}
           >
@@ -218,8 +227,8 @@ if (showTenantItem) {
           </IconButton>
 
             <Box sx={{width:'100%',display:'flex',justifyContent:'space-between'}}  >
-            <Box p={2} >
-                      <Typography fontWeight={700} color={'black'} variant="body2" noWrap component="div">
+                       <Box p={2} >
+                      <Typography component={'div'} fontWeight={700} color={theme.palette.mode==='dark'?'white':'black'} variant="body2"  >
                       {now}
                       </Typography>
 
@@ -227,14 +236,12 @@ if (showTenantItem) {
 
                       <Box sx={{display:'flex'}} columnGap={2} alignItems={'center'} > 
                     
-                     <IconButton>
+                     {/* <IconButton>
                      <Badge overlap="circular"  variant="dot"  color="success" >
                       <NotificationsNoneIcon color="action" />
                       </Badge>
-                     </IconButton>
-                      <Box>
-                     {/* <Avatar alt="Cindy Baker" src={Useimg} /> */}
-                      </Box>
+                     </IconButton> */}
+        
                       {/* <Typography  fontSize={'0.8rem'} fontWeight={600} pr={3}  color={'black'}>
                     {tenantName}
                       </Typography> */}
@@ -252,6 +259,53 @@ if (showTenantItem) {
                            ButtonCaption={tenantName} 
                             />
                       }
+{/* toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolbar */}
+<Toolbar >
+            {locale?.title && (
+              <Box sx={{ minWidth: 120, color: "inherit" }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">direction</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-selectd"
+                    value={locale}
+                    renderValue={(val) => val.title}
+                    label="Direction"
+                    onChange={(event: SelectChangeEvent<MUILocaleData>) => {
+                      const data = event.target.value;
+                      setLocale(data as MUILocaleData);
+                    }}
+                  >
+                    {supportedLocales.map((item:any) => {
+                      return (
+                        // @ts-ignore - necessary to load object into value
+                        <MenuItem key={item.title} value={item}>
+                          {item.title}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </Box>
+            )}
+            <IconButton
+              sx={{ fontSize: "1rem" }}
+              onClick={toggleColorMode}
+              color="inherit"
+              disableTouchRipple
+              disableRipple
+            >
+              {theme.palette.mode === "dark" ? (
+                <span role="img" aria-label="sun">
+                   ☀️
+                </span>
+              ) : (
+                <span role="img" aria-label="moon">
+                   🌚
+                </span>
+              )}
+            </IconButton>
+          </Toolbar>
 
                         
                         
