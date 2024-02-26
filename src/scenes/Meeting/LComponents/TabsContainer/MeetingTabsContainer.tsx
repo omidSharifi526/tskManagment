@@ -7,7 +7,8 @@ import MeetingSlider from '../MeetingSlider/MeetingSlider';
 import DySearchAppBar from '../../../../components/GlobalComponents/DySearchBar/DySearchBar';
 import LyBackdrop from '../../../../components/Layouts/BackDrop/BackDrop';
 import UserTypeSelection from '../UserTypeSelection/UserTypeSelection';
-import {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react';
+import AddMeeting from '../Forms/AddMeeting/AddMeeting';
 
 import Meeting from '../..';
 import { Grid } from '@mui/material';
@@ -92,7 +93,7 @@ export default function BasicTabs() {
 
 
       <MeetingTabsContainer value={value} index={1}>
-    
+      <AddMeeting/>
       </MeetingTabsContainer>
 
     </Box>

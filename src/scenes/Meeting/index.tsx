@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box,Grid, Typography,} from '@mui/material';
+import {Box,Button,Grid, Typography,} from '@mui/material';
 import { useSelector } from 'react-redux';
 import {LoginState} from '../../components/Login/Types/index'
 import MeetingCard from './MeetingCard/MeetingCard';
@@ -14,11 +14,16 @@ import { setLoadingR } from './MeetingsSlice/MeetingsSlice';
 import { UseGetWebCheckinMeetingDetailsByMeetingId } from './Hooks';
 import{useNavigate} from 'react-router-dom';
 import LyBackdrop from '../../components/Layouts/BackDrop/BackDrop';
+import ModalLyt from '../../components/Layouts/ModalLyt/ModalLyt';
+import AddMeeting from './LComponents/Forms/AddMeeting/AddMeeting';
+import DyButton from '../../components/GlobalComponents/DyButton/DyButton';
+// import 
 
 
 
 const Meeting :React.FC=function(){
-  const[meetId,setMeetId]=useState<any>('')
+  const[meetId,setMeetId]=useState<any>('');
+  const [createTenantModal,setCreateTenantModal]=useState<boolean>(false)
   const navigate=useNavigate();
   const getDetSuccess=()=>{
   navigate('/companyTeams',{replace:true})
@@ -36,7 +41,7 @@ const Meeting :React.FC=function(){
   const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
   const[meetingCardData,setMeetingCardData]=useState(meetingsDataa)
   const[LoadingFlag,setLoadinFlag]=useState<boolean>(false);
-  const{data:meetData,isLoading:meetLoad}=useGetAllMeetings(null)
+  // const{data:meetData,isLoading:meetLoad,refetch:getMeetingAgain}=useGetAllMeetings(profileTenantId)
   
 
   const loading=useSelector((state:any)=>state.meetings.loading);
@@ -50,12 +55,18 @@ const Meeting :React.FC=function(){
      },[loading,meetingsDataa]);
   
 
+     const initialCreateMeeting=()=>{
+      setCreateTenantModal(!createTenantModal)
+     }
+
 
  if (meetLoading) {
    return <LyBackdrop visible={true}  >
      <CircularProgress sx={{color:'white'}}  />
    </LyBackdrop>
  }
+
+ 
 
 
   
@@ -84,10 +95,30 @@ const Meeting :React.FC=function(){
 
   return (
     <Grid container  spacing={1} >
+      <Grid item xs={12}    >
+     
+    
+                     <Box display={'flex'}  flexDirection={'row-reverse'}>
+                    <Box width={'150px'}   >
+                    <DyButton
+                            caption={'ساخت جلسه'}
+                            color={'#00387C'}
+                            // onClick={loginHandler}
+                            disbled={false}
+                            variant={'contained'}
+                            bgColor={'#00387C'}
+                            onClick={initialCreateMeeting}
+                            // type={'submit'}
+                          />
+                    </Box>
+                     </Box>
+
+      
+      </Grid>
     
    {
  meetingsDataa && meetingsDataa.map((data:any,i:number):any=>{
-        return (<Grid item md={3}  key={i}>
+        return (<Grid item md={3} xs={12}  key={i}>
 
   
           <MeetingCard 
@@ -99,6 +130,17 @@ const Meeting :React.FC=function(){
           </Grid>)
       })
     }
+
+{
+          createTenantModal &&
+          <ModalLyt title={'ساخت جلسه'}
+            showModal={Boolean(createTenantModal)}
+            setShowModal={setCreateTenantModal}
+          >
+            <AddMeeting/>
+          </ModalLyt>
+
+        }
    
     </Grid>
   )

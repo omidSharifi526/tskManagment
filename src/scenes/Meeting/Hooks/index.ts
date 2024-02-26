@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery,useQueryClient,useMutation } from 'react-query';
 import {getAllMeetingByIds,
     getAllTeamsByTenantId,
     getTeamDetailsById,
@@ -6,7 +6,9 @@ import {getAllMeetingByIds,
     getAllKeyResultByObjectiveId,
     getAllTeamStatusByTenantId,
     getWebCheckinMeetingDetailsByMeetingId,
-    getWebObjectiveDetailsCheckinMeetingByTeamId
+    getWebObjectiveDetailsCheckinMeetingByTeamId,
+    getAllTeamsForSelByTenantId,
+    getAllMeetingsTypeByTenantId,addMeeting
 
 } from '../Api/Index';
 import {setMeetingsListR,setObjectivieR,setKeyResultsR,setLoadingR} from '../MeetingsSlice/MeetingsSlice';
@@ -183,8 +185,85 @@ const useGetWebObjectiveDetailsCheckinMeetingByTeamId=(getObjectiveSuccess:any,g
 }
 
 
+const useGetAllTeamsForSelByTenantId=(tenantId:any)=>{
+return useQuery(['getAllTeamsForSelByTenantId',tenantId],getAllTeamsForSelByTenantId,{
+    enabled:!!tenantId,
+    refetchOnWindowFocus:false,
+onSuccess:(data)=>{
+// console.log(data)
+}
 
-// https://api.myokr.ir/api/Meeting/GetWebObjectiveDetailsCheckinMeetingByTeamId?teamId=7e2a4838-c318-42b9-b874-56f61afeec39
+,
+onError:(err)=>{
+console.log(err)
+},
+select:(data)=>{
+let rawData=data?.data?.data;
+let readyData=rawData.map(({id,name}:any)=>{
+return {title:name,year:id}
+})
+return readyData
+}
+})
+}
+
+
+const useGetAllMeetingsTypeByTenantId=(tenantId:any)=>{
+    return useQuery(['GetAllMeetingsTypeByTenantId',tenantId],getAllMeetingsTypeByTenantId,{
+        enabled:!!tenantId,
+        refetchOnWindowFocus:false,
+    onError:(err)=>{
+   console.log(err)
+    }
+    ,
+    onSuccess:(data)=>{
+       
+    }
+    ,
+    select:(data:any)=>{
+        let rawData=data?.data?.data;
+        let readyData:any[]=rawData.map(({id,name}:any)=>{
+        return {key:name,value:id}
+        })
+        return readyData
+        }
+    })
+}
+
+const useAddMeeting=(addMeetingSuccess:any)=>{
+    const queryClient=useQueryClient();
+ return useMutation(addMeeting,{
+    onSuccess:()=>{
+        addMeetingSuccess()
+        queryClient.invalidateQueries('getAllMeetingByIds')
+    },
+    onError:(err:any)=>{
+       console.log(err)
+    }
+ })
+}
+
+// const useAddCustomer = (onSuccessDon,failSend,err) => {
+//     const navigate=useNavigate();
+//     const queryClient=useQueryClient();
+//     const dispatch=useDispatch();
+//     return useMutation(addCustomer,{
+//       onSuccess:()=>{
+//       queryClient.invalidateQueries('getAllCustomers')
+//       onSuccessDon()
+//       }
+//       ,onError:({response})=>{
+//         let {data:{message}}=response;
+//         const myArray = message.split("|");
+//         dispatch(setErrorsR(myArray))
+//         failSend()
+
+//       }
+//     })
+//   };
+
+
+
 
 export{
     useGetAllMeetings,
@@ -194,5 +273,8 @@ export{
     useGetAllKeyResultByObjectiveId,
     useGetAllTeamStatusByTenantId,
     UseGetWebCheckinMeetingDetailsByMeetingId,
-    useGetWebObjectiveDetailsCheckinMeetingByTeamId
+    useGetWebObjectiveDetailsCheckinMeetingByTeamId,
+    useGetAllTeamsForSelByTenantId,
+    useGetAllMeetingsTypeByTenantId,
+    useAddMeeting
 }

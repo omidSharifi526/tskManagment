@@ -13,7 +13,7 @@ disabled={disbled}
 // color={'#00387C'}   
 
 onClick={initOnclick} 
-sx={{display:'block',width:'100%',bgcolor:'#00387C'}} 
+sx={{display:'block',width:'100%',bgcolor:bgColor,px:3,py:0.5}} 
 variant={variant}
 type={type}
 >

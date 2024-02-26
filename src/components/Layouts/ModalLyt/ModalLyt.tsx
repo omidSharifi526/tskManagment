@@ -35,7 +35,7 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={showModal}
-        onClose={handleClose}
+        // onClose={handleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{

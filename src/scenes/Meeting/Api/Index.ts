@@ -62,6 +62,31 @@ return await axiosInstance.get(`Meeting/GetWebObjectiveDetailsCheckinMeetingByTe
 //  priodId
 //  https://api.myokr.ir/api/Meeting/GetWebObjectiveDetailsCheckinMeetingByTeamId?teamId=6fc546d0-8546-45ff-a228-d484016d09e4&periodId=bba7c504-8a8c-4b9e-b92c-6f7386a54c7a&meetingId=4447c504-8a5c-4b9e-b92c-6f7386a54c7a
 
+
+// https://api.myokr.ir/api/Team/GetAllTeamByTenantId?tenantId=a5c0d516-5f9f-4416-8646-21955c09bc0d&pageIndex=1&pageSize=100
+
+
+const getAllTeamsForSelByTenantId=async({queryKey}:any)=>{
+  let tenantId=queryKey[1];
+return await axiosInstance.get(`Team/GetAllTeamByTenantId?tenantId=${tenantId}&pageIndex=1&pageSize=100`)
+}
+
+
+// https://api.myokr.ir/api/Meeting/GetAllMeetingsTypeByTenantId?tenantId=a5c0d516-5f9f-4416-8646-21955c09bc0d\
+
+const getAllMeetingsTypeByTenantId=async({queryKey}:any)=>{
+  let tenantId=queryKey[1];
+return await axiosInstance.get(`/Meeting/GetAllMeetingsTypeByTenantId?tenantId=${tenantId}`)
+}
+
+// https://api.okrcoach.app/api/Meeting/AddMeeting
+
+const addMeeting=async(meetData:any)=>{
+  // let meetData={}
+return await axiosInstance.post(`/Meeting/AddMeeting`,meetData)
+}
+
+
 export{
     getAllMeetingByIds,
     getAllTeamsByTenantId,
@@ -70,5 +95,8 @@ export{
     getAllKeyResultByObjectiveId,
     getAllTeamStatusByTenantId,
     getWebCheckinMeetingDetailsByMeetingId,
-    getWebObjectiveDetailsCheckinMeetingByTeamId
+    getWebObjectiveDetailsCheckinMeetingByTeamId,
+    getAllTeamsForSelByTenantId,
+    getAllMeetingsTypeByTenantId,
+    addMeeting
 }
