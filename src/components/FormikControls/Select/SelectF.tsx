@@ -1,4 +1,10 @@
 import React from "react";
+import TagFacesIcon from '@mui/icons-material/TagFaces';
+import sad from '../../../Asset/Svgs/Emojys/sad.png';
+import smile from '../../../Asset/Svgs/Emojys/smil.png';
+import meh from '../../../Asset/Svgs/Emojys/meh.png'
+// import {ReactComponent as HistoryIcon} from './Icons/HistoryIcon.svg';
+// import Box from "@mui/material";
 
 import { Field, ErrorMessage, Form } from "formik";
 import {
@@ -21,7 +27,7 @@ import MenuItem from "@mui/material/MenuItem";
 // import './style.css'
 
 const SelectF = (props:any) => {
-  const { name, label, options, disabled, values, ...rest } = props;
+  const { name, label, options, disabled, values,helperText,withIcon, ...rest } = props;
   const theme = useTheme();
 //   const colora = tokens(theme.palette.mode);
 
@@ -60,6 +66,8 @@ const SelectF = (props:any) => {
               {label}
             </InputLabel>
 
+            {/*   */}
+
             <Field
               error={form.errors[name] && form.touched[name]}
               as={Select}
@@ -67,6 +75,7 @@ const SelectF = (props:any) => {
               type={'select'}
               variant="outlined"
               defaultValue={values ? values : ""}
+              
             
               
               name={name}
@@ -78,16 +87,44 @@ const SelectF = (props:any) => {
               {options &&
                 options.map((option:any, index:number) => {
                   return (
+                   
+
+                    
                     <MenuItem
                       sx={{ fontSize: "0.7rem", bgcolor: "transparent" }}
                       key={index}
                       value={option?.value}
                     >
+                      
+                      <Box display={'flex'} 
+                    flexDirection={'row-reverse'} 
+                    justifyContent={'start'} 
+                    alignItems={'center'}>
+
+                       {
+                        
+                        index===0 && withIcon?<img src={smile} style={{margin:'1px 3px'}} width={'20px'} />:
+                        index===1 && withIcon?<img src={meh} style={{margin:'1px 3px'}} width={'20px'} />:
+                        index===2 && withIcon?<img src={sad} style={{margin:'1px 3px'}} width={'20px'} />:''
+                      }
+                       <Typography>
                       {option?.key}
+                      </Typography>
+
+                      </Box>
+                     
+                     
+
                     </MenuItem>
+                   
+                    
                   );
                 })}
+             
             </Field>
+            {
+                true && <Typography mt={'0.3rem'} color={theme.palette.mode==='dark'?'white':'black'} variant='button' px={1} textAlign={'left'}  ><span>{helperText}</span></Typography>
+              }
           </FormControl>
         );
       }}

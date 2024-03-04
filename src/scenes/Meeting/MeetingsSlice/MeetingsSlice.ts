@@ -11,6 +11,7 @@ type meetingsStateType = {
   priodId:string,
   meetingId:string,
   profileTenantId:string,
+  teamId:string,
   profileName:string,
     periodList: any[],
     meetingsList:any[],
@@ -34,6 +35,7 @@ const initialState:meetingsStateType = {
 priodId:'',
 meetingId:'',
 profileTenantId:'',
+teamId:'',
 profileName:'',
 periodList:[],
 meetingsList:[],
@@ -131,7 +133,7 @@ if (treeStatus===null) {
 
 const setTeamInfo=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  // console.log(payload)
+  console.log(payload.id)
 
 
 let teamInfoor={
@@ -200,6 +202,7 @@ const setChangeTenantMode=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
   state.changeTenantMode=payload;
 }
+
 
 
 

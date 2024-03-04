@@ -99,13 +99,31 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                 شما اکانت رایگان در اختیار دارید و تنها یک جلسه در هر دوره زمانی میتوانید ایجاد کنید. با ورود به سایت میتوانید برای ارتقا اکانت خود اقدام نمایید.
               </Typography>
             </Box>
-            <Box alignSelf={'center'} width={'30%'} display={'flex'} justifyContent={'space-between'} textAlign={'center'} p={2} >
-              <Button sx={{ p: 1 }} variant='contained' color={'info'} onClick={initialCreateMeeting} >
+            <Box py={3} mx={'auto'} columnGap={3} width={'40%'}  display={'flex'} justifyContent={'center'} textAlign={'center'}  >
+              {/* <Button sx={{ p: 1 }} variant='contained' color={'info'} onClick={initialCreateMeeting} >
                 جلسه جدید
-              </Button>
-              <Button sx={{ p: 1 }} variant='contained' color={'info'} >
-                ورود به سایت
-              </Button>
+              </Button> */}
+                 <DyButton
+                            caption={'جلسه جدید'}
+                            color={'#00387C'}
+                            onClick={initialCreateMeeting}
+                            disbled={false}
+                            variant={'contained'}
+                            bgColor={'#00387C'}
+                            type={'submit'}
+                            sx={{ p: 1 }}
+                          />
+                             <DyButton
+                            caption={'ورود به سایت'}
+                            color={'#00387C'}
+                            onClick={()=>{}}
+                            disbled={false}
+                            variant={'contained'}
+                            bgColor={'#00387C'}
+                            type={'submit'}
+                            sx={{ p: 1 }}
+                          />
+           
             </Box>
 
           </Box>
@@ -327,7 +345,10 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
       
       
         default:
-        return <AddMeetingSuccess/>
+        return <AddMeetingSuccess   
+        formName={'جلسه'}
+        resetButton={true}
+        resetForm={setConfrimForm}   />
         break;
     }
   }

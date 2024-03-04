@@ -7,18 +7,16 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useEffect,useState } from 'react';
 
 
-export default function DYToastMessage({show,setShow}:any) {
+export default function DYToastMessage({show,setShow,message}:any) {
     console.log(show);
   const [open, setOpen] = React.useState(show);
 
   useEffect(() => {
     
-//  setTimeout(() => {
-//     setShow(false)
-//   }, 200000);
+console.log(message)
 
   
-  }, [])
+  }, [message])
   
 
 
@@ -61,11 +59,11 @@ export default function DYToastMessage({show,setShow}:any) {
         
         autoHideDuration={6000}
         onClose={handleClose}
-        message="خطای سرور"
+        message={message?message:'خطای سرور'}
         action={action}
       >
            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-           خطای سرور
+           {message?message:'خطای سرور'}
         </Alert>
         </Snackbar>
     </div>

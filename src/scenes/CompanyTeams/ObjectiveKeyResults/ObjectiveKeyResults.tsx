@@ -5,6 +5,8 @@ import KrDetails from '../LComponents/KrDetails/KrDetails';
 import { HistoryIcon } from '../StataicData/index';
 import { useGetKeyResultMeetingHistory } from '../Hooks/index';
 import KrHistoryModalContent from '../LComponents/KrHistoryModalContent/KrHistoryModalContent';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import AddKrEvaluation from '../LComponents/Forms/AddKrEvaluation/AddKrEvaluation';
 // import { v4 as uuidv4 } from 'uuid';
 import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
 import { useSelector } from 'react-redux';
@@ -20,6 +22,7 @@ import { ReactComponent as SadIcon } from '../../../Asset/Svgs/Emojys/sad 1.svg'
 import sad from '../../../Asset/Svgs/Emojys/sad.png';
 import smil from '../../../Asset/Svgs/Emojys/smil.png';
 import meh from '../../../Asset/Svgs/Emojys/meh.png';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 
 const ObjectiveKeyResults: React.FC = () => {
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
@@ -35,10 +38,22 @@ const ObjectiveKeyResults: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [historyModal, setHistoryModal] = useState(false)
   const [krRowData, setKrRowData] = useState(null);
-  const [showToolbarModal, setShowToolbarModal] = useState(false)
+  const [showToolbarModal, setShowToolbarModal] = useState(false);
+  const [showAddEvalModal,setShowAddEvalModal]=useState(false);
+  const [kresultId,setKresultId]=useState<string>('');
 
-  const [objcSelectionModel, setObjSelectionModel] = useState('')
-  const [krSelectionModel, setKrSelectionModel] = useState('')
+  useEffect(() => {
+    
+  
+    console.log(showModal)
+  }, [showModal])
+  
+
+  
+
+  const [objcSelectionModel, setObjSelectionModel] = useState<string>('')
+  const [krSelectionModel, setKrSelectionModel] = useState<string>('');
+  
 
   const [getCustomerBody, setGetCustomerBody] = useState<any>({
     pageSize: 10,
@@ -68,12 +83,17 @@ const ObjectiveKeyResults: React.FC = () => {
 
   }
 
-  const initialGetHistoryKR = (row: any) => {
+  const initialGetHistoryKR = (row: any):void => {
     let { id } = row;
     console.log(id)
     //  let{id}=row;
     setKrId(id);
     setHistoryModal(true)
+  }
+
+  const initialAddEvaluation=():void=>{
+  console.log('runAddEval')
+  setShowAddEvalModal(!showAddEvalModal)
   }
 
 
@@ -277,18 +297,8 @@ const ObjectiveKeyResults: React.FC = () => {
       fontsize: '14px',
     },
     {
-      field: 'revenue',
-      headerName: 'عملکرد ',
-      align: 'center',
-      headerAlign: 'center',
-      sortable: false,
-      minWidth: 100,
-      fontsize: '14px',
-    },
-
-    {
       field: 'okrStateName',
-      headerName: 'وضعیت',
+      headerName: 'وضعیت نتیجه',
       align: 'center',
       sortable: false,
       headerAlign: 'center',
@@ -310,137 +320,6 @@ const ObjectiveKeyResults: React.FC = () => {
         </Box>
       }
     },
-
-    {
-      field: 'oldValue',
-      headerName: 'مقدار قبلی',
-      align: 'center',
-      sortable: false,
-      headerAlign: 'center',
-      width: 100,
-      renderCell: ({ value }: any) => {
-        if (typeof value === 'string') {
-          return <Box>
-            {
-              value.length > 10 ? <Tooltip sx={{ fontSize: '12px !important' }} title={value}>
-                <Typography fontSize={'12px'}  >  {value}</Typography>
-              </Tooltip> :
-                <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
-            }
-          </Box>
-
-        }
-        else {
-          return <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
-        }
-      }
-    }
-    ,
-    {
-      field: 'currentValue',
-      headerName: 'مقدار جدید',
-      align: 'center',
-      sortable: false,
-      headerAlign: 'center',
-      width: 100,
-      renderCell: ({ value }: any) => {
-        return <Box>
-
-
-          {
-            value.length > 10 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
-              {value}
-            </Tooltip> :
-              <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
-          }
-        </Box>
-      }
-    },
-    //  
-    {
-      field: 'currentState',
-      headerName: 'وضعیت ',
-      sortable: false,
-      headerAlign: 'center',
-      align: 'center',
-      width: 120,
-      renderCell: ({ value }: any) => {
-        return <Box m={3}
-
-          borderRadius={2}
-          width={'100%'}
-          display={'flex'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          height={'75%'}
-          bgcolor={value === 'در مسیر مناسب' ? '#D5F7D4' : value === 'نیازمند توجه' ? '#FFEBEF' : '#F0F1F2'}  >
-
-          <Typography fontSize={'12px'} px={8} color={value === 'نیازمند توجه' ? '#F95700' : value === 'خارج از مسیر مناسب' ? '#CC0030' : 'black'} >
-            {value}
-          </Typography>
-        </Box>
-      }
-
-
-    }
-    ,
-
-    {
-      field: 'nextState',
-      headerName: 'وضعیت آتی',
-      align: 'center',
-      sortable: false,
-      headerAlign: 'center',
-      width: 90,
-      renderCell: (par: any) => {
-        // انتظار داریم به نتیجه درست برسیم
-        // با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد
-        let value: string = par?.row?.nextState;
-        switch (value) {
-          case 'انتظار داریم به نتیجه درست برسیم':
-            return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={smil} width={'20px'} /></Box>
-            break;
-
-          case 'با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد':
-            return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={meh} width={'20px'} /></Box>
-            break;
-
-          default:
-            return <Box sx={{ width: '100%', textAlign: 'center' }}  >
-              <img src={sad} width={'20px'} />
-            </Box>
-            break;
-        }
-
-      }
-
-    }
-    ,
-    {
-      // name:'startDate',
-      field: 'startDate',
-      headerName: 'تاریخ شروع',
-      align: 'center',
-      sortable: false,
-      headerAlign: 'center',
-      width: 100,
-
-    }
-    ,
-    {
-      // name:'startDate',
-      field: 'forceEndDate',
-      headerName: 'حداکثر تاریخ انجام',
-      align: 'center',
-      sortable: false,
-      headerAlign: 'center',
-      width: 100,
-
-    }
-
-
-
-    ,
     {
       field: 'okR_KeyResultType',
       align: 'center',
@@ -461,19 +340,18 @@ const ObjectiveKeyResults: React.FC = () => {
 
 
     },
-
     {
       field: 'pointingSystemType',
       align: 'center',
-      headerName: 'سیستم امتیاز دهی',
+      headerName: 'سیستم امتیازدهی',
       headerAlign: 'center',
       sortable: false,
-      width: 100,
+      width: 120,
       hideable: true,
       hide: true
 
-    },
-    //  startValue
+    }
+    ,
     {
       field: 'startValue',
       align: 'left',
@@ -496,8 +374,8 @@ const ObjectiveKeyResults: React.FC = () => {
         </Box>
       }
 
-    },
-
+    }
+    ,
     {
       field: 'threeTenthsValue',
       align: 'left',
@@ -520,7 +398,10 @@ const ObjectiveKeyResults: React.FC = () => {
         </Box>
       }
 
-    },
+    }
+    ,
+
+    
     {
       field: 'sevenTenthsValue',
       align: 'left',
@@ -567,7 +448,53 @@ const ObjectiveKeyResults: React.FC = () => {
       }
 
     }
+    ,
+    {
+      // name:'startDate',
+      field: 'startDate',
+      headerName: 'تاریخ شروع',
+      align: 'center',
+      sortable: false,
+      headerAlign: 'center',
+      width: 100,
 
+    }
+    ,
+    {
+      // name:'startDate',
+      field: 'forceEndDate',
+      headerName: 'حداکثر تاریخ انجام',
+      align: 'center',
+      sortable: false,
+      headerAlign: 'center',
+      width: 100,
+
+    }
+    ,
+    {
+      field: 'oldValue',
+      headerName: 'مقدار قبلی',
+      align: 'center',
+      sortable: false,
+      headerAlign: 'center',
+      width: 100,
+      renderCell: ({ value }: any) => {
+        if (typeof value === 'string') {
+          return <Box>
+            {
+              value.length > 10 ? <Tooltip sx={{ fontSize: '12px !important' }} title={value}>
+                <Typography fontSize={'12px'}  >  {value}</Typography>
+              </Tooltip> :
+                <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
+            }
+          </Box>
+
+        }
+        else {
+          return <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
+        }
+      }
+    }
     ,
     {
       field: 'oldScore',
@@ -576,6 +503,26 @@ const ObjectiveKeyResults: React.FC = () => {
       sortable: false,
       headerAlign: 'center',
       width: 80,
+    },
+    {
+      field: 'currentValue',
+      headerName: 'مقدار جدید',
+      align: 'center',
+      sortable: false,
+      headerAlign: 'center',
+      width: 100,
+      renderCell: ({ value }: any) => {
+        return <Box>
+
+
+          {
+            value.length > 10 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
+              {value}
+            </Tooltip> :
+              <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
+          }
+        </Box>
+      }
     },
     {
       field: 'score',
@@ -639,6 +586,82 @@ const ObjectiveKeyResults: React.FC = () => {
 
     }
     ,
+
+    
+    {
+      field: 'revenue',
+      headerName: 'عملکرد ',
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      minWidth: 100,
+      fontsize: '14px',
+    },
+
+ 
+
+ 
+   
+    //  
+    {
+      field: 'currentState',
+      headerName: 'وضعیت فعلی',
+      sortable: false,
+      headerAlign: 'center',
+      align: 'center',
+      width: 122,
+      renderCell: ({ value }: any) => {
+        return <Box m={3}
+          borderRadius={2}
+          width={'100%'}
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          height={'75%'}
+          bgcolor={value === 'در مسیر مناسب' ? '#D5F7D4' : value === 'نیازمند توجه' ? '#FFEBEF' : '#F0F1F2'}  >
+
+          <Typography fontSize={'10px'} px={8} color={value === 'نیازمند توجه' ? '#F95700' : value === 'خارج از مسیر مناسب' ? '#CC0030' : 'black'} >
+            {value}
+          </Typography>
+        </Box>
+      }
+
+
+    }
+    ,
+
+    {
+      field: 'nextState',
+      headerName: 'وضعیت آتی',
+      align: 'center',
+      sortable: false,
+      headerAlign: 'center',
+      width: 90,
+      renderCell: (par: any) => {
+        // انتظار داریم به نتیجه درست برسیم
+        // با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد
+        let value: string = par?.row?.nextState;
+        switch (value) {
+          case 'انتظار داریم به نتیجه درست برسیم':
+            return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={smil} width={'20px'} /></Box>
+            break;
+
+          case 'با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد':
+            return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={meh} width={'20px'} /></Box>
+            break;
+
+          default:
+            return <Box sx={{ width: '100%', textAlign: 'center' }}  >
+              <img src={sad} width={'20px'} />
+            </Box>
+            break;
+        }
+
+      }
+
+    }
+    ,
+
     {
       field: 'problems',
       headerName: 'موانع',
@@ -716,6 +739,32 @@ const ObjectiveKeyResults: React.FC = () => {
         </Box>
       }
     },
+    {
+      field: '---',
+      headerName: 'ارزیابی',
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      width: 70,
+      renderCell: (param: any) => {
+
+        let { row } = param;
+        // console.log(param)
+        return <Box   >
+          <IconButton onClick={() => {
+            let{id}=row;
+            setKresultId(id)
+            console.log(id)
+            //  console.log(row)
+            //  console.log(hi)
+          initialAddEvaluation()
+          }}  >
+          <EditNoteOutlinedIcon/>
+          </IconButton>
+        </Box>
+      }
+    }
+    
 
   ], []);
 
@@ -755,11 +804,7 @@ const ObjectiveKeyResults: React.FC = () => {
   }, [objectivee])
 
   const setKeysResultsList = (): any => {
-    // console.log(objectivee)
-    // console.log(objectivies);
-    // let targetObjective=objectivies?.find((objective:any)=>objective.id===objectivee?.id);
     let keyrs = objectivee?.keyResultCheckingMeetingQueryResultDto
-    // console.log(keyR)
     setKeyR(keyrs)
   }
 
@@ -816,8 +861,12 @@ const ObjectiveKeyResults: React.FC = () => {
             setSelectionModel={setKrSelectionModel}
             selectionModel={krSelectionModel}
             initState={KRinitialState}
-            additionalToolbar={false}
-            setShowToolbarModal={setShowToolbarModal}
+            additionalToolbar={true}
+            
+            // setShowToolbarModal={setShowModal}
+
+            setShowInformation={setShowModal}
+           
           />
         </Grid>
 
@@ -830,9 +879,6 @@ const ObjectiveKeyResults: React.FC = () => {
 
   }
 
-  const selectObjective = () => {
-    console.log(objectivee)
-  }
   return (
     <>
       <Grid container sx={{ bgcolor: '#F9F9F9' }} style={{ width: '100%' }} >
@@ -959,6 +1005,24 @@ const ObjectiveKeyResults: React.FC = () => {
 
 
             <KrHistoryModalContent loadingFlag={KRHLoading} data={KrHistoryData} />
+
+          </ModalLyt>
+        }
+
+        {
+          showAddEvalModal && <ModalLyt 
+          title={'تعیین مقدار برای نتیجه کلیدی'}
+          showModal={Boolean(showAddEvalModal)}
+          setShowModal={setShowAddEvalModal}
+          
+          
+          >
+            <AddKrEvaluation  
+            cancelo={setShowAddEvalModal}
+            objectiveId={objectivee?.id}
+            kresultId={kresultId}
+            />
+
 
           </ModalLyt>
         }

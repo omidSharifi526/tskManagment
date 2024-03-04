@@ -8,11 +8,12 @@ import {FormControl,FormControlLabel,InputLabel,OutlinedInput,TextField,Typograp
 
 
 
+
 function TextFieldF(props:any) {
 
-
+// const theme=useTheme();
  
-    const{label,name,type,value,errors, ...rest}=props;
+    const{label,name,type,value,errors,helperText,placeholder, ...rest}=props;
   
     const theme=useTheme();
     // const colora=tokens(theme.palette.mode)
@@ -44,6 +45,7 @@ function TextFieldF(props:any) {
   ({field,form,values}:any)=>{
   return(
   <FormControl size='small' sx={sxStyle}   >
+    
                <Field
                error={form.errors[name]&&form.touched[name]}
                as={TextField}
@@ -54,6 +56,8 @@ function TextFieldF(props:any) {
                {...rest}
                type={type}
                size="small"
+               placeholder={placeholder}
+              
                InputLabelProps={{
                 htmlFor: name,
                 style: {
@@ -66,6 +70,10 @@ function TextFieldF(props:any) {
                  
    
               </Field> 
+              {
+                true && <Typography color={theme.palette.mode==='dark'?'white':'black'} variant='button' mt={'0.3rem'} px={1} textAlign={'left'}  ><span>{helperText}</span></Typography>
+              }
+             
               {errors&&
                 <span style={{color:'red',fontSize:'12px'}}> {errors}</span>
                 }

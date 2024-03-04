@@ -3,36 +3,42 @@ import { Box, Grid, Typography } from '@mui/material';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import { ReactComponent as AddMeetingSuccessVector } from '../../Statics/Svg/AddMeetingSuccessVector.svg';
 
-const AddMeetingSuccess: React.FC = () => {
+
+//    formName={'ارزیابی' }
+// resetButton={true}
+const AddMeetingSuccess = (props:any) => {
+    let{formName,resetButton,resetForm}=props
     return (
         <Grid container   >
-            <Grid item xs={12}   >
+            <Grid item xs={12} my={1}  >
                 <Box display={'flex'} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}   >
                     <Box textAlign={'center'}  >
                         <AddMeetingSuccessVector style={{ width: '150px' }} />
                     </Box>
                     <Box>
                         <Typography variant='body1'   >
-                            اطلاعات جلسه شما با موفقیت ثبت شد.
+                            اطلاعات {formName} شما با موفقیت ثبت شد.
                         </Typography>
                     </Box>
                 </Box>
             </Grid>
             <Grid item xs={12}   >
-                <Box display={'flex'} justifyContent={'center'} columnGap={2} >
-                    <Box   >
-                        <DyButton
-                            caption={'ایجاد جلسه دیگر'}
-                            color={'#00387C'}
-                            onClick={() => { }}
-                            disbled={false}
-                            variant={'contained'}
-                            bgColor={'#00387C'}
-                        // type={'submit'}
-                        />
-                    </Box>
+               {
+                resetButton &&  <Box display={'flex'} justifyContent={'center'} rowGap={0.5} columnGap={1} >
+                <Box   >
+                    <DyButton
+                        caption={`ایجاد ${formName} دیگر`}
+                        color={'#00387C'}
+                        onClick={() => { 
+                            resetForm('add')
+                        }}
+                        disbled={false}
+                        variant={'contained'}
+                        bgColor={'#00387C'}
+                 
+                    />
 
-                    <Box>
+                    {/* <Box mt={4}>
                         <DyButton
                             caption={'بستن'}
                             // color={'#00387C'}
@@ -43,8 +49,13 @@ const AddMeetingSuccess: React.FC = () => {
                                 //   setConfrimForm('confirm')
                             }}
                         />
-                    </Box>
+                    </Box> */}
+                    
                 </Box>
+
+            
+            </Box>
+               }
             </Grid>
         </Grid>
     )

@@ -47,7 +47,7 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
         <Fade in={showModal}>
       
           <Box sx={style}>
-          <Grid container sx={{backgroundColor:'#F9F9F9',p:2}}>
+          <Grid container sx={{p:2}}>
            <Grid item xs={12} mb={1} >
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
            <Box>
@@ -58,7 +58,7 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
            </Box>
             </Box>
            </Grid>
-           <Grid item xs={12} sx={{backgroundColor:'#FFFFFF',borderRadius:2,pt:1}}  >
+           <Grid item xs={12} sx={{borderRadius:2,pt:1}}  >
           {
             children
           } 

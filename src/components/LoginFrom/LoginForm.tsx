@@ -21,13 +21,19 @@ import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelectio
 import { useLogin } from '../Login/Hooks/Index';
 import useWindowDimensions from '../DeviceSize/DeviceSize';
 import AndroidIcon from '@mui/icons-material/Android';
+import DYToastMessage from '../GlobalComponents/DyToastMessage/DYToastMessage';
 import './Style.css'
 // Link
 // userInfo:{
 //   userPhoneNumber:''
+// interface loginStatusFace{
+//   success:boolean,
+// }
 
 const LoginForm = ({ setContentState }: any) => {
   const { width } = useWindowDimensions();
+  const[loginStatusLocal,setLoginStatusLocal]=useState<boolean | null>(null);
+  const[loginMessage,setLoginMessage]=useState<string|null>(null)
   let authDevice = width > 900;
 
   const loginStatus: any = useSelector((state: any) => state.loign.loginStatus);
@@ -48,7 +54,7 @@ const LoginForm = ({ setContentState }: any) => {
 
   const userBody = {
     phoneNumber: "09121223615",
-    password: "123456",
+    password: "AriaBarbod",
     smsCode: "",
     isOTP: false
   }
@@ -73,14 +79,20 @@ const LoginForm = ({ setContentState }: any) => {
     // console.log(userInfoState)
   }
 
-  const initSetPhoneNum = () => {
-    // dispatch(setUserPhoneNumberR(phoneNum))
-  }
-  // console.log(data)
+  useEffect(() => {
+    if (logdata) {
+      let{data:{isSuccess,data,metaData}}:any=logdata;
+      let {message}:any=metaData;
+      let logStatus={success:isSuccess};
+       console.log(message)
+      setLoginMessage(message);
+      // loginMessage,setLoginMessage
+      setLoginStatusLocal(!loginStatus)
+    console.log(isSuccess,data)
+    }
 
-  const initSetUserInfoState = ({ target }: any) => {
-    // console.log(target)
-  }
+  }, [logdata])
+
 
   if (!authDevice) {
     return <Box width={'100%'} py={5} textAlign={'center'}  >
@@ -173,7 +185,7 @@ const LoginForm = ({ setContentState }: any) => {
                       disbled={userInfoState.phoneNumber.length < 11}
                       variant={'contained'}
                       bgColor={'#00387C'}
-                    //  type={'submit'}
+                      type={'submit'}
                     />
                   </Box>
                 </Grid>
@@ -202,8 +214,16 @@ const LoginForm = ({ setContentState }: any) => {
         </Grid>
 
 
-
+        {/* show,setShow} */}
       </Grid>
+      {
+        loginStatusLocal &&  loginMessage &&
+        <DYToastMessage 
+        show={!loginStatus}  
+        setShow={setLoginStatusLocal} 
+        message={loginMessage}
+        />
+      }
 
 
 

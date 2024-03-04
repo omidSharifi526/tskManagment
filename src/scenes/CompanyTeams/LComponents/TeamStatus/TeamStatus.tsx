@@ -59,7 +59,7 @@ const TeamStatus:React.FC=()=> {
       }
       ,
       { field: 'score',
-     headerName: 'درصد ارزیابی',
+     headerName: 'امتیاز',
      align:'center',
      sortable:false,
      headerAlign:'center',

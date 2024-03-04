@@ -22,13 +22,13 @@ const useGetAllMeetings=(meetIds:any|null)=>{
     const changeTenantMode=useSelector((state:any)=>state.meetings.changeTenantMode);
     // console.log(meetIds)
     return useQuery(['getAllMeetingByIds',meetIds],getAllMeetingByIds,{
-        staleTime:1000,
+        staleTime:0,
         // cacheTime:Infinity,
         enabled:!!meetIds,
         refetchOnWindowFocus:false,
         onSuccess:(data)=>{
       
-        // dispatch(setLoadingR(false))
+        
      
         }
         ,

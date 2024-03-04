@@ -20,8 +20,23 @@ const GetAllTeamChildByParentId=async({queryKey}:any)=>{
 
 }
 
+// https://api.myokr.ir/api/Meeting/AddCheckinMeeting
+
+const AddCheckinMeeting=async(checkinData:any)=>{
+    console.log(checkinData);
+
+return await axiosInstance.post('Meeting/AddCheckinMeeting',checkinData)
+}
+// const addMeeting=async(meetData:any)=>{
+  // let meetData={}
+// return await axiosInstance.post(`/Meeting/AddMeeting`,meetData)
+// }
+
+
+
 
 export{
     GetKeyResultMeetingHistory,
-    GetAllTeamChildByParentId
+    GetAllTeamChildByParentId,
+    AddCheckinMeeting
 }

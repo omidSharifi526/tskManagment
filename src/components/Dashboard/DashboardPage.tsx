@@ -260,7 +260,7 @@ if (showTenantItem) {
                             />
                       }
 {/* toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolbar */}
-<Toolbar >
+{/* <Toolbar >
             {locale?.title && (
               <Box sx={{ minWidth: 120, color: "inherit" }}>
                 <FormControl fullWidth>
@@ -305,7 +305,7 @@ if (showTenantItem) {
                 </span>
               )}
             </IconButton>
-          </Toolbar>
+          </Toolbar> */}
 
                         
                         

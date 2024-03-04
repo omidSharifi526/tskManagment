@@ -1,5 +1,5 @@
-import {GetKeyResultMeetingHistory,GetAllTeamChildByParentId} from '../Api/index';
-import { useQuery } from 'react-query';
+import {GetKeyResultMeetingHistory,GetAllTeamChildByParentId,AddCheckinMeeting} from '../Api/index';
+import { useMutation, useQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -47,7 +47,47 @@ const useGetAllTeamChildByParentId=(teamId:string | null,meetingId:string | null
     })
 }
 
+// const useAddCheckinMeeting=()=>{
+//     return useMutation(AddCheckinMeeting,{
+//         onSuccess:(data:any)=>{
+//        console.log(data)
+//         }
+//         ,
+//         onError:(err:any)=>{
+//         console.log(err)
+//         }
+//     })
+// }
+
+const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
+    // const queryClient=useQueryClient();
+ return useMutation(AddCheckinMeeting,{
+    onSuccess:()=>{
+        addCheckinSuccess()
+        // queryClient.invalidateQueries('getAllMeetingByIds')
+    },
+    onError:(err:any)=>{
+    //    console.log(err)
+    }
+ })
+}
+
+
+// const useAddMeeting=(addMeetingSuccess:any)=>{
+//     const queryClient=useQueryClient();
+//  return useMutation(addMeeting,{
+//     onSuccess:()=>{
+//         addMeetingSuccess()
+//         queryClient.invalidateQueries('getAllMeetingByIds')
+//     },
+//     onError:(err:any)=>{
+//        console.log(err)
+//     }
+//  })
+// }
+
 export{
     useGetKeyResultMeetingHistory,
-    useGetAllTeamChildByParentId
+    useGetAllTeamChildByParentId,
+    useAddCheckinMeeting
 }

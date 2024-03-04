@@ -39,10 +39,10 @@ const[teams,setTeams]=useState<any|null>([]);
 useEffect(() => {
   if (companyNode) {
     let{id}=companyNode;
-    console.log(id)
-    setNodeId(id)
+    console.log(companyNode)
+    setNodeId(id);
+    dispatch(setTeamInfoR(companyNode))
   }
-
 
 }, [])
 
@@ -54,7 +54,7 @@ const getObjectiveSuccess=()=>{
 const getObjectiveError=()=>{
   setToastMessage(true)
 }
-console.log(priodId)
+// console.log(priodId)
 const{data,isError:getObjectiveErrorFlag,isLoading:getObjLoading}=useGetWebObjectiveDetailsCheckinMeetingByTeamId(getObjectiveSuccess,getObjectiveError,nodeId,priodId,meetingId);
 
 const [renderContent,setRenderContent]=useState<any>('companyAndTeams');
@@ -87,7 +87,7 @@ const initNodeSelected=(node:any,i:number)=>{
 // let iniName={...node,name:name};
 // console.log(iniName)
 
-console.log(node)
+// console.log(node)
 dispatch(setTeamsDataR(node));
 dispatch(setTeamInfoR(node))
 // console.log(node,i)

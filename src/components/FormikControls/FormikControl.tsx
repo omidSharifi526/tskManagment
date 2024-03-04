@@ -4,6 +4,7 @@ import SelectF from './Select/SelectF';
 import DateTimePicker from './DatePicker/DatePicker';
 import TimePickerF from './TimePicker/TimePicker';
 import MultiSelect from './MultiSelect/MultiSelect';
+import SingleCheckBox from './SingleCheckBox/SingleCheckBox';
 // import TextArea from './TextArea/TextArea';
 // import SelectDd from './SelectDd/SelectDd';
 // import DateTimePicker from './DateTimePicker/DateTimePicker';
@@ -30,6 +31,10 @@ const FormikControl = (props:any) => {
         case 'select':
             return <SelectF {...rest}/>
         break;
+
+        case 'checkBox':
+            return <SingleCheckBox {...rest}   />
+            break;
 
         // case  'radio':
         //     return null

@@ -18,6 +18,8 @@ import {
   //         rowLength: 10,
   //         maxColumns: 6,
   //       });
+  // setShowToolbarModal={setShowModal}
+  // showInformation={showModal}
 
 
 export default function DyDataGrid(
@@ -32,15 +34,17 @@ export default function DyDataGrid(
     initState,
     setSelectionModel,
     setShowToolbarModal,
-    additionalToolbar
+    additionalToolbar,
+    setShowInformation
+    
   }:any) {
     
     function CustomToolbar() {
       return (
         <GridToolbarContainer>
-          <GridToolbarColumnsButton />
+       
           {/* <span>hi</span> */}
-          <div>
+          <Grid>
           {/* <IconButton size='small'  onClick={()=>{
           setShowToolbarModal((prev:any)=>!prev)
           }}   >
@@ -54,8 +58,17 @@ export default function DyDataGrid(
               نمودار  نتایج
                               </Button>
           }
+             {
+            additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
+              setShowInformation((prev:any)=>!prev)
+              console.log('run')
+              }}  startIcon={<KrChartIcon style={{color:'red',backgroundColor:'red !important'}}  />}   >
+              فلان
+                              </Button>
+          }
 
-          </div>
+          </Grid>
+          <GridToolbarColumnsButton />
           <GridToolbarFilterButton />
           <GridToolbarDensitySelector />
           <GridToolbarExport />
@@ -66,7 +79,7 @@ export default function DyDataGrid(
       const initOnRowClick=(row:any)=>{
         console.log(row)
         setSelectionModel(row.id)
-  
+       
        initialOnRowClick(row)
       //  setObjectiveId(id)
       }
