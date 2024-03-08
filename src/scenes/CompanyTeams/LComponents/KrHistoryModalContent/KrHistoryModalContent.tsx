@@ -2,7 +2,10 @@ import React,{useMemo,useState,useEffect} from 'react'
 import { Box, CircularProgress,Grid,Typography,Tooltip } from '@mui/material';
 import DyDataGrid from '../../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
 // import{Grid,Box,Typography, IconButton, Tooltip} from '@mui/material';
-const KrHistoryModalContent = ({data,loadingFlag}:any) => {
+import { useSelector } from 'react-redux';
+const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
+  // console.log(objective)
+  const priodName = useSelector((state: any) => state.meetings.periodName);
     // console.log(data)
     const KRHColumns: any = useMemo(()=>
     [
@@ -103,49 +106,70 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
         </Box>
       }
     },
+    { field: 'score',
+    headerName: 'امتیاز',
+    align:'center',
+    sortable:false,
+    headerAlign:'center',
+    width: 80 ,
+    renderCell:(par:any)=>{
+     // console.log(par?.row?.score)
+     let score:string=par?.row?.score;
+     // console.log(score);
+     if ( typeof score==='string' &&  score.includes('%')) {
+       let pureNum=score.slice(0,score.length-1);
+       let intVal=+pureNum;
+       let color='';
+      let fColor=''
+      switch (true) {
+       case intVal>=70:
+         color='#D5F7D4';
+         fColor='#125610'
+         break;
+         case intVal<70 &&  intVal>30:
+         color='#FFF8D0';
+         fColor='#6B6440'
+         break
+       default:
+         color='#FFEEE5'
+         fColor='#993600'
+         break;
+      }
+       return <Box m={3} 
+       borderRadius={2} 
+       width={'100%'} 
+       display={'flex'} 
+       justifyContent={'center'} 
+       alignItems={'center'} 
+       height={'65%'}   
+       bgcolor={color}
+       my={1}
+        >
+ 
+         <Typography px={8} color={fColor} fontWeight={400} >
+         {intVal}
+         </Typography>
+       </Box>
+       
+     }
+
+     else{
+       return<Box>
+         <Typography>{score}</Typography>
+       </Box>
+     }
+
+
+     
+  
+     
+    }
+
+   }
+   ,
     // revenue
-    {
-      field: 'revenue',
-      headerName: 'عملکرد',
-      align: 'center',
-      headerAlign: 'center',
-      sortable: false,
-      minWidth: 110,
-      renderCell: ({ value }: any) => {
-      if (value) {
-        return <Box>
-        {
-          value.length > 40 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
-            {value}
-          </Tooltip> :
-            <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
-        }
-      </Box>
-      }
-      }
-    },
+  
       
-        
-      
-          // { field: 'newValue',
-          // headerName: 'مقدار اعلام شده',
-          // align:'center',
-          // sortable:false,
-          // headerAlign:'center',
-          //  width: 130,
-          //  renderCell:({value}:any)=>{
-          //   return <Box>
-          //    {
-          //     value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-          //     {value}
-          //   </Tooltip>:
-          //   <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
-          //    }
-          //   </Box>
-          // }
-           
-          //  },
-           
           { field: 'startValue',
           headerName: 'مقدار شروع',
           sortable:false,
@@ -166,68 +190,48 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
       
            
 
-          { field: 'score',
-           headerName: 'امتیاز',
-           align:'center',
-           sortable:false,
-           headerAlign:'center',
-           width: 80 ,
-           renderCell:(par:any)=>{
-            // console.log(par?.row?.score)
-            let score:string=par?.row?.score;
-            // console.log(score);
-            if ( typeof score==='string' &&  score.includes('%')) {
-              let pureNum=score.slice(0,score.length-1);
-              let intVal=+pureNum;
-              let color='';
-             let fColor=''
-             switch (true) {
-              case intVal>=70:
-                color='#D5F7D4';
-                fColor='#125610'
-                break;
-                case intVal<70 &&  intVal>30:
-                color='#FFF8D0';
-                fColor='#6B6440'
-                break
-              default:
-                color='#FFEEE5'
-                fColor='#993600'
-                break;
-             }
-              return <Box m={3} 
-              borderRadius={2} 
-              width={'100%'} 
-              display={'flex'} 
-              justifyContent={'center'} 
-              alignItems={'center'} 
-              height={'65%'}   
-              bgcolor={color}
-              my={1}
-               >
-        
-                <Typography px={8} color={fColor} fontWeight={400} >
-                {intVal}
-                </Typography>
-              </Box>
-              
-            }
-
-            else{
-              return<Box>
-                <Typography>{score}</Typography>
-              </Box>
-            }
-
-
-            
          
-            
-           }
-    
-          }
+          ,
+          {
+            field: 'revenue',
+            headerName: 'عملکرد',
+            align: 'center',
+            headerAlign: 'center',
+            sortable: false,
+            minWidth: 110,
+            renderCell: ({ value }: any) => {
+            if (value) {
+              return <Box>
+              {
+                value.length > 40 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
+                  {value}
+                </Tooltip> :
+                  <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
+              }
+            </Box>
+            }
+            }
+          },
         
       ],[]);
+      const[krDetailSps,setKrDetailSps]=useState<any>(null);
+
+      useEffect(() => {
+        console.log(objective)
+        if (krDetail && objective ) {
+          let{name}=krDetail;
+          let{name:objectiveName}=objective;
+          let details:any={
+            krName:name,
+            objectiveName:objectiveName,
+            priodName:priodName
+          }
+          setKrDetailSps(details)
+        }
+      
+       
+      }, [krDetail,objective])
+      
 
     if(loadingFlag){
      return <Box width={'100%'} py={4}  textAlign={'center'}  >
@@ -262,6 +266,42 @@ const KrHistoryModalContent = ({data,loadingFlag}:any) => {
 
   return (
     <Grid container  >
+      <Grid item xs={12}  >
+      <Grid container px={2}  >
+         <Grid item xs={12} md={12}  >
+         <Box>
+          <Typography fontWeight={700}  >
+          نام هدف  :
+            {
+            krDetailSps?.objectiveName
+            }
+          </Typography>
+         </Box>
+         </Grid>
+         <Grid item xs={12} md={6}>
+         <Box mt={2}  >
+          <Typography variant='body2'>
+          شرح نتیجه کلیدی :
+            {
+            krDetailSps?.krName
+            }
+          </Typography>
+         </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            {/* priodName */}
+            <Box mt={2} textAlign={'right'} >
+          <Typography textAlign={'right'} variant='body2'>
+          دوره زمانی :
+            {
+            krDetailSps?.priodName
+            }
+          </Typography>
+         </Box>
+          
+          </Grid>
+      </Grid>
+      </Grid>
 
     <Grid item xs={12}   >
     <Box p={1}  >

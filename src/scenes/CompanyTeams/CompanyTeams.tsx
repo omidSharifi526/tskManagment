@@ -15,13 +15,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Timer from '../../components/GlobalComponents/MeetingTimer/MeetingTimer';
 // import TeamStatus from './LComponents/TeamStatus/TeamStatus';
 import { TabPanelProps } from './Interfaces/interfaces'
-
 import ObjectiveKeyResults from './ObjectiveKeyResults/ObjectiveKeyResults';
 // import DyTabs from '../../components/GlobalComponents/DyTabs/DyTabs';
 const TeamStatus = lazy(() => import('./LComponents/TeamStatus/TeamStatus'));
 const CompanyTeams = () => {
+
+
   const tenantName = useSelector((state: any) => state.meetings.profileName);
   const companyAuth = useSelector((state: any) => state.meetings.teamInfo.isCompany);
+  const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
   const meetSelectedDate = useSelector((state: any) => state.meetings.meetSelectedDate);
   const objectivie = useSelector((state: any) => state.meetings.objectivie)
   // meetSelectedDate
@@ -177,17 +179,23 @@ const CompanyTeams = () => {
 
       <Grid container   >
 
-        <Grid item xs={12} md={1.5}   >
+       {   
+         treeView && <Grid item xs={12} md={treeView?1.5:0}   >
 
-          <Box boxShadow={2} borderRadius={2} mt={2}  >
-            <DyTreeView
-              setTabIndex={setTabIndex}
-            />
-          </Box>
+         <Box boxShadow={2} borderRadius={2} mt={2}  >
+           <DyTreeView
+             setTabIndex={setTabIndex}
+           />
+         </Box>
 
-        </Grid>
+       </Grid>
+       }
 
-        <Grid item xs={12} md={10.5}  >
+
+
+
+
+        <Grid item xs={12} md={treeView?10.5:12}  >
 
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

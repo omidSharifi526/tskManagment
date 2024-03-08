@@ -77,11 +77,16 @@ const MeetingSlider = () => {
 
   // handleSlideChange
   const handleSlideChange = (swiper: any) => {
-    
+   
     const currentSlideIndex:any = swiper.activeIndex; // Get the active slide index
     const currentSlideData:any = perData?perData[currentSlideIndex]:null; // Get data from the periods array
-    let{id}=currentSlideData;
-    dispatch(setPriodIdR(id))
+    let{id,name}=currentSlideData;
+    console.log(id,name)
+    let priodDetail={
+      id:id,
+      name:name
+    }
+    dispatch(setPriodIdR(priodDetail))
     // setPriodIds((prev:any)=>({...prev,priodId:id}));
     setIds((prev:any)=>({tenantId:profileTenantId,priodId:id}));
     dispatch(setLoadingR(true))

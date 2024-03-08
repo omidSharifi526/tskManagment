@@ -7,8 +7,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 interface LoginState {
 
 }
+
+interface priodViewStateFace{
+  treeView:boolean
+}
 type meetingsStateType = {
   priodId:string,
+  periodName:string,
   meetingId:string,
   profileTenantId:string,
   teamId:string,
@@ -25,6 +30,7 @@ type meetingsStateType = {
     objUpdated:boolean,
     changeTenantMode:boolean,
     meetSelectedDate:string,
+    treeViewState:priodViewStateFace
 
     
  
@@ -33,6 +39,7 @@ type meetingsStateType = {
 
 const initialState:meetingsStateType = {
 priodId:'',
+periodName:'',
 meetingId:'',
 profileTenantId:'',
 teamId:'',
@@ -48,7 +55,11 @@ keyResults:[],
 loading:false,
 objUpdated:false,
 changeTenantMode:false,
-meetSelectedDate:''
+meetSelectedDate:'',
+
+treeViewState:{
+treeView:true
+}
 }
 
 
@@ -186,7 +197,9 @@ const resetTeamInfo=(state:any)=>{
 }
 const setPriodId=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  state.priodId=payload;
+  let {id,name}=payload
+  state.priodId=id;
+  state.periodName=name;
 // console.log()
 }
 
@@ -201,6 +214,10 @@ const setMeetingId=(state:any,action:PayloadAction<any>)=>{
 const setChangeTenantMode=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
   state.changeTenantMode=payload;
+}
+
+const changeTreeViewState=(state:any)=>{
+  state.treeViewState.treeView=!state.treeViewState.treeView
 }
 
 
@@ -226,7 +243,8 @@ export const meetingsSlice = createSlice({
     setTeamInfo,
     setPriodId,
     setMeetingId,
-    setChangeTenantMode
+    setChangeTenantMode,
+    changeTreeViewState
   
    
   },
@@ -247,7 +265,8 @@ export const {
     resetTeamInfo:resetTeamInfoR,
     setPriodId:setPriodIdR,
     setMeetingId:setMeetingIdR,
-    setChangeTenantMode:setChangeTenantModeR
+    setChangeTenantMode:setChangeTenantModeR,
+    changeTreeViewState:changeTreeViewStateR
  } = meetingsSlice.actions
 
 

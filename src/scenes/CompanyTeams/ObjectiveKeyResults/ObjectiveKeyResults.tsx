@@ -135,7 +135,7 @@ const ObjectiveKeyResults: React.FC = () => {
 
       {
         field: 'responsibleName',
-        headerName: 'مسئول هدف',
+        headerName: 'مسئول',
         align: 'center',
         sortable: false,
         headerAlign: 'center',
@@ -301,6 +301,7 @@ const ObjectiveKeyResults: React.FC = () => {
       headerName: 'وضعیت نتیجه',
       align: 'center',
       sortable: false,
+
       headerAlign: 'center',
       width: 140,
       renderCell: ({ value }: any) => {
@@ -474,9 +475,9 @@ const ObjectiveKeyResults: React.FC = () => {
     {
       field: 'oldValue',
       headerName: 'مقدار قبلی',
-      align: 'center',
+      align: 'right',
       sortable: false,
-      headerAlign: 'center',
+      headerAlign: 'right',
       width: 100,
       renderCell: ({ value }: any) => {
         if (typeof value === 'string') {
@@ -503,13 +504,67 @@ const ObjectiveKeyResults: React.FC = () => {
       sortable: false,
       headerAlign: 'center',
       width: 80,
-    },
+      renderCell: (par: any) => {
+        // console.log(par?.row?.score)
+        let score: string = par?.row?.score;
+        // console.log(score);
+        if (typeof score === 'string' && score.includes('%')) {
+          let pureNum = score.slice(0, score.length - 1);
+          let intVal = +pureNum;
+          let color = '';
+          let fColor = ''
+          switch (true) {
+            case intVal >= 70:
+              color = '#D5F7D4';
+              fColor = '#125610'
+              break;
+            case intVal < 70 && intVal > 30:
+              color = '#FFF8D0';
+              fColor = '#6B6440'
+              break
+            default:
+              color = '#FFEEE5'
+              fColor = '#993600'
+              break;
+          }
+          return <Box m={3}
+            borderRadius={2}
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            height={'65%'}
+            bgcolor={color}
+            my={1}
+          >
+
+            <Typography px={8} color={fColor} fontWeight={400} >
+              {intVal}
+            </Typography>
+          </Box>
+
+        }
+
+        else {
+          return <Box>
+            <Typography>{score}</Typography>
+          </Box>
+        }
+
+
+
+
+
+      }
+
+    }
+    ,
     {
       field: 'currentValue',
       headerName: 'مقدار جدید',
-      align: 'center',
+      align: 'right',
       sortable: false,
-      headerAlign: 'center',
+      headerAlign: 'right',
       width: 100,
       renderCell: ({ value }: any) => {
         return <Box>
@@ -691,79 +746,79 @@ const ObjectiveKeyResults: React.FC = () => {
 
     }
     // InfoIcon
-    ,
-    {
-      field: 'base_Comments',
-      headerName: 'توضیحات',
-      align: 'center',
-      headerAlign: 'center',
-      sortable: false,
-      minWidth: 100,
-      fontsize: '14px',
-    },
-    ,
-    {
-      field: '-',
-      headerName: 'اطلاعات',
-      align: 'center',
-      headerAlign: 'center',
-      sortable: false,
-      width: 70,
-      renderCell: () => {
-        return <Box   >
-          <IconButton onClick={initGetKRinfo}  >
-            <InfoIcon />
-          </IconButton>
-        </Box>
-      }
-    },
-    {
-      field: '--',
-      headerName: 'تاریخچه',
-      align: 'center',
-      headerAlign: 'center',
-      sortable: false,
-      width: 70,
-      renderCell: (param: any) => {
+    // ,
+    // {
+    //   field: 'base_Comments',
+    //   headerName: 'توضیحات',
+    //   align: 'center',
+    //   headerAlign: 'center',
+    //   sortable: false,
+    //   minWidth: 100,
+    //   fontsize: '14px',
+    // },
+    // ,
+    // {
+    //   field: '-',
+    //   headerName: 'اطلاعات',
+    //   align: 'center',
+    //   headerAlign: 'center',
+    //   sortable: false,
+    //   width: 70,
+    //   renderCell: () => {
+    //     return <Box   >
+    //       <IconButton onClick={initGetKRinfo}  >
+    //         <InfoIcon />
+    //       </IconButton>
+    //     </Box>
+    //   }
+    // },
+    // {
+    //   field: '--',
+    //   headerName: 'تاریخچه',
+    //   align: 'center',
+    //   headerAlign: 'center',
+    //   sortable: false,
+    //   width: 70,
+    //   renderCell: (param: any) => {
 
-        let { row } = param;
-        // console.log(param)
-        return <Box   >
-          <IconButton onClick={() => {
-            //  console.log(row)
-            //  console.log(hi)
-            initialGetHistoryKR(row)
-          }}  >
-            <HistoryIcon />
-          </IconButton>
-        </Box>
-      }
-    },
-    {
-      field: '---',
-      headerName: 'ارزیابی',
-      align: 'center',
-      headerAlign: 'center',
-      sortable: false,
-      width: 70,
-      renderCell: (param: any) => {
+    //     let { row } = param;
+    //     // console.log(param)
+    //     return <Box   >
+    //       <IconButton onClick={() => {
+    //         //  console.log(row)
+    //         //  console.log(hi)
+    //         initialGetHistoryKR(row)
+    //       }}  >
+    //         <HistoryIcon />
+    //       </IconButton>
+    //     </Box>
+    //   }
+    // },
+    // {
+    //   field: '---',
+    //   headerName: 'ارزیابی',
+    //   align: 'center',
+    //   headerAlign: 'center',
+    //   sortable: false,
+    //   width: 70,
+    //   renderCell: (param: any) => {
 
-        let { row } = param;
-        // console.log(param)
-        return <Box   >
-          <IconButton onClick={() => {
-            let{id}=row;
-            setKresultId(id)
-            console.log(id)
-            //  console.log(row)
-            //  console.log(hi)
-          initialAddEvaluation()
-          }}  >
-          <EditNoteOutlinedIcon/>
-          </IconButton>
-        </Box>
-      }
-    }
+    //     let { row } = param;
+    //     // console.log(param)
+    //     return <Box   >
+    //       <IconButton onClick={() => {
+    //         let{id}=row;
+    //         setKresultId(id)
+    //         console.log(id)
+    //         //  console.log(row)
+    //         //  console.log(hi)
+    //       initialAddEvaluation()
+    //       }}  >
+    //       <EditNoteOutlinedIcon/>
+    //       </IconButton>
+    //     </Box>
+    //   }
+    // }
     
 
   ], []);
@@ -773,24 +828,22 @@ const ObjectiveKeyResults: React.FC = () => {
       columnVisibilityModel: {
         rowid: false,
         okrStateName: false,
+        okR_KeyResultType:false,
         pointingSystemType: false,
         forceEndDate: false,
-        startDate: false
-
-      },
-    },
-
+        startDate: false,
+        threeTenthsValue:false,
+        oneValue:false
+      }
+    }
   }
   // ObjInitial
-  let ObjInitial = {
+  let ObjctivieInitialState = {
     columns: {
       columnVisibilityModel: {
         weight: false,
-
-
-      },
-    },
-
+      }
+    }
   }
 
 
@@ -863,10 +916,12 @@ const ObjectiveKeyResults: React.FC = () => {
             initState={KRinitialState}
             additionalToolbar={true}
             
-            // setShowToolbarModal={setShowModal}
-
+            setShowHistory={setHistoryModal}
+            setSpecialId={setKrId}
+            
             setShowInformation={setShowModal}
-           
+            setShowAddEvalModal={setShowAddEvalModal}
+             
           />
         </Grid>
 
@@ -935,7 +990,7 @@ const ObjectiveKeyResults: React.FC = () => {
               //  objcSelectionModel,setObjSelectionModel
               setSelectionModel={setObjSelectionModel}
               selectionModel={objcSelectionModel}
-              initState={ObjInitial}
+              initState={ObjctivieInitialState}
 
               additionalToolbar={false}
 
@@ -987,8 +1042,12 @@ const ObjectiveKeyResults: React.FC = () => {
           <ModalLyt title={'اطلاعات نتیجه کلیدی'}
             showModal={Boolean(showModal)}
             setShowModal={setShowModal}
+            
           >
-            <KrDetails data={krRowData} />
+            <KrDetails 
+            // krDetail={krRowData}
+            data={krRowData} 
+            />
           </ModalLyt>
 
         }
@@ -1000,11 +1059,12 @@ const ObjectiveKeyResults: React.FC = () => {
             showModal={Boolean(historyModal)}
             setShowModal={setHistoryModal}
           >
-
-
-
-
-            <KrHistoryModalContent loadingFlag={KRHLoading} data={KrHistoryData} />
+            <KrHistoryModalContent 
+            loadingFlag={KRHLoading} 
+            data={KrHistoryData} 
+            krDetail={krRowData}
+            objective={objectivee}
+            />
 
           </ModalLyt>
         }
@@ -1036,6 +1096,8 @@ const ObjectiveKeyResults: React.FC = () => {
             {/* <h1>ModaLOfDatagRid</h1> */}
           </ModalLyt>
         }
+
+
 
 
 

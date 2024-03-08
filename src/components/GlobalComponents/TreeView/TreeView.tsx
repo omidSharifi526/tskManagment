@@ -11,7 +11,9 @@ import { useSelector } from 'react-redux';
 import { useEffect,useState,useLayoutEffect } from 'react';
 import DYToastMessage from '../DyToastMessage/DYToastMessage';
 import CircularProgress from '@mui/material/CircularProgress';
-import CustomDataGrid from './newTreeView'
+// import CustomDataGrid from './newTreeView';
+import {IconButton} from '@mui/material';
+import Close from '@mui/icons-material/Close';
 // import dyPro
 import { Box } from '@mui/material';
 import LyBackdrop from '../../Layouts/BackDrop/BackDrop';
@@ -19,7 +21,7 @@ import {useGetTeamsByTenantId,
   useGetAllObjectiveByTeamId,
   useGetAllTeamStatusByTenantId,
   useGetWebObjectiveDetailsCheckinMeetingByTeamId} from '../../../scenes/Meeting/Hooks/index';
-  import {updateObjR,resetTeamInfoR,setTeamsDataR,setTeamInfoR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
+  import {updateObjR,resetTeamInfoR,setTeamsDataR,setTeamInfoR,changeTreeViewStateR} from '../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
   import { useDispatch } from 'react-redux';
 export default function DyTreeView({setTabIndex}:any) {
 const dispatch=useDispatch();
@@ -95,6 +97,10 @@ setNodeId(node.id)
 // console.log('hihiih')
 
 
+}
+
+const intialCloseModel=()=>{
+  dispatch(changeTreeViewStateR())
 }
 
 
@@ -243,14 +249,25 @@ const renderContentUi=()=>{
       <CircularProgress sx={{color:'white'}}  />
     </LyBackdrop>
     }
+
    <DYToastMessage 
    show={toastMessage}
    setShow={setToastMessage}
    />
+
+   <Box width={'100%'}   >
+    <Box>
+   <IconButton onClick={intialCloseModel}   >
+  <Close/>
+   </IconButton>
+    </Box>
+    <Box>
     {
       renderContentUi()
     }
-
+    </Box>
+   </Box>
+{/* changeTreeViewStateR */}
    </Box>
   );
 }

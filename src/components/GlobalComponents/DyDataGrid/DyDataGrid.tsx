@@ -2,6 +2,12 @@ import * as React from 'react';
 import { DataGrid, GridRowsProp, GridColDef,faIR,GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Box,Grid, IconButton,Button } from '@mui/material';
+import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import { HistoryIcon } from '../../../scenes/CompanyTeams/StataicData/index';
+import { ReactComponent as InfoIcon } from '../../../scenes/CompanyTeams/StataicData/Icons/InfoIcon.svg';
+// import { ReactComponent as historyIcon } from '../../../scenes/CompanyTeams/StataicData/index';
 import {ReactComponent as KrChartIcon} from './Static/KrChartIcon.svg';
 import './style.css';
 import {
@@ -33,13 +39,16 @@ export default function DyDataGrid(
     onRowSelectionEvent,
     initState,
     setSelectionModel,
-    setShowToolbarModal,
+    setShowHistory,
     additionalToolbar,
-    setShowInformation
+    setShowInformation,
+    setSpecialId,
+    setShowAddEvalModal
     
   }:any) {
-    
+    const[selectedRowData,setSelectedRowData]=React.useState(null);
     function CustomToolbar() {
+    
       return (
         <GridToolbarContainer>
        
@@ -52,18 +61,34 @@ export default function DyDataGrid(
           </IconButton> */}
        
           {
-            additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
-              setShowToolbarModal((prev:any)=>!prev)
-              }}  startIcon={<KrChartIcon style={{color:'red',backgroundColor:'red !important'}}  />}   >
-              نمودار  نتایج
+       selectedRowData && additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
+        setShowHistory((prev:any)=>!prev)
+        let{id}=selectedRowData;
+        setSpecialId(id)
+              }}  startIcon={<HistoryToggleOffIcon/>}   >
+                تاریخچه
                               </Button>
           }
              {
-            additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
-              setShowInformation((prev:any)=>!prev)
-              console.log('run')
-              }}  startIcon={<KrChartIcon style={{color:'red',backgroundColor:'red !important'}}  />}   >
-              فلان
+     selectedRowData &&  additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
+              setShowInformation((prev:any)=>!prev);
+              console.log(selectedRowData)
+              initialOnRowClick(selectedRowData)
+              // console.log('run')
+              }}  startIcon={<ReceiptLongIcon   />}   >
+              اطلاعات
+                              </Button>
+          }
+                       {
+     selectedRowData &&  additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
+      setShowAddEvalModal((prev:any)=>!prev);
+      let{id}=selectedRowData;
+      setSpecialId(id)
+              // console.log(selectedRowData)
+              // initialOnRowClick(selectedRowData)
+              // console.log('run')
+              }}  startIcon={<EditNoteOutlinedIcon  />}   >
+              ارزیابی
                               </Button>
           }
 
@@ -77,9 +102,9 @@ export default function DyDataGrid(
     }
 
       const initOnRowClick=(row:any)=>{
-        console.log(row)
+        // console.log(row)
         setSelectionModel(row.id)
-       
+        setSelectedRowData(row)
        initialOnRowClick(row)
       //  setObjectiveId(id)
       }
@@ -127,10 +152,7 @@ export default function DyDataGrid(
         color:'white',
         borderRadius:5
       },
-      // "& .MuiDataGrid-root .MuiDataGrid-cell":{
-      //   wordWrap: 'break-word !important',
-      //   whiteSpace:'normal !important'
-      // }
+ 
   
     
     
