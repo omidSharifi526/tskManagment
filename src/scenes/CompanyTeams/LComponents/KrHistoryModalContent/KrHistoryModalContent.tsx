@@ -5,6 +5,7 @@ import DyDataGrid from '../../../../components/GlobalComponents/DyDataGrid/DyDat
 import { useSelector } from 'react-redux';
 const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
   // console.log(objective)
+  const meetSelectedDate = useSelector((state: any) => state.meetings.meetSelectedDate);
   const priodName = useSelector((state: any) => state.meetings.periodName);
     // console.log(data)
     const KRHColumns: any = useMemo(()=>
@@ -95,14 +96,14 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
       minWidth: 110,
       // fontsize:'12px',
 
-      renderCell: ({ value }: any) => {
+      renderCell:({value}:any)=>{
         return <Box>
-          {
-            value.length > 50 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
-              {value}
-            </Tooltip> :
-              <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
-          }
+         {
+          value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+          {value}
+        </Tooltip>:
+        <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+         }
         </Box>
       }
     },
@@ -269,7 +270,8 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
       <Grid item xs={12}  >
       <Grid container px={2}  >
          <Grid item xs={12} md={12}  >
-         <Box>
+        <Box display={'flex'} justifyContent={'space-between'}  >
+        <Box>
           <Typography fontWeight={700}  >
           نام هدف  :
             {
@@ -277,6 +279,15 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
             }
           </Typography>
          </Box>
+         <Box>
+         <Typography variant='body1'  >
+          تاریخ :
+            {
+            meetSelectedDate
+            }
+          </Typography>
+         </Box>
+        </Box>
          </Grid>
          <Grid item xs={12} md={6}>
          <Box mt={2}  >

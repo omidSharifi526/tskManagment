@@ -86,7 +86,7 @@ switch (content) {
   <Grid item xs={12} md={5}  >
 <Loading loading={false} setContentState={setContentState}  />
   </Grid>
-  <Grid item xs={12} md={6} height={'600px'} display={'flex'} alignItems={'start'}   mt={'50px'} >
+  <Grid item xs={12} md={6} height={'600px'} display={'flex'} alignItems={'start'}    >
 {
   renderContent()
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { DataGrid, GridRowsProp, GridColDef,faIR,GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Box,Grid, IconButton,Button } from '@mui/material';
@@ -43,7 +44,8 @@ export default function DyDataGrid(
     additionalToolbar,
     setShowInformation,
     setSpecialId,
-    setShowAddEvalModal
+    setShowAddEvalModal,
+    initialMount
     
   }:any) {
     const[selectedRowData,setSelectedRowData]=React.useState(null);
@@ -108,6 +110,17 @@ export default function DyDataGrid(
        initialOnRowClick(row)
       //  setObjectiveId(id)
       }
+
+      useEffect(() => {
+        console.log(data)
+      if (initialMount) {
+        setSelectedRowData(data[0])
+        setSelectionModel(data[0]?.id)
+        initialOnRowClick(data[0])
+      }
+      
+      }, [])
+      
    
      
   return (

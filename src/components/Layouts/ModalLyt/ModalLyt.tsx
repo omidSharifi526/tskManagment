@@ -9,7 +9,7 @@ import Close from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -17,6 +17,9 @@ const style = {
   bgcolor: 'background.paper',
  borderRadius:'10px',
   boxShadow: 24,
+  overFlowY:'scroll',
+  innerHeight:'70%'
+  
 };
 
 export default function ModalLyt({showModal,setShowModal,title,children,KRHLoading}:any) {
@@ -47,7 +50,7 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
         <Fade in={showModal}>
       
           <Box sx={style}>
-          <Grid container sx={{p:2}}>
+          <Grid container  sx={{p:2,overflowY:'scroll !important',maxHeight:'90% !important'}}>
            <Grid item xs={12} mb={1} >
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
            <Box>

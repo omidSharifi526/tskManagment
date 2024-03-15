@@ -40,9 +40,9 @@ const AddMeeting: React.FC = () => {
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
 
   const meetingData: Values = {
-    name: '',
+    name: 'Check_in',
     description: '',
-    meetingTypeId: '',
+    meetingTypeId: "ea43535d-bbeb-4c22-a4c4-ab85eab28802",
     periodId: priodId,
     tenantId: profileTenantId,
     meetingDate: '',
@@ -113,7 +113,26 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                             type={'submit'}
                             sx={{ p: 1 }}
                           />
-                             <DyButton
+
+                       
+                            
+                            <a target='_blank'
+                          style={{ textDecoration: 'none', }}
+                          rel='noopener noreferrer' 
+                          href="https://okrcoach.ir/">
+
+                        <Button variant={'contained'} sx={{bgcolor:'#00387C',width:'130px',px:3,py:0.5}}  >
+                        ورود به سایت     
+                        </Button>
+                        
+                        </a>
+                          
+                        {/*  */}
+                   
+                       
+
+
+                             {/* <DyButton
                             caption={'ورود به سایت'}
                             color={'#00387C'}
                             onClick={()=>{}}
@@ -122,7 +141,8 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                             bgColor={'#00387C'}
                             type={'submit'}
                             sx={{ p: 1 }}
-                          />
+                            
+                          /> */}
            
             </Box>
 
@@ -164,7 +184,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                           <InputLabel id="meetingTypeId">نوع جلسه</InputLabel>
                           <Select
                             error={touched.meetingTypeId && !values.meetingTypeId }
-                            
+                            disabled
                             id="meetingTypeId"
                             label='نوع جلسه'
                             fullWidth

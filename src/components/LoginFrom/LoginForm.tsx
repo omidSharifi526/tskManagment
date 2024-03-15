@@ -22,7 +22,16 @@ import { useLogin } from '../Login/Hooks/Index';
 import useWindowDimensions from '../DeviceSize/DeviceSize';
 import AndroidIcon from '@mui/icons-material/Android';
 import DYToastMessage from '../GlobalComponents/DyToastMessage/DYToastMessage';
-import './Style.css'
+import './Style.css';
+import SchoolIcon from '@mui/icons-material/School';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import SportsIcon from '@mui/icons-material/Sports';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import QrCode2Icon from '@mui/icons-material/QrCode2';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
+import Divider from '@mui/material/Divider';
 // Link
 // userInfo:{
 //   userPhoneNumber:''
@@ -32,8 +41,8 @@ import './Style.css'
 
 const LoginForm = ({ setContentState }: any) => {
   const { width } = useWindowDimensions();
-  const[loginStatusLocal,setLoginStatusLocal]=useState<boolean | null>(null);
-  const[loginMessage,setLoginMessage]=useState<string|null>(null)
+  const [loginStatusLocal, setLoginStatusLocal] = useState<boolean | null>(null);
+  const [loginMessage, setLoginMessage] = useState<string | null>(null)
   let authDevice = width > 900;
 
   const loginStatus: any = useSelector((state: any) => state.loign.loginStatus);
@@ -81,31 +90,291 @@ const LoginForm = ({ setContentState }: any) => {
 
   useEffect(() => {
     if (logdata) {
-      let{data:{isSuccess,data,metaData}}:any=logdata;
-      let {message}:any=metaData;
-      let logStatus={success:isSuccess};
-       console.log(message)
+      let { data: { isSuccess, data, metaData } }: any = logdata;
+      let { message }: any = metaData;
+      let logStatus = { success: isSuccess };
+      console.log(message)
       setLoginMessage(message);
       // loginMessage,setLoginMessage
       setLoginStatusLocal(!loginStatus)
-    console.log(isSuccess,data)
+      console.log(isSuccess, data)
     }
 
   }, [logdata])
 
+  const linkStyle = {
+    fontSize: '0.6rem'
+  }
+
 
   if (!authDevice) {
-    return <Box width={'100%'} py={5} textAlign={'center'}  >
-      <Typography fontWeight={900} mt={4} fontSize={'1.1rem'} >
-        لطفا از نسخه موبایل استفاده کنید
-      </Typography>
-      <Typography mt={5} fontSize={'1rem'} fontWeight={600} color={'blue'}  >
-        <a target='_blank'
-          style={{ textDecoration: 'none', marginTop: '20px' }}
-          rel='noopener noreferrer' href="https://mobile.myokr.ir/">نسخه موبایل</a>
+    return <Box width={'100%'} py={1} textAlign={'center'}  >
 
-      </Typography>
-      <AndroidIcon color='secondary' fontSize='large' />
+      <Grid xs={12}   >
+        <Box width={'100%'}
+          display={'flex'}
+          justifyContent={'center'}
+          textAlign={'center'}
+          flexDirection={'column'}
+          rowGap={2}
+        >
+          <Box>
+            <Typography color={'red'} fontWeight={900} fontSize={'1.1rem'} >
+              لطفا از نسخه موبایل استفاده کنید
+            </Typography>
+          </Box>
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none', }}
+                rel='noopener noreferrer' href="https://mobile.myokr.ir/">
+                <Typography color='primary' fontWeight={900} variant='h6'   >نسخه موبایل
+                  {/* <SchoolIcon   /> */}
+
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <AndroidIcon color='primary' />
+            </Box>
+          </Box>
+
+          <Divider variant="middle" />
+
+          {/* <Typography  fontSize={'0.7rem'} fontWeight={600} color={'blue'}  > */}
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none', }}
+                rel='noopener noreferrer' href=" https://okrcoach.ir/okrcoach-software-online/installation/">
+                <Typography color='primary'   > آموزش نرم افزار
+                  {/* <SchoolIcon   /> */}
+
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <SchoolIcon color='primary' />
+            </Box>
+          </Box>
+
+          <Divider variant="middle" />
+
+          {/* ////////////////////// */}
+
+
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none', }}
+                rel='noopener noreferrer' href="https://okrcoach.ir/okrcoach-software-online/">
+                <Typography color='primary'   > خرید اشتراک نرم افزار
+                  {/* <SchoolIcon   /> */}
+
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <CreditCardIcon color='primary' />
+            </Box>
+          </Box>
+          <Divider variant="middle" />
+
+
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none', }}
+                rel='noopener noreferrer' href="https://okrcoach.ir/okr-coach/">
+                <Typography color='primary'   > درخواست مربی
+                  {/* <SchoolIcon   /> */}
+
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <SportsIcon color='primary' />
+            </Box>
+          </Box>
+
+          <Divider variant="middle" />
+
+          {/* ////////////////////// */}
+
+
+          {/* <a target='_blank'
+            style={{ textDecoration: 'none', }}
+            rel='noopener noreferrer' href="https://okrcoach.ir/customers/ "><Typography   >مشتریان ما<Box mt={'5px'}    >
+              <HandshakeIcon />
+            </Box>
+            </Typography>
+          </a> */}
+
+
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none', }}
+                rel='noopener noreferrer' href="https://okrcoach.ir/customers/">
+                <Typography color='primary'   > مشتریان ما
+
+
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <HandshakeIcon color='primary' />
+            </Box>
+          </Box>
+
+          <Divider variant="middle" />
+
+
+
+          {/* <a target='_blank'
+            style={{ textDecoration: 'none', }}
+            rel='noopener noreferrer' href=" https://okrcoach.ir/amir-imenpour/ "><Typography   >معرفی ما<Box mt={'5px'}    >
+              <CoPresentIcon />
+            </Box>
+            </Typography>
+          </a> */}
+
+
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none' }}
+                rel='noopener noreferrer' href="https://okrcoach.ir/amir-imenpour/">
+                <Typography color='primary'   >معرفی ما
+
+
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <CoPresentIcon color='primary' />
+            </Box>
+          </Box>
+
+          <Divider variant="middle" />
+
+          {/* <a target='_blank'
+            style={{ textDecoration: 'none', }}
+            rel='noopener noreferrer' href="https://okrcoach.ir/services/course/"><Typography   ><Box mt={'5px'}    >
+              <SchoolIcon />
+            </Box>
+            </Typography>
+          </a> */}
+
+
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none' }}
+                rel='noopener noreferrer' href="https://okrcoach.ir/services/course/">
+                <Typography color='primary'   >آموزش OKR
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <SchoolIcon color='primary' />
+            </Box>
+          </Box>
+
+          <Divider variant="middle" />
+
+
+
+
+
+          {/* <Box display={'flex'} alignItems={'center'}  >
+            <a target='_blank'
+              style={{ textDecoration: 'none', }}
+              rel='noopener noreferrer' href=" https://okrcoach.ir/okr-blog/">
+              <Typography>
+
+              </Typography>
+
+            </a>
+            <NewspaperIcon />
+          </Box> */}
+
+
+          <Box
+            width={'100%'}
+            display={'flex'}
+            justifyContent={'center'}
+            columnGap={1}
+            alignItems={'center'}
+          >
+            <Box mt={0.5}>
+              <a target='_blank'
+                style={{ textDecoration: 'none' }}
+                rel='noopener noreferrer' href="https://okrcoach.ir/okr-blog/">
+                <Typography color='primary'   >مجله OKR
+                </Typography>
+              </a>
+            </Box>
+            <Box>
+              <NewspaperIcon color='primary' />
+            </Box>
+          </Box>
+
+          <Divider variant="middle" />
+
+
+
+
+
+
+          {/* </Typography> */}
+
+        </Box>
+      </Grid>
+
+
     </Box>
   }
 
@@ -118,19 +387,19 @@ const LoginForm = ({ setContentState }: any) => {
   }
 
   return (
-    <Grid container >
+    <Grid container  >
 
-      <Grid item xs={10} md={8} mx={'auto'} bgcolor={'white'} borderRadius={4}  >
+      <Grid item xs={12} md={8} mx={'auto'} bgcolor={'white'} borderRadius={4}  >
         <Grid container rowGap={1} >
           <Grid item xs={12} >
-            <Typography px={4} fontWeight={900} fontSize={'1.4rem'} color={'blue'} sx={{ p: 4 }} textAlign={'left'} mt={2} >
+            <Typography px={4} fontWeight={900} fontSize={'1.4rem'} color={'blue'} sx={{ p: 4 }} textAlign={'left'}  >
               خوش آمدید
             </Typography>
           </Grid>
 
           <Grid item xs={12}  >
             <Grid container px={3} >
-              <Grid item xs={12} my={1} display={'flex'} alignItems={'center'}  >
+              <Grid item xs={12} display={'flex'} alignItems={'center'}  >
                 <Typography px={4} fontWeight={600} >سلام</Typography>
               </Grid>
               <Grid item xs={12} my={1} display={'flex'} alignItems={'center'} >
@@ -177,7 +446,7 @@ const LoginForm = ({ setContentState }: any) => {
                 {/* 00387C */}
 
                 <Grid item xs={12} >
-                  <Box px={3} py={5} >
+                  <Box px={3} py={2} >
                     <DyButton
                       caption={'ورود'}
                       color={'#00387C'}
@@ -187,6 +456,191 @@ const LoginForm = ({ setContentState }: any) => {
                       bgColor={'#00387C'}
                       type={'submit'}
                     />
+                  </Box>
+                </Grid>
+
+                <Grid xs={11} mt={1} mx={'auto'} >
+                  <Box width={'100%'}
+                    display={'flex'}
+                    justifyContent={'center'}
+                    textAlign={'center'}
+                    flexDirection={'column'}
+                    rowGap={1}
+                  >
+
+
+
+
+                    {/* <Typography  fontSize={'0.7rem'} fontWeight={600} color={'blue'}  > */}
+                    <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none', }}
+                          rel='noopener noreferrer' href=" https://okrcoach.ir/okrcoach-software-online/installation/">
+                          <Typography sx={linkStyle} color='primary'   > آموزش نرم افزار
+                            {/* <SchoolIcon   /> */}
+
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <SchoolIcon color='primary' />
+                      </Box>
+                    </Box>
+
+                    <Divider variant="middle" />
+
+                    {/* ////////////////////// */}
+
+
+                    <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none', }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/okrcoach-software-online/">
+                          <Typography sx={linkStyle} color='primary'   > خرید اشتراک نرم افزار
+                            {/* <SchoolIcon   /> */}
+
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <CreditCardIcon color='primary' />
+                      </Box>
+                    </Box>
+                    <Divider variant="middle" />
+
+
+                    <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none', }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/okr-coach/">
+                          <Typography sx={linkStyle} color='primary'   > درخواست مربی
+                            {/* <SchoolIcon   /> */}
+
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <SportsIcon color='primary' />
+                      </Box>
+                    </Box>
+
+                    <Divider variant="middle" />
+
+                    <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none', }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/customers/">
+                          <Typography sx={linkStyle} color='primary'   > مشتریان ما
+
+
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <HandshakeIcon color='primary' />
+                      </Box>
+                    </Box>
+
+                    <Divider variant="middle" />
+
+                    <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none' }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/amir-imenpour/">
+                          <Typography sx={linkStyle} color='primary'   >معرفی ما
+
+
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <CoPresentIcon color='primary' />
+                      </Box>
+                    </Box>
+
+                    <Divider variant="middle" />
+
+                    <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none' }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/services/course/">
+                          <Typography sx={linkStyle} color='primary'   >آموزش OKR
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <SchoolIcon color='primary' />
+                      </Box>
+                    </Box>
+
+                    <Divider variant="middle" />
+
+
+                    <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none' }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/okr-blog/">
+                          <Typography sx={linkStyle} color='primary'   >مجله OKR
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <NewspaperIcon color='primary' />
+                      </Box>
+                    </Box>
+
+                    <Divider variant="middle" />
+
                   </Box>
                 </Grid>
 
@@ -217,13 +671,15 @@ const LoginForm = ({ setContentState }: any) => {
         {/* show,setShow} */}
       </Grid>
       {
-        loginStatusLocal &&  loginMessage &&
-        <DYToastMessage 
-        show={!loginStatus}  
-        setShow={setLoginStatusLocal} 
-        message={loginMessage}
+        loginStatusLocal && loginMessage &&
+        <DYToastMessage
+          show={!loginStatus}
+          setShow={setLoginStatusLocal}
+          message={loginMessage}
         />
       }
+
+
 
 
 

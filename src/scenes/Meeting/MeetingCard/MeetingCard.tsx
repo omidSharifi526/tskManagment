@@ -15,7 +15,7 @@ import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
 import { useDispatch } from 'react-redux';
 import { setMeetingIdR } from '../MeetingsSlice/MeetingsSlice';
 import { memo } from 'react'
-
+import {setInitialTreeViewR} from '../../Meeting/MeetingsSlice/MeetingsSlice'
 
 const MeetingCard = memo((props: any) => {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const MeetingCard = memo((props: any) => {
   // const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,tenantId);
   let { info } = props;
   const LoginMeeting = () => {
+    dispatch(setInitialTreeViewR())
     console.log(info)
     let { meetingDate, id } = info;
     //  console.log(meetingDate)

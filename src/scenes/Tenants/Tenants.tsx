@@ -92,6 +92,16 @@ const Tenants = () => {
        width:90,
        
       }
+      // dayRemainContract
+      ,
+      { field: 'dayRemainContract',
+      align:'center',
+      headerName: 'تعداد روز باقی مانده قرارداد',
+      headerAlign:'center',
+      sortable:false,
+       width:90,
+       
+      }
       ,
       { field: 'createDate',
       align:'center',

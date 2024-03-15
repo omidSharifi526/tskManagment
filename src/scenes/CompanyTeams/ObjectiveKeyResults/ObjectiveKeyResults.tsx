@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Grid, Box, Typography, IconButton, Tooltip } from '@mui/material';
+import { Grid, Box, Typography, IconButton, Tooltip, Button } from '@mui/material';
 import ModalLyt from '../../../components/Layouts/ModalLyt/ModalLyt';
 import KrDetails from '../LComponents/KrDetails/KrDetails';
 import { HistoryIcon } from '../StataicData/index';
@@ -13,47 +13,50 @@ import { useSelector } from 'react-redux';
 import { useGetAllKeyResultByObjectiveId } from '../../Meeting/Hooks/index';
 import { DataGrid, GridRowsProp, GridColDef, faIR, GridRenderCellParams } from '@mui/x-data-grid';
 import { EmptyDataIcon } from '../StataicData/index';
-import CircularProgress from '@mui/material/CircularProgress';
-import { ReactComponent as SmileSt } from '../../../Asset/Svgs/Emojys/smile 1.svg';
-import { ReactComponent as NeutralSt } from '../../../Asset/Svgs/Emojys/neutral 2.svg';
-// import {ReactComponent as SadSt} from '../../../Asset/Svgs/Emojys/sad 1.svg';
-import { ReactComponent as InfoIcon } from '../StataicData/Icons/InfoIcon.svg';
-import { ReactComponent as SadIcon } from '../../../Asset/Svgs/Emojys/sad 1.svg';
+import TeamsNavigations from '../LComponents/TeamsNavigation/TeamsNavigations';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import sad from '../../../Asset/Svgs/Emojys/sad.png';
 import smil from '../../../Asset/Svgs/Emojys/smil.png';
 import meh from '../../../Asset/Svgs/Emojys/meh.png';
+import { changeTreeViewStateR } from '../../Meeting/MeetingsSlice/MeetingsSlice'
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
+import CartSlider from '../../../components/CartSlider/CartSlider';
+import { useDispatch } from 'react-redux';
+import Close from '@mui/icons-material/Close';
 
 const ObjectiveKeyResults: React.FC = () => {
+  const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
 
   const objectivies = useSelector((state: any) => state.meetings.objectivie);
   const objUpdated = useSelector((state: any) => state.meetings.objUpdated);
   const teamInfo = useSelector((state: any) => state.meetings.teamInfo);
-
-  const [objectivee, setObjectivee] = useState<any>(objectivies?.length > 4 ? 'fb7cc4ea-7162-4916-9aa8-834b14308e10' : null);
+  const [teameInfo, setTeameInfo] = useState(null);
+  const [teameInfoo, setTeameInfoo] = useState(teameInfo ? teameInfo : teamInfo)
+ 
   // const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
   const [keyR, setKeyR] = useState<any>([]);
   const [showModal, setShowModal] = useState(false);
   const [historyModal, setHistoryModal] = useState(false)
   const [krRowData, setKrRowData] = useState(null);
   const [showToolbarModal, setShowToolbarModal] = useState(false);
-  const [showAddEvalModal,setShowAddEvalModal]=useState(false);
-  const [kresultId,setKresultId]=useState<string>('');
-
+  const [showAddEvalModal, setShowAddEvalModal] = useState(false);
+  const [kresultId, setKresultId] = useState<string>('');
+  const[firstObjectiveId,setfirstObjectiveId]=useState('')
+  const [objectivee, setObjectivee] = useState<any>(objectivies?.length > 4 ? 'fb7cc4ea-7162-4916-9aa8-834b14308e10' : null);
   useEffect(() => {
-    
-  
-    console.log(showModal)
-  }, [showModal])
-  
 
-  
+
+    console.log(objectivee)
+  }, [objectivee])
+
+
+
 
   const [objcSelectionModel, setObjSelectionModel] = useState<string>('')
   const [krSelectionModel, setKrSelectionModel] = useState<string>('');
-  
+
 
   const [getCustomerBody, setGetCustomerBody] = useState<any>({
     pageSize: 10,
@@ -67,13 +70,13 @@ const ObjectiveKeyResults: React.FC = () => {
 
     setKeyR([])
     setObjectivee({})
-
+console.log(objUpdated)
   }, [objUpdated])
 
 
 
   const [counter, setCounter] = useState(1); // Initialize the counter for row index
-
+  const dispatch = useDispatch()
 
 
 
@@ -83,7 +86,7 @@ const ObjectiveKeyResults: React.FC = () => {
 
   }
 
-  const initialGetHistoryKR = (row: any):void => {
+  const initialGetHistoryKR = (row: any): void => {
     let { id } = row;
     console.log(id)
     //  let{id}=row;
@@ -91,9 +94,9 @@ const ObjectiveKeyResults: React.FC = () => {
     setHistoryModal(true)
   }
 
-  const initialAddEvaluation=():void=>{
-  console.log('runAddEval')
-  setShowAddEvalModal(!showAddEvalModal)
+  const initialAddEvaluation = (): void => {
+    console.log('runAddEval')
+    setShowAddEvalModal(!showAddEvalModal)
   }
 
 
@@ -271,7 +274,7 @@ const ObjectiveKeyResults: React.FC = () => {
       align: 'left',
       headerAlign: 'center',
       sortable: false,
-      minWidth: 250,
+      minWidth: 350,
       // fontsize:'12px',
 
       renderCell: ({ value }: any) => {
@@ -402,7 +405,7 @@ const ObjectiveKeyResults: React.FC = () => {
     }
     ,
 
-    
+
     {
       field: 'sevenTenthsValue',
       align: 'left',
@@ -642,7 +645,7 @@ const ObjectiveKeyResults: React.FC = () => {
     }
     ,
 
-    
+
     {
       field: 'revenue',
       headerName: 'عملکرد ',
@@ -653,10 +656,10 @@ const ObjectiveKeyResults: React.FC = () => {
       fontsize: '14px',
     },
 
- 
 
- 
-   
+
+
+
     //  
     {
       field: 'currentState',
@@ -693,8 +696,7 @@ const ObjectiveKeyResults: React.FC = () => {
       headerAlign: 'center',
       width: 90,
       renderCell: (par: any) => {
-        // انتظار داریم به نتیجه درست برسیم
-        // با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد
+        
         let value: string = par?.row?.nextState;
         switch (value) {
           case 'انتظار داریم به نتیجه درست برسیم':
@@ -704,11 +706,12 @@ const ObjectiveKeyResults: React.FC = () => {
           case 'با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد':
             return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={meh} width={'20px'} /></Box>
             break;
+            // 
+
+          
 
           default:
-            return <Box sx={{ width: '100%', textAlign: 'center' }}  >
-              <img src={sad} width={'20px'} />
-            </Box>
+            return null
             break;
         }
 
@@ -819,7 +822,7 @@ const ObjectiveKeyResults: React.FC = () => {
     //     </Box>
     //   }
     // }
-    
+
 
   ], []);
 
@@ -828,12 +831,12 @@ const ObjectiveKeyResults: React.FC = () => {
       columnVisibilityModel: {
         rowid: false,
         okrStateName: false,
-        okR_KeyResultType:false,
+        okR_KeyResultType: false,
         pointingSystemType: false,
         forceEndDate: false,
         startDate: false,
-        threeTenthsValue:false,
-        oneValue:false
+        threeTenthsValue: false,
+        oneValue: false
       }
     }
   }
@@ -852,7 +855,7 @@ const ObjectiveKeyResults: React.FC = () => {
 
   useEffect(() => {
 
-
+   console.log(objectivee)
     setKeysResultsList()
   }, [objectivee])
 
@@ -905,23 +908,19 @@ const ObjectiveKeyResults: React.FC = () => {
         </Grid>
         <Grid item xs={12}  >
           <DyDataGrid
-
             data={keyR || []}
             columns={keyResultColumn}
             initialOnRowClick={setKrRowData}
             hideFooter={true}
-            // krSelectionModel,setKrSelectionModel
             setSelectionModel={setKrSelectionModel}
             selectionModel={krSelectionModel}
             initState={KRinitialState}
             additionalToolbar={true}
-            
             setShowHistory={setHistoryModal}
             setSpecialId={setKrId}
-            
             setShowInformation={setShowModal}
             setShowAddEvalModal={setShowAddEvalModal}
-             
+            initialMount={true}
           />
         </Grid>
 
@@ -933,11 +932,12 @@ const ObjectiveKeyResults: React.FC = () => {
 
 
   }
-
+  // CartSlider
   return (
     <>
       <Grid container sx={{ bgcolor: '#F9F9F9' }} style={{ width: '100%' }} >
-        <Grid item xs={12}>
+
+        <Grid item xs={treeView ? 12 : 10}>
           <Box py={1} my={2} borderRadius={2} boxShadow={2} bgcolor={'white'} >
             <Grid container >
               <Grid item xs={12} md={3}  >
@@ -976,6 +976,35 @@ const ObjectiveKeyResults: React.FC = () => {
             </Grid>
           </Box>
         </Grid>
+
+
+        {
+          !treeView && <Grid item xs={2} display={'flex'} alignItems={'center'}   >
+            < Grid container px={3} borderRadius={2} boxShadow={1}  >
+              {/* <Grid item xs={10}  >
+                <Box py={1} display={'flex'} alignItems={'center'} justifyContent={'center'}  >
+                  <Typography fontSize={'10px'}  >برای پیمایش تیم ها ورق بزنید</Typography>
+                </Box>
+              </Grid> */}
+              <Grid item xs={9} my={'auto'}  >
+                <TeamsNavigations />
+              </Grid>
+              <Grid item xs={3} py={1}  >
+                <IconButton  size='small'  onClick={() => {
+                  dispatch(changeTreeViewStateR())
+                }} >
+                  <AccountTreeIcon  />
+                </IconButton>
+              </Grid>
+
+            </Grid>
+          </Grid>
+        }
+
+
+
+
+
         <Box width={'100%'} borderRadius={2} boxShadow={2} bgcolor={'white'}>
           <Grid item xs={12}  >
 
@@ -991,7 +1020,7 @@ const ObjectiveKeyResults: React.FC = () => {
               setSelectionModel={setObjSelectionModel}
               selectionModel={objcSelectionModel}
               initState={ObjctivieInitialState}
-
+              initialMount={false}
               additionalToolbar={false}
 
             />
@@ -1029,6 +1058,7 @@ const ObjectiveKeyResults: React.FC = () => {
                 renderContents()
               }
             </Grid>
+
           </Grid>
 
 
@@ -1042,11 +1072,11 @@ const ObjectiveKeyResults: React.FC = () => {
           <ModalLyt title={'اطلاعات نتیجه کلیدی'}
             showModal={Boolean(showModal)}
             setShowModal={setShowModal}
-            
+
           >
-            <KrDetails 
-            // krDetail={krRowData}
-            data={krRowData} 
+            <KrDetails
+              // krDetail={krRowData}
+              data={krRowData}
             />
           </ModalLyt>
 
@@ -1059,28 +1089,28 @@ const ObjectiveKeyResults: React.FC = () => {
             showModal={Boolean(historyModal)}
             setShowModal={setHistoryModal}
           >
-            <KrHistoryModalContent 
-            loadingFlag={KRHLoading} 
-            data={KrHistoryData} 
-            krDetail={krRowData}
-            objective={objectivee}
+            <KrHistoryModalContent
+              loadingFlag={KRHLoading}
+              data={KrHistoryData}
+              krDetail={krRowData}
+              objective={objectivee}
             />
 
           </ModalLyt>
         }
 
         {
-          showAddEvalModal && <ModalLyt 
-          title={'تعیین مقدار برای نتیجه کلیدی'}
-          showModal={Boolean(showAddEvalModal)}
-          setShowModal={setShowAddEvalModal}
-          
-          
+          showAddEvalModal && <ModalLyt
+            title={'تعیین مقدار برای نتیجه کلیدی'}
+            showModal={Boolean(showAddEvalModal)}
+            setShowModal={setShowAddEvalModal}
+
+
           >
-            <AddKrEvaluation  
-            cancelo={setShowAddEvalModal}
-            objectiveId={objectivee?.id}
-            kresultId={kresultId}
+            <AddKrEvaluation
+              cancelo={setShowAddEvalModal}
+              objectiveId={objectivee?.id}
+              kresultId={kresultId}
             />
 
 

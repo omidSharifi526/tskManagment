@@ -13,8 +13,7 @@ import DYToastMessage from '../DyToastMessage/DYToastMessage';
 import CircularProgress from '@mui/material/CircularProgress';
 // import CustomDataGrid from './newTreeView';
 import {IconButton} from '@mui/material';
-import Close from '@mui/icons-material/Close';
-// import dyPro
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { Box } from '@mui/material';
 import LyBackdrop from '../../Layouts/BackDrop/BackDrop';
 import {useGetTeamsByTenantId,
@@ -56,7 +55,7 @@ const getObjectiveSuccess=()=>{
 const getObjectiveError=()=>{
   setToastMessage(true)
 }
-// console.log(priodId)
+
 const{data,isError:getObjectiveErrorFlag,isLoading:getObjLoading}=useGetWebObjectiveDetailsCheckinMeetingByTeamId(getObjectiveSuccess,getObjectiveError,nodeId,priodId,meetingId);
 
 const [renderContent,setRenderContent]=useState<any>('companyAndTeams');
@@ -85,16 +84,12 @@ const[toastMessage,setToastMessage]=useState<any>(false)
 
 
 const initNodeSelected=(node:any,i:number)=>{
-// let {name}=node;
-// let iniName={...node,name:name};
-// console.log(iniName)
 
-// console.log(node)
 dispatch(setTeamsDataR(node));
 dispatch(setTeamInfoR(node))
-// console.log(node,i)
+
 setNodeId(node.id)
-// console.log('hihiih')
+
 
 
 }
@@ -255,12 +250,14 @@ const renderContentUi=()=>{
    setShow={setToastMessage}
    />
 
-   <Box width={'100%'}   >
-    <Box>
-   <IconButton onClick={intialCloseModel}   >
-  <Close/>
-   </IconButton>
-    </Box>
+   <Box width={'100%'}  >
+   {
+    teamList &&  <Box width={'100%'} display={'flex'} flexDirection={'row-reverse'} >
+    <IconButton onClick={intialCloseModel}   >
+   <ArrowCircleRightIcon/>
+    </IconButton>
+     </Box>
+   }
     <Box>
     {
       renderContentUi()

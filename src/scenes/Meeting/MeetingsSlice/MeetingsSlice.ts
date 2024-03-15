@@ -30,7 +30,8 @@ type meetingsStateType = {
     objUpdated:boolean,
     changeTenantMode:boolean,
     meetSelectedDate:string,
-    treeViewState:priodViewStateFace
+    treeViewState:priodViewStateFace,
+    counter:number,
 
     
  
@@ -60,6 +61,8 @@ meetSelectedDate:'',
 treeViewState:{
 treeView:true
 }
+,
+counter:0
 }
 
 
@@ -144,7 +147,7 @@ if (treeStatus===null) {
 
 const setTeamInfo=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  console.log(payload.id)
+  console.log(payload)
 
 
 let teamInfoor={
@@ -178,7 +181,8 @@ const setKeyResults=(state:any,action:PayloadAction<any>)=>{
 
 const resetRValues=(state:any)=>{
 state.teamInfo={};
-state.objectivie=[]
+state.objectivie=[];
+state.meetings.teamList=null
 }
 
 const setProfileName=(state:any,action:PayloadAction<any>)=>{
@@ -220,6 +224,23 @@ const changeTreeViewState=(state:any)=>{
   state.treeViewState.treeView=!state.treeViewState.treeView
 }
 
+const setInitialTreeView=(state:any)=>{
+  state.treeViewState.treeView=true;
+}
+
+const increaseCounter=(state:any)=>{
+state.counter=state.counter+1;
+}
+const decreaseCounter=(state:any)=>{
+  state.counter=state.counter-1;
+}
+const resetCounter=(state:any)=>{
+  state.counter=0;
+}
+const resetTeamList=(state:any)=>{
+state.meetings.teamList=null
+}
+
 
 
 
@@ -244,8 +265,13 @@ export const meetingsSlice = createSlice({
     setPriodId,
     setMeetingId,
     setChangeTenantMode,
-    changeTreeViewState
-  
+    changeTreeViewState,
+    increaseCounter,
+    resetCounter,
+    decreaseCounter,
+    setInitialTreeView,
+    resetTeamList
+    
    
   },
 })
@@ -266,7 +292,12 @@ export const {
     setPriodId:setPriodIdR,
     setMeetingId:setMeetingIdR,
     setChangeTenantMode:setChangeTenantModeR,
-    changeTreeViewState:changeTreeViewStateR
+    changeTreeViewState:changeTreeViewStateR,
+    increaseCounter:increaseCounterR,
+    resetCounter:resetCounterR,
+    decreaseCounter:decreaseCounterR,
+    setInitialTreeView:setInitialTreeViewR,
+    resetTeamList:resetTeamListR
  } = meetingsSlice.actions
 
 
