@@ -43,19 +43,21 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
   };
 
 
-  const useGetPriodById=(id:string|null)=>{
+  const useGetPriodById=(id:string|null,onSuccesss:any,onFailed:any)=>{
     const dispatch=useDispatch();
     const navigate=useNavigate();
     // console.log(id)
     return useQuery(['getPeriodById',id],getPriodById,{
+  //  retry:false,
    enabled:!!id,
   //  cacheTime:Infinity,
    refetchOnWindowFocus:false,
    onSuccess:(data:any):void=>{
     let rawData=data;
     
-    dispatch(setPriodListR(rawData))
-    navigate('/dashboard/meetings',{replace:true})
+    dispatch(setPriodListR(rawData));
+    onSuccesss()
+    // navigate('/dashboard/meetings',{replace:true})
    },
    onError:(err)=>{
    console.log(err)

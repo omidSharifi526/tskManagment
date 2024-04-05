@@ -147,7 +147,7 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
        my={1}
         >
  
-         <Typography px={8} color={fColor} fontWeight={400} >
+         <Typography px={8} fontSize={'0.8rem'} color={fColor} fontWeight={400} >
          {intVal}
          </Typography>
        </Box>
@@ -201,6 +201,7 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
             sortable: false,
             minWidth: 110,
             renderCell: ({ value }: any) => {
+              console.log(value)
             if (value) {
               return <Box>
               {

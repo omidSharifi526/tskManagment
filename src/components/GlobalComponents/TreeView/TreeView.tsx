@@ -126,12 +126,12 @@ const renderContentUi=()=>{
                    {
                  teamList && teamList.map((team:any,i:number)=>{
                   return <TreeItem 
-
+                
                   onClick={()=>{     
                     initNodeSelected(team,i)
                    }}
                   key={i}
-                  sx={{mt:1,'& .rtl-305k3i-MuiTreeItem-content .MuiTreeItem-label':{fontSize:'0.7rem',fontWeight:800,py:1}}}  
+                  sx={{mt:1,fontSize:'0.4rem !important'}}  
                   nodeId={team.id} 
                   label={team.name} 
 
@@ -202,6 +202,7 @@ const renderContentUi=()=>{
         {
           teams && teams.map((team:any,i:number)=>{
             return <TreeItem 
+           
              key={i}
              onClick={()=>{
               // console.log(company)

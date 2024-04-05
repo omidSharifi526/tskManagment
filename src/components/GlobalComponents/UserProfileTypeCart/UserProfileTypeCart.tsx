@@ -54,8 +54,8 @@ useEffect(() => {
     <Box  borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} >
     <Box py={3}  display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
     <AccountCircleIcon fontSize='large' />
-    <Box   >
- <Typography color={'black'} fontWeight={600} variant='caption'  >
+    <Box  width={'100%'} textAlign={'center'} minHeight={'50px'} >
+ <Typography  fontWeight={600} variant='caption'  >
     {item.tenantName}
  </Typography>
  </Box>

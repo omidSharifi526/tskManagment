@@ -7,20 +7,22 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 
-export default function AccordionLyt( props: any ) {
+export default function AccordionLyt( {expanded,title,children,collapse}: any ) {
   return (
     <>
-      <Accordion expanded={props.expanded}  >
+      <Accordion expanded={expanded} onChange={()=>{
+        collapse((prev:any)=>!prev)
+      }} >
         <AccordionSummary
-        //   expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          {/* <Typography>{props.title}</Typography> */}
+          <Typography>{title}</Typography>
         </AccordionSummary>
         <AccordionDetails>
         {
-            props.children
+          children
         }
         </AccordionDetails>
       </Accordion>

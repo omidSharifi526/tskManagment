@@ -86,9 +86,7 @@ export default function DyDataGrid(
       setShowAddEvalModal((prev:any)=>!prev);
       let{id}=selectedRowData;
       setSpecialId(id)
-              // console.log(selectedRowData)
-              // initialOnRowClick(selectedRowData)
-              // console.log('run')
+       
               }}  startIcon={<EditNoteOutlinedIcon  />}   >
               ارزیابی
                               </Button>
@@ -104,7 +102,7 @@ export default function DyDataGrid(
     }
 
       const initOnRowClick=(row:any)=>{
-        // console.log(row)
+        console.log(row)
         setSelectionModel(row.id)
         setSelectedRowData(row)
        initialOnRowClick(row)

@@ -25,6 +25,7 @@ import {SideBarLogo,OKRtext} from './StaticsData/index';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {ReactComponent as BaseInfoIcon} from './StaticsData/Icons/BaseInfoIcon.svg';
 import {ReactComponent as MeetingIcon} from './StaticsData/Icons/MeetingIcon.svg';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -125,6 +126,15 @@ const itemsList = [
     icon: <MeetingIcon  />,
     to: "/dashboard/meetings" 
   }
+  ,
+  {
+    text: "مدیریت OKR",
+    icon: <DashboardIcon  />,
+    to: "/dashboard/okrManagment" 
+  }
+
+
+  
   // ,
   // {
   //   text: "خروج",

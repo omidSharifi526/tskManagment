@@ -16,7 +16,6 @@ function TextFieldF(props:any) {
     const{label,name,type,value,errors,helperText,placeholder, ...rest}=props;
   
     const theme=useTheme();
-    // const colora=tokens(theme.palette.mode)
 
     const sxStyle={
       color: '#fff',

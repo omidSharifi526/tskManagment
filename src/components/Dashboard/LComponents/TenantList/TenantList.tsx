@@ -15,11 +15,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProfileTenantIdR, setProfileNameR, setChangeTenantModeR } from '../../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
 // import { useDispatch } from 'react-redux';
 import { useGetPriodById } from '../../../Login/Hooks/Index';
+
 import { useGetAllMeetings } from '../../../../scenes/Meeting/Hooks';
 export default function TenantsList({ ButtonCaption, tenantList, setShowTenantItem }: any) {
-
+  var navigate=useNavigate();
   const [Ids, setIds] = useState<any>(null);
-  const { data: perData, } = useGetPriodById(Ids?.tenantId || null);
+  const onSuccesss=():void=>{
+   
+    navigate('/dashboard/meetings',{replace:true})
+  }
+  
+  const onFailed=():void=>{
+  
+  }
+  const { data: perData, } = useGetPriodById(Ids?.tenantId,onSuccesss,onFailed);
   const { isFetched, isLoading } = useGetAllMeetings(null);
 
 
@@ -30,7 +39,7 @@ export default function TenantsList({ ButtonCaption, tenantList, setShowTenantIt
 
 
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch()
   // console.log(tenantList)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -64,11 +73,6 @@ export default function TenantsList({ ButtonCaption, tenantList, setShowTenantIt
     setIds(ids)
     dispatch(setProfileTenantIdR(ids))
     dispatch(setProfileNameR(tenantName))
-    // dispatch(setLoadingR(true));
-    // dispatch(setChangeTenantModeR(true))
-    // dispatch(setLoadingR(true))
-    // setShowTenantItem(false)
-    // handleClose()
     setAnchorEl(null);
     console.log(ids)
   }

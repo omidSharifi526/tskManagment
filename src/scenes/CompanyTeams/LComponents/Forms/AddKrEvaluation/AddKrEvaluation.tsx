@@ -5,8 +5,8 @@ import { ReactComponent as RateStar } from '../../../StataicData/Icons/RateStar.
 import FormikControl from '../../../../../components/FormikControls/FormikControl';
 import { AddEvalFace } from '../../../Interfaces/interfaces';
 import DyButton from '../../../../../components/GlobalComponents/DyButton/DyButton';
-import { currentStateOptions,nextStateOptions } from '../../../StataicData';
-import {useAddCheckinMeeting} from '../../../Hooks/index';
+import { currentStateOptions, nextStateOptions } from '../../../StataicData';
+import { useAddCheckinMeeting } from '../../../Hooks/index';
 import { useSelector } from 'react-redux';
 import AddMeetingSuccess from '../../../../Meeting/LComponents/AddMeetingSuccess/AddMeetingSuccess';
 // {
@@ -37,7 +37,7 @@ import AddMeetingSuccess from '../../../../Meeting/LComponents/AddMeetingSuccess
 
 
 
-const AddKrEvaluation = ({cancelo,objectiveId,kresultId}:any) => {
+const AddKrEvaluation = ({ cancelo, objectiveId, kresultId }: any) => {
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
@@ -46,34 +46,34 @@ const AddKrEvaluation = ({cancelo,objectiveId,kresultId}:any) => {
   const meetingData: AddEvalFace = {
     newValue: '',
     problems: '',
-    nextState: '',
-    meetingId:meetingId,
-    teamId:teamId,
-    periodId:priodId,
-    tenantId:profileTenantId,
-    keyResultId:kresultId,
-    objectiveId:objectiveId,
-    tensileScore:'100',
-    currentState:'',
-    description:'',
-    closedKeyResult:false
-  
+    nextState: 'WeExpectToGetTheRightResult',
+    meetingId: meetingId,
+    teamId: teamId,
+    periodId: priodId,
+    tenantId: profileTenantId,
+    keyResultId: kresultId,
+    objectiveId: objectiveId,
+    tensileScore: '100',
+    currentState: 'Finished',
+    description: '',
+    closedKeyResult: false
+
   }
-  const addCheckinSuccess=()=>{
+  const addCheckinSuccess = () => {
     // cancelo()
     setRenderState('success')
   }
-  const{mutate:addCheck,isSuccess}=useAddCheckinMeeting(addCheckinSuccess);
+  const { mutate: addCheck, isSuccess } = useAddCheckinMeeting(addCheckinSuccess);
 
   const [renderState, setRenderState] = useState<string>('add');
 
-  const initialCancel=():void=>{
+  const initialCancel = (): void => {
     cancelo()
   }
 
-  const initialSubmitForm:any=(data:any):any=>{
-  console.log(data)
-  addCheck(data)
+  const initialSubmitForm: any = (data: any): any => {
+    console.log(data)
+    addCheck(data)
   }
 
 
@@ -97,15 +97,15 @@ const AddKrEvaluation = ({cancelo,objectiveId,kresultId}:any) => {
                   <Grid container columnSpacing={1}   >
 
                     <Grid item xs={12}   >
-                      <Box>
+                      {/* <Box>
                         <Typography>
                           تعداد مشترکین به 50,000 نفر افزایش یابد.
                         </Typography>
                         <Typography>
                           مقدار قبلی:  37,000
                         </Typography>
-                        {/*  */}
-                      </Box>
+                     
+                      </Box> */}
                     </Grid>
                     <Grid item xs={6}  >
                       <FormikControl
@@ -128,10 +128,10 @@ const AddKrEvaluation = ({cancelo,objectiveId,kresultId}:any) => {
                       <FormikControl
                         control='textField'
                         type='text'
-                        label=''
+                        label='موانعی که با آن مواجه هستید؟'
                         name='problems'
                         fullWidth
-                        helperText={'موانعی که با آن مواجه هستید؟'}
+                        // helperText={'موانعی که با آن مواجه هستید؟'}
                       />
                     </Grid>
 
@@ -139,12 +139,12 @@ const AddKrEvaluation = ({cancelo,objectiveId,kresultId}:any) => {
                       <FormikControl
                         control='select'
                         type='select'
-                        label=''
+                        label='وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟'
                         withIcon={true}
                         options={nextStateOptions}
                         name='nextState'
                         fullWidth
-                        helperText={'وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟'}
+                        // helperText={'وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟'}
                       />
                     </Grid>
 
@@ -173,17 +173,17 @@ const AddKrEvaluation = ({cancelo,objectiveId,kresultId}:any) => {
                       />
                     </Grid>
 
-                    <Grid item xs={12}     >
+                    {/* <Grid item xs={12}     >
                       <FormikControl
                         control='checkBox'
                         label='میخوام این نتیجه کلیدی بسته شود.'
                         name='closedKeyResult'
-                      //  placeholder={"توضیحات  0/300"}
+                     
 
 
 
                       />
-                    </Grid>
+                    </Grid> */}
 
 
                     {/* obstacles */}
@@ -258,14 +258,14 @@ const AddKrEvaluation = ({cancelo,objectiveId,kresultId}:any) => {
 
 
 
-        case 'success':
-          return <Box width={'100%'} textAlign={'center'} py={5}  >
-                 <AddMeetingSuccess 
-                 formName={'ارزیابی' }
-                 resetButton={false}
-                 resetForm={setRenderState}
-                 />
-                 </Box>
+      case 'success':
+        return <Box width={'100%'} textAlign={'center'} py={5}  >
+          <AddMeetingSuccess
+            formName={'ارزیابی'}
+            resetButton={false}
+            resetForm={setRenderState}
+          />
+        </Box>
       default:
         break;
     }

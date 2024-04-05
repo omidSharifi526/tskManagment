@@ -35,27 +35,28 @@ interface Values {
 
 
 
-const AddMeeting: React.FC = () => {
+const AddMeeting = ({hideModal}:any) => {
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
+  const licenseType : any = useSelector((state: any) => state.meetings.meetingsList?.licenseType);
+  console.log(licenseType)
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
 
   const meetingData: Values = {
     name: 'Check_in',
     description: '',
-    meetingTypeId: "ea43535d-bbeb-4c22-a4c4-ab85eab28802",
+    meetingTypeId: "22e56360-33aa-432f-8c50-034e6c2008d1",
     periodId: priodId,
     tenantId: profileTenantId,
     meetingDate: '',
     fromTime: '',
     toTime: '',
     meetingRepeatType: '',
-
     teamIds: [],
     personIds: []
     //  email:''
 
   }
-  const [confrimForm, setConfrimForm] = useState<string>('confirm');
+  const [confrimForm, setConfrimForm] = useState<string>(licenseType);
   const addMeetingSuccess=()=>{
     setConfrimForm('success')
   }
@@ -71,7 +72,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
     { key: 'ماهانه', value: 'OneOneMonthDay' }]
 
   const initialCreateMeeting = () => {
-    setConfrimForm('add')
+    setConfrimForm('Premium')
   }
 
   useEffect(() => {
@@ -83,9 +84,15 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
   }, [AddLoading])
   
 
+  const initialCancel=()=>{
+   hideModal(false)
+  }
+
+
+
   const renderContent = () => {
     switch (confrimForm) {
-      case 'confirm':
+      case 'Free':
         return (
           // <AddMeetingSuccess/>
           <Box width={'100%'} display={'flex'} flexDirection={'column'}>
@@ -100,9 +107,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
               </Typography>
             </Box>
             <Box py={3} mx={'auto'} columnGap={3} width={'40%'}  display={'flex'} justifyContent={'center'} textAlign={'center'}  >
-              {/* <Button sx={{ p: 1 }} variant='contained' color={'info'} onClick={initialCreateMeeting} >
-                جلسه جدید
-              </Button> */}
+        
                  <DyButton
                             caption={'جلسه جدید'}
                             color={'#00387C'}
@@ -127,22 +132,8 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                         
                         </a>
                           
-                        {/*  */}
+                        
                    
-                       
-
-
-                             {/* <DyButton
-                            caption={'ورود به سایت'}
-                            color={'#00387C'}
-                            onClick={()=>{}}
-                            disbled={false}
-                            variant={'contained'}
-                            bgColor={'#00387C'}
-                            type={'submit'}
-                            sx={{ p: 1 }}
-                            
-                          /> */}
            
             </Box>
 
@@ -150,7 +141,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
         )
 
 
-      case 'add':
+      case 'Premium':
         return (
           <Formik enableReinitialize
             initialValues={meetingData}
@@ -191,7 +182,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                             size='small'
                             name='meetingTypeId'
                             type='text'
-                            value={values.meetingTypeId}
+                            value={values.meetingTypeId || ''}
                             onChange={({ target }, { props }:any) => {
                               let { content } = props;
                               let { value } = target;
@@ -328,9 +319,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                             // onClick={loginHandler}
                             disbled={false}
                             variant={'outlined'}
-                            onClick={()=>{
-                              setConfrimForm('confirm')
-                            }}
+                            onClick={initialCancel}
                           />
                         </Box>
 

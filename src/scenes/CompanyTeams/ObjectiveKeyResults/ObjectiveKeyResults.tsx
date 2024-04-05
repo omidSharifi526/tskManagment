@@ -23,6 +23,8 @@ import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import CartSlider from '../../../components/CartSlider/CartSlider';
 import { useDispatch } from 'react-redux';
 import Close from '@mui/icons-material/Close';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 
 const ObjectiveKeyResults: React.FC = () => {
   const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
@@ -34,7 +36,7 @@ const ObjectiveKeyResults: React.FC = () => {
   const teamInfo = useSelector((state: any) => state.meetings.teamInfo);
   const [teameInfo, setTeameInfo] = useState(null);
   const [teameInfoo, setTeameInfoo] = useState(teameInfo ? teameInfo : teamInfo)
- 
+
   // const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
   const [keyR, setKeyR] = useState<any>([]);
   const [showModal, setShowModal] = useState(false);
@@ -43,7 +45,7 @@ const ObjectiveKeyResults: React.FC = () => {
   const [showToolbarModal, setShowToolbarModal] = useState(false);
   const [showAddEvalModal, setShowAddEvalModal] = useState(false);
   const [kresultId, setKresultId] = useState<string>('');
-  const[firstObjectiveId,setfirstObjectiveId]=useState('')
+  const [firstObjectiveId, setfirstObjectiveId] = useState('')
   const [objectivee, setObjectivee] = useState<any>(objectivies?.length > 4 ? 'fb7cc4ea-7162-4916-9aa8-834b14308e10' : null);
   useEffect(() => {
 
@@ -70,7 +72,7 @@ const ObjectiveKeyResults: React.FC = () => {
 
     setKeyR([])
     setObjectivee({})
-console.log(objUpdated)
+    console.log(objUpdated)
   }, [objUpdated])
 
 
@@ -172,7 +174,7 @@ console.log(objUpdated)
             height={'75%'}
             bgcolor={value === 'فعال' ? '#D5F7D4' : '#E5F1FF'}  >
 
-            <Typography px={8}  >
+            <Typography fontSize={'0.8rem'} px={8}  >
               {value}
             </Typography>
           </Box>
@@ -244,7 +246,7 @@ console.log(objUpdated)
             bgcolor={color}
           >
 
-            <Typography px={8} color={fColor} fontWeight={400} >
+            <Typography px={8} color={fColor} fontSize={'0.8rem'} fontWeight={400} >
               {value}
             </Typography>
           </Box>
@@ -274,7 +276,7 @@ console.log(objUpdated)
       align: 'left',
       headerAlign: 'center',
       sortable: false,
-      minWidth: 350,
+      minWidth: 300,
       // fontsize:'12px',
 
       renderCell: ({ value }: any) => {
@@ -509,7 +511,7 @@ console.log(objUpdated)
       width: 80,
       renderCell: (par: any) => {
         // console.log(par?.row?.score)
-        let score: string = par?.row?.score;
+        let score: string = par?.row?.oldScore;
         // console.log(score);
         if (typeof score === 'string' && score.includes('%')) {
           let pureNum = score.slice(0, score.length - 1);
@@ -541,7 +543,7 @@ console.log(objUpdated)
             my={1}
           >
 
-            <Typography px={8} color={fColor} fontWeight={400} >
+            <Typography px={8} color={fColor} fontSize={'0.8rem'} fontWeight={400} >
               {intVal}
             </Typography>
           </Box>
@@ -623,7 +625,7 @@ console.log(objUpdated)
             my={1}
           >
 
-            <Typography px={8} color={fColor} fontWeight={400} >
+            <Typography px={8} color={fColor} fontSize={'0.8rem'} fontWeight={400} >
               {intVal}
             </Typography>
           </Box>
@@ -654,6 +656,50 @@ console.log(objUpdated)
       sortable: false,
       minWidth: 100,
       fontsize: '14px',
+      renderCell: (param: any) => {
+        let revenue: string = param?.row?.revenue;
+        // console.log(revenue?.length,revenue)
+        let postive;
+        if (revenue && revenue.length > 2 && revenue !== 'محاسبه نشده') {
+          postive = revenue.includes('-');
+          return <Box display={'flex'} alignItems={'center'} justifyContent={'center'} columnGap={1} >
+            <Typography fontSize={'0.6rem'}  >
+              {
+                revenue.replace('-', '')
+              }
+            </Typography>
+
+            {
+              !postive ? <TrendingUpIcon color='secondary' /> : <TrendingDownIcon color='error' />
+            }
+
+
+          </Box>
+
+        }
+        else if (revenue && revenue.length <= 2 && revenue.includes('%')) {
+          return <Box display={'flex'} alignItems={'center'} justifyContent={'center'} columnGap={1} >
+            <Typography fontSize={'0.6rem'}  >
+              {
+                revenue
+              }
+            </Typography>
+          </Box>
+        }
+
+        else {
+          return <Typography fontSize={'0.6rem'} color={'red'}  >
+            {
+              revenue
+            }
+          </Typography>
+        }
+
+        //  let postive=revenue.includes('-');
+        //  console.log(postive)
+
+      }
+      //  let score: string = par?.row?.score;
     },
 
 
@@ -696,7 +742,7 @@ console.log(objUpdated)
       headerAlign: 'center',
       width: 90,
       renderCell: (par: any) => {
-        
+
         let value: string = par?.row?.nextState;
         switch (value) {
           case 'انتظار داریم به نتیجه درست برسیم':
@@ -706,9 +752,9 @@ console.log(objUpdated)
           case 'با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد':
             return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={meh} width={'20px'} /></Box>
             break;
-            // 
+          // 
 
-          
+
 
           default:
             return null
@@ -748,17 +794,17 @@ console.log(objUpdated)
       }
 
     }
-    // InfoIcon
-    // ,
-    // {
-    //   field: 'base_Comments',
-    //   headerName: 'توضیحات',
-    //   align: 'center',
-    //   headerAlign: 'center',
-    //   sortable: false,
-    //   minWidth: 100,
-    //   fontsize: '14px',
-    // },
+    ,
+
+    {
+      field: 'base_Comments',
+      headerName: 'توضیحات',
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      minWidth: 100,
+      fontsize: '14px',
+    },
     // ,
     // {
     //   field: '-',
@@ -855,7 +901,7 @@ console.log(objUpdated)
 
   useEffect(() => {
 
-   console.log(objectivee)
+    console.log(objectivee)
     setKeysResultsList()
   }, [objectivee])
 
@@ -979,21 +1025,21 @@ console.log(objUpdated)
 
 
         {
-          !treeView && <Grid item xs={2} display={'flex'} alignItems={'center'}   >
-            < Grid container px={3} borderRadius={2} boxShadow={1}  >
+          !treeView && <Grid mx={'auto'} item xs={12} sm={1.70} display={'flex'} alignItems={'center'}   >
+            < Grid container borderRadius={2} boxShadow={1}   >
               {/* <Grid item xs={10}  >
                 <Box py={1} display={'flex'} alignItems={'center'} justifyContent={'center'}  >
                   <Typography fontSize={'10px'}  >برای پیمایش تیم ها ورق بزنید</Typography>
                 </Box>
               </Grid> */}
-              <Grid item xs={9} my={'auto'}  >
+              <Grid item xs={9} my={'auto'}   >
                 <TeamsNavigations />
               </Grid>
               <Grid item xs={3} py={1}  >
-                <IconButton  size='small'  onClick={() => {
+                <IconButton size='small'  onClick={() => {
                   dispatch(changeTreeViewStateR())
                 }} >
-                  <AccountTreeIcon  />
+                  <AccountTreeIcon />
                 </IconButton>
               </Grid>
 

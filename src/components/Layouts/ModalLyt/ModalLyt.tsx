@@ -13,12 +13,12 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 800,
+  width: 1200,
   bgcolor: 'background.paper',
  borderRadius:'10px',
   boxShadow: 24,
   overFlowY:'scroll',
-  innerHeight:'70%'
+  innerHeight:'90%'
   
 };
 

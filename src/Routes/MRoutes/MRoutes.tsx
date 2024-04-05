@@ -1,4 +1,4 @@
-import React from "react";
+import React,{lazy,Suspense} from "react";
 import{createBrowserRouter,Outlet,createRoutesFromElements,Route,Link} from 'react-router-dom'
 import Contact from "../../components/Contact/Contact";
 import Meeting from "../../scenes/Meeting";
@@ -15,9 +15,9 @@ import OverView from "../../scenes/OverView/OverView";
 import LoginPage from "../../components/Login/LoginPage";
 import Dashboard from "../../components/Dashboard";
 
+const OkrManagmentContainer = lazy(() => import('../../scenes/OKRManagment'));
 
 const Mrouter=createBrowserRouter(createRoutesFromElements(
-   
  <>
  <Route path="/" element={<LoginPage/>} />
  {/* <RequierAuth><CompanyTeams/></RequierAuth> */}
@@ -26,6 +26,16 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
   <Route  path="/dashboard" element={<RequierAuth><Dashboard/></RequierAuth>}>
   <Route index path="/dashboard/meetings"  element={<MeetingTabsContainer/>} />
   <Route  path="/dashboard/tenants" element={<ReqPhone><Tenants/></ReqPhone>} />
+  
+  <Route  path="/dashboard/okrManagment"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <OkrManagmentContainer/>
+    </RequierAuth>
+  </Suspense>
+} />
+  {/* OkrManagmentContainer */}
   {/* <Route  element={<OverView/>} /> */}
   
  

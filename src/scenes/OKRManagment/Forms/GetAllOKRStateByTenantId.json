@@ -1,0 +1,28 @@
+{"isSuccess":true,
+"data":[{"name":"پیش نویس",
+"id":"cbd46bd6-6889-4d7d-ab87-0cb829474254",
+"createById":"73b54dda-95cf-404e-a641-5abdce6fb8e5",
+"createByName":null,
+"createDate":"11/30/2023 5:00:25 AM",
+"lastModifiedId":null,
+"lastModifiedName":null,
+"lastModifiedDate":null,
+"activated":true,
+"pageIndex":1,
+"pageSize":50,
+"searchTerm":""
+}
+,{"name":"فعال",
+"id":"e71fa848-bf0f-4471-91b1-07168ae8bc8e",
+"createById":"73b54dda-95cf-404e-a641-5abdce6fb8e5",
+"createByName":null,
+"createDate":"11/30/2023 5:00:25 AM",
+"lastModifiedId":null,
+"lastModifiedName":null,
+"lastModifiedDate":null,
+"activated":true,
+"pageIndex":1,
+"pageSize":50,
+"searchTerm":""
+},{"name":"بسته شده",
+"id":"c69f6e3a-ebf1-4160-968f-176de6f66fde","createById":"73b54dda-95cf-404e-a641-5abdce6fb8e5","createByName":null,"createDate":"11/30/2023 5:00:25 AM","lastModifiedId":null,"lastModifiedName":null,"lastModifiedDate":null,"activated":true,"pageIndex":1,"pageSize":50,"searchTerm":""}],"metaData":{"message":"عملیات با موفقیت انجام شد","appStatusCode":1},"count":3}

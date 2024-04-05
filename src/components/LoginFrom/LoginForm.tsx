@@ -67,9 +67,12 @@ const LoginForm = ({ setContentState }: any) => {
     smsCode: "",
     isOTP: false
   }
+  // AriaBarbod
+  // 09121223615
+
   const initialValue = {
-    phoneNumber: '',
-    password: ''
+    phoneNumber: '09198390527',
+    password: 'AriaBarbod'
   }
   const [userInfoState, setUserInfoState] = useState<any>(userBody || null);
 
@@ -459,7 +462,7 @@ const LoginForm = ({ setContentState }: any) => {
                   </Box>
                 </Grid>
 
-                <Grid xs={11} mt={1} mx={'auto'} >
+                <Grid item xs={11} mt={1} mx={'auto'} >
                   <Box width={'100%'}
                     display={'flex'}
                     justifyContent={'center'}
@@ -481,6 +484,7 @@ const LoginForm = ({ setContentState }: any) => {
 
                     >
                       <Box mt={0.5}>
+                      
                         <a target='_blank'
                           style={{ textDecoration: 'none', }}
                           rel='noopener noreferrer' href=" https://okrcoach.ir/okrcoach-software-online/installation/">

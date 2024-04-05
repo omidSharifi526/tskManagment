@@ -134,10 +134,10 @@ const TeamsNavigations = ({ setTeameInfo }: any) => {
           <CircularProgress sx={{ color: 'white' }} />
         </LyBackdrop>
       }
-      <IconButton onClick={handleNext}   >
+      <IconButton onClick={handleNext} size='small'   >
         <SkipNextIcon />
       </IconButton>
-      <IconButton onClick={initialPrevious}   >
+      <IconButton onClick={initialPrevious} size='small'    >
         <SkipPreviousIcon />
       </IconButton>
     </Box>

@@ -26,6 +26,7 @@ import createCache from '@emotion/cache';
 import Loading from "./components/Loading/Loading";
 import MUIWrapper from "./ThemeWrapper/ThemeWrapper";
 import App from "./App";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 
 
@@ -80,10 +81,9 @@ ReactDOM.createRoot(document.getElementById("root")as HTMLElement).render(
        {/* <CacheProvider value={cacheRtl}> 
          <ThemeProvider theme={theme}> */}
 
-
-
+         <ErrorBoundary>
            <App/>
-
+          </ErrorBoundary>
 
         
          {/* </ThemeProvider>

@@ -17,10 +17,7 @@ import theme from './theme';
 // import theme from './theme';
 
 
-const cacheRtl = createCache({
-  key: 'rtl',
-  stylisPlugins: [rtlPlugin],
-});
+
 
 
 const App = () => {

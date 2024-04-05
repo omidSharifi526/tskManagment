@@ -134,7 +134,7 @@ const OwnerRegistration = ({setContentState}:any) => {
 
        <Grid item xs={12} >
        <Box px={3} py={5} >
-        <Link to='dashboard' >test</Link>
+        {/* <Link to='dashboard' >test</Link> */}
        <DyButton 
         caption={'ثبت نام '}
         color={'primary'} 

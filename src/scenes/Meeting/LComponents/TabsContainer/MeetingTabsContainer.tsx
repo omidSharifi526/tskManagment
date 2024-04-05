@@ -93,7 +93,7 @@ export default function BasicTabs() {
 
 
       <MeetingTabsContainer value={value} index={1}>
-      <AddMeeting/>
+      {/* <AddMeeting/> */}
       </MeetingTabsContainer>
 
     </Box>

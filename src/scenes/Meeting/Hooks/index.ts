@@ -37,7 +37,8 @@ const useGetAllMeetings = (meetIds: any | null) => {
             console.log(err)
         },
         select: (data: any) => {
-            let rawData = data?.data.data
+            let rawData = data?.data.data;
+            console.log(rawData)
             dispatch(setMeetingsListR(rawData))
             return rawData
         }

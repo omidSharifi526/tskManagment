@@ -51,7 +51,47 @@ const Tenants = () => {
       wrap:'wrap',
        width:90
       }
+      // teamCount
       ,
+      { field: 'teamCount',
+      align:'center',
+      headerName: 'تعداد تیم',
+      headerAlign:'center',
+      sortable:false,
+      wrap:'wrap',
+       width:90
+      }
+      ,
+      { field: 'objectiveCount',
+      align:'center',
+      headerName: 'تعداد هدف',
+      headerAlign:'center',
+      sortable:false,
+      wrap:'wrap',
+       width:90
+      }
+      ,
+      { field: 'meetingCount',
+      align:'center',
+      headerName: ' تعداد جلسه',
+      headerAlign:'center',
+      sortable:false,
+      wrap:'wrap',
+       width:90
+      }
+      // meetingCount
+      ,
+      { field: 'keyResultCount',
+      align:'center',
+      headerName: 'تعداد نتیجه',
+      headerAlign:'center',
+      sortable:false,
+      wrap:'wrap',
+       width:90
+      }
+      // objectiveCount
+      ,
+      // keyResultCount
       { field: 'creator',
       align:'center',
       headerName: 'ایجاد کننده',
@@ -89,7 +129,7 @@ const Tenants = () => {
       headerName: 'تعداد کاربران',
       headerAlign:'center',
       sortable:false,
-       width:90,
+       width:60,
        
       }
       // dayRemainContract
@@ -144,6 +184,8 @@ const Tenants = () => {
     
      
   ],[]);
+
+  
   const renderContent=()=>{
     if (tenantsDataLoading) {
       return (<Box  width={'100%'} py={16}   >

@@ -10,12 +10,14 @@ import { useGetAllMeetings } from '../../Hooks';
 import {useDispatch} from 'react-redux';
 import {setPriodIdR} from '../../MeetingsSlice/MeetingsSlice';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 
 import SwiperCore, { Navigation } from 'swiper';
 SwiperCore.use([Navigation]);
 
 
 const MeetingSlider = () => {
+  const navigate=useNavigate();
   // const dispatch=useDispatch();
   const dispatch=useDispatch();
 
@@ -30,34 +32,29 @@ const MeetingSlider = () => {
   
 
 
+const onSuccesss=():void=>{
+  
+  navigate('/dashboard/meetings',{replace:true})
+}
+
+const onFailed=():void=>{
+
+}
 
 
 
 
 
 
-
-  const{data:perData,isLoading:perLoading}=useGetPriodById(profileTenantId);
-  // console.log(perData);
+  const{data:perData,isLoading:perLoading,isError:periodError}=useGetPriodById(profileTenantId,onSuccesss,onFailed);
+  console.log(perData);
   const[currentPriod,setCurrentPriod]=useState<any>(perData?.map((e:any) => e.isCurrent).indexOf(true));
   const currentPriodId=perData?.find((priod:any)=>priod.isCurrent).id;
   const[ids,setIds]=useState<any>(null)
   const{isFetched,isLoading}=useGetAllMeetings(ids);
 
-  useEffect(() => {
-  //  console.log(profileTenantId)
-    // setIds({tenantId:profileTenantId,priodId:currentPriodId})
-    
-   
-  }, [profileTenantId]);
 
 
-  useEffect(() => {
-    
-// console.log(perData)
-  }, [perData])
-  
-  
 
 
 
@@ -80,21 +77,29 @@ const MeetingSlider = () => {
    
     const currentSlideIndex:any = swiper.activeIndex; // Get the active slide index
     const currentSlideData:any = perData?perData[currentSlideIndex]:null; // Get data from the periods array
-    let{id,name}=currentSlideData;
-    console.log(id,name)
-    let priodDetail={
-      id:id,
-      name:name
+    if (!periodError) {
+      let{id,name}=currentSlideData;
+      // console.log(id,name)
+      let priodDetail={
+        id:id,
+        name:name
+      }
+      dispatch(setPriodIdR(priodDetail))
+      setIds((prev:any)=>({tenantId:profileTenantId,priodId:id}));
+      dispatch(setLoadingR(true))
     }
-    dispatch(setPriodIdR(priodDetail))
-    // setPriodIds((prev:any)=>({...prev,priodId:id}));
-    setIds((prev:any)=>({tenantId:profileTenantId,priodId:id}));
-    dispatch(setLoadingR(true))
-    // console.log(ids)
   };
   if (perLoading) {
     return <Box width={'100%'} py={4} textAlign={'center'}  >
       <CircularProgress sx={{color:'blue'}}  />
+    </Box>
+  }
+
+  if (periodError) {
+    return <Box width={'100%'} py={4} textAlign={'center'} >
+      <Typography textAlign={'center'} color={'red'} variant='caption' >
+        متاسفانه خطایی رخ داده است
+      </Typography>
     </Box>
   }
 
@@ -109,7 +114,7 @@ const MeetingSlider = () => {
     </Typography>
    </Box>
      <Swiper
-     initialSlide={3}
+     initialSlide={4}
      style={{textAlign:'center',fontSize:'2rem'}}
       spaceBetween={30}
       slidesPerView={1}

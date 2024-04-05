@@ -19,6 +19,7 @@ import useWindowDimensions from '../../../../components/DeviceSize/DeviceSize';
 // useEffect
 
 const UserTypeSelection = (props:any) => {
+  const navigate=useNavigate();
   const {width } = useWindowDimensions();
   let authDevice=width>600;
   // console.log(width)
@@ -29,10 +30,19 @@ const UserTypeSelection = (props:any) => {
   //   setLoadingR(false)
    
   // }, [])
+
+  const onSuccesss=():void=>{
+  
+    navigate('/dashboard/meetings',{replace:true})
+  }
+  
+  const onFailed=():void=>{
+  
+  }
   
 
  
-  const {data:priodData,isLoading}=useGetPriodById(tenantId||null);
+  const {data:priodData,isLoading}=useGetPriodById(tenantId||null,onSuccesss,onFailed);
   const[currenPriod,setCurrentPeriod]=useState<object|null>({});
 
   // console.log(priodData)

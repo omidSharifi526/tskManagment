@@ -17,6 +17,7 @@ import LyBackdrop from '../../components/Layouts/BackDrop/BackDrop';
 import ModalLyt from '../../components/Layouts/ModalLyt/ModalLyt';
 import AddMeeting from './LComponents/Forms/AddMeeting/AddMeeting';
 import DyButton from '../../components/GlobalComponents/DyButton/DyButton';
+
 // import 
 
 
@@ -71,16 +72,18 @@ const Meeting :React.FC=function(){
 
   
 
-  if (meetingsDataa?.length==0) {
-  return (
-    <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
-    <Typography>
-      در این دوره جلسه ایی وجود ندارد
-    </Typography>
-    </Box>
-  )
-  }
-  if (loading ) {
+  // if (meetingsDataa?.length==0) {
+  // return (
+  //   <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
+  //   <Typography>
+  //     در این دوره جلسه ایی وجود ندارد
+  //   </Typography>
+  //   </Box>
+  // )
+  // }
+
+
+  if (loading) {
     return <Box display={'flex'} 
     alignItems={'center'} 
     justifyContent={'center'} 
@@ -96,12 +99,10 @@ const Meeting :React.FC=function(){
   return (
     <Grid container  spacing={1} >
       <Grid item xs={12}    >
-     
-    
                      <Box display={'flex'}  flexDirection={'row-reverse'}>
                     <Box width={'150px'}   >
                     <DyButton
-                            caption={'ساخت جلسه'}
+                            caption={'ایجاد جلسه'}
                             color={'#00387C'}
                             // onClick={loginHandler}
                             disbled={false}
@@ -112,8 +113,6 @@ const Meeting :React.FC=function(){
                           />
                     </Box>
                      </Box>
-
-      
       </Grid>
     
    {
@@ -131,16 +130,38 @@ const Meeting :React.FC=function(){
       })
     }
 
-{
+    {
+      meetingsDataa?.length==0 && <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
+      <Typography>
+        در این دوره جلسه ایی وجود ندارد
+      </Typography>
+      </Box>
+    }
+
+       {
           createTenantModal &&
-          <ModalLyt title={'ساخت جلسه'}
+          <ModalLyt title={'ایجاد جلسه'}
             showModal={Boolean(createTenantModal)}
             setShowModal={setCreateTenantModal}
           >
-            <AddMeeting/>
+            <AddMeeting  
+            hideModal={setCreateTenantModal}
+            
+            />
           </ModalLyt>
 
         }
+
+        {/* {
+          loading && <Box display={'flex'} 
+          alignItems={'center'} 
+          justifyContent={'center'} 
+          width={'100%'} 
+          height={'500px'} 
+          boxShadow={4} borderRadius={3}>
+            <CircularProgress  />
+           </Box>
+        } */}
    
     </Grid>
   )
