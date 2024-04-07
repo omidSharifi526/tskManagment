@@ -21,8 +21,8 @@ startDate:'',
 startValue:'',
 weight:'',
 description:'',
-valuesDetailCommandDtos:[]
-// whenCompletedValue:''
+valuesDetailCommandDtos:[],
+oKRStateId:''
 }
 
 const addObjectiveValues:AddObjectiveFace={

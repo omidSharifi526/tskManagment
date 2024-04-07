@@ -4,10 +4,12 @@ import { Box, Grid, TextField, Typography } from '@mui/material';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import { Formik, Form } from 'formik';
 import { addKrValues } from '../../StaticData/index';
+import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
 import { useGetAllActivePersonByTenantId,
     useGetAllHorizontalAlignmentByTenantId,
     useGetAllOKRStateByTenantId,
-    useGetAllScoreLevelsByTenantId
+    useGetAllScoreLevelsByTenantId,
+    useAddKeyResult
  } from '../../Hooks';
 import AccordionLyt from '../../../../components/Layouts/AccordionLyt/AccordionLyt';
 import { useSelector } from 'react-redux';
@@ -17,18 +19,19 @@ export const CreateKeyResult = () => {
     const[pointingSystemType,setPointingSystemType]=useState<string>('Regulary');
     const[idsValue,setIdsValue]=useState<any>([])
     const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
-
     const {data:acPersOptions}=useGetAllActivePersonByTenantId(tenantId);
     const{data:HorzinalAlignData}=useGetAllHorizontalAlignmentByTenantId(tenantId);
-    const{}=useGetAllOKRStateByTenantId(tenantId);
-    const{data:levelIds,isFetched:getLevelsIds}=useGetAllScoreLevelsByTenantId(tenantId)
+    const{data:submitFormOptions}=useGetAllOKRStateByTenantId(tenantId);
+    const{data:levelIds,isFetched:getLevelsIds}=useGetAllScoreLevelsByTenantId(tenantId);
+    const{mutate:addKeyResulttt}=useAddKeyResult()
     // console.log(acPersOptions)
 // Regulary
 // Tensile
     const initialAddKeyR = (data: any) => {
         data.valuesDetailCommandDtos=idsValue
         // totalData.valuesDetailCommandDtos=idsValue
-        console.log(data)
+        console.log(data);
+        addKeyResulttt(data)
     }
 
     const[showAdvanceOptions,setShowAdvanceOptions]=useState<Boolean>(false)
@@ -281,15 +284,20 @@ export const CreateKeyResult = () => {
 
 
 
-                                    <Grid item xs={12} md={3} mt={3} >
-                                        <Box width={'100%'}  >
-                                            <DyButton
+                                    <Grid item xs={12} md={12} mt={3} >
+                                        <Box width={'100%'} display={'flex'} flexDirection={'row-reverse'} >
+                                            <DySplitButton 
+                                            onclick={setFieldValue}
+                                            options={submitFormOptions || []}
+
+                                            />
+                                            {/* <DyButton
                                                 type={'submit'}
                                                 variant={'contained'}
                                                 bgColor={'info'}
                                                 caption={'افزودن نتیجه'}
                                                 onClick={() => { }}
-                                            />
+                                            /> */}
                                         </Box>
                                     </Grid>
                                 </Grid>

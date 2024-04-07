@@ -25,7 +25,7 @@ import { useDispatch } from 'react-redux';
 import Close from '@mui/icons-material/Close';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-
+import { useNavigate } from 'react-router-dom';
 const ObjectiveKeyResults: React.FC = () => {
   const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
@@ -44,14 +44,16 @@ const ObjectiveKeyResults: React.FC = () => {
   const [krRowData, setKrRowData] = useState(null);
   const [showToolbarModal, setShowToolbarModal] = useState(false);
   const [showAddEvalModal, setShowAddEvalModal] = useState(false);
-  const [kresultId, setKresultId] = useState<string>('');
+  const [SuccessState,setSuccessState] = useState<boolean>(false);
   const [firstObjectiveId, setfirstObjectiveId] = useState('')
   const [objectivee, setObjectivee] = useState<any>(objectivies?.length > 4 ? 'fb7cc4ea-7162-4916-9aa8-834b14308e10' : null);
+  var navigate=useNavigate();
   useEffect(() => {
+    
+navigate('/companyTeams')
 
-
-    console.log(objectivee)
-  }, [objectivee])
+    console.log(SuccessState)
+  }, [SuccessState])
 
 
 
@@ -967,6 +969,7 @@ const ObjectiveKeyResults: React.FC = () => {
             setShowInformation={setShowModal}
             setShowAddEvalModal={setShowAddEvalModal}
             initialMount={true}
+            // setKresultId={}
           />
         </Grid>
 
@@ -1156,7 +1159,8 @@ const ObjectiveKeyResults: React.FC = () => {
             <AddKrEvaluation
               cancelo={setShowAddEvalModal}
               objectiveId={objectivee?.id}
-              kresultId={kresultId}
+              kresultId={krId}
+              onsucces={setSuccessState}
             />
 
 

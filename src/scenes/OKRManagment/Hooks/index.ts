@@ -1,8 +1,9 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import {GetAllActivePersonByTenantId,
     GetAllHorizontalAlignmentByTenantId,
     GetAllOKRStateByTenantId,
-    GetAllScoreLevelsByTenantId
+    GetAllScoreLevelsByTenantId,
+    AddKeyResult
 
 } from '../Api/index';
 
@@ -71,6 +72,13 @@ const useGetAllOKRStateByTenantId=(tenantId:string|null)=>{
      ,
      onError:(err:any)=>{
      console.log(err)
+     },
+     select:(data)=>{
+   let rawData=data?.data?.data;
+  let tranformed=rawData.map(({id,name}:any)=>{
+    return {label:name,id:id}
+  })
+  return tranformed
      }
     })
 }
@@ -90,7 +98,7 @@ return useQuery(['GetAllScoreLevelsByTenantId',tenantId],GetAllScoreLevelsByTena
     let rawData=data?.data?.data;
     // console.log(rawData);
     let levelids=rawData.map(({id}:any)=>{
-        return {id:id,value:''}
+        return {scoreLevelId:id,value:''}
     });
     return levelids
     // console.log(levelids)
@@ -100,9 +108,23 @@ return useQuery(['GetAllScoreLevelsByTenantId',tenantId],GetAllScoreLevelsByTena
 }
 
 
+const useAddKeyResult=()=>{
+    return useMutation(AddKeyResult,{
+        onSuccess:(data:any)=>{
+        console.log(data)
+        }
+        ,
+        onError:(err:any)=>{
+         console.log(err)
+        }
+    })
+}
+
+
 export{
     useGetAllActivePersonByTenantId,
     useGetAllHorizontalAlignmentByTenantId,
     useGetAllOKRStateByTenantId,
-    useGetAllScoreLevelsByTenantId
+    useGetAllScoreLevelsByTenantId,
+    useAddKeyResult
 }

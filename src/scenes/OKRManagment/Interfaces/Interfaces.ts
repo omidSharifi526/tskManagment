@@ -42,7 +42,8 @@ export  interface TabPanelProps {
     forceEndDate:string,
     startDate:string,
     description:string,
-    valuesDetailCommandDtos:any[]
+    valuesDetailCommandDtos:any[],
+    oKRStateId:string
 
   }
 

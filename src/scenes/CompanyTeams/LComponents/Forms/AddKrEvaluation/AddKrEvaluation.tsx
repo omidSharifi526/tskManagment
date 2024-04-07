@@ -9,6 +9,7 @@ import { currentStateOptions, nextStateOptions } from '../../../StataicData';
 import { useAddCheckinMeeting } from '../../../Hooks/index';
 import { useSelector } from 'react-redux';
 import AddMeetingSuccess from '../../../../Meeting/LComponents/AddMeetingSuccess/AddMeetingSuccess';
+import { useNavigate } from 'react-router-dom';
 // {
 //   "meetingId": "78667f0e-f023-454b-b7d4-261a38760a22",
 //   "teamId": "fb7cc4ea-7162-4916-9aa8-834b14308e10",
@@ -37,7 +38,8 @@ import AddMeetingSuccess from '../../../../Meeting/LComponents/AddMeetingSuccess
 
 
 
-const AddKrEvaluation = ({ cancelo, objectiveId, kresultId }: any) => {
+const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces }: any) => {
+  var navigate=useNavigate();
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
@@ -60,8 +62,12 @@ const AddKrEvaluation = ({ cancelo, objectiveId, kresultId }: any) => {
 
   }
   const addCheckinSuccess = () => {
+    // navigate('/dashboard/meetings')
+    cancelo()
+    // onsucces('suvvess')
+    return onsucces((prev:boolean)=>!prev)
     // cancelo()
-    setRenderState('success')
+    // setRenderState('success')
   }
   const { mutate: addCheck, isSuccess } = useAddCheckinMeeting(addCheckinSuccess);
 

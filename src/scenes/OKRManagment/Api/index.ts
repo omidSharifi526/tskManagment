@@ -28,9 +28,20 @@ const GetAllScoreLevelsByTenantId=async({queryKey}:any)=>{
     let tenantId=queryKey[1];
     return await axiosInstance.get(`/OKR/GetAllScoreLevelsByTenantId?tenantId=${tenantId}`)
 }
+
+// https://api.myokr.ir/api/OKR/AddKeyResult
+
+const AddKeyResult=async(krData:any)=>{
+return await axiosInstance.post('OKR/AddKeyResult',krData) 
+}
+// return await axiosInstance.post('Meeting/AddCheckinMeeting',checkinData)
+
+
+
 export{
     GetAllActivePersonByTenantId,
     GetAllHorizontalAlignmentByTenantId,
     GetAllOKRStateByTenantId,
-    GetAllScoreLevelsByTenantId
+    GetAllScoreLevelsByTenantId,
+    AddKeyResult
 }
