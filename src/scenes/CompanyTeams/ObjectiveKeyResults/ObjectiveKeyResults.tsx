@@ -26,10 +26,15 @@ import Close from '@mui/icons-material/Close';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import { useNavigate } from 'react-router-dom';
+import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
+import { useGetWebObjectiveDetailsCheckinMeetingByTeamId } from '../../Meeting/Hooks/index';
 const ObjectiveKeyResults: React.FC = () => {
   const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
+  const companyNode:any=useSelector((state:any)=>state.meetings.companyList);
+  const[companys,setCompanys]=useState<any|null>([]);
+  const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
 
   const objectivies = useSelector((state: any) => state.meetings.objectivie);
   const objUpdated = useSelector((state: any) => state.meetings.objUpdated);
@@ -45,15 +50,43 @@ const ObjectiveKeyResults: React.FC = () => {
   const [showToolbarModal, setShowToolbarModal] = useState(false);
   const [showAddEvalModal, setShowAddEvalModal] = useState(false);
   const [SuccessState,setSuccessState] = useState<boolean>(false);
-  const [firstObjectiveId, setfirstObjectiveId] = useState('')
+  const[pointingSystem,setPointingSystem]=useState<string|null>(null)
+  const getObjectiveSuccess=()=>{
+
+  }
+  const getObjectiveError=()=>{
+
+  }
+  const{data,isError:getObjectiveErrorFlag,isLoading:getObjLoading,refetch:callAgain}=useGetWebObjectiveDetailsCheckinMeetingByTeamId(getObjectiveSuccess,getObjectiveError,'7aa9f801-7417--8398-bfe79f0709b5',priodId,meetingId);
   const [objectivee, setObjectivee] = useState<any>(objectivies?.length > 4 ? 'fb7cc4ea-7162-4916-9aa8-834b14308e10' : null);
-  var navigate=useNavigate();
+
   useEffect(() => {
     
-navigate('/companyTeams')
 
-    console.log(SuccessState)
+// callAgain()
+setTimeout(() => {
+  setSuccessState(false)
+}, 2000);
+    // console.log(SuccessState)
   }, [SuccessState])
+
+
+  useEffect(() => {
+    if (companyNode) {
+      let{id}=companyNode;
+      console.log(companyNode)
+      setNodeId(id);
+      // dispatch(setTeamInfoR(companyNode))
+    }
+  
+  }, [])
+
+  useEffect(() => {
+    
+  
+ console.log(pointingSystem)
+  }, [pointingSystem])
+  
 
 
 
@@ -75,7 +108,7 @@ navigate('/companyTeams')
     setKeyR([])
     setObjectivee({})
     console.log(objUpdated)
-  }, [objUpdated])
+  }, [])
 
 
 
@@ -969,6 +1002,7 @@ navigate('/companyTeams')
             setShowInformation={setShowModal}
             setShowAddEvalModal={setShowAddEvalModal}
             initialMount={true}
+            setPointSys={setPointingSystem}
             // setKresultId={}
           />
         </Grid>
@@ -1161,6 +1195,7 @@ navigate('/companyTeams')
               objectiveId={objectivee?.id}
               kresultId={krId}
               onsucces={setSuccessState}
+              pointingSystem={pointingSystem}
             />
 
 
@@ -1175,6 +1210,12 @@ navigate('/companyTeams')
           >
             {/* <h1>ModaLOfDatagRid</h1> */}
           </ModalLyt>
+        }
+
+        {
+          SuccessState && <LyBackdrop visible={SuccessState} >
+            <h1>loading</h1>
+            </LyBackdrop>
         }
 
 

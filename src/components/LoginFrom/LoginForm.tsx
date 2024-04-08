@@ -62,8 +62,8 @@ const LoginForm = ({ setContentState }: any) => {
   const { data: logdata, mutate: LoginReq, isLoading } = useLogin(loginSuccess, loginFailed)
 
   const userBody = {
-    phoneNumber: "09198390527",
-    password: "4120162281",
+    phoneNumber: "09121223615",
+    password: "AriaBarbod",
     smsCode: "",
     isOTP: false
   }

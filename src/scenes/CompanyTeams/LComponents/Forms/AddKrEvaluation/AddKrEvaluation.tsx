@@ -38,13 +38,22 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces }: any) => {
+const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces,pointingSystem }: any) => {
   var navigate=useNavigate();
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const teamId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
-  console.log(teamId)
+  // console.log(pointingSystem);
+const [pointSystems,setPointSystem]=useState<string>('')
+  useEffect(() => {
+    
+  // console.log(pointingSystem)
+  setPointSystem(pointingSystem)
+   
+  }, [pointingSystem])
+  
+
   const meetingData: AddEvalFace = {
     newValue: '',
     problems: '',
@@ -58,7 +67,8 @@ const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces }: any) => {
     tensileScore: '100',
     currentState: 'Finished',
     description: '',
-    closedKeyResult: false
+    closedKeyResult: false,
+    score:''
 
   }
   const addCheckinSuccess = () => {
@@ -122,13 +132,28 @@ const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces }: any) => {
                         fullWidth
                       />
                     </Grid>
-                    <Grid item xs={6}  >
-                      <Box columnGap={1} sx={{ width: '50%', display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'start', p: 2 }}  >
+                    
+                      {
+                        pointSystems==='تارگت متداول'?
+                        <Grid item xs={6}  > 
+                        <FormikControl
+                        control='textField'
+                        type='text'
+                        label='امتیاز'
+                        name='score'
+                        fullWidth
+                        // helperText={'موانعی که با آن مواجه هستید؟'}
+                      />
+                    </Grid>:''
+
+                      }
+
+                      {/* <Box columnGap={1} sx={{ width: '50%', display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'start', p: 2 }}  >
 
                         <Typography>امتیاز:</Typography>
                         <RateStar />
-                      </Box>
-                    </Grid>
+                      </Box> */}
+                   
 
                     <Grid item xs={11}  >
                       <FormikControl
@@ -159,12 +184,12 @@ const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces }: any) => {
                       <FormikControl
                         control='select'
                         type='select'
-                        label=''
+                        label='وضعیت فعلی  نتیجه کلیدی را چگونه ارزیابی می کنید؟'
                         // withIcon={true}
                         options={currentStateOptions}
                         name='currentState'
                         fullWidth
-                        helperText={'وضعیت فعلی  نتیجه کلیدی را چگونه ارزیابی می کنید؟'}
+                        // helperText={}
                       />
                     </Grid>
 
@@ -172,7 +197,7 @@ const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces }: any) => {
                       <FormikControl
                         control='textField'
                         type='text'
-                        label=''
+                        label='توضیحات'
                         name='description'
                         fullWidth
                         placeholder={'توضیحات (اختیاری)  0/300'}

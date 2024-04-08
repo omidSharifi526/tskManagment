@@ -2,7 +2,7 @@ import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 
 
-export default function LyBackdrop(props:any) {
+export default function LyBackdrop({visible,children}:any) {
 
 
  
@@ -12,11 +12,11 @@ export default function LyBackdrop(props:any) {
     
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={props?.visible}
+        open={visible}
    
       >
        {
-        props?.children
+        children
        }
       </Backdrop>
     </div>
