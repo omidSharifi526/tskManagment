@@ -67,8 +67,7 @@ const LoginForm = ({ setContentState }: any) => {
     smsCode: "",
     isOTP: false
   }
-  // AriaBarbod
-  // 09121223615
+ 
 
   const initialValue = {
     phoneNumber: '09198390527',

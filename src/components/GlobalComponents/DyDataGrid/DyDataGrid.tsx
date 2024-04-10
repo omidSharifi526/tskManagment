@@ -108,6 +108,12 @@ export default function DyDataGrid(
         setSelectedRowData(row)
        initialOnRowClick(row)
       //  setObjectiveId(id)
+      // console.log(row?.okR_KeyResultType,row)
+     if (setPointSys) {
+      setPointSys(row?.okR_KeyResultType)
+     }
+     
+
       }
 
       useEffect(() => {
@@ -116,7 +122,12 @@ export default function DyDataGrid(
         setSelectedRowData(data[0])
         setSelectionModel(data[0]?.id)
         initialOnRowClick(data[0])
-        setPointSys(data[0]?.pointingSystemType)
+       
+        console.log(data[0]?.okR_KeyResultType)
+      }
+
+      if (setPointSys) {
+         setPointSys(data[0]?.okR_KeyResultType)
       }
       
       }, [])

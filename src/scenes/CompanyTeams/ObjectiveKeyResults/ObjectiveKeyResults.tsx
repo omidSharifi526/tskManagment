@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import CachedIcon from '@mui/icons-material/Cached';
 import { Grid, Box, Typography, IconButton, Tooltip, Button } from '@mui/material';
 import ModalLyt from '../../../components/Layouts/ModalLyt/ModalLyt';
 import KrDetails from '../LComponents/KrDetails/KrDetails';
-import { HistoryIcon } from '../StataicData/index';
+import { useGetWebObjectiveDetailsCheckinMeetingByTeamId2 } from '../../Meeting/Hooks/index';
 import { useGetKeyResultMeetingHistory } from '../Hooks/index';
 import KrHistoryModalContent from '../LComponents/KrHistoryModalContent/KrHistoryModalContent';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -10,8 +11,6 @@ import AddKrEvaluation from '../LComponents/Forms/AddKrEvaluation/AddKrEvaluatio
 // import { v4 as uuidv4 } from 'uuid';
 import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
 import { useSelector } from 'react-redux';
-import { useGetAllKeyResultByObjectiveId } from '../../Meeting/Hooks/index';
-import { DataGrid, GridRowsProp, GridColDef, faIR, GridRenderCellParams } from '@mui/x-data-grid';
 import { EmptyDataIcon } from '../StataicData/index';
 import TeamsNavigations from '../LComponents/TeamsNavigation/TeamsNavigations';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -19,22 +18,23 @@ import sad from '../../../Asset/Svgs/Emojys/sad.png';
 import smil from '../../../Asset/Svgs/Emojys/smil.png';
 import meh from '../../../Asset/Svgs/Emojys/meh.png';
 import { changeTreeViewStateR } from '../../Meeting/MeetingsSlice/MeetingsSlice'
-import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
-import CartSlider from '../../../components/CartSlider/CartSlider';
 import { useDispatch } from 'react-redux';
-import Close from '@mui/icons-material/Close';
+import AddMeetingSuccess from '../../Meeting/LComponents/AddMeetingSuccess/AddMeetingSuccess';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import { useNavigate } from 'react-router-dom';
+import DyLoadingCircular from '../../../components/GlobalComponents/DyLoadingCircular/DyLoadingCircular';
+import {CircularProgress} from '@mui/material';
+
 import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
 import { useGetWebObjectiveDetailsCheckinMeetingByTeamId } from '../../Meeting/Hooks/index';
 const ObjectiveKeyResults: React.FC = () => {
   const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
+  const nodeId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
   const companyNode:any=useSelector((state:any)=>state.meetings.companyList);
-  const[companys,setCompanys]=useState<any|null>([]);
-  const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
+
+  // const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
 
   const objectivies = useSelector((state: any) => state.meetings.objectivie);
   const objUpdated = useSelector((state: any) => state.meetings.objUpdated);
@@ -47,7 +47,8 @@ const ObjectiveKeyResults: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [historyModal, setHistoryModal] = useState(false)
   const [krRowData, setKrRowData] = useState(null);
-  const [showToolbarModal, setShowToolbarModal] = useState(false);
+  const [showToolbarModal, setShowToolbarModal] = useState<Boolean|null>(false);
+  const [addEvalSuccessModal,setAddEvalSuccessModal]=useState<Boolean|null>(false);
   const [showAddEvalModal, setShowAddEvalModal] = useState(false);
   const [SuccessState,setSuccessState] = useState<boolean>(false);
   const[pointingSystem,setPointingSystem]=useState<string|null>(null)
@@ -57,35 +58,29 @@ const ObjectiveKeyResults: React.FC = () => {
   const getObjectiveError=()=>{
 
   }
-  const{data,isError:getObjectiveErrorFlag,isLoading:getObjLoading,refetch:callAgain}=useGetWebObjectiveDetailsCheckinMeetingByTeamId(getObjectiveSuccess,getObjectiveError,'7aa9f801-7417--8398-bfe79f0709b5',priodId,meetingId);
+  
+  const{data,isError:getObjectiveErrorFlag,isFetched:getObjectiveAgainFetched,isLoading:getObjLoading,refetch:callAgain}=useGetWebObjectiveDetailsCheckinMeetingByTeamId2(getObjectiveSuccess,getObjectiveError,nodeId,priodId,meetingId);
   const [objectivee, setObjectivee] = useState<any>(objectivies?.length > 4 ? 'fb7cc4ea-7162-4916-9aa8-834b14308e10' : null);
 
   useEffect(() => {
     
+if (SuccessState) {
+  callAgain()
+}
 
-// callAgain()
-setTimeout(() => {
-  setSuccessState(false)
-}, 2000);
-    // console.log(SuccessState)
+
+
   }, [SuccessState])
-
-
-  useEffect(() => {
-    if (companyNode) {
-      let{id}=companyNode;
-      console.log(companyNode)
-      setNodeId(id);
-      // dispatch(setTeamInfoR(companyNode))
-    }
-  
-  }, [])
 
   useEffect(() => {
     
   
- console.log(pointingSystem)
-  }, [pointingSystem])
+   
+  }, [getObjectiveAgainFetched])
+  
+
+
+
   
 
 
@@ -112,7 +107,7 @@ setTimeout(() => {
 
 
 
-  const [counter, setCounter] = useState(1); // Initialize the counter for row index
+  
   const dispatch = useDispatch()
 
 
@@ -371,8 +366,6 @@ setTimeout(() => {
       hideable: true,
       hide: true,
       renderCell: ({ value }: any) => {
-
-
         return (
           <Typography fontSize={'12px'}  >{value}</Typography>
         )
@@ -1213,12 +1206,36 @@ setTimeout(() => {
         }
 
         {
-          SuccessState && <LyBackdrop visible={SuccessState} >
-            <h1>loading</h1>
+          SuccessState && 
+          <LyBackdrop 
+          visible={getObjLoading} 
+          successFlag={getObjectiveAgainFetched}  >
+          
+           {
+            getObjLoading && <Box>
+              <CircularProgress color='info'/>
+            </Box>
+           }
             </LyBackdrop>
         }
 
+        {/* {
+          getObjectiveAgainFetched  && <ModalLyt 
+          title={'ارزیابی'}
+          showModal={Boolean(addEvalSuccessModal)}
+            setShowModal={setAddEvalSuccessModal}
+          >
+            <AddMeetingSuccess
+            formName={'ارزیابی'}
+            resetButton={false}
+            resetForm={()=>{}}
+            />
+    
 
+          </ModalLyt>
+        } */}
+{/* CircularProgress */}
+{/* {formName,resetButton,resetForm} */}
 
 
 

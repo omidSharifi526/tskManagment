@@ -130,13 +130,13 @@ const Meeting :React.FC=function(){
       })
     }
 
-    {
+    {/* {
       meetingsDataa?.length==0 && <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
       <Typography>
         در این دوره جلسه ایی وجود ندارد
       </Typography>
       </Box>
-    }
+    } */}
 
        {
           createTenantModal &&

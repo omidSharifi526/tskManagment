@@ -45,27 +45,29 @@ const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces,pointingSyst
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const teamId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
   // console.log(pointingSystem);
-const [pointSystems,setPointSystem]=useState<string>('')
+const [pointSystemsL,setPointSystemL]=useState<string>('')
   useEffect(() => {
-    
+    if(pointingSystem==='مرحله ای'){
+      setPointSystemL('req')
+    }
   // console.log(pointingSystem)
-  setPointSystem(pointingSystem)
+  // setPointSystem(pointingSystem)
    
   }, [pointingSystem])
   
 
-  const meetingData: AddEvalFace = {
+  const KrData: AddEvalFace = {
     newValue: '',
     problems: '',
-    nextState: 'WeExpectToGetTheRightResult',
+    nextState: '',
     meetingId: meetingId,
     teamId: teamId,
     periodId: priodId,
     tenantId: profileTenantId,
     keyResultId: kresultId,
     objectiveId: objectiveId,
-    tensileScore: '100',
-    currentState: 'Finished',
+    tensileScore: '',
+    currentState: '',
     description: '',
     closedKeyResult: false,
     score:''
@@ -98,7 +100,7 @@ const [pointSystems,setPointSystem]=useState<string>('')
       case 'add':
         return (
           <Formik enableReinitialize
-            initialValues={meetingData}
+            initialValues={KrData}
             onSubmit={(data: AddEvalFace) => {
               // addCheckinMeeting(data)
               initialSubmitForm(data)
@@ -134,7 +136,7 @@ const [pointSystems,setPointSystem]=useState<string>('')
                     </Grid>
                     
                       {
-                        pointSystems==='تارگت متداول'?
+                        pointSystemsL==='req'?
                         <Grid item xs={6}  > 
                         <FormikControl
                         control='textField'
