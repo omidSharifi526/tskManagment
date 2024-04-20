@@ -10,6 +10,7 @@ import { useAddCheckinMeeting } from '../../../Hooks/index';
 import { useSelector } from 'react-redux';
 import AddMeetingSuccess from '../../../../Meeting/LComponents/AddMeetingSuccess/AddMeetingSuccess';
 import { useNavigate } from 'react-router-dom';
+import { intaddKrSchema,straddKrSchema } from '../../../StataicData';
 // {
 //   "meetingId": "78667f0e-f023-454b-b7d4-261a38760a22",
 //   "teamId": "fb7cc4ea-7162-4916-9aa8-834b14308e10",
@@ -39,24 +40,21 @@ import { useNavigate } from 'react-router-dom';
 
 
 const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces,pointingSystem }: any) => {
-  var navigate=useNavigate();
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const teamId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
-  // console.log(pointingSystem);
+
 const [pointSystemsL,setPointSystemL]=useState<string>('')
   useEffect(() => {
     if(pointingSystem==='مرحله ای'){
       setPointSystemL('req')
     }
-  // console.log(pointingSystem)
-  // setPointSystem(pointingSystem)
    
   }, [pointingSystem])
   
 
-  const KrData: AddEvalFace = {
+  const evaluationData: AddEvalFace = {
     newValue: '',
     problems: '',
     nextState: '',
@@ -69,19 +67,17 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
     tensileScore: '',
     currentState: '',
     description: '',
-    closedKeyResult: false,
-    score:''
+    closedKeyResult: false
+   
 
   }
   const addCheckinSuccess = () => {
-    // navigate('/dashboard/meetings')
+
     cancelo()
-    // onsucces('suvvess')
-    return onsucces((prev:boolean)=>!prev)
-    // cancelo()
-    // setRenderState('success')
+     onsucces(true)
+
   }
-  const { mutate: addCheck, isSuccess } = useAddCheckinMeeting(addCheckinSuccess);
+  const { mutate: addCheck, isSuccess,isLoading } = useAddCheckinMeeting(addCheckinSuccess);
 
   const [renderState, setRenderState] = useState<string>('add');
 
@@ -92,17 +88,24 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
   const initialSubmitForm: any = (data: any): any => {
     console.log(data)
     addCheck(data)
+ 
   }
 
+
+
+
+  
+// intaddKrSchema,straddKrSchema
 
   const renderContent = () => {
     switch (renderState) {
       case 'add':
         return (
-          <Formik enableReinitialize
-            initialValues={KrData}
+          <Formik
+           validationSchema={pointSystemsL==='req'?straddKrSchema:intaddKrSchema}
+           enableReinitialize
+            initialValues={evaluationData}
             onSubmit={(data: AddEvalFace) => {
-              // addCheckinMeeting(data)
               initialSubmitForm(data)
 
             }}
@@ -110,9 +113,9 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
 
           >
             {
-              ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }) =>
+              ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }:any) =>
                 <Form>
-                  <Grid container columnSpacing={1}   >
+                  <Grid container columnSpacing={1} sx={{bgcolor: 'background.paper',mx:'auto',borderRadius:3}}   >
 
                     <Grid item xs={12}   >
                       {/* <Box>
@@ -137,25 +140,18 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                     
                       {
                         pointSystemsL==='req'?
-                        <Grid item xs={6}  > 
+                        <Grid item xs={5}  > 
                         <FormikControl
                         control='textField'
                         type='text'
                         label='امتیاز'
-                        name='score'
+                        name='tensileScore'
                         fullWidth
                         // helperText={'موانعی که با آن مواجه هستید؟'}
                       />
                     </Grid>:''
 
                       }
-
-                      {/* <Box columnGap={1} sx={{ width: '50%', display: 'flex', flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'start', p: 2 }}  >
-
-                        <Typography>امتیاز:</Typography>
-                        <RateStar />
-                      </Box> */}
-                   
 
                     <Grid item xs={11}  >
                       <FormikControl
@@ -168,7 +164,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={6} >
+                    <Grid item xs={12} md={5.5} >
                       <FormikControl
                         control='select'
                         type='select'
@@ -182,7 +178,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                     </Grid>
 
 
-                    <Grid item xs={12} md={6} >
+                    <Grid item xs={12} md={5.5} >
                       <FormikControl
                         control='select'
                         type='select'
@@ -195,7 +191,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={12} >
+                    <Grid item xs={12} md={11} >
                       <FormikControl
                         control='textField'
                         type='text'
@@ -253,7 +249,8 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                             caption={'ذخیره'}
                             color={'#00387C'}
                             onClick={() => { }}
-                            disbled={false}
+                            disbled={!dirty || !isValid}
+                            // !isValid || !dirty 
                             variant={'contained'}
                             bgColor={'#00387C'}
                             type={'submit'}

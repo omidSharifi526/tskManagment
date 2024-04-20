@@ -5,6 +5,7 @@ import sad from '../../../Asset/Svgs/Emojys/sad.png.png';
 import smil from '../../../Asset/Svgs/Emojys/smil.png.png';
 import {SelectOptionFace} from '../Interfaces/interfaces';
 import React from 'react';
+import * as yup from 'yup';
 
 // 
 // با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد.
@@ -66,6 +67,22 @@ switch (index) {
 }
 }
 
+const straddKrSchema = yup.object().shape({
+    newValue:yup.string().required(''),
+    tensileScore:yup.string().required(''),
+    problems:yup.string().required(''),
+    nextState:yup.string().required(''),
+    currentState:yup.string().required(''),
+ });
+
+ const intaddKrSchema = yup.object().shape({
+    newValue:yup.number().required(''),
+    // tensileScore:yup.string().required(''),
+    problems:yup.string().required(''),
+    nextState:yup.string().required(''),
+    currentState:yup.string().required(''),
+ });
+
 
 
 
@@ -74,5 +91,8 @@ export{
     HistoryIcon,
     currentStateOptions,
     nextStateOptions,
-    StatusIcon
+    // StatusIcon,
+    straddKrSchema,
+    intaddKrSchema
+
 }

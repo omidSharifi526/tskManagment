@@ -10,7 +10,7 @@ interface RadioControlFace{
     options:any[]
 }
 
-export default function RadioButtonsGroup({mainLabel,options}:RadioControlFace) {
+export default function RadioButtonsGroup({mainLabel,options,setFieldValue,value,propName}:any) {
   return (
    <Box sx={{px:2,pb:1}}  >
      <FormControl sx={{mb:3}}  >
@@ -24,7 +24,22 @@ export default function RadioButtonsGroup({mainLabel,options}:RadioControlFace) 
         {
             options?.map((item:any,i:number)=>{
                 return (
-                    <FormControlLabel key={i}  value={item.id} control={<Radio />} label={item.label} />
+                    <FormControlLabel 
+                    key={i}  
+                    name={item.label}
+                    value={item.value} 
+                    // checked={value}
+                    control={<Radio />} 
+                    label={item.label}
+                    onChange={({target}:any)=>{
+                      let {name,value}=target;
+                      console.log(value)
+                      // let flag=Boolean(value);
+                      // console.log(name,Boolean(value))
+                      setFieldValue(propName,value)
+                     console.log(target)
+                    }}
+                     />
                 )
             })
         }

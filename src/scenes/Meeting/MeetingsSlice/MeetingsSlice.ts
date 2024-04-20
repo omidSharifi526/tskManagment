@@ -19,7 +19,7 @@ type meetingsStateType = {
   teamId:string,
   profileName:string,
     periodList: any[],
-    meetingsList:any[],
+    meetingsList:any,
     teamsData:any[],
     teamInfo:any,
     teamList:any[],
@@ -32,6 +32,7 @@ type meetingsStateType = {
     meetSelectedDate:string,
     treeViewState:priodViewStateFace,
     counter:number,
+    kRinitialState:any
 
     
  
@@ -46,7 +47,7 @@ profileTenantId:'',
 teamId:'',
 profileName:'',
 periodList:[],
-meetingsList:[],
+meetingsList:null,
 teamsData:[],
 teamInfo:{},
 companyList:[],
@@ -62,7 +63,24 @@ treeViewState:{
 treeView:true
 }
 ,
-counter:0
+counter:0,
+
+kRinitialState:{
+  columns: {
+    columnVisibilityModel: {
+      rowid: false,
+      okrStateName: false,
+      okR_KeyResultType: false,
+      pointingSystemType: false,
+      forceEndDate: false,
+      startDate: false,
+      threeTenthsValue: false,
+      oneValue: false
+    }
+  }
+}
+
+
 }
 
 
@@ -102,30 +120,6 @@ let{webTeamWithoutParentCheckinMeetingDetailsQueryResultDtos:treeStatus}=treeDat
 if (treeStatus===null) {
   let{webTeamHaveParentCheckinMeetingDetailsQueryResultDtos:companyy}=treeData;
   let companyInfo=companyy[0];
-  // console.log(treeData);
-  // keyResultsCount
-  // : 
-  // 202
-  // managerCompanyName
-  // : 
-  // "کیان فرزانه"
-  // meetingId
-  // : 
-  // "f39882a0-f4b9-4793-afa2-9cef2de4883d"
-  // name
-  // : 
-  // "اکلر"
-  // objectivesCount
-  // : 
-  // 49
-  // periodId
-  // : 
-  // "bba7c504-8a8c-4b9e-b92c-6f7386a54c7a"
-  // tenantId
-  // : 
-  // "6cfd9a87-e09b-4f0e-bbe1-c1b65c8f170d"
-
-
   let{name,managerCompanyName,objectivesCount,keyResultsCount}=treeData;
   
   let totcompanyInfo={
@@ -182,7 +176,7 @@ const setKeyResults=(state:any,action:PayloadAction<any>)=>{
 const resetRValues=(state:any)=>{
 state.teamInfo={};
 state.objectivie=[];
-state.meetings.teamList=null
+// state.meetings.teamList=null
 }
 
 const setProfileName=(state:any,action:PayloadAction<any>)=>{
@@ -241,6 +235,42 @@ const resetTeamList=(state:any)=>{
 state.meetings.teamList=null
 }
 
+const resetMeetingSlice=(state:any,action:PayloadAction<any>)=>{
+  // console.log(action)
+  state.priodId='';
+  state.periodName='';
+  state.meetingId='';
+  state.profileTenantId='';
+  state.teamId="";
+  state.profileName="";
+  state.periodList=[];
+  state.meetingsList=null;
+    state.teamsData=[];
+    state.teamInfo={};
+    state.companyList=[];
+    state.teamList=[];
+    state.objectivie=[];
+    state.keyResults=[];
+    state.loading=false;
+    state.objUpdated=false;
+    state.changeTenantMode=false;
+    state.meetSelectedDate='';
+    
+    state.treeViewState={
+    treeView:true
+    };
+    state.counter=0;
+}
+
+const setinitialState=(state:any,action:PayloadAction<any>)=>{
+let{payload}=action;
+console.log(payload)
+// state.
+}
+
+
+
+
 
 
 
@@ -270,7 +300,9 @@ export const meetingsSlice = createSlice({
     resetCounter,
     decreaseCounter,
     setInitialTreeView,
-    resetTeamList
+    resetTeamList,
+    resetMeetingSlice,
+    setinitialState
     
    
   },
@@ -297,7 +329,9 @@ export const {
     resetCounter:resetCounterR,
     decreaseCounter:decreaseCounterR,
     setInitialTreeView:setInitialTreeViewR,
-    resetTeamList:resetTeamListR
+    resetTeamList:resetTeamListR,
+    resetMeetingSlice:resetMeetingSliceR,
+    setinitialState:setinitialStateR
  } = meetingsSlice.actions
 
 

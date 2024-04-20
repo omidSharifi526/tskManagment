@@ -32,6 +32,8 @@ import QrCode2Icon from '@mui/icons-material/QrCode2';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
 import Divider from '@mui/material/Divider';
+import { useDispatch } from 'react-redux';
+import {resetMeetingSliceR} from '../../scenes/Meeting/MeetingsSlice/MeetingsSlice'
 // Link
 // userInfo:{
 //   userPhoneNumber:''
@@ -40,13 +42,15 @@ import Divider from '@mui/material/Divider';
 // }
 
 const LoginForm = ({ setContentState }: any) => {
+
+  
   const { width } = useWindowDimensions();
   const [loginStatusLocal, setLoginStatusLocal] = useState<boolean | null>(null);
   const [loginMessage, setLoginMessage] = useState<string | null>(null)
   let authDevice = width > 900;
 
   const loginStatus: any = useSelector((state: any) => state.loign.loginStatus);
-  const dispatch: any = useAppDispatch();
+  const dispatch=useDispatch();
   // const userInfo:any=useAppSelector(state=>state.loign.userInfo.userPhoneNumber)
   const loginSuccess = () => {
     // navigate('/dashboard',{replace:true})
@@ -55,6 +59,42 @@ const LoginForm = ({ setContentState }: any) => {
     setContentState((prev: any) => ({ ...prev, content: 'userTypeSelection' }));
     // }
   }
+
+  useEffect(() => {
+  
+    
+    let initialValues={
+      priodId:'',
+      periodName:'',
+      meetingId:'',
+      profileTenantId:'',
+      teamId:'',
+      profileName:'',
+      periodList:[],
+      meetingsList:null,
+      teamsData:[],
+      teamInfo:{},
+      companyList:[],
+      teamList:[],
+      objectivie:[],
+      keyResults:[],
+      loading:false,
+      objUpdated:false,
+      changeTenantMode:false,
+      meetSelectedDate:'',
+      
+      treeViewState:{
+      treeView:true
+      }
+      ,
+      counter:0
+    
+    }
+    dispatch(resetMeetingSliceR(initialValues))
+  
+    
+  }, )
+  
 
   const loginFailed = () => {
 
@@ -387,6 +427,10 @@ const LoginForm = ({ setContentState }: any) => {
       <CircularProgress sx={{ color: 'white' }} />
     </LyBackdrop>
   }
+
+
+
+
 
   return (
     <Grid container  >

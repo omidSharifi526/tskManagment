@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { DataGrid, GridRowsProp, GridColDef,faIR,GridToolbar } from '@mui/x-data-grid';
-import LinearProgress from '@mui/material/LinearProgress';
+import { useDispatch,useSelector } from 'react-redux';
 import { Box,Grid, IconButton,Button } from '@mui/material';
 import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import { HistoryIcon } from '../../../scenes/CompanyTeams/StataicData/index';
-import { ReactComponent as InfoIcon } from '../../../scenes/CompanyTeams/StataicData/Icons/InfoIcon.svg';
-// import { ReactComponent as historyIcon } from '../../../scenes/CompanyTeams/StataicData/index';
-import {ReactComponent as KrChartIcon} from './Static/KrChartIcon.svg';
+import {setinitialStateR} from '../../../components/Login/LoginSlice/LoginSlice'
 import './style.css';
 import {
   GridToolbarContainer,
@@ -46,7 +43,8 @@ export default function DyDataGrid(
     setSpecialId,
     setShowAddEvalModal,
     initialMount,
-    setPointSys
+    setPointSys,
+    drName
     
   }:any) {
     const[selectedRowData,setSelectedRowData]=React.useState(null);
@@ -103,7 +101,7 @@ export default function DyDataGrid(
     }
 
       const initOnRowClick=(row:any)=>{
-        console.log(row)
+        // console.log(row)
         setSelectionModel(row.id)
         setSelectedRowData(row)
        initialOnRowClick(row)
@@ -117,20 +115,34 @@ export default function DyDataGrid(
       }
 
       useEffect(() => {
-        console.log(data)
+        // console.log(data)
       if (initialMount) {
         setSelectedRowData(data[0])
         setSelectionModel(data[0]?.id)
         initialOnRowClick(data[0])
        
-        console.log(data[0]?.okR_KeyResultType)
+        // console.log(data[0]?.okR_KeyResultType)
       }
 
       if (setPointSys) {
          setPointSys(data[0]?.okR_KeyResultType)
       }
       
-      }, [])
+      }, []);
+
+      // setinitialStateR
+const dispatch=useDispatch()
+      const initialChangestate=(data:any)=>{
+     if (drName) {
+      let{columns}=data;
+let{columnVisibilityModel}=columns
+
+
+     
+      dispatch(setinitialStateR({name:drName,colVis:columnVisibilityModel}))
+     }
+
+      }
       
    
      
@@ -139,7 +151,9 @@ export default function DyDataGrid(
     
    <Grid  width={'100%'} >
    <DataGrid 
-   
+   onStateChange={(state)=>{
+    initialChangestate(state)
+   }}
    density="compact"
   //  filterMode={true}
    initialState={initState}

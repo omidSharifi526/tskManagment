@@ -1,272 +1,379 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
-import {Box,Grid,Typography} from '@mui/material';
+import {Box,Grid,Typography,FormControl,InputLabel,Select,MenuItem, Button} from '@mui/material';
 import { Formik,Form } from 'formik';
-import { addObjectiveValues } from '../../StaticData';
+import { addObjectiveSchema } from '../../StaticData';
+import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
+import { useSelector } from 'react-redux';
+import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
+import AccordionLyt from '../../../../components/Layouts/AccordionLyt/AccordionLyt';
+import { addObjectiveInitialValues } from '../../StaticData';
+import { useGetAllHorizontalAlignmentByTenantId,
+     useGetAllObjectiveDefinitionLevelByTenantId,
+     useGetAllObjectiveOKRStateByTenantId,
+    useAddObjective
+    } from '../../Hooks';
+import { useGetAllActivePersonByTenantId } from '../../Hooks';
+import {CircularProgress} from '@mui/material';
+import DyLoadingCircular from '../../../../components/GlobalComponents/DyLoadingCircular/DyLoadingCircular';
+import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
+import { ifError } from 'assert';
+// import { addObjectiveValues } from '../../StaticData';
+const CreateObjective = ({periodsData,onSuccess}:any) => {
+    const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
+    const[HorzIds,setHorzIds]=useState<any>({tenantId:tenantId,definitionId:null})
+    const[definitionLevel,setDefinitionLevel]=useState<string | null>(null);
+    const[showAdvanceOptions,setShowAdvanceOptions]=useState<boolean>(false)
+   const[successAddObjective,setSuccessAddObjective]=useState<boolean|null>(null);
+   const[addObectiveMessage,setAddObjectiveMessage]=useState<string>('')
+    const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
+    const{data:personsOptionds}=useGetAllActivePersonByTenantId(tenantId);
+    const{data:submitOptions}=useGetAllObjectiveOKRStateByTenantId(tenantId);
+    const{data:HorzinalAlignData, isLoading:HorzDataLoading}=useGetAllHorizontalAlignmentByTenantId(HorzIds);
+     
+const[periodOptions,setPeriodOptions]=useState<any>([])
+    const onSuccesss=()=>{
+        onSuccess((prev:any)=>!prev)
+    }
 
-const CreateObjective = () => {
+    const onFailed=()=>{
 
+      }
+      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective()
+
+      useEffect(() => {
+  if (addObjectiveData) {
+    setAddObjectiveMessage(addObjectiveData?.data?.metaData.message)
+    setSuccessAddObjective(isSuccess)
+  }
+      }, [addObjectiveData,isSuccess]);
+
+
+      
+
+
+// const{data:perData,isLoading:perLoading,isError:periodError,isFetched}=useGetPriodById(tenantId,onSuccesss,onFailed);
 
   const initialAddObjective=(data:any)=>{
-   console.log(data)
+    let{isPublic}=data;
+    let resIsPublic={isPublic:isPublic==='برای همه'?true:false};
+    let total={...data,...resIsPublic,tenantId:tenantId};
+    addObjective(total)
+   console.log(total)
+
   }
+
+  useEffect(() => {
+    
+//   console.log(perData)
+  let transformed=periodsData?.map((item:any)=>{
+    let{name:key,id:value}=item;
+  return {key,value}
+  })
+
+  setPeriodOptions(transformed)
+
+  console.log(transformed)
+   
+  }, [])
+  
+
+  useEffect(() => {
+    
+  console.log(teamsOptions)
+   
+  }, [teamsOptions])
+
+  if (isLoading) {
+    return <Box width={'100%'} py={6} textAlign={'center'}   >
+        <CircularProgress/>
+    </Box>
+  }
+  
 
 
   return (
     <>
-     <Box width={'100%'} maxHeight={'50em'}  >
-                <Formik enableReinitialize
-                    initialValues={addObjectiveValues}
-                    onSubmit={(data) => {
-                      initialAddObjective(data)
-                    }}
+    {
+        successAddObjective===null?  <Box width={'100%'} maxHeight={'50em'}  >
+        <Formik enableReinitialize
+        validationSchema={addObjectiveSchema}
+             validate={(data)=>{
+                let{definitionLevelId}=data;
+                setHorzIds((prev:any)=>({...prev,definitionId:definitionLevelId}))
+            console.log(data)
+             }}
+            initialValues={{...addObjectiveInitialValues}}
+            onSubmit={(data) => {
+              initialAddObjective(data)
+            }}
 
 
-                >
-                    {
-                        ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }: any) =>
-                            <Form>
-                                <Grid container  >
-                                    <Grid item xs={12} md={12}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type='text'
-                                            label='شرح هدف'
-                                            name='objectiveDescription'
-                                            fullWidth
-                                            values={values?.objectiveDescription}
-                                        />
+        >
+            {
+                ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }: any) =>
+                    <Form>
+                        <Grid container  >
+                            <Grid item xs={12} md={10}  >
+                                <FormikControl
+                                    control='textField'
+                                    type='text'
+                                    label='شرح هدف'
+                                    name='name'
+                                    fullWidth
+                                    values={values?.name || ''}
+                                />
 
-                                    </Grid>
-                                    {/**/}
+                            </Grid>
+                            {/**/}
 
-                                    <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='select'
-                                            options={[{ key: '1', value: 'یک' }, { key: '2', value: 'دو' }]}
-                                            label='دوره زمانی'
-                                            name='periodId'
-                                            fullWidth
-                                            values={values?.periodId}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='select'
-                                            options={[{ key: '1', value: 'یک' }, { key: '2', value: 'دو' }]}
-                                            label='تیم'
-                                            name='teamID'
-                                            fullWidth
-                                            values={values?.teamID}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='select'
-                                            options={[{ key: '1', value: 'یک' }, { key: '2', value: 'دو' }]}
-                                            label='سطح اجرا'
-                                            name='levelId'
-                                            fullWidth
-                                            values={values?.levelId}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='select'
-                                            options={[{ key: '1', value: 'یک' }, { key: '2', value: 'دو' }]}
-                                            label='مسئول هدف'
-                                            name='responsibleId'
-                                            fullWidth
-                                            values={values?.responsibleId}
-                                        />
-                                    </Grid>
-
-                                    {/* <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type='text'
-                                            label='مسئول'
-                                            name='responsible'
-                                            fullWidth
-                                            values={values?.responsible}
-                                        />
-
-                                    </Grid> */}
-
-                                   
+                            <Grid item xs={12} md={2}  >
+                                <FormikControl
+                                    control='select'
+                                    options={periodOptions || []}
+                                    label='دوره زمانی'
+                                    name='periodId'
+                                    fullWidth
+                                    values={values?.periodId}
+                                />
+                            </Grid>
 
 
-                                    {/* <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='select'
-                                            options={[{ key: '1', value: 'یک' }, { key: '2', value: 'دو' }]}
-                                            label='نوع نتیجه کلیدی '
-                                            name='KeyResultType'
-                                            fullWidth
-                                            values={values?.KeyResultType}
-                                        />
-                                    </Grid> */}
-                                    {/* مقدار شروع */}
-                                    {/* <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type={'text'}
-                                            label='مقدار شروع '
-                                            name='startingValue'
-                                            fullWidth
-                                            values={values?.startingValue}
-                                        />
-                                    </Grid> */}
-                                    
-                                    {/* <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type={'text'}
-                                            label='چه زمانی به 100% میرسد؟ '
-                                            name='whenCompletedValue'
-                                            fullWidth
-                                            values={values?.whenCompletedValue}
-                                        />
-                                    </Grid> */}
-                                    <Grid item xs={12} >
-                                        <Box px={2} my={3} >
-                                            <Typography variant='body1'  >
-                                                تنظیمات پیشرفته ( اختیاری)
-                                            </Typography>
-                                        </Box>
-                                    </Grid>
-                                    <Grid item xs={12} md={3}  >
-                                   <FormikControl 
-                                   control={'radio'}
-                                   mainLabel={'قابلیت نمایش'}
-                                   options={[{id:'1',label:'برای همه'},{id:'2',label:'برای اشخاص خاص'}]}
-                                     />
-                                    </Grid>
+                            <Grid item xs={12} md={3}  >
 
-                                    <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='select'
-                                            options={[{ key: '1', value: 'یک' }, { key: '2', value: 'دو' }]}
-                                            label='اشخاص یا تیم ها'
-                                            name='teamsOrPersonsId'
-                                            fullWidth
-                                            values={values?.teamsOrPersonsId}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={12} md={6}  >
-                                   <FormikControl 
-                                   control={'radio'}
-                                   mainLabel={'نحوه محاسبه پیشرفت:'}
-                                   options={[{id:'1',label:'براساس تحقق نتایج کلیدی'},{id:'2',label:'براساسOKR های همسو شده'}]}
-                                     />
-                                    </Grid>
-
-                                    <Grid item xs={12} md={4}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type='text'
-                                            label='وزن'
-                                            name='weight'
-                                            fullWidth
-                                            values={values?.weight}
-                                        />
-
-                                    </Grid>
-                                    <Grid item xs={12} md={8}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type='text'
-                                            label='دلیل اهمیت'
-                                            name='TheReasonImportant'
-                                            fullWidth
-                                            values={values?.TheReasonImportant}
-                                        />
-
-                                    </Grid>
-                                    <Grid item xs={12} md={12}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type='text'
-                                            label='دلیل اهمیت'
-                                            name='descriptions'
-                                            fullWidth
-                                            values={values?.descriptions}
-                                        />
-
-                                    </Grid>
-                                
+                            <Box padding={'8px'} >
+                                <FormControl fullWidth size='small'  >
+                                <InputLabel id="demo-simple-select-label">تیم</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-selectd"
+                                    value={values?.definitionLevelId || ''}
+                                    // renderValue={(val) => val.key}
+                                    label="تیم"
+                                    onChange={(e: any,other:any) => {
+                                        let{props}=other;
+                                        let{children:keyName}=props;
+                                        setDefinitionLevel(keyName)
+                                        let {target}=e
+                                        let{value}=target;
+                                        console.log(keyName)
+                                        setFieldValue('definitionLevelId',value)
+                                    //   const data = event.target.value;
+                                    //   setLocale(data as MUILocaleData);
+                                    }}
 
 
-                                    {/* <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type={'text'}
-                                            label='وزن'
-                                            name='weight'
-                                            fullWidth
-                                            values={values?.weight}
-                                        />
-                                    </Grid> */}
+                                >
+                                 {
+                                    teamOPloading && <Box  width={'100%'} textAlign={'center'}  ><DyLoadingCircular /></Box>
+                                 }
 
-                                    
-                                    {/* <Grid item xs={12} md={3}  >
-                                        <FormikControl
-                                            control='select'
-                                            options={[{ key: '1', value: 'یک' }, { key: '2', value: 'دو' }]}
-                                            label='همسویی افقی'
-                                            name='horizontalAlignment'
-                                            fullWidth
-                                            values={values?.horizontalAlignment}
-                                        />
-                                    </Grid> */}
+                                    { teamsOptions && teamsOptions.map((item:any) => {
+                                        let{key,value}=item
+                                    return (
+                                      
+                                        <MenuItem key={key} value={value}>
+                                        {key}
+                                        </MenuItem>
+                                    );
+                                    })}
+                                </Select>
+                                </FormControl>
+                            </Box>
+                              
+                            </Grid>
 
-                                    {/* <Grid item xs={12} md={3}>
-                                    <FormikControl
-                                        control="date"
-                                        label="حداکثر تاریخ انجام"
-                                        name="maximumComplationDate"
-                                        value={values.maximumComplationDate}
+                            {
+                            definitionLevel!=='شرکت' && definitionLevel!==null && 
+
+                        <Grid item xs={12} md={6} >
+                        <MultiSelect
+                          options={HorzinalAlignData || []}
+                          isLoading={HorzDataLoading}
+                          onChangee={setFieldValue}
+                          propName='keyResultParentIds'
+                          label={'همسویی عمودی'}
+                        />
+  
+                      </Grid>
+                     
+                          }
+
+                            <Grid item xs={12} md={3}  >
+                                <FormikControl
+                                    control='select'
+                                    options={personsOptionds || []}
+                                    label='مسئول هدف'
+                                    name='responsibleId'
+                                    fullWidth
+                                    values={values?.responsibleId || ''}
+                                />
+                            </Grid>
+
+
+                         
+
+      
+
+                           
+
+
+
+
+                   <Grid item xs={12}  >
+                   <AccordionLyt 
+                      collapse={setShowAdvanceOptions}
+                      title={' تنظیمات پیشرفته ( اختیاری)'}
+                      expanded={showAdvanceOptions}  >
+                     <Grid container  >
+                        
+                         <Grid item xs={12} md={3}  >
+                           <FormikControl 
+                           control={'radio'}
+                           mainLabel={'قابلیت نمایش'}
+                           value={values?.isPublic}
+                           setFieldValue={setFieldValue}
+                           propName={'isPublic'}
+                           options={[{label:'برای همه',value:'برای همه'},{label:'برای اشخاص خاص',value:'برای اشخاص خاص'}]}
+                             />
+                            </Grid>
+
+
+                            <Grid item xs={12} md={6} >
+                        <MultiSelect
+                          options={teamsOptions?.map((item:any)=>{
+                          return{year:item.value,title:item.key}
+                          }) || []}
+                          isLoading={HorzDataLoading}
+                          onChangee={setFieldValue}
+                          propName='TeamIds'
+                          disabled={values?.isPublic==='برای همه' }
+                          label={'انتخاب تیم ها'}
+                          
+                          
+                        />
+  
+                      </Grid>
+
+                    
+
+
+                            <Grid item xs={12} md={12}  >
+                                <FormikControl 
+                                setFieldValue={setFieldValue}
+                                control={'radio'}
+                                propName={'CalculateProgressType'}
+                                mainLabel={'نحوه محاسبه پیشرفت:'}
+                                options={[{label:'بر اساس okr های همسو',value:'ForSpecialPeople'},{label:'بر اساس تحقق نتایج کلیدی',value:'BasedOnKR'}]}
+                             />
+                            </Grid>
+                     </Grid>
+
+                     <Grid container >
+                       <Grid item xs={12} md={4}  >
+                                <FormikControl
+                                    control='textField'
+                                    type='text'
+                                    label='وزن'
+                                    name='weight'
+                                    fullWidth
+                                    values={values?.weight}
+                                />
+                            </Grid>
+
+                              <Grid item xs={12} md={8}  >
+                                <FormikControl
+                                    control='textField'
+                                    type='text'
+                                    label='دلیل اهمیت'
+                                    name='answerRequest'
+                                    fullWidth
+                                    values={values?.answerRequest}
+                                />
+                                {/* TheReasonImportant */}
+
+                            </Grid>
+
+
+                               
+                            <Grid item xs={12} md={12}  >
+                                <FormikControl
+                                    control='textField'
+                                    type='text'
+                                    label='توضیحات'
+                                    name='description'
+                                    fullWidth
+                                    values={values?.description}
+                                />
+
+                            </Grid>
+
+
+
+                     </Grid>
+
+
+
+
+                        
+
+                          
+
+                       
+
+
+
+
+                        </AccordionLyt>
+                   </Grid>
+
+
+
+
+                       
+                          
+
+                       
+
+                      
+
+                        
+             
+                        
+
+
+                     
+
+
+
+                        
+
+
+
+
+                            <Grid item xs={12} mt={1}  >
+                      <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
+                        <Box >
+                          <DySplitButton
+                                    options={submitOptions || [] }
+                                    onclick={setFieldValue}
+                                    disbled={!dirty || !isValid}
+                                    // name={'oKRStateId'}
                                     />
-                                    </Grid> */}
-                                    {/* */}
+                        </Box>
 
-                                    {/* <Grid item xs={12} md={3}>
-                                    <FormikControl
-                                        control="date"
-                                        label="تاریخ شروع نتایج کلیدی"
-                                        name="startDateOfKeyResults"
-                                        value={values.startDateOfKeyResults}
-                                    />
-                                    </Grid> */}
+                        <Box>
+                          <DyButton
+                            caption={'انصراف'}
+                            disbled={false}
+                            variant={'outlined'}
+                            onClick={onSuccesss}
+                          />
+                        </Box>
 
-                                    {/* <Grid item xs={12} md={12}  >
-                                        <FormikControl
-                                            control='textField'
-                                            type={'text'}
-                                            label='توضیحات'
-                                            name='description'
-                                            fullWidth
-                                            values={values?.description}
-                                        />
-                                    </Grid> */}
-
-
-
-
-                                    <Grid item xs={12}  >
-                                        <Box width={'100%'}  >
-                                            <DyButton
-                                                type={'submit'}
-                                                variant={'contained'}
-                                                bgColor={'info'}
-                                                caption={'ذخیره'}
-                                                onClick={() => { }}
-                                            />
-                                        </Box>
-                                    </Grid>
-                                </Grid>
+                      </Box>
+                    </Grid>
 
 
 
@@ -281,11 +388,40 @@ const CreateObjective = () => {
 
 
 
-                            </Form>
-                    }
 
-                </Formik>
-            </Box>
+                        </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </Form>
+            }
+
+        </Formik>
+    </Box>:successAddObjective===true?
+    <Box width={'100%'} py={6} textAlign={'center'}  >
+     <Typography variant='body1' fontWeight={700} color={successAddObjective?'green':'red'}   >{addObectiveMessage}</Typography>
+     <Button variant='outlined' color='info' sx={{my:2}}  onClick={()=>{
+        onSuccesss()
+     }}  >
+      تایید
+     </Button>
+    </Box>
+    :
+    <Box width={'100%'} py={6} textAlign={'center'}>
+     <Typography variant='body1' fontWeight={700} color={successAddObjective===false?'green':'red'}>خطایی رخ داده</Typography>
+    </Box>
+    }
             </>
   )
 }

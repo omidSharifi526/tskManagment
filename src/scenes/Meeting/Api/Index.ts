@@ -7,7 +7,7 @@ import axiosInstance from "../../../Axios/Axios";
 const getAllMeetingByIds=async({queryKey:info}:any)=>{
     // console.log(info);
     let ids=info[1];
-   return await axiosInstance.get(`Meeting/GetAllMeetingsByTenantId?tenantId=${ids.tenantId}&periodId=${ids.priodId}`)
+   return await axiosInstance.get(`Meeting/GetAllMeetingsByTenantId?tenantId=${ids.tenantId}&periodId=${ids.priodId}&phoneNumber=${ids.userPhoneNumber}`)
 }
 
 
@@ -86,6 +86,15 @@ const addMeeting=async(meetData:any)=>{
 return await axiosInstance.post(`/Meeting/AddMeeting`,meetData)
 }
 
+// https://localhost:7170/api/Download/ExportMeetingDetails?meetingId=b7853e3c-f81b-461b-a360-197150b2a086
+
+const exportMeetingDetails=async()=>{
+return await axiosInstance.get(`/Download/ExportMeetingDetails?meetingId=76d801ee-eedc-4019-a36d-3bb3780ee3e8`)
+}
+
+// /Download/ExportMeetingDetails?meetingId=76d801ee-eedc-4019-a36d-3bb3780ee3e8
+
+
 
 export{
     getAllMeetingByIds,
@@ -98,5 +107,6 @@ export{
     getWebObjectiveDetailsCheckinMeetingByTeamId,
     getAllTeamsForSelByTenantId,
     getAllMeetingsTypeByTenantId,
-    addMeeting
+    addMeeting,
+    exportMeetingDetails
 }

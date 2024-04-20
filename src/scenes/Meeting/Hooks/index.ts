@@ -9,7 +9,8 @@ import {
     getWebCheckinMeetingDetailsByMeetingId,
     getWebObjectiveDetailsCheckinMeetingByTeamId,
     getAllTeamsForSelByTenantId,
-    getAllMeetingsTypeByTenantId, addMeeting
+    getAllMeetingsTypeByTenantId, addMeeting,
+    exportMeetingDetails
 
 } from '../Api/Index';
 import { setMeetingsListR, setObjectivieR, setKeyResultsR, setLoadingR } from '../MeetingsSlice/MeetingsSlice';
@@ -20,25 +21,17 @@ import { setTeamsDataR } from '../MeetingsSlice/MeetingsSlice'
 
 const useGetAllMeetings = (meetIds: any | null) => {
     const dispatch = useDispatch();
-    const changeTenantMode = useSelector((state: any) => state.meetings.changeTenantMode);
-    // console.log(meetIds)
     return useQuery(['getAllMeetingByIds', meetIds], getAllMeetingByIds, {
-        staleTime: 0,
-        // cacheTime:Infinity,
+        // staleTime: 0,
+        cacheTime:Infinity,
         enabled: !!meetIds,
         refetchOnWindowFocus: false,
-        onSuccess: (data) => {
-
-
-
-        }
-        ,
         onError: (err) => {
             console.log(err)
         },
         select: (data: any) => {
             let rawData = data?.data.data;
-            console.log(rawData)
+            // console.log(rawData)
             dispatch(setMeetingsListR(rawData))
             return rawData
         }
@@ -284,36 +277,43 @@ const useGetAllMeetingsTypeByTenantId = (tenantId: any) => {
 
 const useAddMeeting = (addMeetingSuccess: any) => {
     const queryClient = useQueryClient();
-    return useMutation(addMeeting, {
-        onSuccess: () => {
-            addMeetingSuccess()
+    // return useMutation(addMeeting, {
+    //     onSuccess: (data:any) => {
+    //         addMeetingSuccess()
+    //         queryClient.invalidateQueries('getAllMeetingByIds')
+    //         console.log(data);
+    //         return data
+           
+    //     },
+    //     onError: (err: any) => {
+    //         console.log(err)
+    //     }
+    // })
+    return useMutation({
+        mutationFn: (data:any) =>
+            addMeeting(data),
+        onSuccess: (data) => {
             queryClient.invalidateQueries('getAllMeetingByIds')
+          console.log(data)
         },
-        onError: (err: any) => {
-            console.log(err)
-        }
-    })
+      });
 }
 
-// const useAddCustomer = (onSuccessDon,failSend,err) => {
-//     const navigate=useNavigate();
-//     const queryClient=useQueryClient();
-//     const dispatch=useDispatch();
-//     return useMutation(addCustomer,{
-//       onSuccess:()=>{
-//       queryClient.invalidateQueries('getAllCustomers')
-//       onSuccessDon()
-//       }
-//       ,onError:({response})=>{
-//         let {data:{message}}=response;
-//         const myArray = message.split("|");
-//         dispatch(setErrorsR(myArray))
-//         failSend()
+ 
+// https://localhost:7170/api/Download/ExportMeetingDetails?meetingId=b7853e3c-f81b-461b-a360-197150b2a086
 
-//       }
-//     })
-//   };
 
+const useExportMeetingDetails=()=>{
+return useQuery(['ExportMeetingDetails'],exportMeetingDetails,{
+    onSuccess:(data:any)=>{
+    console.log(data)
+    }
+    ,
+    onError:(err:any)=>{
+   console.log(err)
+    }
+})
+}
 
 
 
@@ -329,5 +329,6 @@ export {
     useGetAllTeamsForSelByTenantId,
     useGetAllMeetingsTypeByTenantId,
     useAddMeeting,
-    useGetWebObjectiveDetailsCheckinMeetingByTeamId2
+    useGetWebObjectiveDetailsCheckinMeetingByTeamId2,
+    useExportMeetingDetails
 }

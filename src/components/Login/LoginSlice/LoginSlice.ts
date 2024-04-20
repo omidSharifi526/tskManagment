@@ -8,7 +8,10 @@ interface LoginState {
   rBaseUrl:string,
   userPhoneNumber:string
   userInfo: UserInfo,
-  loginStatus:any
+  loginStatus:any,
+  kRinitialState:any,
+  ObjctivieInitialState:any
+
 }
 type UserInfo = {
   userTenants: any[]; // This could be an array of a specific type, e.g., UserTenant[]
@@ -22,7 +25,32 @@ const initialState: LoginState = {
    loginStatus:null,
    userInfo:{
     userTenants:[]
-   }
+   },
+   ObjctivieInitialState:{
+    columns: {
+      columnVisibilityModel: {
+        weight: false,
+      }
+    }
+  }
+  ,
+
+   kRinitialState:{
+    columns: {
+      columnVisibilityModel: {
+        rowid: false,
+        okrStateName: false,
+        okR_KeyResultType: false,
+        pointingSystemType: false,
+        forceEndDate: false,
+        startDate: false,
+        threeTenthsValue: false,
+        oneValue: false
+      }
+    }
+  }
+
+  
 }
 
 const setUserPhoneNumber=(state:any,action:PayloadAction<any>)=>{
@@ -37,21 +65,58 @@ const setUserData=(state:LoginState,action:PayloadAction<any>):any=>{
   state.userInfo.userTenants=payload?.tenantInfoDtos;
 // console.log(payload)
 }
+const setinitialState=(state:any,action:PayloadAction<any>)=>{
+  let{payload}=action;
+  let{name,colVis}=payload
+  // console.log(name,colVis)
+  switch (name) {
+    case 'ObjctivieInitialState':
+      state.ObjctivieInitialState.columns.columnVisibilityModel=colVis
+      break;
+      case 'KRinitialState':
+        state.kRinitialState.columns.columnVisibilityModel=colVis
+      break;
+  
+    // default:
+    //   break;
+  }
+  
+
+  
+  // kRinitialState:{
+  //   columns: {
+  //     columnVisibilityModel: {
+  //       rowid: false,
+  //       okrStateName: false,
+  //       okR_KeyResultType: false,
+  //       pointingSystemType: false,
+  //       forceEndDate: false,
+  //       startDate: false,
+  //       threeTenthsValue: false,
+  //       oneValue: false
+  //     }
+  //   }
+  // }
+  }
 
 export const loginSlice = createSlice({
   name: 'Login',
   initialState,
   reducers: {
     setUserData,
-    setUserPhoneNumber
+    setUserPhoneNumber,
+    setinitialState
   
    
   },
 })
 
+
+
 export const {
   setUserPhoneNumber:setUserPhoneNumberR,
-  setUserData:setUserDataR
+  setUserData:setUserDataR,
+  setinitialState:setinitialStateR
  } = loginSlice.actions
 
 

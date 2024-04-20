@@ -34,7 +34,7 @@ const MeetingSlider = () => {
 
 const onSuccesss=():void=>{
   
-  navigate('/dashboard/meetings',{replace:true})
+  // navigate('/dashboard/meetings',{replace:true})
 }
 
 const onFailed=():void=>{
@@ -85,7 +85,7 @@ const onFailed=():void=>{
         name:name
       }
       dispatch(setPriodIdR(priodDetail))
-      setIds((prev:any)=>({tenantId:profileTenantId,priodId:id}));
+      // setIds((prev:any)=>({tenantId:profileTenantId,priodId:id}));
       dispatch(setLoadingR(true))
     }
   };
@@ -122,9 +122,7 @@ const onFailed=():void=>{
       onRealIndexChange={()=>{
         // console.log('hhhhi')
       }}
-      // onSlideChange={(swiper) => {
-      // console.log(swiper)
-      // }}
+
       onSwiper={(swiper) => {
         // console.log(swiper.realIndex)
       }}

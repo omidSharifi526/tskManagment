@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box,Button,Grid, Typography,} from '@mui/material';
+import {Box,Button,Grid, Typography, BottomNavigationAction,} from '@mui/material';
 import { useSelector } from 'react-redux';
 import {LoginState} from '../../components/Login/Types/index'
 import MeetingCard from './MeetingCard/MeetingCard';
@@ -10,19 +10,16 @@ import Loading from '../../components/Loading/Loading';
 import Skeleton from '@mui/material/Skeleton';
 import { useDispatch } from 'react-redux';
 import { setLoadingR } from './MeetingsSlice/MeetingsSlice';
-// import { useGetAllMeetings } from './Hooks';
 import { UseGetWebCheckinMeetingDetailsByMeetingId } from './Hooks';
 import{useNavigate} from 'react-router-dom';
 import LyBackdrop from '../../components/Layouts/BackDrop/BackDrop';
 import ModalLyt from '../../components/Layouts/ModalLyt/ModalLyt';
 import AddMeeting from './LComponents/Forms/AddMeeting/AddMeeting';
+import { Link } from 'react-router-dom';
 import DyButton from '../../components/GlobalComponents/DyButton/DyButton';
-
-// import 
-
-
-
 const Meeting :React.FC=function(){
+
+  const[showDownloadLink,setShowDownlodLink]=useState<boolean>(false)
   const[meetId,setMeetId]=useState<any>('');
   const [createTenantModal,setCreateTenantModal]=useState<boolean>(false)
   const navigate=useNavigate();
@@ -32,28 +29,47 @@ const Meeting :React.FC=function(){
   const getDetFailed=()=>{
 
   }
+  // userPhoneNumber(pin):"09121223615"
 
   const{data:MeetDetData,isLoading:meetLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,meetId);
-//  const{isLoading:meetLoadin,data:meetdata}=useGetAllMeetings(null)
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
-  const changeTenant=useSelector((state:any)=>state.meetings.profileTenantId);
-  // const{data:meetingData,isLoading,isError}=useGetAllMeetings({});
-  const[userTenants,setUserTenants]=useState<any[]>()
+  const priodId=useSelector((state:any)=>state.meetings.priodId);
+  const userPhoneNumber:string=useSelector((state:any)=>state.loign.userPhoneNumber);
+  const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMeetings({tenantId:profileTenantId,priodId:priodId,userPhoneNumber:userPhoneNumber})
   const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
-  const[meetingCardData,setMeetingCardData]=useState(meetingsDataa)
-  const[LoadingFlag,setLoadinFlag]=useState<boolean>(false);
-  // const{data:meetData,isLoading:meetLoad,refetch:getMeetingAgain}=useGetAllMeetings(profileTenantId)
-  
+  const meetingLoadState=useSelector((state:any)=>state?.meetings?.meetingsList);
+  const [existData,setExistData]=useState<any>(null);
+  const [accessForReport,setAccessForReport]=useState<boolean>(false);
+  const[meetingLenght,setMeetingLenght]=useState<Number>(0);
+  const[reloadMeetingData,setReloadMeetingData]=useState<boolean>(false)
+ 
 
-  const loading=useSelector((state:any)=>state.meetings.loading);
-  const dispatch=useDispatch();
 
   useEffect(() => {
   
-    setTimeout(() => {
-     dispatch(setLoadingR(false))
-    }, 5000);
-     },[loading,meetingsDataa]);
+    if (meetdata) {
+      let{accessibleForReport}=meetdata;
+      setAccessForReport(accessibleForReport)
+    }
+  // console.log(meetdata)
+     },[meetdata]);
+
+
+     useEffect(() => {
+       if (meetingLoadState!==null) {
+       let {meetingsList}=meetingLoadState;
+      setExistData(meetingsList)
+      setMeetingLenght(meetingsList.length)
+       console.log(meetingsList.length)
+
+       }
+     }, [meetingLoadState])
+
+
+     
+     
+
+
   
 
      const initialCreateMeeting=()=>{
@@ -61,29 +77,22 @@ const Meeting :React.FC=function(){
      }
 
 
- if (meetLoading) {
-   return <LyBackdrop visible={true}  >
-     <CircularProgress sx={{color:'white'}}  />
-   </LyBackdrop>
- }
+
+
+
+
+
+
 
  
 
 
   
 
-  // if (meetingsDataa?.length==0) {
-  // return (
-  //   <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
-  //   <Typography>
-  //     در این دوره جلسه ایی وجود ندارد
-  //   </Typography>
-  //   </Box>
-  // )
-  // }
+ 
 
 
-  if (loading) {
+  if (meetLoadin || existData===null || isFetched!==true) {
     return <Box display={'flex'} 
     alignItems={'center'} 
     justifyContent={'center'} 
@@ -103,7 +112,7 @@ const Meeting :React.FC=function(){
                     <Box width={'150px'}   >
                     <DyButton
                             caption={'ایجاد جلسه'}
-                            color={'#00387C'}
+                            color={'#00l387C'}
                             // onClick={loginHandler}
                             disbled={false}
                             variant={'contained'}
@@ -116,14 +125,19 @@ const Meeting :React.FC=function(){
       </Grid>
     
    {
- meetingsDataa && meetingsDataa.map((data:any,i:number):any=>{
+ existData && existData.map((data:any,i:number):any=>{
         return (<Grid item md={3} xs={12}  key={i}>
 
   
           <MeetingCard 
           setMeetId={setMeetId}
           info={data}
-           prog={i}   />
+          prog={i}  
+          accessForReport={accessForReport}
+          setShowDownlodLink={setShowDownlodLink}
+           
+           
+           />
           
           
           </Grid>)
@@ -145,11 +159,25 @@ const Meeting :React.FC=function(){
             setShowModal={setCreateTenantModal}
           >
             <AddMeeting  
+            meetingLenght={meetingLenght}
             hideModal={setCreateTenantModal}
+            // setReloadMeetingData={setReloadMeetingData}
             
             />
           </ModalLyt>
 
+        }
+
+        {
+          showDownloadLink && <ModalLyt 
+          showModal={Boolean(showDownloadLink)}
+          setShowModal={setShowDownlodLink}
+          >
+           
+          <Box width={'100%'} alignItems={'center'}   >
+          <Link target='_blank' to={`https://api.myokr.ir/api/Download/ExportMeetingDetails?meetingId=${meetId}`}>دریافت فایل</Link>
+          </Box>
+          </ModalLyt>
         }
 
         {/* {

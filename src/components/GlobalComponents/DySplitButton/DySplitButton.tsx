@@ -11,7 +11,7 @@ import MenuList from '@mui/material/MenuList';
 
 // const options = ['Create a merge commit', 'Squash and merge', 'Rebase and merge'];
 
-export default function DySplitButton({options,onclick}:any) {
+export default function DySplitButton({options,onclick,disbled}:any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -53,7 +53,7 @@ export default function DySplitButton({options,onclick}:any) {
         aria-label="Button group with a nested menu"
       >
         {/*   bgColor={'#00387C'} */}
-        <Button type='submit' sx={{px:5,bgcolor:'#00387C'}} onClick={handleClick}>{options[selectedIndex]?.label}</Button>
+        <Button disabled={disbled} type='submit' sx={{px:5,bgcolor:'#00387C'}} onClick={handleClick}>{options[selectedIndex]?.label}</Button>
         <Button
         sx={{bgcolor:'#00387C'}}
         // type='submit'
@@ -63,6 +63,7 @@ export default function DySplitButton({options,onclick}:any) {
           aria-label="select merge strategy"
           aria-haspopup="menu"
           onClick={handleToggle}
+          disabled={disbled}
         >
           <ArrowDropDownIcon />
         </Button>
@@ -90,7 +91,7 @@ export default function DySplitButton({options,onclick}:any) {
                 <MenuList id="split-button-menu" autoFocusItem>
                   {options.map((option:any, index:number) => (
                     <MenuItem
-                   
+                    //  sx={{px:5}}
                       key={index}
                     //   disabled={index === 2}
                       selected={index === selectedIndex}

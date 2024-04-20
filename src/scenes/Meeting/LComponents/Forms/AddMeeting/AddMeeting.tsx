@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import{FormControl,InputLabel,Select,MenuItem} from '@mui/material';
 import AddMeetingSuccess from '../../AddMeetingSuccess/AddMeetingSuccess';
 import {CircularProgress} from '@mui/material';
+import { addMeetingSchema } from '../../../MeetingCard/StaticData';
 // import 
 
 interface Values {
@@ -35,7 +36,7 @@ interface Values {
 
 
 
-const AddMeeting = ({hideModal}:any) => {
+const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const licenseType : any = useSelector((state: any) => state.meetings.meetingsList?.licenseType);
   console.log(licenseType)
@@ -57,18 +58,21 @@ const AddMeeting = ({hideModal}:any) => {
 
   }
   const [confrimForm, setConfrimForm] = useState<string>(licenseType);
+  const[addMeetingStatus,setAddMeetingStatus]=useState<any>(null)
+  const[addMeetingMessage,setAddMeetingMessage]=useState<any|null>(null)
   const addMeetingSuccess=()=>{
-    setConfrimForm('success')
+    setReloadMeetingData((prev:any):any=>!prev)
+    hideModal((prev:any):any=>!prev)
   }
-const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
+const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}=useAddMeeting(addMeetingSuccess)
   // const profileTenantId=useSelector((state)=>state.meetings.profileTenantId)
   const { data: allTeamsData, isLoading } = useGetAllTeamsForSelByTenantId(profileTenantId);
   
   const { data: allmeetingTypeData } = useGetAllMeetingsTypeByTenantId(profileTenantId)
   const repeatTypeData = [
-    { key: 'روزانه', value: 'Daily' },
+    // { key: 'روزانه', value: 'Daily' },
     { key: 'بدون تکرار', value: 'none' },
-    { key: 'هفتگی', value: 'OneOneWeekDay' },
+    { key: 'هفتگی', value: 'OnOneWeekDay' },
     { key: 'ماهانه', value: 'OneOneMonthDay' }]
 
   const initialCreateMeeting = () => {
@@ -81,11 +85,49 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
   setConfrimForm('loading')
  }
     
-  }, [AddLoading])
+  }, [AddLoading]);
+
+
+  useEffect(() => {
+    
+  console.log(addMeetingStatus)
+    
+  }, [addMeetingStatus])
+  
+
+
+
+  useEffect(() => {
+   if (isSuccess) {
+    let{data}:any=addMeetData;
+    let{isSuccess:isSuccesss}:any=data;
+    setAddMeetingStatus(isSuccesss);
+    let{metaData}:any=data;
+    let{message}=metaData;
+    setAddMeetingMessage(message)
+   }
+   
+  }, [addMeetData])
+  
+  
+
+ 
+
+  
   
 
   const initialCancel=()=>{
    hideModal(false)
+  }
+
+  const initialAddMeeting=(data:any)=>{
+    addMeeting(data)
+    // if(isSuccess){
+    //   console.log(addMeetData)
+    //   let{data}:any=addMeetData;
+    //   console.log(data)
+    //   setAddMeetingMessage(data) // data here!
+    //   }
   }
 
 
@@ -95,7 +137,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
       case 'Free':
         return (
           // <AddMeetingSuccess/>
-          <Box width={'100%'} display={'flex'} flexDirection={'column'}>
+          <Box width={'100%'} display={'flex'} flexDirection={'column'} >
             <Box p={2}  >
               <Typography fontWeight={800} variant='h6'   >
                 توجه در مورد تعداد جلسات:
@@ -106,18 +148,20 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                 شما اکانت رایگان در اختیار دارید و تنها یک جلسه در هر دوره زمانی میتوانید ایجاد کنید. با ورود به سایت میتوانید برای ارتقا اکانت خود اقدام نمایید.
               </Typography>
             </Box>
-            <Box py={3} mx={'auto'} columnGap={3} width={'40%'}  display={'flex'} justifyContent={'center'} textAlign={'center'}  >
+            <Box py={3} mx={'auto'} columnGap={3}   display={'flex'} justifyContent={'center'} textAlign={'center'}  >
         
-                 <DyButton
-                            caption={'جلسه جدید'}
-                            color={'#00387C'}
-                            onClick={initialCreateMeeting}
-                            disbled={false}
-                            variant={'contained'}
-                            bgColor={'#00387C'}
-                            type={'submit'}
-                            sx={{ p: 1 }}
-                          />
+             {
+                meetingLenght===0 && <DyButton
+                caption={'جلسه جدید'}
+                color={'#00387C'}
+                onClick={initialCreateMeeting}
+                disbled={false}
+                variant={'contained'}
+                bgColor={'#00387C'}
+                type={'submit'}
+                
+              />
+             }
 
                        
                             
@@ -145,8 +189,10 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
         return (
           <Formik enableReinitialize
             initialValues={meetingData}
+            validationSchema={addMeetingSchema}
             onSubmit={(data) => {
-              addMeeting(data)
+              
+              initialAddMeeting(data)
               console.log(data)
             }}
 
@@ -166,11 +212,9 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                     </Grid> */}
 
 
-                    <Grid item xs={12} md={4}   position={'relative'}>
+                    {/* <Grid item xs={12} md={4}   position={'relative'}>
                       <Box display={'flex'}  >
-                      {/* {
-                          !values.meetingTypeId ? '*' : ''
-                      } */}
+            
                         <FormControl fullWidth sx={{ padding: '8px' }} >
                           <InputLabel id="meetingTypeId">نوع جلسه</InputLabel>
                           <Select
@@ -195,12 +239,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                               // setFieldTouched('klischeThicknessId', true, false); // Set the field as touched
                             }}
                           >
-                            {/* {
-                              allmeetingTypeData?.map(()=>{
-                            return <></>
-                              })
-                            } */}
-
+                    
                             {
                               allmeetingTypeData && allmeetingTypeData?.map((klische:any, i:number) => {
                                 return <MenuItem className='font-num' sx={{ fontSize: '0.7rem' }} key={i} content={klische.key} id={i.toString()} value={klische.value} >{klische.key}</MenuItem>
@@ -217,7 +256,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                           )}
                         </Box>
   
-                  </Grid>
+                  </Grid> */}
 
 
 
@@ -231,11 +270,12 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                         isLoading={isLoading}
                         onChangee={setFieldValue}
                         propName='teamIds'
+                        label={'انتخاب سطح'}
                       />
 
                     </Grid>
 
-                    <Grid item xs={12} md={3} >
+                    <Grid item xs={12} md={4} >
                       <FormikControl
                         control='select'
                         type='select'
@@ -246,18 +286,18 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={4}>
                       {/* <DateFieldValue/> */}
                       <FormikControl
                         control="date"
                         label="تاریخ جلسه"
                         name="meetingDate"
-                        value={meetingData.meetingDate}
+                        value={meetingData.meetingDate || ''}
                       />
                     </Grid>
 
 
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={4}>
                       <FormikControl
                         control="timePicker"
                         name="fromTime"
@@ -265,7 +305,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                         value={meetingData.fromTime}
                       />
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={4}>
                       <FormikControl
                         control="timePicker"
                         name="toTime"
@@ -305,7 +345,7 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
                             caption={'ذخیره'}
                             color={'#00387C'}
                             onClick={()=>{}}
-                            disbled={false}
+                            disbled={!dirty || !isValid}
                             variant={'contained'}
                             bgColor={'#00387C'}
                             type={'submit'}
@@ -348,17 +388,19 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
 
         case 'loading':
           return <Box textAlign={'center'}  py={4}  >
-           <CircularProgress  color='info'  />
+           {
+            <Typography  variant='body1' fontWeight={700} color={addMeetingStatus?'green':'red'}  >{addMeetingMessage}</Typography>
+           }
           </Box>
       
       
       
-        default:
-        return <AddMeetingSuccess   
-        formName={'جلسه'}
-        resetButton={true}
-        resetForm={setConfrimForm}   />
-        break;
+        // default:
+        // return <AddMeetingSuccess   
+        // formName={'جلسه'}
+        // resetButton={true}
+        // resetForm={setConfrimForm}   />
+        // break;
     }
   }
 
@@ -377,6 +419,29 @@ const {mutate:addMeeting,isLoading:AddLoading}=useAddMeeting(addMeetingSuccess)
           }
 
         </Grid>
+        
+       {
+        addMeetingMessage &&  <Grid item xs={12 }  >
+        <Box width={'100%'} textAlign={'center'} py={1}  >
+        <Button variant='contained'  sx={{bgcolor:'#00387C'}}  onClick={()=>{
+           if (addMeetingStatus) {
+            hideModal((prev:any):any=>!prev)
+           } else {
+            setConfrimForm('Premium')
+            setAddMeetingMessage(null)
+           }
+         }}  >
+          {addMeetingStatus?'تایید':'تلاش مجدد'}
+         </Button>
+        </Box>
+         </Grid>
+       }
+
+        {/* {
+         addMeetingMessage?.isSuccess==false?<Box>
+          <Typography color={addMeetingMessage?.isSuccess===true?'blue':'red'} >{addMeetingMessage?.message}</Typography>
+        </Box>:''
+        } */}
 
 
 

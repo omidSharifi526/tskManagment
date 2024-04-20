@@ -13,7 +13,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
 export default function MultiSelect(props: any) {
-  let { propName } = props;
+  let { propName,disabled,label} = props;
   // console.log(propName,props.propName)
   const [selected, setSelected] = React.useState([])
   const [loading, setLoading] = React.useState<any>()
@@ -49,8 +49,10 @@ export default function MultiSelect(props: any) {
         options={top100Films}
         disableCloseOnSelect
         value={selected}
+        disabled={disabled}
 
         onChange={(e: any, value: any) => {
+          console.log(value)
           initialSelectItem(value)
           
         }}
@@ -71,7 +73,7 @@ export default function MultiSelect(props: any) {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="سطح برگزاری"
+            label={label}
             InputProps={{
               ...params.InputProps,
               endAdornment: (

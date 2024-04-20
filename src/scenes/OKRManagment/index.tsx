@@ -33,7 +33,7 @@ const Index :React.FC=function(){
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }}>
+          <Box >
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -55,7 +55,7 @@ const Index :React.FC=function(){
   }
 
   const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
-  const{data:perData,isLoading:perLoading,isError:periodError,isFetched}=useGetPriodById(tenantId,onSuccesss,onFailed);
+  const{data:perData,isLoading:perLoading,isError:periodError,isFetched}:any=useGetPriodById(tenantId,onSuccesss,onFailed);
   const[periodId,setPeriodId]=useState<string|null>(null);
   const[activeIndex,setActiveIndex]=useState<number>(0);
 
@@ -73,10 +73,17 @@ const Index :React.FC=function(){
   }
   }, [isFetched]);
 
-
   useEffect(() => {
-console.log(periodId)
-  }, [periodId]);
+    
+  console.log(perData)
+   
+  }, [perData])
+  
+
+
+//   useEffect(() => {
+// console.log(periodId)
+//   }, [periodId]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -105,13 +112,20 @@ console.log(periodId)
    
     </Tabs>
   </Box>
+
+  
   <CustomTabPanel value={value} index={0}>
     <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
-     <AllOkRs/>
+     <AllOkRs 
+     periodId={periodId}  
+     periodsData={perData}
+     />
       
 
     </Suspense>
   </CustomTabPanel>
+
+
   <CustomTabPanel value={value} index={1}>
   <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
   <PersonalOkRs/>

@@ -19,7 +19,7 @@
     currentState:string,
     description:string,
     closedKeyResult:Boolean,
-    score:string
+    
   }
 
   export interface SelectOptionFace{

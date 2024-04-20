@@ -7,7 +7,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { useGetTeamsByTenantId, UseGetWebCheckinMeetingDetailsByMeetingId } from '../Hooks/index';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import * as moment from 'jalali-moment';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -16,42 +16,59 @@ import { useDispatch } from 'react-redux';
 import { setMeetingIdR } from '../MeetingsSlice/MeetingsSlice';
 import { memo } from 'react'
 import {setInitialTreeViewR} from '../../Meeting/MeetingsSlice/MeetingsSlice'
+import {IconButton} from '@mui/material';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+// import {ReactComponent as Exeloo} from '../MeetingCard/StaticData/Svg/exeloo.svg';
+import Exeloo from '../MeetingCard/StaticData/Svg/exeloo.svg';
+import { useExportMeetingDetails } from '../Hooks/index';
 
-const MeetingCard = memo((props: any) => {
+// setMeetId={setMeetId}
+// info={data}
+// prog={i}  
+// accessForReport={accessForReport}
+
+
+
+const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: any) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const[meetingId,setMeetingId]=useState<string>('')
   const getDetSuccess = () => {
     navigate('/companyTeams', { replace: true })
   }
   const getDetFailed = () => {
 
   }
-  const [tenantId, setTenantId] = useState<any>('')
+ 
+  useEffect(() => {
+    
+  console.log(meetingId)
+   
+  }, [meetingId])
+  
 
   // const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,tenantId);
-  let { info } = props;
+  
   const LoginMeeting = () => {
     dispatch(setInitialTreeViewR())
     console.log(info)
     let { meetingDate, id } = info;
     //  console.log(meetingDate)
     //  setTenantId(id); 
-    props.setMeetId(id)
+    setMeetId(id)
     console.log(id)
     let meetDetail = {
       id: id,
       meetingDate: meetingDate
     }
     dispatch(setMeetingIdR(meetDetail))
-    // console.log(info)
+  
   }
 
+ 
 
-  //  if (isLoading) {
-  //    return <LyBackdrop visible={true}  >
-  //      <CircularProgress sx={{color:'white'}}  />
-  //    </LyBackdrop>
-  //  }
+
+
 
   return (
     <Card sx={{ width: '100%', boxShadow: 6, borderRadius: 5 }}>
@@ -78,11 +95,11 @@ const MeetingCard = memo((props: any) => {
             </Box>
           </Box>
 
-          <Box width={'80px'} display={'flex'} alignItems={'center'} justifyContent={'center'} >
+          <Box width={'100px'} display={'flex'} alignItems={'center'} justifyContent={'center'} >
             <Typography
               fontWeight={500}
-              px={1}
-              py={2}
+              variant='caption'
+              py={1}
               textAlign={'center'}
               width={'100%'}
               color={'info'}
@@ -94,43 +111,28 @@ const MeetingCard = memo((props: any) => {
               }
 
             </Typography>
+
+            
           </Box>
 
         </Box>
 
 
 
-        <Box  >
-          {/* <Typography sx={{mb:1}} variant="body2" color="text.secondary">
-        کد دعوت:{
-          info.invitationCode
-        }
-      </Typography> */}
-          <Typography variant="button" color="gray" py={info?.name.length > 50 ? 0 : 1}>
+        <Box>
+          <Typography variant="button" color="gray">
             {
               info.level
             }
 
           </Typography>
         </Box>
-
-        {/* 
-      <Box width={'100%'}  display={'flex'} alignItems={'center'} justifyContent={'space-between'} py={2} px={2}>
-       <ProgressMeeting prog={props.prog}/>
-       <Button variant='text' color='secondary' sx={{mr:-2}}>
-       {
-          info.type==2?'درخواست تکرار':'ورود به جلسه'
-       }
-       </Button>
-       {
-      // moment.default(info.createDate).locale('fa').format('YYYY/M/D')
-       }
-      </Box> */}
         <Box
           display={'flex'}
           justifyContent={'space-between'}
           columnGap={1}
-          p={info?.name.length150 ? 0 : 1}
+          // p={info?.name.length150 ? 0 : 1}
+          py={1}
         >
           <Typography>
             درتاریخ
@@ -142,7 +144,7 @@ const MeetingCard = memo((props: any) => {
             از {info?.fromTime} تا {info?.toTime}
           </Typography>
         </Box>
-        <Box px={1} py={2} minHeight={'90px'}  >
+        <Box px={1}    >
           {
             info?.definitionLevel.length > 120 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={info?.definitionLevel}>
               <Typography sx={{ fontSize: '12px !important', color: 'gray',cursor:'pointer',textAlign:'left' }}   >{info?.definitionLevel.slice(0, 120)}</Typography>
@@ -154,6 +156,29 @@ const MeetingCard = memo((props: any) => {
             </Typography>
           }
 
+        </Box>
+
+        <Box>
+            {
+              accessForReport && <Box display={'flex'} alignItems={'center'}  flexDirection={'row-reverse'} px={1}  >
+                <IconButton color='info'  onClick={()=>{
+                  let{id}=info;
+                 setMeetingId(id)
+                }}   >
+                  <Box >
+                  <Link target='_blank' to={`https://api.myokr.ir/api/Download/ExportMeetingDetails?meetingId=${meetingId}`}>
+                  <img
+                    src={Exeloo}
+                    style={{ height: 40, width: 43 }}
+                    alt="exelLogo"
+                  />
+                  </Link>
+             
+                  </Box>
+                
+                </IconButton>
+                </Box>
+            }
         </Box>
 
 
@@ -178,6 +203,6 @@ const MeetingCard = memo((props: any) => {
 
     </Card>
   );
-});
+}
 
 export default MeetingCard;

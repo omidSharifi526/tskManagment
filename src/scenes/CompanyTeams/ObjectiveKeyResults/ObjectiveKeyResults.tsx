@@ -26,15 +26,18 @@ import DyLoadingCircular from '../../../components/GlobalComponents/DyLoadingCir
 import {CircularProgress} from '@mui/material';
 
 import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
-import { useGetWebObjectiveDetailsCheckinMeetingByTeamId } from '../../Meeting/Hooks/index';
+
 const ObjectiveKeyResults: React.FC = () => {
   const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
   const nodeId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
   const companyNode:any=useSelector((state:any)=>state.meetings.companyList);
-
+  const KRinitialStatee=useSelector((state:any)=>state.loign.kRinitialState);
+  const ObjctivieInitialState=useSelector((state:any)=>state.loign.ObjctivieInitialState);
+  // ObjctivieInitialState
   // const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
+  // console.log(KRinitialStatee)
 
   const objectivies = useSelector((state: any) => state.meetings.objectivie);
   const objUpdated = useSelector((state: any) => state.meetings.objUpdated);
@@ -64,19 +67,23 @@ const ObjectiveKeyResults: React.FC = () => {
 
   useEffect(() => {
     
-if (SuccessState) {
-  callAgain()
+if (getObjectiveAgainFetched) {
+  setSuccessState(false)
 }
 
 
 
-  }, [SuccessState])
+
+
+  }, [getObjectiveAgainFetched])
 
   useEffect(() => {
     
-  
+    if (SuccessState) {
+      callAgain()
+    }
    
-  }, [getObjectiveAgainFetched])
+  }, [SuccessState])
   
 
 
@@ -915,13 +922,13 @@ if (SuccessState) {
     }
   }
   // ObjInitial
-  let ObjctivieInitialState = {
-    columns: {
-      columnVisibilityModel: {
-        weight: false,
-      }
-    }
-  }
+  // let ObjctivieInitialState = {
+  //   columns: {
+  //     columnVisibilityModel: {
+  //       weight: false,
+  //     }
+  //   }
+  // }
 
 
 
@@ -988,7 +995,7 @@ if (SuccessState) {
             hideFooter={true}
             setSelectionModel={setKrSelectionModel}
             selectionModel={krSelectionModel}
-            initState={KRinitialState}
+            initState={KRinitialStatee}
             additionalToolbar={true}
             setShowHistory={setHistoryModal}
             setSpecialId={setKrId}
@@ -996,6 +1003,7 @@ if (SuccessState) {
             setShowAddEvalModal={setShowAddEvalModal}
             initialMount={true}
             setPointSys={setPointingSystem}
+            drName={'KRinitialState'}
             // setKresultId={}
           />
         </Grid>
@@ -1098,6 +1106,8 @@ if (SuccessState) {
               initState={ObjctivieInitialState}
               initialMount={false}
               additionalToolbar={false}
+              drName={'ObjctivieInitialState'}
+
 
             />
 
@@ -1208,14 +1218,12 @@ if (SuccessState) {
         {
           SuccessState && 
           <LyBackdrop 
-          visible={getObjLoading} 
-          successFlag={getObjectiveAgainFetched}  >
-          
-           {
-            getObjLoading && <Box>
+          visible={SuccessState} 
+          // successFlag={getObjectiveAgainFetched} 
+           >
+             <Box>
               <CircularProgress color='info'/>
             </Box>
-           }
             </LyBackdrop>
         }
 

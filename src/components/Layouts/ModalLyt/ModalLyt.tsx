@@ -14,7 +14,8 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 1200,
-  bgcolor: 'background.paper',
+  // bgcolor: 'background.paper',
+  bgcolor:'#F9F9F9 !important',
  borderRadius:'10px',
   boxShadow: 24,
   overFlowY:'scroll',
@@ -22,7 +23,7 @@ const style = {
   
 };
 
-export default function ModalLyt({showModal,setShowModal,title,children,KRHLoading}:any) {
+export default function ModalLyt({showModal,setShowModal,title,children,KRHLoading,width}:any) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setShowModal(false);
@@ -50,7 +51,7 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
         <Fade in={showModal}>
       
           <Box sx={style}>
-          <Grid container  sx={{p:2,overflowY:'scroll !important',maxHeight:'90% !important'}}>
+          <Grid container  sx={{p:2,overflowY:'auto',maxHeight:'90% !important'}}>
            <Grid item xs={12} mb={1} >
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
            <Box>
