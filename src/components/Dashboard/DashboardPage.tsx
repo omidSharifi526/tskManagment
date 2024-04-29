@@ -15,7 +15,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import{Popover} from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+
 import TenantsList from './LComponents/TenantList/TenantList';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 
@@ -25,6 +26,7 @@ import {SideBarLogo,OKRtext} from './StaticsData/index';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {ReactComponent as BaseInfoIcon} from './StaticsData/Icons/BaseInfoIcon.svg';
 import {ReactComponent as MeetingIcon} from './StaticsData/Icons/MeetingIcon.svg';
+import {ReactComponent as CompanyManagmentIcon} from './StaticsData/Icons/companyManagmentIcon.svg';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
 import Collapse from '@mui/material/Collapse';
@@ -132,6 +134,19 @@ const itemsList = [
     icon: <DashboardIcon  />,
     to: "/dashboard/okrManagment" 
   }
+  ,
+  {
+    text: "مدیریت شرکت",
+    icon: <CompanyManagmentIcon  />,
+    to: "/dashboard/companyManagment" 
+  }
+  ,
+  {
+    text: "تنظیمات",
+    icon: <SettingsIcon fontSize='large'  />,
+    to: "/dashboard/settings" 
+  }
+  // SettingsIcon
 
 
   

@@ -17,7 +17,7 @@ type userInfoo={
     })
 
     const setInfo=(ifo:any)=>{
-     console.log(ifo)
+    //  console.log(ifo)
      let{value,name}=ifo;
     //  setUserInfo((prev)=>({...prev,[name]:value}))
     }
@@ -45,7 +45,7 @@ name='age' onChange={({target})=>{
      setInfo({value,name})
     }} />
     <button onClick={()=>{
-        console.log(userInfo)
+        // console.log(userInfo)
     }} >
 hi
     </button>

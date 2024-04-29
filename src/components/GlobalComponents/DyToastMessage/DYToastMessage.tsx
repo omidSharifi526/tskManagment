@@ -8,12 +8,12 @@ import { useEffect,useState } from 'react';
 
 
 export default function DYToastMessage({show,setShow,message}:any) {
-    console.log(show);
+    // console.log(show);
   const [open, setOpen] = React.useState(show);
 
   useEffect(() => {
     
-console.log(message)
+// console.log(message)
 
   
   }, [message])

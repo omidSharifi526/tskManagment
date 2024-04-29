@@ -141,7 +141,7 @@ if (treeStatus===null) {
 
 const setTeamInfo=(state:any,action:PayloadAction<any>)=>{
   let{payload}=action;
-  console.log(payload)
+  // console.log(payload)
 
 
 let teamInfoor={
@@ -265,7 +265,7 @@ const resetMeetingSlice=(state:any,action:PayloadAction<any>)=>{
 const setinitialState=(state:any,action:PayloadAction<any>)=>{
 let{payload}=action;
 console.log(payload)
-// state.
+
 }
 
 

@@ -75,7 +75,7 @@ const Index :React.FC=function(){
 
   useEffect(() => {
     
-  console.log(perData)
+  // console.log(perData)
    
   }, [perData])
   
@@ -128,7 +128,7 @@ const Index :React.FC=function(){
 
   <CustomTabPanel value={value} index={1}>
   <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
-  <PersonalOkRs/>
+  {/* <PersonalOkRs/> */}
 
     </Suspense>
   </CustomTabPanel>

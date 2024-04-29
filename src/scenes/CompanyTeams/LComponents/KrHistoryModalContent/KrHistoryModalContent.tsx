@@ -201,7 +201,7 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
             sortable: false,
             minWidth: 110,
             renderCell: ({ value }: any) => {
-              console.log(value)
+              // console.log(value)
             if (value) {
               return <Box>
               {
@@ -219,7 +219,7 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
       const[krDetailSps,setKrDetailSps]=useState<any>(null);
 
       useEffect(() => {
-        console.log(objective)
+        // console.log(objective)
         if (krDetail && objective ) {
           let{name}=krDetail;
           let{name:objectiveName}=objective;
@@ -319,7 +319,7 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
     <Box p={1}  >
     <DyDataGrid  
       data={data} 
-      columns={KRHColumns} 
+      columns={KRHColumns||[]} 
       hideFooter={false}
       selectionModel={''}
       initialOnRowClick={()=>{}}

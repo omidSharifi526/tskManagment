@@ -27,7 +27,7 @@ const useGetAllMeetings = (meetIds: any | null) => {
         enabled: !!meetIds,
         refetchOnWindowFocus: false,
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
         },
         select: (data: any) => {
             let rawData = data?.data.data;
@@ -63,7 +63,7 @@ const useGetTeamDetailsById = () => {
             //    console.log(data)
         },
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
         }
 
     })
@@ -84,7 +84,7 @@ const useGetAllObjectiveByTeamId = (nodeId: any) => {
             dispatch(setObjectivieR(rawData))
         },
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
         },
 
 
@@ -100,7 +100,7 @@ const useGetAllKeyResultByObjectiveId = (objectiveId: any) => {
         cacheTime: Infinity,
         refetchOnWindowFocus: false,
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
         },
         onSuccess: (data) => {
             //    console.log(data)
@@ -168,7 +168,7 @@ const useGetAllObjectiveByTeamId2=(nodeId: any)=>{
             dispatch(setObjectivieR(rawData))
         },
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
         },
 
 
@@ -186,7 +186,7 @@ const useGetWebObjectiveDetailsCheckinMeetingByTeamId = (getObjectiveSuccess: an
         enabled: !!id,
         onSuccess: (data) => {
             let rawData = data?.data?.data
-            console.log(rawData)
+            // console.log(rawData)
             dispatch(setObjectivieR(rawData))
             getObjectiveSuccess();
             // return rawData
@@ -194,7 +194,7 @@ const useGetWebObjectiveDetailsCheckinMeetingByTeamId = (getObjectiveSuccess: an
         }
         ,
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
 
             getObjectiveError()
 
@@ -213,7 +213,7 @@ const useGetWebObjectiveDetailsCheckinMeetingByTeamId2 = (getObjectiveSuccess: a
         enabled: false,
         onSuccess: (data) => {
             let rawData = data?.data?.data
-            console.log(rawData)
+            // console.log(rawData)
             dispatch(setObjectivieR(rawData))
             getObjectiveSuccess();
             // return rawData
@@ -221,7 +221,7 @@ const useGetWebObjectiveDetailsCheckinMeetingByTeamId2 = (getObjectiveSuccess: a
         }
         ,
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
 
             getObjectiveError()
 
@@ -240,7 +240,7 @@ const useGetAllTeamsForSelByTenantId = (tenantId: any) => {
 
         ,
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
         },
         select: (data) => {
             let rawData = data?.data?.data;
@@ -258,7 +258,7 @@ const useGetAllMeetingsTypeByTenantId = (tenantId: any) => {
         enabled: !!tenantId,
         refetchOnWindowFocus: false,
         onError: (err) => {
-            console.log(err)
+            // console.log(err)
         }
         ,
         onSuccess: (data) => {
@@ -294,7 +294,7 @@ const useAddMeeting = (addMeetingSuccess: any) => {
             addMeeting(data),
         onSuccess: (data) => {
             queryClient.invalidateQueries('getAllMeetingByIds')
-          console.log(data)
+        //   console.log(data)
         },
       });
 }
@@ -306,11 +306,11 @@ const useAddMeeting = (addMeetingSuccess: any) => {
 const useExportMeetingDetails=()=>{
 return useQuery(['ExportMeetingDetails'],exportMeetingDetails,{
     onSuccess:(data:any)=>{
-    console.log(data)
+    // console.log(data)
     }
     ,
     onError:(err:any)=>{
-   console.log(err)
+//    console.log(err)
     }
 })
 }

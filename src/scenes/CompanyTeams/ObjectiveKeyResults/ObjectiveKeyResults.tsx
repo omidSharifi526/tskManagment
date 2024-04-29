@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import CachedIcon from '@mui/icons-material/Cached';
 import { Grid, Box, Typography, IconButton, Tooltip, Button } from '@mui/material';
 import ModalLyt from '../../../components/Layouts/ModalLyt/ModalLyt';
 import KrDetails from '../LComponents/KrDetails/KrDetails';
@@ -35,17 +34,12 @@ const ObjectiveKeyResults: React.FC = () => {
   const companyNode:any=useSelector((state:any)=>state.meetings.companyList);
   const KRinitialStatee=useSelector((state:any)=>state.loign.kRinitialState);
   const ObjctivieInitialState=useSelector((state:any)=>state.loign.ObjctivieInitialState);
-  // ObjctivieInitialState
-  // const[nodeId,setNodeId]=useState<any>(companys[0]?.id);
-  // console.log(KRinitialStatee)
 
   const objectivies = useSelector((state: any) => state.meetings.objectivie);
   const objUpdated = useSelector((state: any) => state.meetings.objUpdated);
   const teamInfo = useSelector((state: any) => state.meetings.teamInfo);
   const [teameInfo, setTeameInfo] = useState(null);
-  const [teameInfoo, setTeameInfoo] = useState(teameInfo ? teameInfo : teamInfo)
-
-  // const {data:keyRData,isLoading:KeyRDataLoading}=useGetAllKeyResultByObjectiveId(objectiveId);
+  const [teameInfoo, setTeameInfoo] = useState(teameInfo ? teameInfo : teamInfo);
   const [keyR, setKeyR] = useState<any>([]);
   const [showModal, setShowModal] = useState(false);
   const [historyModal, setHistoryModal] = useState(false)
@@ -85,14 +79,6 @@ if (getObjectiveAgainFetched) {
    
   }, [SuccessState])
   
-
-
-
-  
-
-
-
-
   const [objcSelectionModel, setObjSelectionModel] = useState<string>('')
   const [krSelectionModel, setKrSelectionModel] = useState<string>('');
 
@@ -103,13 +89,12 @@ if (getObjectiveAgainFetched) {
     searchTerm: "",
   });
   const [krId, setKrId] = useState(null)
-  const { data: KrHistoryData, isLoading: KRHLoading, isError: KRHError, isFetched: KRHFetched } = useGetKeyResultMeetingHistory(krId, priodId, meetingId)
-  // console.log(KrHistoryData)
+  const { data: KrHistoryData, isLoading: KRHLoading, isError: KRHError, isFetched: KRHFetched } = useGetKeyResultMeetingHistory(krId, priodId, meetingId);
   useEffect(() => {
 
     setKeyR([])
     setObjectivee({})
-    console.log(objUpdated)
+  
   }, [])
 
 
@@ -119,28 +104,8 @@ if (getObjectiveAgainFetched) {
 
 
 
-  const initGetKRinfo = () => {
 
-    setShowModal(true)
-
-  }
-
-  const initialGetHistoryKR = (row: any): void => {
-    let { id } = row;
-    console.log(id)
-    //  let{id}=row;
-    setKrId(id);
-    setHistoryModal(true)
-  }
-
-  const initialAddEvaluation = (): void => {
-    console.log('runAddEval')
-    setShowAddEvalModal(!showAddEvalModal)
-  }
-
-
-
-  const objectiveColumns: any = useMemo(() =>
+  const objectiveColumns: any = 
     [
       {
         field: "rowid",
@@ -226,15 +191,7 @@ if (getObjectiveAgainFetched) {
         headerAlign: 'center',
         align: 'center',
         width: 80,
-        //  renderCell: ({ value }:any):any => {
-        //     return (
 
-        //          <Typography textAlign={'center'}  >
-        //           16
-        //          </Typography>
-
-        //     )
-        //   } 
 
       },
       {
@@ -291,9 +248,9 @@ if (getObjectiveAgainFetched) {
         }
 
       }
-    ], []);
+    ];
 
-  const keyResultColumn: any = useMemo(() => [
+  const keyResultColumn: any = [
     {
       field: "rowid",
       headerName: "ردیف",
@@ -730,11 +687,10 @@ if (getObjectiveAgainFetched) {
           </Typography>
         }
 
-        //  let postive=revenue.includes('-');
-        //  console.log(postive)
+    
 
       }
-      //  let score: string = par?.row?.score;
+    
     },
 
 
@@ -840,95 +796,14 @@ if (getObjectiveAgainFetched) {
       minWidth: 100,
       fontsize: '14px',
     },
-    // ,
-    // {
-    //   field: '-',
-    //   headerName: 'اطلاعات',
-    //   align: 'center',
-    //   headerAlign: 'center',
-    //   sortable: false,
-    //   width: 70,
-    //   renderCell: () => {
-    //     return <Box   >
-    //       <IconButton onClick={initGetKRinfo}  >
-    //         <InfoIcon />
-    //       </IconButton>
-    //     </Box>
-    //   }
-    // },
-    // {
-    //   field: '--',
-    //   headerName: 'تاریخچه',
-    //   align: 'center',
-    //   headerAlign: 'center',
-    //   sortable: false,
-    //   width: 70,
-    //   renderCell: (param: any) => {
 
-    //     let { row } = param;
-    //     // console.log(param)
-    //     return <Box   >
-    //       <IconButton onClick={() => {
-    //         //  console.log(row)
-    //         //  console.log(hi)
-    //         initialGetHistoryKR(row)
-    //       }}  >
-    //         <HistoryIcon />
-    //       </IconButton>
-    //     </Box>
-    //   }
-    // },
-    // {
-    //   field: '---',
-    //   headerName: 'ارزیابی',
-    //   align: 'center',
-    //   headerAlign: 'center',
-    //   sortable: false,
-    //   width: 70,
-    //   renderCell: (param: any) => {
-
-    //     let { row } = param;
-    //     // console.log(param)
-    //     return <Box   >
-    //       <IconButton onClick={() => {
-    //         let{id}=row;
-    //         setKresultId(id)
-    //         console.log(id)
-    //         //  console.log(row)
-    //         //  console.log(hi)
-    //       initialAddEvaluation()
-    //       }}  >
-    //       <EditNoteOutlinedIcon/>
-    //       </IconButton>
-    //     </Box>
-    //   }
-    // }
+  
 
 
-  ], []);
+  ]
 
-  let KRinitialState = {
-    columns: {
-      columnVisibilityModel: {
-        rowid: false,
-        okrStateName: false,
-        okR_KeyResultType: false,
-        pointingSystemType: false,
-        forceEndDate: false,
-        startDate: false,
-        threeTenthsValue: false,
-        oneValue: false
-      }
-    }
-  }
-  // ObjInitial
-  // let ObjctivieInitialState = {
-  //   columns: {
-  //     columnVisibilityModel: {
-  //       weight: false,
-  //     }
-  //   }
-  // }
+
+
 
 
 
@@ -936,7 +811,7 @@ if (getObjectiveAgainFetched) {
 
   useEffect(() => {
 
-    console.log(objectivee)
+   
     setKeysResultsList()
   }, [objectivee])
 
@@ -990,7 +865,7 @@ if (getObjectiveAgainFetched) {
         <Grid item xs={12}  >
           <DyDataGrid
             data={keyR || []}
-            columns={keyResultColumn}
+            columns={keyResultColumn || []}
             initialOnRowClick={setKrRowData}
             hideFooter={true}
             setSelectionModel={setKrSelectionModel}
@@ -1016,7 +891,7 @@ if (getObjectiveAgainFetched) {
 
 
   }
-  // CartSlider
+  
   return (
     <>
       <Grid container sx={{ bgcolor: '#F9F9F9' }} style={{ width: '100%' }} >
@@ -1098,7 +973,7 @@ if (getObjectiveAgainFetched) {
             <DyDataGrid
               initialOnRowClick={setObjectivee}
               data={objectivies}
-              columns={objectiveColumns}
+              columns={objectiveColumns||[]}
               hideFooter={true}
               //  objcSelectionModel,setObjSelectionModel
               setSelectionModel={setObjSelectionModel}

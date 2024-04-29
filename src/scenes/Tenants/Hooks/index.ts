@@ -9,7 +9,7 @@ const useGetAllTenantsInfo=()=>{
         cacheTime:Infinity,
         
         onError:(err)=>{
-        console.log( err)
+        // console.log( err)
         },
         onSuccess:(data)=>{
             let rawdata=data?.data?.data;

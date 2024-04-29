@@ -40,7 +40,7 @@ const[teams,setTeams]=useState<any|null>([]);
 useEffect(() => {
   if (companyNode) {
     let{id}=companyNode;
-    console.log(companyNode)
+    // console.log(companyNode)
     setNodeId(id);
     dispatch(setTeamInfoR(companyNode))
   }

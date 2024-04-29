@@ -6,7 +6,7 @@ const DyTabs = ({ tabs,tabIndex }:any) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event:any, newValue:any) => {
-    console.log(newValue)
+    // console.log(newValue)
     setValue(newValue);
   };
 

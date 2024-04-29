@@ -10,7 +10,7 @@ const AddMession = () => {
 
 
     const initialSubmitForm=(data:any)=>{
-    console.log(data)
+    // console.log(data)
     }
 
 

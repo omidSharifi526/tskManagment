@@ -57,7 +57,7 @@ type periodSliderProps = {
        // }}
        onSwiper={(swiper) => {
          // console.log(swiper.realIndex)
-         console.log(swiper)
+        //  console.log(swiper)
         //  setPriodId()
        }}
        onSlideChange={(swiper) => handleSlideChange(swiper)

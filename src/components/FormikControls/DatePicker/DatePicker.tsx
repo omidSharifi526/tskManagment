@@ -68,9 +68,9 @@ const DateTimePicker = (props:any) => {
              
               
               onChange={(newValue:any) => {
-                console.log(newValue)
+                // console.log(newValue)
                 var persianDate = moment(newValue).format('jYYYY/jM/jD');
-                console.log(persianDate)
+                // console.log(persianDate)
                 // console.log(newValue.toString())
                 setFieldValue(name,persianDate);
               }}

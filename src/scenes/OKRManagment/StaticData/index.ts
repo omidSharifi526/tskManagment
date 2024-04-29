@@ -5,24 +5,16 @@ import {AddKeyResultFace,
   addContractFace,
   addCompanyFace,
   resetPasswordFace,
-  addObjectiveFace
+  addObjectiveFace,
+  
+  
 } from '../Interfaces/Interfaces';
 import * as yup from 'yup';
-
-// import { addStaffFace } from '../Interfaces/Interfaces';
-
-
-
-
-
-
-
 
 
 const addKrValues:AddKeyResultFace={
 name:'',
 horizontalAlignments:[],
-onValue:'',
 keyResultType:'',
 forceEndDate:'',
 responsibleId:'',
@@ -34,6 +26,9 @@ description:'',
 valuesDetailCommandDtos:[],
 oKRStateId:''
 }
+
+
+
 
 // const addObjectiveValues:AddObjectiveFace={
 //     objectiveDescription:'',
@@ -47,12 +42,7 @@ oKRStateId:''
 //     weight:''
 // }
 
-const addStaffValues:addStaffFace={
-  fName:'',
-  lName:'',
-  phoneNumber:'',
-  position:''
-}
+
 
 
 const addTeamValues:addTeamFace={
@@ -110,20 +100,7 @@ const resetFormValues:resetPasswordFace={
   ]
 
 
-  // {"name":"تست",
-// "periodId":"d3fe4f1c-e2ce-470e-9e48-87ffb411a997",
-// "definitionLevelId":"ab6af938-af16-4d3d-8d6f-b7079a145c4a",
-// "oKRStateId":"b913a620-5078-4249-aa48-3269ded442a7",
-// "responsibleId":"e76209ac-35c8-4e13-a85a-ebe0340588cd",
-// "tenantId":"3f2d72cf-cdff-413c-abcd-d5459d97890c",
-// "isPublic":true,"answerRequest":"تست",
-// "description":"تست",
-// "CalculateProgressType":"BasedOnKR",
-// "createById":"73b54dda-95cf-404e-a641-5abdce6fb8e5",
-// "keyResultParentIds":[],
-// "TeamIds":[],
-// "weight":"100"
-// }
+
 
 const addObjectiveInitialValues:addObjectiveFace={
   name:'',
@@ -146,28 +123,29 @@ const addObjectiveInitialValues:addObjectiveFace={
 }
 
 const addObjectiveSchema = yup.object().shape({
-  name:yup.string().required(),
-  periodId:yup.string().required(),
+  name:yup.string().required(''),
+  periodId:yup.string().required(''),
   responsibleId:yup.string().required(''),
   definitionLevelId:yup.string().required(''),
 
 });
 
-
 // name:string,
-// periodId:string,
-// definitionLevelId:string,
-// oKRStateId:string,
 // responsibleId:string,
-// tenantId:string,
-// isPublic:boolean,
-// description:string,
-// CalculateProgressType:string,
-// // createById:string,
-// keyResultParentIds:string[],
-// TeamIds:string[],
-// weight:string,
-// answerRequest:string
+// pointingSystemType:string,
+// keyResultType:string,
+// startValue:string,
+
+const addKeyResultSchema=yup.object().shape({
+  name:yup.string().required(),
+  responsibleId:yup.string().required(''),
+  pointingSystemType:yup.string().required(''),
+  keyResultType:yup.string().required(''),
+  startValue:yup.string().required(''),
+
+})
+
+
 
 
 
@@ -176,12 +154,14 @@ export   {
     addObjectiveInitialValues,
     pointSystem,
     keyResultTypeOptions,
-    addStaffValues,
+    
     addTeamValues,
     addMissionValues,
     addContractValues,
     addCompanyValues,
     resetFormValues,
-    addObjectiveSchema
+    addObjectiveSchema,
+    addKeyResultSchema
+    
     
 }

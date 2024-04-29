@@ -33,11 +33,11 @@ export default function RadioButtonsGroup({mainLabel,options,setFieldValue,value
                     label={item.label}
                     onChange={({target}:any)=>{
                       let {name,value}=target;
-                      console.log(value)
+                      // console.log(value)
                       // let flag=Boolean(value);
                       // console.log(name,Boolean(value))
                       setFieldValue(propName,value)
-                     console.log(target)
+                    //  console.log(target)
                     }}
                      />
                 )

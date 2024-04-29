@@ -2,7 +2,7 @@ import React from 'react';
 import {Grid,Box,Typography} from '@mui/material'
 
 const KrDetails = ({data}:any) => {
-    console.log(data)
+    // console.log(data)
   return (
     <>
     <Grid container   >

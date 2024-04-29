@@ -20,8 +20,8 @@ const Home = () => {
 
 
   useEffect(() => {
-    console.log('auth is Change ... !')
-    console.log(auth,'ttttt')
+    // console.log('auth is Change ... !')
+    // console.log(auth,'ttttt')
   }, [auth])
   
 

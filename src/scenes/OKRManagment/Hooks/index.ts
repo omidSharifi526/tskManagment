@@ -7,7 +7,8 @@ import {GetAllActivePersonByTenantId,
     getAllObjectiveByPeriodId,
     AddObjective,
     getAllObjectiveDefinitionLevelByTenantId,
-    GetAllObjectiveOKRStateByTenantId
+    GetAllObjectiveOKRStateByTenantId,
+    
 
 } from '../Api/index';
 import { QueryClient } from 'react-query';
@@ -28,7 +29,7 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
    }
    ,
    onError:(err:any)=>{
-   console.log(err)
+//    console.log(err)
    },
    select:(data:any)=>{
    let rawData=data?.data?.data;
@@ -50,16 +51,16 @@ const useGetAllHorizontalAlignmentByTenantId=(horzIds:any)=>{
         cacheTime:Infinity,
         refetchOnWindowFocus:false,
             onSuccess:(data)=>{
-            console.log(data)
+            // console.log(data)
             }
             ,
             onError:(err)=>{
-            console.log(err)
+            // console.log(err)
             }
             ,
             select:(data:any)=>{
                 let rawData=data?.data?.data;
-                console.log(rawData)
+                // console.log(rawData)
                 let transFormed=rawData?.map((item:any)=>{
                     let{name,id}=item
                     return {year:id,title:name}
@@ -76,11 +77,11 @@ const useGetAllOKRStateByTenantId=(tenantId:string|null)=>{
      cacheTime:Infinity,
      refetchOnWindowFocus:false,
      onSuccess:(data:any)=>{
-      console.log(data)
+    //   console.log(data)
      }
      ,
      onError:(err:any)=>{
-     console.log(err)
+    //  console.log(err)
      },
      select:(data)=>{
    let rawData=data?.data?.data;
@@ -97,10 +98,10 @@ return useQuery(['GetAllScoreLevelsByTenantId',tenantId],GetAllScoreLevelsByTena
     refetchOnWindowFocus:false,
     cacheTime:Infinity,
     onSuccess:(data:any)=>{
-    console.log(data)
+    // console.log(data)
     },
     onError:(err:any)=>{
-     console.log(err)
+    //  console.log(err)
     }
     ,
     select:(data:any)=>{
@@ -120,26 +121,26 @@ return useQuery(['GetAllScoreLevelsByTenantId',tenantId],GetAllScoreLevelsByTena
 const useAddKeyResult=()=>{
     return useMutation(AddKeyResult,{
         onSuccess:(data:any)=>{
-        console.log(data)
+        // console.log(data)
         }
         ,
         onError:(err:any)=>{
-         console.log(err)
+        //  console.log(err)
         }
     })
 }
 
 const useGetAllObjectiveByPeriodId=(periodId:string | null,profileTenantId:string | null)=>{
-    console.log(periodId)
+    // console.log(periodId)
 return useQuery(['GetAllObjectiveByPeriodId',periodId,profileTenantId],getAllObjectiveByPeriodId,{
     enabled:!!periodId,
     cacheTime:Infinity,
     refetchOnWindowFocus:false,
     onSuccess:(data:any)=>{
-    console.log(data)
+    // console.log(data)
     }
     ,onError:(err)=>{
-    console.log(err)
+    // console.log(err)
     } ,
     select:(data)=>{
     let rawData=data?.data?.data;
@@ -169,7 +170,7 @@ const queryClient=useQueryClient()
     onSuccess: (data) => {
         
         queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
-      console.log(data)
+    //   console.log(data)
     },
   });
  }
@@ -193,16 +194,6 @@ const queryClient=useQueryClient()
    })
  }
 
-//   return useMutation({
-//     mutationFn: (data:any) =>
-//         addMeeting(data),
-//     onSuccess: (data) => {
-//         queryClient.invalidateQueries('getAllMeetingByIds')
-//       console.log(data)
-//     },
-//   });
-
-// GetAllObjectiveOKRStateByTenantId
 const useGetAllObjectiveOKRStateByTenantId=(tenantId:string|null)=>{
     return useQuery(['GetAllOKRStateByTenantId',tenantId],GetAllOKRStateByTenantId,{
         enabled:!!tenantId,
@@ -219,11 +210,13 @@ const useGetAllObjectiveOKRStateByTenantId=(tenantId:string|null)=>{
             }).filter((item:any)=>item.label!=="بسته شده")
             return transformed
       
-        // "بسته شده"
+        
         }
         
     })
 }
+
+
 
 
 export{
@@ -235,5 +228,6 @@ export{
     useGetAllObjectiveByPeriodId,
     useAddObjective,
     useGetAllObjectiveDefinitionLevelByTenantId,
-    useGetAllObjectiveOKRStateByTenantId
+    useGetAllObjectiveOKRStateByTenantId,
+    
 }

@@ -60,7 +60,7 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
     // navigate('/dashboard/meetings',{replace:true})
    },
    onError:(err)=>{
-   console.log(err)
+  //  console.log(err)
    },
    select:(data:any)=>{
     let rawData:any[]=data?.data.data;

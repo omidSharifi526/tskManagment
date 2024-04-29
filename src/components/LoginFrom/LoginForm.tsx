@@ -102,8 +102,8 @@ const LoginForm = ({ setContentState }: any) => {
   const { data: logdata, mutate: LoginReq, isLoading } = useLogin(loginSuccess, loginFailed)
 
   const userBody = {
-    phoneNumber: "09121223615",
-    password: "AriaBarbod",
+    phoneNumber: "",
+    password: "",
     smsCode: "",
     isOTP: false
   }
@@ -132,14 +132,15 @@ const LoginForm = ({ setContentState }: any) => {
 
   useEffect(() => {
     if (logdata) {
+      // console.log(logdata)
       let { data: { isSuccess, data, metaData } }: any = logdata;
       let { message }: any = metaData;
       let logStatus = { success: isSuccess };
-      console.log(message)
+      // console.log(message)
       setLoginMessage(message);
       // loginMessage,setLoginMessage
       setLoginStatusLocal(!loginStatus)
-      console.log(isSuccess, data)
+      // console.log(isSuccess, data)
     }
 
   }, [logdata])

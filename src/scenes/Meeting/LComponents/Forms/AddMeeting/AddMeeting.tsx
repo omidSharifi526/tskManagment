@@ -39,7 +39,7 @@ interface Values {
 const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const licenseType : any = useSelector((state: any) => state.meetings.meetingsList?.licenseType);
-  console.log(licenseType)
+  // console.log(licenseType)
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
 
   const meetingData: Values = {
@@ -90,7 +90,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
   useEffect(() => {
     
-  console.log(addMeetingStatus)
+  // console.log(addMeetingStatus)
     
   }, [addMeetingStatus])
   
@@ -193,7 +193,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
             onSubmit={(data) => {
               
               initialAddMeeting(data)
-              console.log(data)
+              // console.log(data)
             }}
 
 

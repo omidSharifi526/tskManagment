@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const useGetKeyResultMeetingHistory=(krId:string|null,prId:string|null,meetId:string|null)=>{
-    console.log(krId)
+    // console.log(krId)
 return useQuery(['GetKeyResultMeetingHistory',krId,prId,meetId],GetKeyResultMeetingHistory,{
     refetchOnWindowFocus:false,
     cacheTime:Infinity,

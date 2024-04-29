@@ -70,7 +70,7 @@ switch (index) {
 const straddKrSchema = yup.object().shape({
     newValue:yup.string().required(''),
     tensileScore:yup.string().required(''),
-    problems:yup.string().required(''),
+    // problems:yup.string().required(''),
     nextState:yup.string().required(''),
     currentState:yup.string().required(''),
  });
@@ -78,7 +78,7 @@ const straddKrSchema = yup.object().shape({
  const intaddKrSchema = yup.object().shape({
     newValue:yup.number().required(''),
     // tensileScore:yup.string().required(''),
-    problems:yup.string().required(''),
+    // problems:yup.string().required(''),
     nextState:yup.string().required(''),
     currentState:yup.string().required(''),
  });

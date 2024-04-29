@@ -11,7 +11,7 @@ const TeamsNavigations = ({ setTeameInfo }: any) => {
   const counter = useSelector((state: any) => state.meetings.counter);
   const teaminfo = useSelector((state: any) => state.meetings.companyList);
   const dispatch = useDispatch();
-  console.log(teaminfo)
+  // console.log(teaminfo)
   const [itemInfo, setItemInfo] = useState(null);
 
   const getObjectiveSuccess = () => {
@@ -38,9 +38,9 @@ const TeamsNavigations = ({ setTeameInfo }: any) => {
 
     if (teamList) {
       let ids = teamList;
-      console.log(ids);
+      // console.log(ids);
       let total = [...ids, { ...teaminfo }];
-      console.log(total)
+      // console.log(total)
       setAllIteams(total)
     }
 
@@ -49,7 +49,7 @@ const TeamsNavigations = ({ setTeameInfo }: any) => {
 
   useEffect(() => {
 
-    console.log(getObjectiveErrorFlag)
+    // console.log(getObjectiveErrorFlag)
   }, [getObjectiveErrorFlag])
 
   // console.log(teamList)

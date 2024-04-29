@@ -131,11 +131,16 @@ export default function DyDataGrid(
       }, []);
 
       // setinitialStateR
-const dispatch=useDispatch()
+const dispatch=useDispatch();
+
+
+
       const initialChangestate=(data:any)=>{
-     if (drName) {
-      let{columns}=data;
-let{columnVisibilityModel}=columns
+     if (drName && data) {
+      // console.log('existData')
+      let columnVisibilityModel=data?.columns?.columnVisibilityModel;
+      // let columnVisibilityModel=columns?.columnVisibilityModel
+      // console.log(columnVisibilityModel)
 
 
      
@@ -155,9 +160,7 @@ let{columnVisibilityModel}=columns
     initialChangestate(state)
    }}
    density="compact"
-  //  filterMode={true}
    initialState={initState}
-    // pageSizeOptions={[10]}
    slots={{ toolbar:CustomToolbar}}
 
    rowHeight={40}

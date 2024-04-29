@@ -42,7 +42,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
  
   useEffect(() => {
     
-  console.log(meetingId)
+  // console.log(meetingId)
    
   }, [meetingId])
   
@@ -51,12 +51,12 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
   
   const LoginMeeting = () => {
     dispatch(setInitialTreeViewR())
-    console.log(info)
+    // console.log(info)
     let { meetingDate, id } = info;
     //  console.log(meetingDate)
     //  setTenantId(id); 
     setMeetId(id)
-    console.log(id)
+    // console.log(id)
     let meetDetail = {
       id: id,
       meetingDate: meetingDate

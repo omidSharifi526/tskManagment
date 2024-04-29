@@ -86,7 +86,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
   }
 
   const initialSubmitForm: any = (data: any): any => {
-    console.log(data)
+    // console.log(data)
     addCheck(data)
  
   }

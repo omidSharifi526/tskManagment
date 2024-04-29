@@ -37,7 +37,7 @@ const customeStyle={
   }
 
   const initialValidation=()=>[
-    console.log(codeValuesState)
+    // console.log(codeValuesState)
   ]
   return (
     <Box

@@ -64,7 +64,7 @@ export default function TenantsList({ ButtonCaption, tenantList, setShowTenantIt
 
   const initialSelectTenant = (tenant: any) => {
     let { tenantId, tenantName } = tenant;
-    console.log(tenantId)
+    // console.log(tenantId)
     let ids = {
       tenantId: tenantId,
       priodId: 'rrr'
@@ -74,7 +74,7 @@ export default function TenantsList({ ButtonCaption, tenantList, setShowTenantIt
     dispatch(setProfileTenantIdR(ids))
     dispatch(setProfileNameR(tenantName))
     setAnchorEl(null);
-    console.log(ids)
+    // console.log(ids)
   }
 
 

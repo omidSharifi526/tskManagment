@@ -1,15 +1,17 @@
 import React, { useState,useEffect } from 'react';
+// import {} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { useGetAllObjectiveByPeriodId } from '../../Hooks';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid, Box, Typography, Button } from '@mui/material';
 import { AllOKRComponentFace } from '../../Interfaces/Interfaces';
 import { ReactComponent as ObjectiveVector } from '../../StaticData/Svgs/ObjectiveVector.svg';
 import ModalLyt from '../../../../components/Layouts/ModalLyt/ModalLyt';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import CreateObjective from '../../Forms/CreateObjective/CreateObjective';
 import {CircularProgress} from '@mui/material';
+import { useNavigate,useParams } from 'react-router-dom';
 const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
-  
+  const navigate=useNavigate();
   const[allObjective,setAllObjective]=useState<any[]>()
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
   const{data:objetcideData,isLoading:getObjectiveLoading,isError,isFetched}:any=useGetAllObjectiveByPeriodId(periodId,profileTenantId)
@@ -34,6 +36,12 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
      >
       <CircularProgress  />
      </Box>
+  }
+
+  const initialGoToKrPage=(item:any)=>{
+    // console.log(item);
+    let{id}=item;
+    navigate('/dashboard/okrManagment/kr',{replace:true,state:{objectiveId:id}})
   }
   
   return (
@@ -93,10 +101,23 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
            <Box  width={'100%'} display={'flex'} justifyContent={'start'}  >
            {
              allObjective && allObjective.map((item:any,i:number)=>{
-               return    <Box key={i} width={'150px'} height={'150px'} mx={2} boxShadow={1} borderRadius={2} display={'flex'} flexDirection={'column'} alignItems={'start'}   >
+               return    <Box 
+               
+               sx={{cursor:'pointer'}}
+               
+               key={i} 
+               width={'150px'}
+                height={'150px'} 
+               mx={2} boxShadow={1} 
+               borderRadius={2} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}   >
                <Typography>
                  {item?.name}
                </Typography>
+               <Button variant='outlined' color='info' onClick={()=>{
+                initialGoToKrPage(item)
+               }} >
+                 افزودن نتیجه کلیدی
+               </Button>
                  </Box>
              })
            }

@@ -59,7 +59,7 @@ const getAllObjectiveByPeriodId=async({queryKey}:any)=>{
     // profileTenantId
     let periodId=queryKey[1];
     let profileTenantId=queryKey[2];
-    return await axiosInstance.get(`/OKR/GetAllObjectiveByPeriodId/?tenantId=${profileTenantId}&periodId=${periodId}&pageIndex=1&pageSize=5&searchTerm=`)
+    return await axiosInstance.get(`/OKR/GetAllObjectiveByPeriodId/?tenantId=${profileTenantId}&periodId=${periodId}&pageIndex=1&pageSize=7&searchTerm=`)
 }
 
 
@@ -93,16 +93,19 @@ return await axiosInstance.post('OKR/AddObjective',ObjectiveData)
 
 
 
+
+
+
+
 export{
     GetAllActivePersonByTenantId,
     GetAllHorizontalAlignmentByTenantId,
     GetAllOKRStateByTenantId,
     GetAllScoreLevelsByTenantId,
     AddKeyResult,
-    // getAllObjectivePeriodsByTenantId,
     getAllObjectiveByPeriodId,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
-    // GetAllOKRStateByTenantId
-    AddObjective
+    AddObjective,
+    
 }

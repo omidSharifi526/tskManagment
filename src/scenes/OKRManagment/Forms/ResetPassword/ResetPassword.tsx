@@ -14,7 +14,7 @@ const ResetPassword = () => {
    <Formik enableReinitialize
              initialValues={resetFormValues}
              onSubmit={(data:any) => {
-            console.log(data)
+            // console.log(data)
              }}
             //  currentPassword:string,
             //  newPassword:string,

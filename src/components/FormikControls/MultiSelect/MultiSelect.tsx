@@ -52,7 +52,7 @@ export default function MultiSelect(props: any) {
         disabled={disabled}
 
         onChange={(e: any, value: any) => {
-          console.log(value)
+          // console.log(value)
           initialSelectItem(value)
           
         }}

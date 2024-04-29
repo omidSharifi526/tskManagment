@@ -47,7 +47,7 @@ const onFailed=():void=>{
 
 
   const{data:perData,isLoading:perLoading,isError:periodError}=useGetPriodById(profileTenantId,onSuccesss,onFailed);
-  console.log(perData);
+  // console.log(perData);
   const[currentPriod,setCurrentPriod]=useState<any>(perData?.map((e:any) => e.isCurrent).indexOf(true));
   const currentPriodId=perData?.find((priod:any)=>priod.isCurrent).id;
   const[ids,setIds]=useState<any>(null)

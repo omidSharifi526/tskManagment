@@ -31,11 +31,13 @@ const saveState = (state: RootState): void => {
 
 const persistedState:any = loadState();
 export const store = configureStore({
+  
   reducer: {
    loign:loginSlice.reducer,
    meetings:meetingsSlice.reducer,
   },
   preloadedState: persistedState,
+  
   
   
 })

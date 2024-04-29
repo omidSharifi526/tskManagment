@@ -19,8 +19,13 @@ import DyLoadingCircular from '../../../../components/GlobalComponents/DyLoading
 import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import { ifError } from 'assert';
+interface teamIdsFace{
+  teamId:string,
+  personIds:string[]
+}
 // import { addObjectiveValues } from '../../StaticData';
 const CreateObjective = ({periodsData,onSuccess}:any) => {
+  const[teamIdObject,setTeameIdObjects]=useState<teamIdsFace>({teamId:'',personIds:[]})
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
     const[HorzIds,setHorzIds]=useState<any>({tenantId:tenantId,definitionId:null})
     const[definitionLevel,setDefinitionLevel]=useState<string | null>(null);
@@ -57,33 +62,24 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
 
   const initialAddObjective=(data:any)=>{
     let{isPublic}=data;
-    let resIsPublic={isPublic:isPublic==='برای همه'?true:false};
+    // 
+    let resIsPublic={isPublic:isPublic==='برای همه'?true:false,TeamIds:isPublic==='برای همه'?[]:[{...teamIdObject}]};
     let total={...data,...resIsPublic,tenantId:tenantId};
+    console.log(total)
     addObjective(total)
-   console.log(total)
 
   }
 
   useEffect(() => {
-    
-//   console.log(perData)
   let transformed=periodsData?.map((item:any)=>{
     let{name:key,id:value}=item;
   return {key,value}
   })
-
   setPeriodOptions(transformed)
-
-  console.log(transformed)
-   
   }, [])
   
 
-  useEffect(() => {
-    
-  console.log(teamsOptions)
-   
-  }, [teamsOptions])
+ 
 
   if (isLoading) {
     return <Box width={'100%'} py={6} textAlign={'center'}   >
@@ -100,9 +96,10 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
         <Formik enableReinitialize
         validationSchema={addObjectiveSchema}
              validate={(data)=>{
-                let{definitionLevelId}=data;
+                let{definitionLevelId,responsibleId}=data;
+                setTeameIdObjects((prev:teamIdsFace)=>({...prev,personIds:[responsibleId]}))
                 setHorzIds((prev:any)=>({...prev,definitionId:definitionLevelId}))
-            console.log(data)
+            // console.log(data)
              }}
             initialValues={{...addObjectiveInitialValues}}
             onSubmit={(data) => {
@@ -149,7 +146,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-selectd"
                                     value={values?.definitionLevelId || ''}
-                                    // renderValue={(val) => val.key}
+                                 
                                     label="تیم"
                                     onChange={(e: any,other:any) => {
                                         let{props}=other;
@@ -157,10 +154,10 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                         setDefinitionLevel(keyName)
                                         let {target}=e
                                         let{value}=target;
-                                        console.log(keyName)
+                                    
+                                        setTeameIdObjects((prev:teamIdsFace)=>({...prev,teamId:value}))
                                         setFieldValue('definitionLevelId',value)
-                                    //   const data = event.target.value;
-                                    //   setLocale(data as MUILocaleData);
+                                    
                                     }}
 
 
@@ -348,7 +345,6 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
 
 
                         
-
 
 
 

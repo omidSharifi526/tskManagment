@@ -14,7 +14,7 @@ const AddCompany = () => {
    <Formik enableReinitialize
              initialValues={addCompanyValues}
              onSubmit={(data:any) => {
-            console.log(data)
+            // console.log(data)
              }}
  
  

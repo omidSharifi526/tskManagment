@@ -36,7 +36,7 @@ setMEmbershipId(target.value||'')
   );
 
   const intialCompleteRegistartion=()=>{
-    console.log(memberShipTypeId)
+    // console.log(memberShipTypeId)
     switch (memberShipTypeId) {
       case '1':
         setContentState((prev:any):any=>({...prev,content:'ownerRegistration'}))

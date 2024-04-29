@@ -36,7 +36,7 @@ export  interface TabPanelProps {
     pointingSystemType:string,
     keyResultType:string,
     startValue:string,
-    onValue:string,
+    // onValue:string,
     weight:string,
     horizontalAlignments:any[],
     forceEndDate:string,
@@ -147,80 +147,11 @@ export interface addObjectiveFace{
 
 
 
-  // interface pointingSystemItemFace:{
-  //   tensile:'tensile',
-  //   regulary:'regulary'
-  // }
-
-  // export interface pointingSystemOptions{
-  //   pointingSystemOptions:pointingSystemItemFace[]
-  // }
 
 
-  
-// {
 
-//     "name": "rggrgrg",
 
-//     "responsibleId": "e76209ac-35c8-4e13-a85a-ebe0340588cd",
 
-//     "pointingSystemType": "Tensile",
-
-//     "keyResultType": "Percentage",
-
-//     "oKRStateId": "e71fa848-bf0f-4471-91b1-07168ae8bc8e",
-
-//     "weight": null,
-
-//     "startDate": null,
-
-//     "forceEndDate": null,
-
-//     "description": "",
-
-//     "valuesDetailCommandDtos": [
-
-//         {
-
-//             "scoreLevelId": "d0966827-75c2-4a98-87e7-c07e572bef62",
-
-//             "value": "۲۱",
-
-//             "tenantId": "eb781974-3cb0-4c3a-881e-97af686ce7f5"
-
-//         },
-
-//         {
-
-//             "scoreLevelId": "9155774b-5738-4f2c-9f93-ef2aaa6a4983",
-
-//             "value": "۳۳۱",
-
-//             "tenantId": "eb781974-3cb0-4c3a-881e-97af686ce7f5"
-
-//         },
-
-//         {
-
-//             "scoreLevelId": "58e2f9cb-2d3a-41db-892c-63539dafc740",
-
-//             "value": "۴۴۴۴",
-
-//             "tenantId": "eb781974-3cb0-4c3a-881e-97af686ce7f5"
-
-//         }
-
-//     ],
-
-//     "horizontalAlignments": [],
-
-//     "tenantId": "eb781974-3cb0-4c3a-881e-97af686ce7f5",
-
-//     "startValue": "۱",
-
-//     "objectiveId": "714820bb-0642-4159-8ac7-7fe54d9078f1"
-
-// }
   
 
  

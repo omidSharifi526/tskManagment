@@ -9,7 +9,7 @@ export default function DyRadioBtn({label}:any) {
   const [value, setValue] = React.useState('female');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('ihhiihhi')
+    // console.log('ihhiihhi')
     setValue((event.target as HTMLInputElement).value);
   };
 

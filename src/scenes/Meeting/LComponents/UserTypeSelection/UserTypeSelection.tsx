@@ -136,11 +136,11 @@ userTenantsData && userTenantsData?.map((item:any,i:number)=>{
 
   </Grid>
 
-  <Grid item xs={12}  >
+  {/* <Grid item xs={12}  >
     <Box px={4} py={3} >
     <FormControlLabel control={<Checkbox  />}  sx={{color:'black'}} label="این پیام دیگر به من نمایش داده نشود." />
     </Box>
-  </Grid>
+  </Grid> */}
 
 
    </Grid>

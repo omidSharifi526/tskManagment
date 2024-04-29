@@ -14,7 +14,8 @@ interface LoginState {
 
 }
 type UserInfo = {
-  userTenants: any[]; // This could be an array of a specific type, e.g., UserTenant[]
+  userTenants: any[];
+  userId:string // This could be an array of a specific type, e.g., UserTenant[]
   // Add more properties here if needed
 };
 
@@ -24,8 +25,10 @@ const initialState: LoginState = {
    rBaseUrl:'https://api.myokr.ir/api/',
    loginStatus:null,
    userInfo:{
+    userId:'',
     userTenants:[]
    },
+
    ObjctivieInitialState:{
     columns: {
       columnVisibilityModel: {
@@ -60,7 +63,8 @@ state.userPhoneNumber=payload.phoneNumber;
 
 const setUserData=(state:LoginState,action:PayloadAction<any>):any=>{
   let{payload}=action;
-  // console.log(payload)
+  // console.log(payload);
+  state.userInfo.userId=payload?.userId;
   state.loginStatus=payload?.data
   state.userInfo.userTenants=payload?.tenantInfoDtos;
 // console.log(payload)
@@ -77,26 +81,12 @@ const setinitialState=(state:any,action:PayloadAction<any>)=>{
         state.kRinitialState.columns.columnVisibilityModel=colVis
       break;
   
-    // default:
-    //   break;
+   
   }
   
 
   
-  // kRinitialState:{
-  //   columns: {
-  //     columnVisibilityModel: {
-  //       rowid: false,
-  //       okrStateName: false,
-  //       okR_KeyResultType: false,
-  //       pointingSystemType: false,
-  //       forceEndDate: false,
-  //       startDate: false,
-  //       threeTenthsValue: false,
-  //       oneValue: false
-  //     }
-  //   }
-  // }
+
   }
 
 export const loginSlice = createSlice({
