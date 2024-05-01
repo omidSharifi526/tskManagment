@@ -83,7 +83,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
          {
           allObjective.length>0 &&  <Grid container  >
           <Grid item xs={12} >
-     <Box py={2} px={1} width={'100%'} display={'flex'} flexDirection={'row-reverse'}  >
+     <Box py={2} px={1} width={'100%'} display={'flex'} flexDirection={'row-reverse'}   >
      <Box>
      <DyButton
                 caption={'هدف جدید'}
@@ -98,7 +98,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
           </Grid>
           <Grid item xs={12}  >
           
-           <Box  width={'100%'} display={'flex'} justifyContent={'start'}  >
+           <Box  width={'100%'} display={'flex'} justifyContent={'start'} flexWrap={'wrap'}  >
            {
              allObjective && allObjective.map((item:any,i:number)=>{
                return    <Box 
@@ -108,7 +108,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
                key={i} 
                width={'150px'}
                 height={'150px'} 
-               mx={2} boxShadow={1} 
+               m={2} boxShadow={1} 
                borderRadius={2} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}   >
                <Typography>
                  {item?.name}

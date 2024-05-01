@@ -44,21 +44,17 @@ type periodSliderProps = {
      </Typography>
     </Box>
       <Swiper
-      initialSlide={activeIndex||4}
+      initialSlide={activeIndex}
       style={{textAlign:'center',fontSize:'2rem'}}
        spaceBetween={30}
        slidesPerView={1}
        navigation
        onRealIndexChange={()=>{
-         // console.log('hhhhi')
+    
        }}
-       // onSlideChange={(swiper) => {
-       // console.log(swiper)
-       // }}
+
        onSwiper={(swiper) => {
-         // console.log(swiper.realIndex)
-        //  console.log(swiper)
-        //  setPriodId()
+
        }}
        onSlideChange={(swiper) => handleSlideChange(swiper)
     }

@@ -131,7 +131,7 @@ const itemsList = [
   ,
   {
     text: "مدیریت OKR",
-    icon: <DashboardIcon  />,
+    icon: <DashboardIcon fontSize='large'  />,
     to: "/dashboard/okrManagment" 
   }
   ,

@@ -77,7 +77,11 @@ const Teams = () => {
                   display={'flex'} 
                   alignItems={'center'} 
                   justifyContent={'center'}
-                  width={'200px'} height={'200px'} borderRadius={2} boxShadow={2} mx={2} >
+                  width={'200px'} 
+                  height={'200px'} 
+                  borderRadius={2} 
+                  boxShadow={2}
+                   mx={2} >
                          <Typography>{name}</Typography>
 
                   </Box>

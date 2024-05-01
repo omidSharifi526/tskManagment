@@ -12,17 +12,13 @@ import * as yup from 'yup';
 // 
 
 const currentStateOptions:SelectOptionFace[]=[
-
-    {
-        key:'پایان یافته',
-        value:'Finished'
-    }
-    ,
+    
     {
         key:'در مسیر مناسب',
         value:'OnTheRightTrack'
     }
     ,
+    
     {
         key:'نیازمند توجه',
         value:'NeedAttention'
@@ -31,11 +27,19 @@ const currentStateOptions:SelectOptionFace[]=[
     {
         key:'خارج از مسیر مناسب',
         value:'OfTheRightTrack'
-    },
+    }
+    ,
     {
         key:'بدون وضعیت',
         value:'NoStatus'
     }
+    ,
+    {
+        key:'پایان یافته',
+        value:'Finished'
+    }
+    
+    
 ]
 
 const nextStateOptions:SelectOptionFace[]=[

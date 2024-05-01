@@ -61,11 +61,19 @@ const InviteUser = () => {
               <CircularProgress  />
              </Box>
 
-             :<Box width={'100%'} display={'flex'} justifyContent={'start'} px={2} >
+             :<Box width={'100%'} display={'flex'} flexWrap={'wrap'}  justifyContent={'start'} px={2} >
               {
                 usersData && usersData?.map((item:any,i:number)=>{
                     let{name}=item;
-                return <Box key={i}  width={'200px'} height={'200px'} borderRadius={2} boxShadow={2} mx={2} display={'flex'} alignItems={'center'} justifyContent={'center'} >
+                return <Box key={i} 
+                 width={'200px'} 
+                height={'200px'}
+                m={1}
+                 borderRadius={2}
+                 boxShadow={2} mx={2} 
+                 display={'flex'} 
+                 alignItems={'center'}
+                  justifyContent={'center'} >
               {
               name
               }

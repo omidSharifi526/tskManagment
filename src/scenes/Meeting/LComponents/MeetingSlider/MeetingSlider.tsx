@@ -114,7 +114,7 @@ const onFailed=():void=>{
     </Typography>
    </Box>
      <Swiper
-     initialSlide={4}
+    //  initialSlide={4}
      style={{textAlign:'center',fontSize:'2rem'}}
       spaceBetween={30}
       slidesPerView={1}
