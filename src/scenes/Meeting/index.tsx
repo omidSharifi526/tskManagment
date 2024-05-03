@@ -31,12 +31,13 @@ const Meeting :React.FC=function(){
   }
   // userPhoneNumber(pin):"09121223615"
 
-  const{data:MeetDetData,isLoading:meetLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,meetId);
+  const{data:MeetDetData,isLoading:meetLoading,refetch:getAgain}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,meetId);
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
   const priodId=useSelector((state:any)=>state.meetings.priodId);
   const userPhoneNumber:string=useSelector((state:any)=>state.loign.userPhoneNumber);
   const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMeetings({tenantId:profileTenantId,priodId:priodId,userPhoneNumber:userPhoneNumber})
   const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
+  const periodList=useSelector((state:any)=>state.meetings.periodList);
   const meetingLoadState=useSelector((state:any)=>state?.meetings?.meetingsList);
   const [existData,setExistData]=useState<any>(null);
   const [accessForReport,setAccessForReport]=useState<boolean>(false);
@@ -63,7 +64,22 @@ const Meeting :React.FC=function(){
       //  console.log(meetingsList.length)
 
        }
-     }, [meetingLoadState])
+     }, [meetingLoadState]);
+
+
+     useEffect(() => {
+       
+     console.log(periodList)
+    //  getAgain()
+    
+     }, [periodList])
+     
+     useEffect(() => {
+       
+     
+    //  console.log(first)
+     }, [MeetDetData])
+     
 
 
      

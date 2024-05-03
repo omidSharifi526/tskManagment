@@ -45,8 +45,8 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
 
   const useGetPriodById=(id:string|null,onSuccesss:any,onFailed:any)=>{
     const dispatch=useDispatch();
-    const navigate=useNavigate();
-    // console.log(id)
+  //  console.log(id)
+
     return useQuery(['getPeriodById',id],getPriodById,{
   //  retry:false,
    enabled:!!id,

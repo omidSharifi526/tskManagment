@@ -12,12 +12,21 @@ import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import { useNavigate } from 'react-router-dom';
 import { setLoadingR } from '../../../../scenes/Meeting/MeetingsSlice/MeetingsSlice'
 import { useDispatch, useSelector } from 'react-redux';
-import { setProfileTenantIdR, setProfileNameR, setChangeTenantModeR } from '../../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
+import { setProfileTenantIdR, setProfileNameR, setChangeTenantModeR,setNewCurrentPeriodR } from '../../../../scenes/Meeting/MeetingsSlice/MeetingsSlice';
 // import { useDispatch } from 'react-redux';
 import { useGetPriodById } from '../../../Login/Hooks/Index';
 
 import { useGetAllMeetings } from '../../../../scenes/Meeting/Hooks';
+
 export default function TenantsList({ ButtonCaption, tenantList, setShowTenantItem }: any) {
+  const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
+const userPhoneNumber:string=useSelector((state:any)=>state.loign.userPhoneNumber);
+const periodId=useSelector((state:any)=>state.meetings.priodId);
+  const[MeetIds,setMeetIds]=useState<any>({
+    tenantId:profileTenantId,
+    priodId:periodId,
+    userPhoneNumber:userPhoneNumber
+  })
   var navigate=useNavigate();
   const [Ids, setIds] = useState<any>(null);
   const onSuccesss=():void=>{
@@ -29,7 +38,8 @@ export default function TenantsList({ ButtonCaption, tenantList, setShowTenantIt
   
   }
   const { data: perData, } = useGetPriodById(Ids?.tenantId,onSuccesss,onFailed);
-  const { isFetched, isLoading } = useGetAllMeetings(null);
+  // const { isFetched, isLoading } = useGetAllMeetings(null);
+  // const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMeetings(MeetIds)
 
 
 
@@ -74,6 +84,7 @@ export default function TenantsList({ ButtonCaption, tenantList, setShowTenantIt
     dispatch(setProfileTenantIdR(ids))
     dispatch(setProfileNameR(tenantName))
     setAnchorEl(null);
+    dispatch(setNewCurrentPeriodR())
     // console.log(ids)
   }
 

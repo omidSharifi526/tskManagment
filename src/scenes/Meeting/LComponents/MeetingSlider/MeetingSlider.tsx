@@ -69,21 +69,26 @@ const onFailed=():void=>{
   }, [isLoading,isFetched]);
 
 
-  useEffect(() => {
-    if (perData) {
-    let currentSlide=perData?.map((e:any) => e.isCurrent).indexOf(true);
-    setCurrentSlide(currentSlide)
-    }
-  }, [getPeriodFetched,perData]);
+
+// aval in
+  // useEffect(() => {
+    
+  //   getPeriodAgain()
+  //   setCurrentSlide(undefined)
+  //   // console.log(profileTenantId)
+  //   // dispatch(setLoadingR(true))
+  
+  // }, [profileTenantId])
 
   useEffect(() => {
-    
-    getPeriodAgain()
-    setCurrentSlide(undefined)
-    // console.log(profileTenantId)
-    // dispatch(setLoadingR(true))
+if (perData) {
+  const currentPriodId=perData?.find((priod:any)=>priod.isCurrent);
+  console.log(currentPriodId)
+  dispatch(setPriodIdR(currentPriodId))
+}
+
+  }, [perData])
   
-  }, [profileTenantId])
   
 
 

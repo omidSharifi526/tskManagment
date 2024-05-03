@@ -7,11 +7,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 type periodSliderProps = {
     // tenantId?: string;
     setActiveIndex: (tenantId:number) => void;
-    setPriodId:(periodId:number)=>void;
+    setPriodId:(periodId:string)=>void;
     slideData?:any;
     dataLoading?:boolean;
     activeIndex?:number
   };
+  
 
 
   const PeriodSlider =function({slideData,setActiveIndex,dataLoading,activeIndex,setPriodId}:periodSliderProps){
@@ -32,7 +33,7 @@ type periodSliderProps = {
     const currentSlideIndex:any = swiper.activeIndex; // Get the active slide index
     const currentSlideData:any = slideData?slideData[currentSlideIndex]:null; // Get data from the periods array
     console.log(currentSlideData?.id)
-    // setPriodId(currentSlideData?.id)
+    setPriodId(currentSlideData?.id)
     
     // setActiveIndex(swiper.activeIndex)
     // console.log(currentSlideData)
