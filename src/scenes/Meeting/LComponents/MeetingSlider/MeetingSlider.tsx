@@ -46,12 +46,13 @@ const onFailed=():void=>{
 
 
 
-  const{data:perData,isLoading:perLoading,isError:periodError}=useGetPriodById(profileTenantId,onSuccesss,onFailed);
+  const{data:perData,isLoading:perLoading,isError:periodError,isFetched:getPeriodFetched,refetch:getPeriodAgain}=useGetPriodById(profileTenantId,onSuccesss,onFailed);
   // console.log(perData);
   const[currentPriod,setCurrentPriod]=useState<any>(perData?.map((e:any) => e.isCurrent).indexOf(true));
   const currentPriodId=perData?.find((priod:any)=>priod.isCurrent).id;
   const[ids,setIds]=useState<any>(null)
   const{isFetched,isLoading}=useGetAllMeetings(ids);
+  const[currentSlide,setCurrentSlide]=useState<undefined|number>(undefined)
 
 
 
@@ -66,6 +67,29 @@ const onFailed=():void=>{
     dispatch(setLoadingR(false))
   } 
   }, [isLoading,isFetched]);
+
+
+  useEffect(() => {
+    if (perData) {
+    let currentSlide=perData?.map((e:any) => e.isCurrent).indexOf(true);
+    setCurrentSlide(currentSlide)
+    }
+  }, [getPeriodFetched,perData]);
+
+  useEffect(() => {
+    
+    getPeriodAgain()
+    setCurrentSlide(undefined)
+    // console.log(profileTenantId)
+    // dispatch(setLoadingR(true))
+  
+  }, [profileTenantId])
+  
+
+
+
+
+  
 
 
   
@@ -108,57 +132,54 @@ const onFailed=():void=>{
  
   return (
    <Box width={'700px'} py={1} mx={'auto'} display={'flex'} >
-    <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-   <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
-   دوره قبل
-    </Typography>
-   </Box>
-     <Swiper
-    //  initialSlide={4}
-     style={{textAlign:'center',fontSize:'2rem'}}
-      spaceBetween={30}
-      slidesPerView={1}
-      navigation
-      onRealIndexChange={()=>{
-        // console.log('hhhhi')
-      }}
 
-      onSwiper={(swiper) => {
-        // console.log(swiper.realIndex)
-      }}
-      onSlideChange={(swiper) => handleSlideChange(swiper)}
-    >
-    
-      {
-        perData && perData.map((prd:any,i:number)=>{
-          return (
-            <SwiperSlide key={i}  >
-            <Typography fontWeight={700}  >
-           {
-            prd?.name
-           }
-           </Typography>
-           </SwiperSlide>
-          )
-        })
-      }
-
-
-
+      <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+      <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
+      دوره قبل
+       </Typography>
+      </Box>
+        <Swiper
+        initialSlide={perData?.findIndex(item=>item.isCurrent)}
+        style={{textAlign:'center',fontSize:'2rem'}}
+         spaceBetween={30}
+         slidesPerView={1}
+         navigation
+         onRealIndexChange={()=>{
+           // console.log('hhhhi')
+         }}
    
-      {/* <div className="swiper-button-prev">
-        <span>Previous</span>
-      </div>
-      <div className="swiper-button-next">
-        <span>Next</span>
-      </div> */}
-
-    </Swiper>
-    <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-   <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
-   دوره بعد
-    </Typography>
-   </Box>
+         onSwiper={(swiper) => {
+           // console.log(swiper.realIndex)
+         }}
+         onSlideChange={(swiper) => handleSlideChange(swiper)}
+       >
+       
+         {
+           perData && perData.map((prd:any,i:number)=>{
+             return (
+               <SwiperSlide key={i}  >
+               <Typography fontWeight={700}  >
+              {
+               prd?.name
+              }
+              </Typography>
+              </SwiperSlide>
+             )
+           })
+         }
+   
+   
+   
+      
+     
+   
+       </Swiper>
+       <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+      <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
+      دوره بعد
+       </Typography>
+      </Box>
+      
    </Box>
   );
 };

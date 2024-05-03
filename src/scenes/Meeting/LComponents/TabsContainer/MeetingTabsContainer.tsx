@@ -8,6 +8,7 @@ import DySearchAppBar from '../../../../components/GlobalComponents/DySearchBar/
 import LyBackdrop from '../../../../components/Layouts/BackDrop/BackDrop';
 import UserTypeSelection from '../UserTypeSelection/UserTypeSelection';
 import {useState,useEffect} from 'react';
+import { AllMeetings } from '../AllMeetings/AllMeetings';
 import AddMeeting from '../Forms/AddMeeting/AddMeeting';
 
 import Meeting from '../..';
@@ -93,7 +94,7 @@ export default function BasicTabs() {
 
 
       <MeetingTabsContainer value={value} index={1}>
-      {/* <AddMeeting/> */}
+      <AllMeetings/>
       </MeetingTabsContainer>
 
     </Box>

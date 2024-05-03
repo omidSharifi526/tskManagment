@@ -50,11 +50,11 @@ const useLogin = (loginSuccess:any,loginFailed:any) => {
     return useQuery(['getPeriodById',id],getPriodById,{
   //  retry:false,
    enabled:!!id,
-  //  cacheTime:Infinity,
+   cacheTime:0,
+   staleTime:0,
    refetchOnWindowFocus:false,
    onSuccess:(data:any):void=>{
     let rawData=data;
-    
     dispatch(setPriodListR(rawData));
     onSuccesss()
     // navigate('/dashboard/meetings',{replace:true})
