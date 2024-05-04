@@ -5,7 +5,7 @@ import 'swiper/swiper-bundle.css';
 import CircularProgress from '@mui/material/CircularProgress';
 
 type periodSliderProps = {
-    // tenantId?: string;
+    tenantId?: string;
     setActiveIndex: (tenantId:number) => void;
     setPriodId:(periodId:string)=>void;
     slideData?:any;

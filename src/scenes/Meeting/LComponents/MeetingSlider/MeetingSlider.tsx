@@ -144,7 +144,7 @@ if (perData) {
        </Typography>
       </Box>
         <Swiper
-        initialSlide={perData?.findIndex(item=>item.isCurrent)}
+        initialSlide={perData?.findIndex((item:any)=>item.isCurrent)}
         style={{textAlign:'center',fontSize:'2rem'}}
          spaceBetween={30}
          slidesPerView={1}

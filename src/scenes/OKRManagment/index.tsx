@@ -56,9 +56,9 @@ const Index :React.FC=function(){
 
   const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
   const{data:perData,isLoading:perLoading,isError:periodError,isFetched}:any=useGetPriodById(tenantId,onSuccesss,onFailed);
-  const[periodId,setPeriodId]=useState<string|null>(null);
+  // const[periodId,setPeriodId]=useState<string|null>(null);
   const[activeIndex,setActiveIndex]=useState<number>(0);
-
+  const[periodId,setPeriodId]=useState<string|null>(null);
   useEffect(() => {
   const active:any=perData?perData[activeIndex]:{};
   setPeriodId(active.id);
@@ -95,7 +95,8 @@ const Index :React.FC=function(){
   return (
     <>
     <PeriodSlider 
-    // tenantId={tenantId } 
+    setPriodId={()=>{}}
+    tenantId={tenantId } 
     activeIndex={activeIndex}
     setActiveIndex={setActiveIndex}
     slideData={perData}
