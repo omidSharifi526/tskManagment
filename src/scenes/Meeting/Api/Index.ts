@@ -96,6 +96,18 @@ return await axiosInstance.get(`/Download/ExportMeetingDetails?meetingId=76d801e
 
 
 
+
+// https://api.myokr.ir/api/Meeting/GetMeetingKeyResultValueById?meetingId=591d2911-bb83-4d3e-93dd-b6775e86b64d&keyResultId=97d8be97-661a-496f-b711-aa02c43971aa
+
+
+const getMeetingKeyResultValueById=async({queryKey}:any)=>{
+  // meetingId,krId
+  let ids:any=queryKey[1];
+return await axiosInstance.get(`/Meeting/GetMeetingKeyResultValueById?meetingId=${ids?.meetingId}&keyResultId=${ids?.krId}`)
+}
+
+
+
 export{
     getAllMeetingByIds,
     getAllTeamsByTenantId,
@@ -108,5 +120,6 @@ export{
     getAllTeamsForSelByTenantId,
     getAllMeetingsTypeByTenantId,
     addMeeting,
-    exportMeetingDetails
+    exportMeetingDetails,
+    getMeetingKeyResultValueById
 }

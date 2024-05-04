@@ -10,7 +10,8 @@ import {
     getWebObjectiveDetailsCheckinMeetingByTeamId,
     getAllTeamsForSelByTenantId,
     getAllMeetingsTypeByTenantId, addMeeting,
-    exportMeetingDetails
+    exportMeetingDetails,
+    getMeetingKeyResultValueById
 
 } from '../Api/Index';
 import { setMeetingsListR, setObjectivieR, setKeyResultsR, setLoadingR } from '../MeetingsSlice/MeetingsSlice';
@@ -315,6 +316,20 @@ return useQuery(['ExportMeetingDetails'],exportMeetingDetails,{
 })
 }
 
+// getMeetingKeyResultValueById
+const useGetMeetingKeyResultValueById=(ids:any)=>{
+    return useQuery(['getMeetingKeyResultValueById',ids],getMeetingKeyResultValueById,{
+        
+        enabled:!!ids,
+        refetchOnWindowFocus:false,
+        select:(data:any)=>{
+            let rawData=data?.data?.data;
+            // console.log(rawData)add
+            return rawData
+       
+        }
+    })
+}
 
 
 export {
@@ -330,5 +345,6 @@ export {
     useGetAllMeetingsTypeByTenantId,
     useAddMeeting,
     useGetWebObjectiveDetailsCheckinMeetingByTeamId2,
-    useExportMeetingDetails
+    useExportMeetingDetails,
+    useGetMeetingKeyResultValueById
 }

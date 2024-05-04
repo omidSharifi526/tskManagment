@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import AddMeetingSuccess from '../../../../Meeting/LComponents/AddMeetingSuccess/AddMeetingSuccess';
 import { useNavigate } from 'react-router-dom';
 import { intaddKrSchema,straddKrSchema } from '../../../StataicData';
+// useGetMeetingKeyResultValueById
+import { useGetMeetingKeyResultValueById } from '../../../../Meeting/Hooks';
 // {
 //   "meetingId": "78667f0e-f023-454b-b7d4-261a38760a22",
 //   "teamId": "fb7cc4ea-7162-4916-9aa8-834b14308e10",
@@ -78,6 +80,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
 
   }
   const { mutate: addCheck, isSuccess,isLoading } = useAddCheckinMeeting(addCheckinSuccess);
+  const {data:initialNewValue,isLoading:iniValLoading}=useGetMeetingKeyResultValueById({meetingId:meetingId,krId:kresultId})
 
   const [renderState, setRenderState] = useState<string>('add');
 
@@ -90,6 +93,12 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
     addCheck(data)
  
   }
+
+  useEffect(() => {
+    console.log(initialNewValue)
+ 
+  }, [initialNewValue])
+  
 
 
 
@@ -104,7 +113,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
           <Formik
            validationSchema={pointSystemsL==='req'?straddKrSchema:intaddKrSchema}
            enableReinitialize
-            initialValues={evaluationData}
+            initialValues={{...evaluationData,newValue:initialNewValue}}
             onSubmit={(data: AddEvalFace) => {
               initialSubmitForm(data)
 
@@ -128,15 +137,18 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                      
                       </Box> */}
                     </Grid>
-                    <Grid item xs={6}  >
+                   { !iniValLoading && <Grid item xs={6}  >
                       <FormikControl
                         control='textField'
                         type='text'
                         label='مقدار جدید'
                         name='newValue'
                         fullWidth
+                        value={values?.newValue}
                       />
                     </Grid>
+                    
+                    }
                     
                       {
                         pointSystemsL==='req'?

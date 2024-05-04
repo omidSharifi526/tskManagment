@@ -101,7 +101,7 @@ export default function DyDataGrid(
     }
 
       const initOnRowClick=(row:any)=>{
-        // console.log(row)
+        console.log(row)
         setSelectionModel(row.id)
         setSelectedRowData(row)
        initialOnRowClick(row)
