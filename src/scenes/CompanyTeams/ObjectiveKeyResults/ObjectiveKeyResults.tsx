@@ -23,10 +23,13 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import DyLoadingCircular from '../../../components/GlobalComponents/DyLoadingCircular/DyLoadingCircular';
 import {CircularProgress} from '@mui/material';
+import { CreateKReval } from '../LComponents/Forms/CreateKReval/CreateKReval';
 
 import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
+import { isNull } from 'util';
 
 const ObjectiveKeyResults: React.FC = () => {
+  const dispatch = useDispatch()
   const treeView = useSelector((state: any) => state.meetings.treeViewState?.treeView);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
@@ -48,7 +51,9 @@ const ObjectiveKeyResults: React.FC = () => {
   const [addEvalSuccessModal,setAddEvalSuccessModal]=useState<Boolean|null>(false);
   const [showAddEvalModal, setShowAddEvalModal] = useState(false);
   const [SuccessState,setSuccessState] = useState<boolean>(false);
-  const[pointingSystem,setPointingSystem]=useState<string|null>(null)
+  const[pointingSystem,setPointingSystem]=useState<string|null>(null);
+  const[rowSelectedData,setRowSelectedData]=useState<any>(null);
+  
   const getObjectiveSuccess=()=>{
 
   }
@@ -90,17 +95,26 @@ if (getObjectiveAgainFetched) {
   });
   const [krId, setKrId] = useState(null)
   const { data: KrHistoryData, isLoading: KRHLoading, isError: KRHError, isFetched: KRHFetched } = useGetKeyResultMeetingHistory(krId, priodId, meetingId);
-  useEffect(() => {
 
-    setKeyR([])
-    setObjectivee({})
+
+  // useEffect(() => {
+
+  // console.log(rowSelectedData)
   
-  }, [])
+  // }, [rowSelectedData])
 
 
 
   
-  const dispatch = useDispatch()
+ 
+
+  const initialAfterAddKr=()=>{
+console.log('successFromParent');
+// clg
+setObjSelectionModel(objectivies[0]?.id)
+setKeysResultsList()
+// setObjSelectionModel()
+  }
 
 
 
@@ -788,13 +802,24 @@ if (getObjectiveAgainFetched) {
     ,
 
     {
-      field: 'base_Comments',
+      field: 'description',
       headerName: 'توضیحات',
       align: 'center',
       headerAlign: 'center',
       sortable: false,
-      minWidth: 100,
+      minWidth: 150,
       fontsize: '14px',
+      renderCell: ({ value }: any) => {
+        return <Box>
+          {
+            value?.length > 10 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={value}>
+              {value}
+            </Tooltip> :
+              <Typography sx={{ fontSize: '12px' }} >{value}</Typography>
+          }
+        </Box>
+      }
+      
     },
 
   
@@ -879,6 +904,7 @@ if (getObjectiveAgainFetched) {
             initialMount={true}
             setPointSys={setPointingSystem}
             drName={'KRinitialState'}
+            setRowSelectedData={setRowSelectedData}
             // setKresultId={}
           />
         </Grid>
@@ -975,11 +1001,12 @@ if (getObjectiveAgainFetched) {
               data={objectivies}
               columns={objectiveColumns||[]}
               hideFooter={true}
+              setRowSelectedData={}
               //  objcSelectionModel,setObjSelectionModel
               setSelectionModel={setObjSelectionModel}
               selectionModel={objcSelectionModel}
               initState={ObjctivieInitialState}
-              initialMount={false}
+              initialMount={true}
               additionalToolbar={false}
               drName={'ObjctivieInitialState'}
 
@@ -1068,12 +1095,20 @@ if (getObjectiveAgainFetched) {
 
 
           >
-            <AddKrEvaluation
+            {/* <AddKrEvaluation
               cancelo={setShowAddEvalModal}
               objectiveId={objectivee?.id}
               kresultId={krId}
               onsucces={setSuccessState}
               pointingSystem={pointingSystem}
+              afterAddKr={initialAfterAddKr}
+              rowSelectedData={rowSelectedData}
+            /> */}
+            <CreateKReval
+              cancelo={setShowAddEvalModal}
+            
+            
+            
             />
 
 

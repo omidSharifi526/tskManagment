@@ -3,13 +3,10 @@ import { baseUrl } from "../env";
 
 
 const existToken=localStorage.getItem('accessToken');
-console.log(existToken)
-
 const axiosInstance = axios.create({
   baseURL: baseUrl,
   headers: {
     'Content-Type': 'application/json',
-    // 'authorization':`Bearer ${existToken}`,
     "Access-Control-Allow-Origin":'*'
   },
 });

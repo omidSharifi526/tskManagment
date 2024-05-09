@@ -18,7 +18,7 @@ horizontalAlignments:[],
 keyResultType:'',
 forceEndDate:'',
 responsibleId:'',
-pointingSystemType:'Regulary',
+pointingSystemType:'Regularly',
 startDate:'',
 startValue:'',
 weight:'',
@@ -79,7 +79,7 @@ const resetFormValues:resetPasswordFace={
 
   const pointSystem:pSoFace[]=[
     {key:'کششی',value:'Tensile'},
-    {key:'منظم',value:'Regulary'}
+    {key:'متداول',value:'Regularly'}
   ]
 
   const keyResultTypeOptions:pSoFace[]=[

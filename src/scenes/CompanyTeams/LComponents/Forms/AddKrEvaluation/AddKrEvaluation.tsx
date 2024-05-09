@@ -41,19 +41,20 @@ import { useGetMeetingKeyResultValueById } from '../../../../Meeting/Hooks';
 
 
 
-const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces,pointingSystem }: any) => {
+const AddKrEvaluation = ({ cancelo, objectiveId, kresultId,onsucces,pointingSystem,afterAddKr,rowSelectedData }: any) => {
   const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const priodId: any = useSelector((state: any) => state.meetings.priodId);
   const teamId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
-
+  const[initialValuesForm,setInitialValuesForm]=useState<any>({description:''})
 const [pointSystemsL,setPointSystemL]=useState<string>('')
   useEffect(() => {
     if(pointingSystem==='مرحله ای'){
       setPointSystemL('req')
     }
    
-  }, [pointingSystem])
+  }, [pointingSystem]);
+
   
 
   const evaluationData: AddEvalFace = {
@@ -74,7 +75,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
 
   }
   const addCheckinSuccess = () => {
-
+    afterAddKr()
     cancelo()
      onsucces(true)
 
@@ -95,9 +96,12 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
   }
 
   useEffect(() => {
-    console.log(initialNewValue)
- 
-  }, [initialNewValue])
+    // console.log(rowSelectedData)
+  if (rowSelectedData) {
+    let{description,problems,predict,currentStateValue}=rowSelectedData;
+    setInitialValuesForm((prev:any)=>({description:description,problems:problems,nextState:predict,currentState:currentStateValue}))
+  }
+  }, [rowSelectedData])
   
 
 
@@ -113,7 +117,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
           <Formik
            validationSchema={pointSystemsL==='req'?straddKrSchema:intaddKrSchema}
            enableReinitialize
-            initialValues={{...evaluationData,newValue:initialNewValue}}
+            initialValues={{...evaluationData,newValue:initialNewValue,...initialValuesForm}}
             onSubmit={(data: AddEvalFace) => {
               initialSubmitForm(data)
 
@@ -124,7 +128,10 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
             {
               ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }:any) =>
                 <Form>
-                  <Grid container columnSpacing={1} sx={{bgcolor: 'background.paper',mx:'auto',borderRadius:3}}   >
+                  {
+                    true && 
+
+                    <Grid container columnSpacing={1} sx={{bgcolor: 'background.paper',mx:'auto',borderRadius:3}}   >
 
                     <Grid item xs={12}   >
                       {/* <Box>
@@ -144,7 +151,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                         label='مقدار جدید'
                         name='newValue'
                         fullWidth
-                        value={values?.newValue}
+                        value={values?.newValue || ''}
                       />
                     </Grid>
                     
@@ -172,6 +179,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                         label='موانعی که با آن مواجه هستید؟'
                         name='problems'
                         fullWidth
+                        value={values?.problems || ''}
                         // helperText={'موانعی که با آن مواجه هستید؟'}
                       />
                     </Grid>
@@ -185,6 +193,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                         options={nextStateOptions}
                         name='nextState'
                         fullWidth
+                        value={values?.nextState || ''}
                         // helperText={'وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟'}
                       />
                     </Grid>
@@ -199,6 +208,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                         options={currentStateOptions}
                         name='currentState'
                         fullWidth
+                        value={values?.currentState || ''}
                         // helperText={}
                       />
                     </Grid>
@@ -210,6 +220,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                         label='توضیحات'
                         name='description'
                         fullWidth
+                        value={values?.description || ''}
                         placeholder={'توضیحات (اختیاری)  0/300'}
                       />
                     </Grid>
@@ -285,11 +296,10 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
 
 
                   </Grid>
+                  }
 
 
-                  {/* <Button color='info' type='submit'  >
-                test
-              </Button> */}
+          
                 </Form>
             }
 

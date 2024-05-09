@@ -44,7 +44,8 @@ export default function DyDataGrid(
     setShowAddEvalModal,
     initialMount,
     setPointSys,
-    drName
+    drName,
+    setRowSelectedData
     
   }:any) {
     const[selectedRowData,setSelectedRowData]=React.useState(null);
@@ -105,10 +106,12 @@ export default function DyDataGrid(
         setSelectionModel(row.id)
         setSelectedRowData(row)
        initialOnRowClick(row)
-      //  setObjectiveId(id)
-      // console.log(row?.okR_KeyResultType,row)
      if (setPointSys) {
       setPointSys(row?.okR_KeyResultType)
+     }
+
+     if (setRowSelectedData) {
+      setRowSelectedData(row)
      }
      
 
@@ -127,6 +130,10 @@ export default function DyDataGrid(
       if (setPointSys) {
          setPointSys(data[0]?.okR_KeyResultType)
       }
+
+      if (setRowSelectedData) {
+        setRowSelectedData(data[0])
+       }
       
       }, []);
 

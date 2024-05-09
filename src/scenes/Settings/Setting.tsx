@@ -3,6 +3,10 @@ import { Grid,Box,Checkbox,FormControl,FormControlLabel,FormGroup, Button} from 
 import { useSelector } from 'react-redux';
 import { useGetTenantSetting,useAddSettings} from './Hooks';
 import {CircularProgress} from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import {ReactComponent as SettingVector} from './StaticData/Svgs/settingVector.svg';
+import SettingsIcon from '@mui/icons-material/Settings';
+// import {CircularProgress} from '@mui/material';
 
 interface settingItemFace{
     key:string,
@@ -18,13 +22,26 @@ const Setting = () => {
   
    
     const{data:tenantSettingsData,isLoading:getTenantSettinLoading,isFetched}=useGetTenantSetting(tenantId);
-    const{mutate:callAddTenantSetting}=useAddSettings()
+    const{mutate:callAddTenantSetting,isSuccess:changeSettingSuccess,isLoading:changeSettingLoading}=useAddSettings()
     const[SettingsState,setSettingsState]=useState<settingItemFace[]>([]);
+    const[remainData,setRemainData]=useState<any>(null);
+    const[asyncState,setAsyncState]=useState<any>({
+      success:false,
+      loading:false
+    });
+
+    const[disabledSub,setDisabledSub]=useState<any>(true)
     const[initSett,setInitSett]=useState<any>(null);
 
 
     const initialChangeSetting=(key:string,value:boolean)=>{
-        console.log(key,value)
+     
+      setAsyncState({
+        success:false,
+        loading:false
+      })
+      setDisabledSub(false)
+
         setSettingsState((prev:any)=>(prev.map((item:any)=>{
         if (item.key===key) {
             return { ...item, value: !item.value }; 
@@ -33,18 +50,36 @@ const Setting = () => {
         })))
 
     }
+    
+
+    useEffect(() => {
+     
+   setAsyncState((prev:any)=>({...prev,success:changeSettingSuccess}))
+  //  setDisabledSub(true)
+    }, [changeSettingSuccess])
+
+    useEffect(() => {
+     
+      setAsyncState((prev:any)=>({...prev,loading:changeSettingLoading}))
+       }, [changeSettingLoading])
+    
 
 
         useEffect(() => {
           
         // console.log(tenantData);
-        setSettingsState(tenantSettingsData)
+        if (tenantSettingsData && isFetched ) {
+          let{settings,...rest}:any=tenantSettingsData
+          setSettingsState(settings);
+          setRemainData(rest)
+        }
         
         }, [isFetched])
 
         const initialAddSetting=()=>{
-          console.log(SettingsState)
-            callAddTenantSetting(SettingsState)
+          
+          console.log({settings:[...SettingsState],...remainData})
+            callAddTenantSetting({settings:[...SettingsState],...remainData})
         }
 
 
@@ -59,7 +94,7 @@ const Setting = () => {
 
   return (
    <Grid container   >
-   <Grid item xs={12}  > 
+   <Grid item xs={12}  md={6} > 
 
    <Box
      py={2}
@@ -90,14 +125,43 @@ const Setting = () => {
    }
    </Box>
 
-   <Box mt={2} mx={8}  >
+   
+   </Grid>
+
+   <Grid item xs={12}  md={6}>
+   <Box   
+   display={'flex'} 
+   flexDirection={'column-reverse'} 
+   justifyContent={'space-between'} 
+   alignItems={'center'}
+
+   minHeight={'100%'} >
+    
+    <Box  mb={2} >
     <Button 
-    variant='contained' color='primary'
+    endIcon={asyncState.success?<CheckIcon/>:<SettingsIcon/>}
+    disabled={disabledSub}
+    sx={{fontSize:'14px',px:6,py:1,bgcolor:asyncState.success?'green':'#00387C'}}
+    variant='contained' 
      onClick={()=>{
      initialAddSetting()
     }}  >
-      ثبت تنظیمات
+    {
+     asyncState.success ?'باموفقیت ثبت شد':' ثبت تنظیمات'
+    }
+
+    {/* {
+      changeSettingLoading?<CircularProgress size={10} />:null
+    } */}
     </Button>
+    </Box>
+
+
+    <Box>
+      <SettingVector style={{width:'550px'}}  />
+    </Box>
+
+
    </Box>
    </Grid>
    </Grid>

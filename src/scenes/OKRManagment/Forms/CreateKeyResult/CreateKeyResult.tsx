@@ -22,7 +22,7 @@ export const CreateKeyResult = () => {
     const location:any=useLocation();
     let{state:{objectiveId}}:any=location;
     // console.log(objectiveId)
-    const[pointingSystemType,setPointingSystemType]=useState<string>('Regulary');
+    const[pointingSystemType,setPointingSystemType]=useState<string>('Regularly');
     const[idsValue,setIdsValue]=useState<any>([]);
     const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
     const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
@@ -37,7 +37,7 @@ export const CreateKeyResult = () => {
         
         let{pointingSystemType}=data;
 
-        let ids=pointingSystemType==='Regulary'?[]:idsValue;
+        let ids=pointingSystemType==='Regularly'?[]:idsValue;
         // console.log(ids)
         // console.log(pointingSystemType)
         // pointingSystemType==="Tensile"?idsValue:[]
@@ -46,6 +46,8 @@ export const CreateKeyResult = () => {
         // pointingSystemType
 
         // console.log(totalData);
+
+
         addKeyResulttt(totalData)
      
     }
@@ -165,7 +167,7 @@ export const CreateKeyResult = () => {
                                 </Grid>
                                 
                               {
-                                pointingSystemType==='Regulary'?<Grid item xs={12} md={3}  >
+                                pointingSystemType==='Regularly'?<Grid item xs={12} md={3}  >
                                 <FormikControl
                                     control='textField'
                                     type={'text'}

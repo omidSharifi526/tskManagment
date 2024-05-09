@@ -67,18 +67,6 @@ const Meeting :React.FC=function(){
      }, [meetingLoadState]);
 
 
-     useEffect(() => {
-       
-     console.log(periodList)
-    //  getAgain()
-    
-     }, [periodList])
-     
-     useEffect(() => {
-       
-     
-    //  console.log(first)
-     }, [MeetDetData])
      
 
 

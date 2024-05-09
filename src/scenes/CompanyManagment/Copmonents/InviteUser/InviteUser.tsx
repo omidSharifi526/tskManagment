@@ -5,16 +5,23 @@ import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton'
 import AddStaff from '../../Forms/AddStaff/AddStaff';
 import { useSelector } from 'react-redux';
 import {CircularProgress} from '@mui/material';
+import { StaffCart } from '../StaffCart/StaffCart';
 
 import { useGetAllPersonByTenantId } from '../../Hooks';
 const InviteUser = () => {
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
     const{data:usersData,isLoading:getAllPeronsLoading}=useGetAllPersonByTenantId(tenantId);
-
+   
     const [showAddStaff, setShowAddStaff] = useState<Boolean | null>(false);
     const initialAddStaff = () => {
         setShowAddStaff((prev: any) => !prev)
     }
+
+    useEffect(() => {
+      
+    console.log(usersData)
+    }, [usersData])
+    
 
 
 
@@ -55,29 +62,18 @@ const InviteUser = () => {
             getAllPeronsLoading?<Box display={'flex'} 
             alignItems={'center'} 
             justifyContent={'center'} 
-            width={'100%'} 
-            py={7}
-            boxShadow={4} borderRadius={3}>
+            width={'99%'} 
+            py={15}
+            boxShadow={4} borderRadius={3}
+            mx={'auto'}>
               <CircularProgress  />
              </Box>
 
              :<Box width={'100%'} display={'flex'} flexWrap={'wrap'}  justifyContent={'start'} px={2} >
               {
                 usersData && usersData?.map((item:any,i:number)=>{
-                    let{name}=item;
-                return <Box key={i} 
-                 width={'200px'} 
-                height={'200px'}
-                m={1}
-                 borderRadius={2}
-                 boxShadow={2} mx={2} 
-                 display={'flex'} 
-                 alignItems={'center'}
-                  justifyContent={'center'} >
-              {
-              name
-              }
-             </Box>
+                    
+                return <StaffCart item={item}  />
                 })
               }
              </Box>

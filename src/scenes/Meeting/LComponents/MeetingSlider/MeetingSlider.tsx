@@ -83,7 +83,7 @@ const onFailed=():void=>{
   useEffect(() => {
 if (perData) {
   const currentPriodId=perData?.find((priod:any)=>priod.isCurrent);
-  console.log(currentPriodId)
+  // console.log(currentPriodId)
   dispatch(setPriodIdR(currentPriodId))
 }
 

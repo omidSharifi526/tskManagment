@@ -7,6 +7,7 @@ import AddTeam from '../../Forms/AddTeam/AddTeam';
 import { useGetAllTeams } from '../../Hooks';
 import { useSelector } from 'react-redux';
 import {CircularProgress} from '@mui/material';
+import TeamCart from '../TeamCart/TeamCart';
 // import { useGetAllTeams } from '../../Hooks';
 
 const Teams = () => {
@@ -26,8 +27,9 @@ const Teams = () => {
         return <Box display={'flex'} 
         alignItems={'center'} 
         justifyContent={'center'} 
-        width={'100%'} 
-        py={7}
+        width={'99%'} 
+        py={20}
+        mx={'auto'}
         boxShadow={4} borderRadius={3}>
           <CircularProgress  />
          </Box>
@@ -69,22 +71,12 @@ const Teams = () => {
                 <Box  width={'100%'} display={'flex'} 
                 justifyContent={'start'} 
                 flexWrap={'wrap'}
+                px={2}
                   >
                  {
                     isFetched && teamsData?.map((item:any,i:number)=>{
                         let{name}=item
-                  return <Box key={i} 
-                  display={'flex'} 
-                  alignItems={'center'} 
-                  justifyContent={'center'}
-                  width={'200px'} 
-                  height={'200px'} 
-                  borderRadius={2} 
-                  boxShadow={2}
-                   mx={2} >
-                         <Typography>{name}</Typography>
-
-                  </Box>
+                  return <TeamCart item={item}  />
                     })
                  }
                 </Box>

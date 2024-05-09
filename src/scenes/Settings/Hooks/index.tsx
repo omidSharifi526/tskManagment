@@ -22,7 +22,8 @@ return useQuery(['GetTenantSetting',tenantId],getTenantSetting,{
     console.log(err)
     },
     select:(data:any)=>{
-        let rawData=data?.data?.data?.settings;
+        let rawData=data?.data?.data;
+        // console.log(rawData)
         return rawData;
     // console.log(data)
     } 

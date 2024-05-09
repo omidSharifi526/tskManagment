@@ -269,19 +269,8 @@ console.log(payload)
 }
 
 const setNewCurrentPeriod=(state:any)=>{
-  console.log('hihihihih');
   let resto=[...state.periodList]
   let obj = resto.find((o:any) => o.isCurrent === true);
-  console.log(obj.id)
-  // let currentSlide=state.periodList.find((e:any) =>{
-  //   let{isCurrent,id}=e;
-  //   console.log(e)
-  //   if (isCurrent) {
-  //   return {id}
-  //   }
-  // });
-
-//   console.log(currentSlide.id)
 state.priodId=obj.id
 }
 
