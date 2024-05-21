@@ -13,14 +13,7 @@ const addTeamsinintialValues:addTeamsFace={
     
     }
 
-    const addStaffInitialValues:addUserFace={
-     firstName:'',
-     lastName:'',
-    //  createById:'',
-     jobType:'',
-     phoneNumber:'',
-     tenantId:''
-      }
+    
 
 
       const addUserSchema = yup.object().shape({
@@ -33,6 +26,6 @@ const addTeamsinintialValues:addTeamsFace={
 
     export{
         addTeamsinintialValues,
-        addStaffInitialValues,
+        // addStaffInitialValues,
         addUserSchema
     }

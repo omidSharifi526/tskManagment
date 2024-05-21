@@ -6,12 +6,30 @@ import AddStaff from '../../Forms/AddStaff/AddStaff';
 import { useSelector } from 'react-redux';
 import {CircularProgress} from '@mui/material';
 import { StaffCart } from '../StaffCart/StaffCart';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 
-import { useGetAllPersonByTenantId } from '../../Hooks';
+
+
+
+
+
+
+import { useGetAllPersonByTenantId,useGetPersonDetails,useDeletePerson } from '../../Hooks';
+import EditPerson from '../../Forms/EditPerson/EditPerson';
 const InviteUser = () => {
-    const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
+ 
+  
+    const userId=useSelector((state:any)=>state.loign.userInfo.userId);
+    const userPhoneNumber=useSelector((state:any)=>state.loign.userPhoneNumber);
+    const tenantId:string|null=useSelector((state:any)=>state.meetings.profileTenantId);
     const{data:usersData,isLoading:getAllPeronsLoading}=useGetAllPersonByTenantId(tenantId);
-   
+   const[personId,setPersonId]=useState<string|null>(null);
+   const[personIdFDelete,setPersonIdFDelete]=useState<string|null>(null)
+   const[showEditModal,setShowEditModal]=useState<boolean>(false);
+   const[asyncOpStatus,setAsyncOpStatus]=useState<any>(null)
+   const[showToastAsync,setShowToastAsync]=useState<boolean>(false)
+
+   const{mutate:deletePerson}=useDeletePerson()
     const [showAddStaff, setShowAddStaff] = useState<Boolean | null>(false);
     const initialAddStaff = () => {
         setShowAddStaff((prev: any) => !prev)
@@ -19,8 +37,46 @@ const InviteUser = () => {
 
     useEffect(() => {
       
-    console.log(usersData)
-    }, [usersData])
+    console.log(personId)
+     
+    }, [personId])
+
+    useEffect(() => {
+      
+    console.log(asyncOpStatus)
+    
+    }, [asyncOpStatus])
+    
+    
+
+    
+
+
+    useEffect(() => {
+        if (personIdFDelete) {
+            let deleteBody={
+                phoneNumber:userPhoneNumber,
+                lastModifiedById:userId,
+                userId:userId,
+                tenantId:tenantId
+        
+            }
+            console.log(deleteBody)
+            deletePerson(deleteBody)
+        }
+             
+            }, [personIdFDelete])
+
+
+
+    
+      
+      
+
+
+
+
+    
     
 
 
@@ -48,10 +104,35 @@ const InviteUser = () => {
                         showModal={showAddStaff}
                         setShowModal={setShowAddStaff}
                         title={'ثبت پرسنل'}  >
-                        <AddStaff onSuccesss={initialAddStaff} />
+                        <AddStaff 
+                        onSuccesss={initialAddStaff} 
+                        onClose={setShowAddStaff}
+                        />
                     </ModalLyt>
 
                 }
+
+              {
+                showEditModal && <ModalLyt
+                showModal={showEditModal}
+                setShowModal={setShowEditModal}
+                title={'ویرایش کاربر'}
+                >
+                    {/* asyncOpStatus,setAsyncOpStatus */}
+                    <EditPerson
+                     personId={personId}
+                     onClose={setShowEditModal}
+                     setAsyncOpStatus={setAsyncOpStatus}
+
+                    />
+                </ModalLyt>
+
+
+            }
+
+
+
+
             </Grid>
 
             <Grid item xs={12}  >
@@ -73,13 +154,52 @@ const InviteUser = () => {
               {
                 usersData && usersData?.map((item:any,i:number)=>{
                     
-                return <StaffCart item={item}  />
+                return <Box key={i}  >
+                    <StaffCart 
+                // personIdFDelete,setPersonIdFDelete
+                setShowEditModal={setShowEditModal} 
+                setPersonId={setPersonId} 
+                setPersonIdFDelete={setPersonIdFDelete}
+                item={item} 
+                 />
+                    </Box>
                 })
               }
              </Box>
          }
             </Grid>
+{/* {showModal,setShowModal,title,children,KRHLoading,width */}
+            {/* {
+                showAddStaff && <ModalLyt 
+                showModal={showAddStaff}
+                setShowModal={setShowAddStaff}
+                title={'افزودن کاربر'}
 
+
+                  >
+                            <AddStaff 
+                            // editMode={true}
+                            
+                            onSuccesss={initialAddStaff} 
+                            onClose={setShowAddStaff}
+                            
+                            />
+                </ModalLyt>
+            } */}
+
+       {
+        true && showToastAsync &&
+        <DYToastMessage
+          show={showToastAsync}
+          setShow={setShowToastAsync}
+          message={'موفق'}
+          isSuccess={true}
+        />
+      }
+{/* showToastAsync,setShowAsync */}
+
+       
+{/* showToastAsync,setShowToastAsync */}
             
         </Grid>
     )

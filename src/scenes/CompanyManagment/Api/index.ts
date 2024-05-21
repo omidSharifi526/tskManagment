@@ -28,12 +28,62 @@ const inviteUser=async(userData:any)=>{
 return axiosInstance.post('/Account/InvitedUser',userData)
 }
 
+// https://api.myokr.ir/api/Person/GetPersonDetailById?id=e76209ac-35c8-4e13-a85a-ebe0340588cd
+const editPerson=async({queryKey}:any)=>{
+    let perId=queryKey[1];
+return await axiosInstance.get(`/Person/GetPersonDetailById?id=${perId}`)
+}
 
+// https://api.myokr.ir/api/Team/GetTeamDetailsById?id=d95a39da-8e5c-4d9e-ba66-df9fd0a61bed
+
+const getTeamDetail=async({queryKey}:any)=>{
+    let teamId=queryKey[1];
+    return await axiosInstance.get(`/Team/GetTeamDetailsById?id=${teamId}`)
+
+}
+
+
+
+
+// https://localhost:7170/api/Person/DeleteInvitedPerson
+const deleteInvitedPerson=(perIds:any|null)=>{
+return axiosInstance.post(`/Person/DeleteInvitedPerson`,perIds)
+}
+// https://localhost:7170/api/Person/DeletePerson
+const deletePerson=async(personDeletedBody:any|null)=>{
+return  await  axiosInstance.post(`/Person/DeletePerson`,personDeletedBody)
+}
+
+
+
+// api/Team/DeleteTeam
+const deleteTeam=async(teamDeletedBody:any|null)=>{
+    console.log(teamDeletedBody)
+return await axiosInstance.post(`/Team/DeleteTeam`,teamDeletedBody)
+}
+
+// https://api.myokr.ir/api/Person/EditPerson
+const editPersonStaff=async(personEditedBody:any)=>{
+    console.log(personEditedBody)
+return await axiosInstance.post('/Person/EditPerson',personEditedBody)
+}
+// https://api.myokr.ir/api/Team/EditTeam
+
+const editTeam=async(teamEditedBody:any)=>{
+    return await axiosInstance.post('/Team/EditTeam',teamEditedBody)
+}
 
     export{
         addTeam,
         getAllTeams,
         getAllActivePersonByTenantId,
         getAllPersonByTenantId,
-        inviteUser
+        inviteUser,
+        editPerson,
+        deleteTeam,
+        deletePerson,
+        editPersonStaff,
+        deleteInvitedPerson,
+        getTeamDetail,
+        editTeam
     }

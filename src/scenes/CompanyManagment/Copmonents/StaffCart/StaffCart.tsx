@@ -1,15 +1,65 @@
 import React from 'react';
 import { Grid,Box, Typography, Button } from '@mui/material';
+import {IconButton} from '@mui/material';
 import {ReactComponent as StaffVector} from '../../StaticData/Vectors/staffVector.svg';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-
+import { useDeletePerson,useDeleteInvitedPerson} from '../../Hooks';
+import { useSelector } from 'react-redux';
 export const StaffCart = (props:any) => {
-    let{item}=props;
-    let{name,jobTypeName,activated}=item;
+    const userId=useSelector((state:any)=>state.loign.userInfo.userId);
+    const tenantId:string|null=useSelector((state:any)=>state.meetings.profileTenantId);
+    const userPhoneNumber=useSelector((state:any)=>state.loign.userPhoneNumber);
+   
+    const{mutate:deletePerson}=useDeletePerson();
+    const{mutate:deleteInvitedPerson}=useDeleteInvitedPerson();
+    // let{setPersonId}=props
+    let{item,setPersonId,setShowEditModal,setPersonIdFDelete,actived}=props;
+    console.log(item)
+    let{name,jobTypeName,activated,id,phoneNumber}=item;
+
+
+const initialEditPerson=(perId:string|null)=>{
+setShowEditModal(true)
+setPersonId(id)
+}
+
+
+
+const initialDelete=(id:any)=>{
+    // activated,id
+   if (actived) {
+    let deletePersonBody={
+        DeletedPersonId:id,
+        UserId:userId,
+        TenantId:tenantId
+    }
+    console.log(deletePersonBody)
+    deletePerson(deletePersonBody)
+   }
+   else{
+    let invitedPersonBody={
+        phoneNumber:phoneNumber,
+        lastModifiedById:userId,
+        userId:userId,
+        tenantId:tenantId
+
+    }
+    console.log(invitedPersonBody)
+    deleteInvitedPerson(invitedPersonBody)
+   }
+
+    console.log(item)
+
+}
+
+
+
+
   return (
-    <Box width={'396px'} m={1} height={'130px'} borderRadius={3} boxShadow={4}  >
-        <Grid container px={1} rowGap={4} >
+    <Box width={'396px'} m={1}  borderRadius={3} boxShadow={4}  >
+        <Grid container px={1} rowGap={2} >
+            
         <Grid item xs={2}   >
     <Box  display={'flex'} 
     flexDirection={'column'} 
@@ -43,7 +93,10 @@ export const StaffCart = (props:any) => {
         </Grid>
         <Grid item xs={4} height={'45px'} >
       <Box py={1}>
-        <Button variant='text'  >
+        <Button variant='text'  onClick={()=>{
+            // console.log(id)
+            initialEditPerson(id)
+        }} >
             ویرایش
         </Button>
       </Box>
@@ -64,7 +117,7 @@ export const StaffCart = (props:any) => {
                     bgcolor={'#D5f7D4'} px={4} borderRadius={2} display={'flex'} alignItems={'center'} justifyContent={'center'}>
                         <Typography fontSize={'0.80rem'} fontWeight={activated?900:400} color={activated?'green':'red'}  >
                             {
-                                activated?'فعال':'غیرفعال'
+                                activated?'فعال':'دعوت شده'
 
                             }</Typography>
                     </Box>
@@ -73,8 +126,23 @@ export const StaffCart = (props:any) => {
         </Grid>
          </Grid>
          </Grid>
+
+      
+
+     
    
         </Grid>
+       
+         <Box width={'100%'}  textAlign={'end'} px={2} >
+      <Box>
+        <IconButton onClick={()=>{
+            initialDelete(id)
+        }}   >
+        <DeleteIcon color='error'   />
+       </IconButton>
+      </Box>
+         </Box>
+       
     </Box>
   )
 }

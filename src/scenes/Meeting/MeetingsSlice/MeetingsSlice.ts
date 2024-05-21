@@ -32,7 +32,8 @@ type meetingsStateType = {
     meetSelectedDate:string,
     treeViewState:priodViewStateFace,
     counter:number,
-    kRinitialState:any
+    kRinitialState:any,
+    addKrStatusData:any
 
     
  
@@ -79,6 +80,9 @@ kRinitialState:{
     }
   }
 }
+,
+
+addKrStatusData:null
 
 
 }
@@ -274,6 +278,11 @@ const setNewCurrentPeriod=(state:any)=>{
 state.priodId=obj.id
 }
 
+const setAddKrStatusData=(state:any,action:PayloadAction<any>)=>{
+  let{payload}=action
+  state.addKrStatusData=payload;
+}
+
 
 
 
@@ -309,7 +318,8 @@ export const meetingsSlice = createSlice({
     resetTeamList,
     resetMeetingSlice,
     setinitialState,
-    setNewCurrentPeriod
+    setNewCurrentPeriod,
+    setAddKrStatusData
     
    
   },
@@ -339,7 +349,8 @@ export const {
     resetTeamList:resetTeamListR,
     resetMeetingSlice:resetMeetingSliceR,
     setinitialState:setinitialStateR,
-    setNewCurrentPeriod:setNewCurrentPeriodR
+    setNewCurrentPeriod:setNewCurrentPeriodR,
+    setAddKrStatusData:setAddKrStatusDataR
  } = meetingsSlice.actions
 
 

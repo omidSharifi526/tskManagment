@@ -15,7 +15,7 @@
     tenantId:string,
     keyResultId:string|null,
     objectiveId:string,
-    tensileScore:string,
+    // tensileScore:string,
     currentState:string,
     description:string,
     closedKeyResult:Boolean,
@@ -48,7 +48,8 @@
     nextState:string|null,
     currentState:string|null,
     description:string|null,
-    score:any
+    score:any,
+    okR_KeyResultType:string|null
   }
 
 

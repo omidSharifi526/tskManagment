@@ -28,14 +28,15 @@ export default function Assessor({optionList,setSelectedInitialValue}:assessorFa
     
 
     const initialSelectHisCart=(item:any)=>{
-        let{id,value,problems,currentState,description,...rest}=item;
-        console.log(value)
+        let{id,value,problems,currentState,description,nextState,...rest}=item;
+        // console.log(value)
         console.log(id,item)
         setHisCartActiveId(id);
         let initSelVal={
           newValue:value,
           problems:problems===null?'':problems,
           currentState:currentState,
+          nextState:nextState,
           description:description,
           tensileScore:''
         }
@@ -51,10 +52,10 @@ export default function Assessor({optionList,setSelectedInitialValue}:assessorFa
 
 
 
-
+// bgColor={'#00387C'}
   return (
     <div>
-      <Button sx={{px:3,py:1}} endIcon={<PersonIcon/>}  aria-describedby={id} variant="contained" onClick={handleClick}>
+      <Button sx={{px:3,py:1,bgcolor:'#00387C'}}  endIcon={<PersonIcon/>}  aria-describedby={id} variant="contained" onClick={handleClick}>
        ارزیابی کننده
       </Button>
       <Popover
@@ -69,9 +70,10 @@ export default function Assessor({optionList,setSelectedInitialValue}:assessorFa
       >
         <Grid container >
        <Grid xs={12}  >
-       <Box width={'230px'} minHeight={optionList.length===0?'50px':'250px'} 
+       <Box width={'230px'} py={2}
        display={'flex'}
        flexDirection={'column'}
+       alignItems={'center'}
        >
         {
             optionList.length===0?<Box py={3} width={'100%'} textAlign={'center'}  ><Typography variant='body1'   >

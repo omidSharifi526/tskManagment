@@ -11,26 +11,21 @@ import { useSelector } from 'react-redux';
 import { intaddKrSchema,straddKrSchema } from '../../../StataicData';
 import { useGetMeetingKeyResultValueById } from '../../../../Meeting/Hooks';
 import { useGetKeyResultHistoryCheckinByKeyResultId } from '../../../Hooks/index';
-import {Tooltip} from '@mui/material';
+import {TextField, Tooltip} from '@mui/material';
 import {CircularProgress} from '@mui/material';
 import { Grid,Box,Typography,Divider,Button} from '@mui/material';
 import { ObjectiveSelectedFace,krSelectedFace } from '../../../Interfaces/interfaces';
 import DyDataGrid from '../../../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
 import DyLinearProgress from '../../../../../components/GlobalComponents/DyLinearProgress/DyLinearProgress';
-import { addKrValues } from '../../../../OKRManagment/StaticData';
 import Assessor from '../../Assessor/Assessor';
-import Stack from '@mui/material/Stack';
-import {ListItem,List} from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import TagFacesIcon from '@mui/icons-material/TagFaces';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import IconButton from '@mui/material/IconButton';
+import sad from '../../../../../Asset/Svgs/Emojys/sad 1.svg';
+import meh from '../../../../../Asset/Svgs/Emojys/neutral 2.svg';
+import smile from '../../../../../Asset/Svgs/Emojys/smil.png';
+// import { useSelector } from 'react-redux';
+// import {ReactComponent as Smile} from '../../../../../Asset/Svgs/Emojys/smile 1.svg';
 
-import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import DyButtonPopper from '../../../../../components/GlobalComponents/DyButtonPopper/DyButtonPopper';
-// import sad from '../../../../../Asset/Svgs/Emojys/sad.png';
-// import meh from '../../../../../Asset/Svgs/Emojys/meh.png';
-// import smile from '../../../../../Asset/Svgs/Emojys/smil.png'
 
 
 
@@ -61,7 +56,7 @@ interface progValueFace{
 
 
 
-export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,pointingSystem,objectiveId, kresultId,afterAddKr,onsucces}:any) => {
+export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,objectiveId, kresultId,afterAddKr,onsucces}:any) => {
   const meetSelectedDate = useSelector((state: any) => state.meetings.meetSelectedDate);
     const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
     const teamId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
@@ -72,21 +67,39 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,pointingSyste
     const[keyResultMeetingHistoryDtos,setKeyResultMeetingHistoryDtos]=useState<any[]>([]);
     const[assessmentHistory,setAssessmentHistory]=useState<any[]>([]);
     const[hisCartActiveId,setHisCartActiveId]=useState<string>('')
-    const {data:initialNewValue,isLoading:iniValLoading}=useGetMeetingKeyResultValueById({meetingId:meetingId,krId:kresultId});
+    // const {data:initialNewValue,isLoading:iniValLoading}=useGetMeetingKeyResultValueById({meetingId:meetingId,krId:kresultId});
     const[formIds,setFormIds]=useState<any>({meetingId:meetingId,periodId:periodId,keyResultId:null});
     const[nextOptCurrIndex,setNextOptCurrIndex]=useState<number>(0);
-    const[currOptIndex,setCurrOptIndex]=useState<number>(0)
+    const[currOptIndex,setCurrOptIndex]=useState<number>(0);
+    const[tensileScore,setTensileScore]=useState<string|null>('');
+    const addKrStatusData:any=useSelector((state:any)=>state.meetings.addKrStatusData);
+    const[addKrStatus,setAddKrStatus]=useState<any>(null);
 
     const addCheckinSuccess = () => {
         // afterAddKr()
-         cancelo(false)
-         onsucces(true)
-    
+       
+    //     let{isSuccess,metaData}=addKrStatusData;
+    // let addSt={
+    //   isSuccess:isSuccess,
+    //   message:metaData?.message
+    // }
+    //     if (isSuccess) {
+    //         // cancelo(false)
+    //         //  onsucces(true)
+           
+    //     }
+    //     else{
+    //       setAddKrStatus(addSt)
+    //     }
+    // afterAddKr()
+    cancelo()
+    onsucces(true)
+        
       }
 
     const {data:historyData,isLoading:historyDataLoading}:any=useGetKeyResultHistoryCheckinByKeyResultId(formIds)
-    const { mutate: addCheck, isSuccess,isLoading } = useAddCheckinMeeting(addCheckinSuccess);
-
+    const { mutate: addCheck, isSuccess,isLoading:AddChekinLoading,data:addCheckingData } = useAddCheckinMeeting(addCheckinSuccess);
+    
 
 
 
@@ -100,7 +113,7 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,pointingSyste
       tenantId: profileTenantId,
       keyResultId: kresultId,
       objectiveId: objectiveId,
-      tensileScore: '',
+      // tensileScore: '',
       currentState: '',
       description: '',
       closedKeyResult: false
@@ -110,20 +123,7 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,pointingSyste
     // {...evaluationData,newValue:initialNewValue,...initialValuesForm}
    const[selectedInitialValue,setSelectedInitialValue]=useState<any>(evaluationData)
 
-    const [pointSystemsL,setPointSystemL]=useState<string>('')
-  useEffect(() => {
-    if(pointingSystem==='مرحله ای'){
-      setPointSystemL('req')
-    }
-   
-  }, [pointingSystem]);
-
-  useEffect(() => {
-    
-  console.log(selectedInitialValue)
-   
-  }, [selectedInitialValue])
-  
+    const [pointSystemsL,setPointSystemL]=useState<string>('');
 
 
 
@@ -136,8 +136,10 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,pointingSyste
 
 
   const initialSubmitForm: any = (data: any): any => {
-    console.log(data)
-    addCheck(data)
+    let totalData={...data,tensileScore:String(tensileScore)}
+    console.log(totalData)
+
+    addCheck(totalData)
  
   }
 
@@ -147,29 +149,40 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,pointingSyste
 
   useEffect(() => {
     
-  console.log(historyData)
+  // console.log(historyData)
   if (historyData) {
     let{assessmentRate,score,keyResultMeetingHistoryDtos,assessmentHistory}=historyData;
     let progData={assessmentRate:assessmentRate,score:score};
     setKeyResultMeetingHistoryDtos(keyResultMeetingHistoryDtos?.map((item:any)=>({id:uuid(),...item})));
     setAssessmentHistory(assessmentHistory?.map((item:any)=>({id:uuid(),...item})))
     setProgressFormValues(progData)
+    
+   
   }
   
   }, [historyData])
 
   useEffect(() => {
-    let{id:krId,currentValue,problems,currentState,nextState,description,score}:any=krMainInfo;
+    // console.log(krMainInfo)
+    let{id:krId,currentValue,problems,currentState,nextState,description,okR_KeyResultType,score}:any=krMainInfo;
+    setPointSystemL(okR_KeyResultType);
+
+    if (okR_KeyResultType==='مرحله ای') {
+      let pureVal=score?.replace('%','');
+     
+      setTensileScore(pureVal)
+    }
+
+
+    
+    
     let initValues={
       newValue:currentValue,
       problems:problems,
       currentState:currentState,
       nextState:nextState,
       description:description,
-      tensileScore:score
-
     }
-
     setFormIds((prev:any)=>({...prev,keyResultId:krId}));
 
     setSelectedInitialValue((prev:any)=>({...prev,...initValues}))
@@ -390,22 +403,7 @@ const KRHColumns: any = useMemo(()=>
       
     ],[]);
 
-    const initialSelectHisCart=(item:any)=>{
-    let{id,value,problems,currentState,description,...rest}=item;
-    console.log(value)
-    console.log(id,item)
-    setHisCartActiveId(id);
-    let initSelVal={
-      newValue:value,
-      problems:problems===null?'':problems,
-      currentState:currentState,
-      description:description,
-      tensileScore:''
-    }
-    // console.log(rest)
-    // setSelectedInitialValue({...initSelVal,...rest})
-    setSelectedInitialValue((prev:any)=>({...prev,...initSelVal}))
-    }
+
 
 
 
@@ -423,10 +421,10 @@ const KRHColumns: any = useMemo(()=>
 
 
   return (
-    <Grid container sx={{maxHeight:'90% !important '}}   >
+    <Grid container  >
     <Grid item xs={12}  >
     <Box width={'100%'} 
-    minHeight={'120px'} 
+    minHeight={'110px'} 
     borderRadius={2} 
     // boxShadow={3}  
     sx={{display:'flex',flexWrap:'wrap',justifyContent:'space-between',alignItems:'center'}}
@@ -484,54 +482,83 @@ const KRHColumns: any = useMemo(()=>
     }
     {
        historyData && <Grid  container >
-       <Grid item xs={12} sx={{bgcolor:'#F9F9F9'}}  >
+       <Grid item xs={12} mx={'auto'} sx={{bgcolor:'#F9F9F9'}}  >
        <Formik
-              validationSchema={pointSystemsL==='req'?straddKrSchema:intaddKrSchema}
+              validationSchema={pointSystemsL==="مرحله ای"?straddKrSchema:intaddKrSchema}
                enableReinitialize
                initialValues={selectedInitialValue || evaluationData  }
+               
                onSubmit={(data: AddEvalFace) => {
-                // console.log(data)
+        
                  initialSubmitForm(data)
    
+               }}
+               validate={(data)=>{
+                 console.log(data)
                }}
    
    
              >
                {
                  ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }:any) =>
+
+                 
                    <Form>
                      {
                        true && 
    
                        <Grid container columnSpacing={1} sx={{bgcolor:'#F9F9F9',mx:'auto',borderRadius:3}}   >
+                     
    
                        {/* <Grid item xs={4}   >
                        </Grid> */}
-                      { !iniValLoading && <Grid item xs={8}  >
+                      <Grid item xs={8}  >
                          <FormikControl
                            control='textField'
-                           type='text'
+                          //  type='text'
                            label='مقدار جدید'
                            name='newValue'
                           //  fullWidth
                            value={values?.newValue || ''}
+                          //  description={'hi'}
+                          //  helperText='kjkj'
+                          //  errors={errors}
+                          //  type={pointSystemsL==="مرحله ای"?'text':'number'}
                          />
                        </Grid>
                        
-                       }
+                       
                        
                          {
-                           pointSystemsL==='req'?
+                           pointSystemsL==='مرحله ای'?
                            <Grid item xs={2}  > 
-                           <FormikControl
+                           {/* <FormikControl
                            fullWidth
                            control='textField'
                            type='text'
                            label='امتیاز'
                            name='tensileScore'
+                           value={values?.tensileScore}
                            
-                           // helperText={'موانعی که با آن مواجه هستید؟'}
-                         />
+                         
+                         /> */}
+                       <Box  sx={{padding:'8px'}} >
+                    
+                        <TextField 
+                         label='امتیاز' 
+                         size='small'
+                         value={tensileScore || ''}
+                         error={tensileScore===''}
+                        //  type={pointSystemsL==="مرحله ای"?'text':'number'}
+                          fullWidth
+                          onChange={({target}:any)=>{
+                            let{value}=target;
+                            setTensileScore(value)
+                         
+                          }}
+                           />
+                    
+                       </Box>
                        </Grid>:''
                          }
    
@@ -561,7 +588,7 @@ const KRHColumns: any = useMemo(()=>
                    
                        </Grid>
    
-                       <Grid item xs={10} sx={{mt:1}}   >
+                       <Grid item xs={8} sx={{mt:1}}   >
                          {/* <FormikControl
                            control='select'
                            type='select'
@@ -611,20 +638,20 @@ const KRHColumns: any = useMemo(()=>
                      {
                           nextStateOptions && nextStateOptions.map((item:any,i:number)=>{
                             let{key,value}=item
-                            return <Tooltip  arrow title={key}>
+                            return <Tooltip key={i} arrow title={key}>
                                   <IconButton 
                                   onClick={()=>{
                                     setNextOptCurrIndex(i)
                                     setFieldValue('nextState',value)
                                   }}
                                   sx={{p:1,mx:1,
-                                    bgcolor:i===nextOptCurrIndex?'#DBDBDB':'inherit',
-                                  boxShadow:i===nextOptCurrIndex?4:0}} 
+                                  bgcolor:value===values?.nextState?'#E5F1FF':'inherit',
+                                  boxShadow:value===values?.nextState?3:1}} 
                                   
                                   size='large'   >
-                                            {i===0?<TagFacesIcon color={i===nextOptCurrIndex?'info':'inherit'} fontSize={'large'}  />:
-                                             i===1?<SentimentDissatisfiedIcon  color={i===nextOptCurrIndex?'info':'inherit'} fontSize={'large'} />:
-                                             i===2?<SentimentVeryDissatisfiedIcon  color={i===nextOptCurrIndex?'info':'inherit'} fontSize={'large'} />:''
+                                            {i===0?<img src={smile} style={{margin:'1px 3px'}} width={'25px'} />:
+                                             i===1?<img src={meh} style={{margin:'1px 3px'}} width={'25px'}/>:
+                                             i===2?<img src={sad} style={{margin:'1px 3px'}} width={'25px'} />:''
                                              }
                                   </IconButton>
                                 </Tooltip>
@@ -633,6 +660,14 @@ const KRHColumns: any = useMemo(()=>
                           </Box>
                  
                        </Grid> 
+
+                       <Grid item xs={4}  >
+                       <Box  py={5} textAlign={'center'}  >
+                        {
+                          addKrStatus && <Typography mt={2} fontWeight={900} color={'red'}>*{addKrStatus?.message}</Typography>
+                        }
+                       </Box>
+                       </Grid>
    
    
                        <Grid item xs={12} md={12} sx={{mt:1}} >
@@ -670,10 +705,10 @@ const KRHColumns: any = useMemo(()=>
                          setValue={setFieldValue}
                          value={values?.currentState || ''}
                          /> */}
-                    <Box width={'100%'} px={1}  textAlign={'start'}   >
+                    <Box width={'99%'} mx={'auto'}   textAlign={'start'}   >
                       <Typography variant='caption'  >وضعیت فعلی  نتیجه کلیدی را چگونه ارزیابی می کنید؟</Typography>
                     </Box>
-                      <Box px={1}  >
+                      <Box  >
                       <ButtonGroup sx={{mt:1}} variant="contained" aria-label="Basic button group">
                           {
                             currentStateOptions && currentStateOptions.map((item:any,i:number)=>{
@@ -681,17 +716,17 @@ const KRHColumns: any = useMemo(()=>
                             return <Box>
                               <Button 
                               // variant={i===currOptIndex?'contained':'text'} 
-                              color={i===currOptIndex?'info':'inherit'}
+                              
                               onClick={()=>{
                                 // currOptIndex,setCurrOptIndex
                                 setCurrOptIndex(i)
                                 setFieldValue('currentState',value)
                               }}
-                              sx={{whiteSpace:'nowrap'}} 
+                              sx={{whiteSpace:'nowrap',bgcolor:value===values?.currentState?'#E5F1FF':'inherit'}} 
                               fullWidth 
                                               
                                >
-                                <Typography py={1} >{key}</Typography>
+                                <Typography variant='caption' color={'black'} py={1} >{key}</Typography>
                                 </Button>
                             </Box>
                             })
@@ -768,7 +803,7 @@ const KRHColumns: any = useMemo(()=>
                                caption={'ذخیره'}
                                color={'#00387C'}
                                onClick={() => { }}
-                              //  disbled={!dirty || !isValid}
+                               disbled={!dirty || !isValid || AddChekinLoading || (pointSystemsL==="مرحله ای" && tensileScore==='' )}
                                // !isValid || !dirty 
                                variant={'contained'}
                                bgColor={'#00387C'}

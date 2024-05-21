@@ -8,19 +8,40 @@ import { useGetAllTeams } from '../../Hooks';
 import { useSelector } from 'react-redux';
 import {CircularProgress} from '@mui/material';
 import TeamCart from '../TeamCart/TeamCart';
+import {useGetTeamDetail } from '../../Hooks';
+import EditTeam from '../../Forms/EditTeam/EditTeam'
+
 // import { useGetAllTeams } from '../../Hooks';
 
+
+
 const Teams = () => {
-    const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
+    const userId=useSelector((state:any)=>state.loign.userInfo.userId);
+    const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
+    const [teamId,setTeamId]=useState<string|null>(null)
+    // const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
+    const{data:teamDetailData,isLoading:getTeamDetailLoading,isFetched:getTeamDetailFetched}=useGetTeamDetail(teamId)
     const [showAddTeam, setShowAddTeam] = useState<Boolean | null>(false);
+    const[showEditTeam,setShowEditTeam]=useState<Boolean|null>(false);
     const{data:teamsData,isLoading:getTeamLoading,isSuccess,isFetched}=useGetAllTeams(tenantId);
     const initialAddTeam = () => {
         setShowAddTeam(prev => !prev)
     }
 
+    // useEffect(() => {
+    // }, [teamsData])
     useEffect(() => {
-    //   console.log(teamsData)
-    }, [teamsData])
+      
+    // console.log(teamId)
+    if (teamId) {
+        setShowEditTeam(true)
+    }
+   
+    }, [teamId])
+    
+
+
+    
 
 
     if (getTeamLoading) {
@@ -64,6 +85,26 @@ const Teams = () => {
                             </ModalLyt>
 
                         }
+
+                        {
+                            showEditTeam  && <ModalLyt
+                            showModal={showEditTeam }
+                            setShowModal={setShowEditTeam}
+                            title={'ویرایش تیم'}
+                            
+                            >
+                        {
+                            getTeamDetailFetched && <EditTeam 
+                            teamId={teamId}
+                            loading={getTeamLoading}
+                            initialValues={teamDetailData}
+                            isFetchedData={getTeamDetailFetched}
+                            />
+                        }
+                
+
+                            </ModalLyt>
+                        }
                     </Box>
                 </Grid>
 
@@ -75,8 +116,13 @@ const Teams = () => {
                   >
                  {
                     isFetched && teamsData?.map((item:any,i:number)=>{
-                        let{name}=item
-                  return <TeamCart item={item}  />
+                      
+                  return <TeamCart 
+                  key={i}
+                  setTeamId={setTeamId} 
+                  item={item}  
+                  setShowEditForm={setShowEditTeam}
+                  />
                     })
                  }
                 </Box>

@@ -3,24 +3,56 @@ import {ReactComponent as AddStaffVector} from '../../StaticData/Vectors/addStaf
 import { Grid,Box, Typography,Button} from '@mui/material';
 import { Formik,Form } from 'formik';
 import { useSelector } from 'react-redux';
-import { useInviteUser } from '../../Hooks';
-import { addStaffInitialValues,addUserSchema } from '../../StaticData';
+import { useInviteUser,useEditPersonStaff } from '../../Hooks';
+import { addUserFace } from '../../Interfaces/Interfaces';
+import {addUserSchema } from '../../StaticData';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
-const AddStaff = ({onSuccesss}:any) => {
+const AddStaff = ({onSuccesss,initialValue,editMode,onClose}:any) => {
+  const[editPersonInitialValues,setEditPersonInitialValues]=useState<any>()
     const{mutate:inviteUser,data:inviteUserData,isSuccess}=useInviteUser()
   const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
   const userId:string=useSelector((state:any)=>state.loign.userInfo.userId);
   const[addUserMesaage,setAddUserMessage]=useState<string>('');
   const[successAddUser,setSuccessAddUser]=useState<Boolean>(false);
 
+  const staffInitialValues:addUserFace={
+    firstName:'',
+    lastName:'',
+   //  createById:'',
+    jobType:'',
+    phoneNumber:'',
+    tenantId:''
+     }
+  const[addStaffInitialValues,setAddStaffInitialValues]=useState<addUserFace>(staffInitialValues)
+
+ 
+
+
+
   // console.log(userId)
 
   useEffect(() => {
     
   // console.log(inviteUserData)
+
+ if (editMode && initialValue) {
+  let{firstName,lastName,phoneNumber,jobTypeName,id}=initialValue;
+  console.log(initialValue)
+  let initVal={
+    firstName:firstName,
+    lastName:lastName,
+    phoneNumber:phoneNumber,
+    jobType:jobTypeName,
+    tenantId:'',
+    id:id
+
+  }
+  console.log(initialValue)
+  setAddStaffInitialValues(initVal)
+ }
    
-  }, [inviteUserData])
+  }, [initialValue])
 
 
   useEffect(() => {
@@ -29,12 +61,37 @@ const AddStaff = ({onSuccesss}:any) => {
   
     
   }, [inviteUserData])
+
+  useEffect(() => {
+    // setAddUserMessage(editUserData?.data?.metaData.message)
+    // setSuccessAddUser(editUserSuccess)
+    // setAddStaffInitialValues({
+    //   firstName:'',
+    //   lastName:'',
+    //  //  createById:'',
+    //   jobType:'',
+    //   phoneNumber:'',
+    //   tenantId:''
+    //    })
+  
+    
+  }, [])
   
 
     const initialSubmitForm=(data:any)=>{ 
-        // console.log({...data,tenantId:tenantId,createById:userId})
-        inviteUser({...data,tenantId:tenantId,createById:userId})
+
+          console.log({...data,tenantId:tenantId,createById:userId})
+          inviteUser({...data,tenantId:tenantId,createById:userId})
+        
+
     }
+
+    const handleClose=()=>{
+      console.log('close')
+      onClose((prev:any)=>false)
+
+    }
+    
 
 
   return (
@@ -69,7 +126,7 @@ const AddStaff = ({onSuccesss}:any) => {
                 label='نام'
                 name='firstName'
                 fullWidth
-                value={values.firstName||''}
+                value={values?.firstName||''}
               />
             </Grid>
             
@@ -82,7 +139,7 @@ const AddStaff = ({onSuccesss}:any) => {
                 label='نام خانوادگی'
                 name='lastName'
                 fullWidth
-                value={values.lastName||''}
+                value={values?.lastName ||''}
               
               />
             </Grid>
@@ -94,7 +151,7 @@ const AddStaff = ({onSuccesss}:any) => {
                 label='شماره تلفن'
                 name='phoneNumber'
                 fullWidth
-                value={values.phoneNumber||''}
+                value={values?.phoneNumber||''}
               
               />
             </Grid>
@@ -109,7 +166,7 @@ const AddStaff = ({onSuccesss}:any) => {
                 label='عنوان شغلی'
                 name='jobType'
                 fullWidth
-                value={values.jobType ||''}
+                value={values?.jobType ||''}
               />
             </Grid>
 
@@ -174,7 +231,7 @@ const AddStaff = ({onSuccesss}:any) => {
                     // onClick={loginHandler}
                     disbled={false}
                     variant={'outlined'}
-                    onClick={()=>{}}
+                    onClick={handleClose}
                   />
                 </Box>
 

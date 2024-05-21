@@ -23,6 +23,18 @@ export default function MultiSelect(props: any) {
     setLoading(props.isLoading)
   }, [props])
 
+  useEffect(() => {
+    if (props.initialValues) {
+      setSelected(props.initialValues)
+      // console.log(props.initialValues)
+    }
+  
+   
+  }, [props.initialValues])
+
+  
+  
+
 
 
   const initialSelectItem = (value: any) => {

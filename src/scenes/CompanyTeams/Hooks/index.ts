@@ -3,9 +3,11 @@ import {GetKeyResultMeetingHistory,
     AddCheckinMeeting,
     GetKeyResultHistoryCheckinByKeyResultId
 } from '../Api/index';
+import { useDispatch } from 'react-redux';
+import { setAddKrStatusDataR } from '../../Meeting/MeetingsSlice/MeetingsSlice';
 import { useMutation, useQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
-
+import { useQueryClient } from 'react-query';
 
 const useGetKeyResultMeetingHistory=(krId:string|null,prId:string|null,meetId:string|null)=>{
     // console.log(krId)
@@ -63,18 +65,55 @@ const useGetAllTeamChildByParentId=(teamId:string | null,meetingId:string | null
 //     })
 // }
 
+// const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
+//     // const queryClient=useQueryClient();
+//  return useMutation({
+//     mutationFn:(checkinData)=>
+//     AddCheckinMeeting(checkinData),
+//     onSuccess:()=>{
+//         addCheckinSuccess()
+     
+//     },
+//     onError:(err:any)=>{
+   
+//     }
+//  })
+// }
+
 const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
-    // const queryClient=useQueryClient();
- return useMutation(AddCheckinMeeting,{
-    onSuccess:()=>{
+    const dispatch=useDispatch();
+    const queryClient=useQueryClient()
+    return useMutation({
+  mutationFn: (checkinData:any) =>
+    AddCheckinMeeting(checkinData),
+  onSuccess: (data:any) => {
+    // console.log(data?.data)
+    dispatch(setAddKrStatusDataR(data?.data))
         addCheckinSuccess()
-        // queryClient.invalidateQueries('getAllMeetingByIds')
-    },
-    onError:(err:any)=>{
-    //    console.log(err)
-    }
- })
-}
+
+    // console.log(data)
+    // queryClient.invalidateQueries('GetTenantSetting')
+  },
+});
+   }
+
+
+
+
+
+
+// const useAddTeam=()=>{
+//     const queryClient=useQueryClient()
+//           return useMutation({
+//         mutationFn: (teamData:any) =>
+//             addTeam(teamData),
+//         onSuccess: (data) => {
+//           queryClient.invalidateQueries('getAllTeams')
+//         //  console.log(data)
+//         },
+//       });
+//      }
+
 
 // const useGetKeyResultHistoryCheckinByKeyResultId=()=>{
 //     return useQuery(['GetKeyResultHistoryCheckinByKeyResultId'],

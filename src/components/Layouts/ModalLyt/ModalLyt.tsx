@@ -22,9 +22,11 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
     bgcolor:'#F9F9F9 !important',
     borderRadius:'10px',
     boxShadow: 24,
-    overFlowY:'scroll',
-    innerHeight:'90%',
-    // maxHeight:'90% !important '
+    // overFlowY:'scroll nt',
+    overflow:'scroll',
+    // minHeight: '80vh',
+   
+    maxHeight:'90% !important '
     
   };
   const [open, setOpen] = React.useState(false);
@@ -42,9 +44,10 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={showModal}
-        // onClose={handleClose}
+        onClose={handleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
+      
         slotProps={{
           backdrop: {
             timeout: 500,
@@ -54,7 +57,7 @@ export default function ModalLyt({showModal,setShowModal,title,children,KRHLoadi
         <Fade in={showModal}>
       
           <Box sx={style}>
-          <Grid container  sx={{p:2,overflowY:'auto',maxHeight:'90% !important'}}>
+          <Grid container  sx={{p:2}}>
            <Grid item xs={12} mb={1} >
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
            <Box>

@@ -1,5 +1,11 @@
 import { useMutation,useQuery,useQueryClient} from "react-query";
-import {addTeam,getAllTeams,getAllActivePersonByTenantId,getAllPersonByTenantId,inviteUser} from '../Api/index'
+import {addTeam,getAllTeams,getAllActivePersonByTenantId,
+  getAllPersonByTenantId,inviteUser,
+  editPerson,deleteTeam,deletePerson,
+  editPersonStaff,deleteInvitedPerson,
+  getTeamDetail,
+  editTeam
+} from '../Api/index'
 
 
 const useGetAllTeams=(tenantId:string|null)=>{
@@ -85,6 +91,121 @@ const useAddTeam=()=>{
     },
   });
      }
+
+     const useGetPersonDetails=(perId:string|null)=>{
+      console.log(perId)
+  
+      return useQuery(['GetPersonDetails',perId],editPerson,{
+       enabled:!!perId,
+       refetchOnWindowFocus:false,
+       cacheTime:Infinity,
+       onError:(err:any)=>{
+       console.log(err)
+       }
+       ,
+      select:(data)=>{
+        let rawData=data?.data.data;
+        return rawData
+      //  console.log(data)
+      }
+
+      })
+     
+     }
+
+
+     const useDeleteTeam=()=>{
+      const queryClient=useQueryClient()
+      return useMutation(deleteTeam,{
+        onSuccess:()=>{
+          queryClient.invalidateQueries('getAllTeams')
+        }
+        ,
+
+      })
+     }
+
+
+
+     const useDeletePerson=()=>{
+      const queryClient=useQueryClient()
+      return useMutation(deletePerson,{
+        onSuccess:()=>{
+          queryClient.invalidateQueries('getAllPersonByTenantId')
+        }
+        ,
+
+      })
+     }
+
+     const useDeleteInvitedPerson=()=>{
+      const queryClient=useQueryClient()
+      return useMutation(deleteInvitedPerson,{
+        onSuccess:()=>{
+          queryClient.invalidateQueries('getAllPersonByTenantId')
+        }
+        ,
+
+      })
+     }
+
+
+    //  deleteInvitedPerson
+
+     const useEditPersonStaff=(editSuccess:any)=>{
+      const queryClient=useQueryClient();
+      // return useMutation(editPersonStaff,{
+      //   onSuccess:()=>{
+      //     editSuccess()
+      //     queryClient.invalidateQueries('getAllPersonByTenantId')
+      //   }
+      //   ,
+
+      // })
+
+      return useMutation({
+        mutationFn: (userData:any) =>editPersonStaff(userData),
+        onSuccess: (data:any) => {
+          editSuccess()
+          queryClient.invalidateQueries('getAllPersonByTenantId')
+        },
+      });
+     }
+  
+
+
+
+
+
+
+     const useEditTeam=()=>{
+      const queryClient=useQueryClient();
+      return useMutation(editTeam,{
+        onSuccess:()=>{
+          queryClient.invalidateQueries('getAllTeams')
+        }
+        ,
+
+      })
+     }
+
+     const useGetTeamDetail=(teamId:string|null)=>{
+       return useQuery(['GetTeamDetails',teamId],getTeamDetail,{
+        enabled:!!teamId,
+        refetchOnWindowFocus:false,
+        cacheTime:Infinity,
+        onError:(err:any)=>{
+        console.log(err)
+        }
+        ,
+       select:(data)=>{
+         let rawData=data?.data.data;
+         return rawData
+       //  console.log(data)
+       }
+ 
+       })
+     }
      
 
      export{
@@ -92,5 +213,12 @@ const useAddTeam=()=>{
        useGetAllTeams,
        useGetAllActivePersonByTenantId,
        useGetAllPersonByTenantId,
-       useInviteUser
+       useInviteUser,
+       useGetPersonDetails,
+       useDeleteTeam,
+       useDeletePerson,
+       useEditPersonStaff,
+       useDeleteInvitedPerson,
+       useGetTeamDetail,
+       useEditTeam
      }

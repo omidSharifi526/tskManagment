@@ -52,7 +52,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
     tenantId: profileTenantId,
     keyResultId: kresultId,
     objectiveId: objectiveId,
-    tensileScore: '',
+    // tensileScore: '',
     currentState: '',
     description: '',
     closedKeyResult: false

@@ -16,6 +16,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 import smil from '../../../Asset/Svgs/Emojys/smil.png';
 import meh from '../../../Asset/Svgs/Emojys/meh.png';
+import sad from '../../../Asset/Svgs/Emojys/sad.png';
 import { changeTreeViewStateR } from '../../Meeting/MeetingsSlice/MeetingsSlice'
 import { useDispatch } from 'react-redux';
 import AddMeetingSuccess from '../../Meeting/LComponents/AddMeetingSuccess/AddMeetingSuccess';
@@ -118,7 +119,7 @@ if (objectiveSelectedData) {
 
   useEffect(() => {
 if (rowSelectedData) {
-  let{name,id,responsibleName,startDate,startValue,threeTenthsValue,sevenTenthsValue,oneValue,currentValue,problems,predict,currentStateValue,description,score}=rowSelectedData;
+  let{name,id,responsibleName,startDate,startValue,threeTenthsValue,sevenTenthsValue,oneValue,currentValue,problems,predict,currentStateValue,description,score,okR_KeyResultType}=rowSelectedData;
   let krSelected:krSelectedFace={
     name:name,
     id:id,
@@ -133,7 +134,8 @@ if (rowSelectedData) {
     nextState:predict,
     currentState:currentStateValue,
     description:description,
-    score:score
+    score:score,
+    okR_KeyResultType:okR_KeyResultType
   }
   setKrMainInfo(krSelected)
 console.log(rowSelectedData)
@@ -786,6 +788,10 @@ console.log(rowSelectedData)
           case 'با ریسک عدم دستیابی مواجه هستیم اما تمام تلاش خود را خواهیم کرد':
             return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={meh} width={'20px'} /></Box>
             break;
+            case "اعتقادی نداریم به نتیجه برسیم مگر اینکه رویکرد جدیدی اتخاذ کنیم":
+            return <Box sx={{ width: '100%', textAlign: 'center' }}  ><img src={sad} width={'20px'} /></Box>
+            break;
+            // "اعتقادی نداریم به نتیجه برسیم مگر اینکه رویکرد جدیدی اتخاذ کنیم"
           // 
 
 
@@ -1119,7 +1125,7 @@ console.log(rowSelectedData)
 
         {
           showAddEvalModal && <ModalLyt
-            width={1600}
+            width={1300}
             title={'تعیین مقدار برای نتیجه کلیدی'}
             showModal={Boolean(showAddEvalModal)}
             setShowModal={setShowAddEvalModal}
@@ -1141,7 +1147,7 @@ console.log(rowSelectedData)
               cancelo={setShowAddEvalModal}
               objectiveManiInfo={objectiveManiInfo}
               krMainInfo={krMainInfo}
-              pointingSystem={pointingSystem}
+              // pointingSystem={pointingSystem}
               objectiveId={objectivee?.id}
               kresultId={krId}
               // afterAddKr={initialAfterAddKr}

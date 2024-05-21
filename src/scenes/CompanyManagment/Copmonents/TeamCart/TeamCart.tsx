@@ -2,11 +2,44 @@ import React from 'react';
 import {Grid,Box,Typography,Button} from '@mui/material'
 import {ReactComponent as ManagerTeamVector} from '../../StaticData/Vectors/managerTeamVector.svg';
 import {ReactComponent as PersonelVector} from '../../StaticData/Vectors/personelVector.svg';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {IconButton} from '@mui/material';
+import { useDeleteTeam } from '../../Hooks';
+import { useSelector } from 'react-redux';
+
 
 const TeamCart = (props:any) => {
-    let {item}:any=props;
-    let{name,managerName,personCount,chlidsTeamCount,activated}=item;
-    console.log(name)
+  const userId=useSelector((state:any)=>state.loign.userInfo.userId);
+  const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
+
+    let {item,setTeamId,setShowEditForm}:any=props;
+    let{name,managerName,personCount,chlidsTeamCount,activated,id}=item;
+    const{mutate:deleteTeam}=useDeleteTeam()
+
+
+
+
+    const initialDeleteTeam=()=>{
+          let deleteBody={
+      deletedId:id,
+      userId:userId,
+      tenantId:tenantId
+
+  }
+  deleteTeam(deleteBody)
+
+    }
+
+    const initialEditTeam=()=>{
+      setShowEditForm(true)
+      setTeamId(id)
+    }
+
+
+
+
+
+
   return (
     <Box width={'390px'} 
  borderRadius={3} 
@@ -15,12 +48,21 @@ const TeamCart = (props:any) => {
     >
         <Grid container p={1} >
        <Grid item xs={12}   >
-    <Box width={'100%'} p={1} >
-        <Typography  color={'#001733'} fontWeight={700}   >
+    <Box width={'100%'} p={1} display={'flex'} justifyContent={'space-between'} >
+      <Box>
+      <Typography  color={'#001733'} fontWeight={700}   >
             {
                 name
             }
         </Typography>
+      </Box>
+      <Box>
+        <IconButton onClick={()=>{
+            initialDeleteTeam()
+        }}  >
+            <DeleteIcon/>
+        </IconButton>
+      </Box>
     </Box>
        </Grid>
 
@@ -101,7 +143,7 @@ const TeamCart = (props:any) => {
      </Typography>
         </Box>
         <Box py={1}>
-        <Button variant='text'  >
+        <Button variant='text' onClick={initialEditTeam}  >
             ویرایش
         </Button>
       </Box>

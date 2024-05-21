@@ -22,7 +22,7 @@ const Setting = () => {
   
    
     const{data:tenantSettingsData,isLoading:getTenantSettinLoading,isFetched}=useGetTenantSetting(tenantId);
-    const{mutate:callAddTenantSetting,isSuccess:changeSettingSuccess,isLoading:changeSettingLoading}=useAddSettings()
+    const{mutate:callAddTenantSetting,isSuccess:changeSettingSuccess,isLoading:changeSettingLoading,data:settingData}=useAddSettings()
     const[SettingsState,setSettingsState]=useState<settingItemFace[]>([]);
     const[remainData,setRemainData]=useState<any>(null);
     const[asyncState,setAsyncState]=useState<any>({
@@ -75,6 +75,14 @@ const Setting = () => {
         }
         
         }, [isFetched])
+
+
+        useEffect(() => {
+          
+        console.log(settingData)
+        
+        }, [settingData])
+        
 
         const initialAddSetting=()=>{
           

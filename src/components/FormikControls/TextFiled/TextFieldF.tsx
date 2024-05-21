@@ -70,12 +70,12 @@ function TextFieldF(props:any) {
    
               </Field> 
               {
-                true && <Typography color={theme.palette.mode==='dark'?'white':'black'} variant='button' mt={'0.3rem'} px={1} textAlign={'left'}  ><span>{helperText}</span></Typography>
+                true && <Typography color={theme.palette.mode==='dark'?'white':'black'} variant='button' mt={'0.3rem'} px={1} textAlign={'left'}  ><span>{errors}</span></Typography>
               }
              
-              {errors&&
+              {/* {errors&&
                 <span style={{color:'red',fontSize:'12px'}}> {errors}</span>
-                }
+                } */}
   </FormControl>
   )
   }

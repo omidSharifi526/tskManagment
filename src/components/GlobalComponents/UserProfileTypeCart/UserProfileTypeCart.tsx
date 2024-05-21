@@ -67,19 +67,4 @@ useEffect(() => {
 }
 
 
-
-// import{login} from '../Api/index';
-// import {setUserDataR} from '../LoginSlice/LoginSlice';
-// import { useDispatch } from 'react-redux';
-// const useLogin = () => {
-//     const dispatch=useDispatch();
-//     
-//     const queryClient = useQueryClient();
-//     queryClient.setMutationDefaults(["Login-user"], 
-//     {
-//       mutationFn: (data:any) => login(),
-//       onSuccess: (data) => {
-//         // console.log(data.data.data);
-//         let userData=data?.data.data
-//         dispatch(setUserDataR(userData))
-//         
+      

@@ -55,7 +55,7 @@ const nextStateOptions:SelectOptionFace[]=[
 ,
 {
     key:'اعتقاد نداریم به نتیجه ای برسیم مگر اینکه رویکرد جدید اتخاذ کنیم.',
-    value:'WeDoNotBelieveThatWeWillReachTheResultUnlessWeAdoptNewApp'
+    value:'WeDoNotBelieveThatWeWillReachTheResultUnlessWeAdoptNewApproach'
 }
 ];
 
@@ -73,20 +73,20 @@ switch (index) {
 
 const straddKrSchema = yup.object().shape({
     newValue:yup.string().required(''),
-    tensileScore:yup.string().required(''),
+    // tensileScore:yup.string().required(''),
     // problems:yup.string().required(''),
-    // nextState:yup.string().required(''),
-    // currentState:yup.string().required(''),
+    nextState:yup.string().required(''),
+    currentState:yup.string().required(''),
  });
-
+//  'this will be displayed when empty'
  const intaddKrSchema = yup.object().shape({
     newValue:yup.number().required(''),
     // tensileScore:yup.string().required(''),
     // problems:yup.string().required(''),
-    // nextState:yup.string().required(''),
-    // currentState:yup.string().required(''),
+    nextState:yup.string().required(''),
+    currentState:yup.string().required(''),
  });
-
+// .min(1).max(100)
 
 
 
