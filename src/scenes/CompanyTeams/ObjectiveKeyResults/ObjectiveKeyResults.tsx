@@ -7,13 +7,13 @@ import { useGetKeyResultMeetingHistory } from '../Hooks/index';
 import KrHistoryModalContent from '../LComponents/KrHistoryModalContent/KrHistoryModalContent';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddKrEvaluation from '../LComponents/Forms/AddKrEvaluation/AddKrEvaluation';
-// import { v4 as uuidv4 } from 'uuid';
+import { ObjectiveSelectedFace,krSelectedFace } from '../Interfaces/interfaces';
 import DyDataGrid from '../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
 import { useSelector } from 'react-redux';
 import { EmptyDataIcon } from '../StataicData/index';
 import TeamsNavigations from '../LComponents/TeamsNavigation/TeamsNavigations';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import sad from '../../../Asset/Svgs/Emojys/sad.png';
+
 import smil from '../../../Asset/Svgs/Emojys/smil.png';
 import meh from '../../../Asset/Svgs/Emojys/meh.png';
 import { changeTreeViewStateR } from '../../Meeting/MeetingsSlice/MeetingsSlice'
@@ -26,7 +26,6 @@ import {CircularProgress} from '@mui/material';
 import { CreateKReval } from '../LComponents/Forms/CreateKReval/CreateKReval';
 
 import LyBackdrop from '../../../components/Layouts/BackDrop/BackDrop';
-import { isNull } from 'util';
 
 const ObjectiveKeyResults: React.FC = () => {
   const dispatch = useDispatch()
@@ -49,11 +48,15 @@ const ObjectiveKeyResults: React.FC = () => {
   const [krRowData, setKrRowData] = useState(null);
   const [showToolbarModal, setShowToolbarModal] = useState<Boolean|null>(false);
   const [addEvalSuccessModal,setAddEvalSuccessModal]=useState<Boolean|null>(false);
-  const [showAddEvalModal, setShowAddEvalModal] = useState(false);
+  const [showAddEvalModal, setShowAddEvalModal]=useState<Boolean>(false);
   const [SuccessState,setSuccessState] = useState<boolean>(false);
   const[pointingSystem,setPointingSystem]=useState<string|null>(null);
-  const[rowSelectedData,setRowSelectedData]=useState<any>(null);
   
+  const[rowSelectedData,setRowSelectedData]=useState<any>(null);
+  const[objectiveSelectedData,setObjectiveSelectedData]=useState<any>(null);
+  const[objectiveManiInfo,setObjectiveMainInfo]=useState<ObjectiveSelectedFace|null>(null);
+  const[krMainInfo,setKrMainInfo]=useState<krSelectedFace|null>(null);
+  // const[object]
   const getObjectiveSuccess=()=>{
 
   }
@@ -97,24 +100,50 @@ if (getObjectiveAgainFetched) {
   const { data: KrHistoryData, isLoading: KRHLoading, isError: KRHError, isFetched: KRHFetched } = useGetKeyResultMeetingHistory(krId, priodId, meetingId);
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  // console.log(rowSelectedData)
-  
-  // }, [rowSelectedData])
-
-
-
-  
- 
-
-  const initialAfterAddKr=()=>{
-console.log('successFromParent');
-// clg
-setObjSelectionModel(objectivies[0]?.id)
-setKeysResultsList()
-// setObjSelectionModel()
+if (objectiveSelectedData) {
+  console.log(objectiveSelectedData)
+  let{name,id}=objectiveSelectedData;
+  let ObjSelected={
+    name:name,
+    id:id
   }
+  setObjectiveMainInfo(ObjSelected)
+}
+
+  // objectiveManiInfo,setObjectiveMainInfo
+  }, [objectiveSelectedData])
+
+
+  useEffect(() => {
+if (rowSelectedData) {
+  let{name,id,responsibleName,startDate,startValue,threeTenthsValue,sevenTenthsValue,oneValue,currentValue,problems,predict,currentStateValue,description,score}=rowSelectedData;
+  let krSelected:krSelectedFace={
+    name:name,
+    id:id,
+    responsibleName:responsibleName,
+    startDate:startDate,
+    startValue:startValue,
+    threeTenthsValue:threeTenthsValue,
+    sevenTenthsValue:sevenTenthsValue,
+    oneValue:oneValue,
+    currentValue:currentValue,
+    problems:problems,
+    nextState:predict,
+    currentState:currentStateValue,
+    description:description,
+    score:score
+  }
+  setKrMainInfo(krSelected)
+console.log(rowSelectedData)
+}
+  
+  }, [rowSelectedData]);
+
+  
+
+  
 
 
 
@@ -1001,7 +1030,8 @@ setKeysResultsList()
               data={objectivies}
               columns={objectiveColumns||[]}
               hideFooter={true}
-              setRowSelectedData={}
+
+              setRowSelectedData={setObjectiveSelectedData}
               //  objcSelectionModel,setObjSelectionModel
               setSelectionModel={setObjSelectionModel}
               selectionModel={objcSelectionModel}
@@ -1089,12 +1119,14 @@ setKeysResultsList()
 
         {
           showAddEvalModal && <ModalLyt
+            width={1600}
             title={'تعیین مقدار برای نتیجه کلیدی'}
             showModal={Boolean(showAddEvalModal)}
             setShowModal={setShowAddEvalModal}
 
 
           >
+            {/* afterAddKr */}
             {/* <AddKrEvaluation
               cancelo={setShowAddEvalModal}
               objectiveId={objectivee?.id}
@@ -1104,8 +1136,17 @@ setKeysResultsList()
               afterAddKr={initialAfterAddKr}
               rowSelectedData={rowSelectedData}
             /> */}
+    
             <CreateKReval
               cancelo={setShowAddEvalModal}
+              objectiveManiInfo={objectiveManiInfo}
+              krMainInfo={krMainInfo}
+              pointingSystem={pointingSystem}
+              objectiveId={objectivee?.id}
+              kresultId={krId}
+              // afterAddKr={initialAfterAddKr}
+              onsucces={setSuccessState}
+              // krMainInfo={krMainInfo}
             
             
             

@@ -8,22 +8,25 @@ import {Typography,IconButton,Grid} from '@mui/material';
 import Close from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 1200,
-  // bgcolor: 'background.paper',
-  bgcolor:'#F9F9F9 !important',
- borderRadius:'10px',
-  boxShadow: 24,
-  overFlowY:'scroll',
-  innerHeight:'90%'
-  
-};
+
 
 export default function ModalLyt({showModal,setShowModal,title,children,KRHLoading,width}:any) {
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: width?width:1200,
+    
+    // bgcolor: 'background.paper',
+    bgcolor:'#F9F9F9 !important',
+    borderRadius:'10px',
+    boxShadow: 24,
+    overFlowY:'scroll',
+    innerHeight:'90%',
+    // maxHeight:'90% !important '
+    
+  };
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setShowModal(false);

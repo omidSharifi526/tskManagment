@@ -13,21 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import { intaddKrSchema,straddKrSchema } from '../../../StataicData';
 // useGetMeetingKeyResultValueById
 import { useGetMeetingKeyResultValueById } from '../../../../Meeting/Hooks';
-// {
-//   "meetingId": "78667f0e-f023-454b-b7d4-261a38760a22",
-//   "teamId": "fb7cc4ea-7162-4916-9aa8-834b14308e10",
-//   "periodId": "9fc71f3a-3235-492d-927f-38eed39e6550",
-//   "tenantId": "eb781974-3cb0-4c3a-881e-97af686ce7f5",
-//   "keyResultId": "7d1efc88-7e55-49bc-b960-7fbec97afd36",
-//   "objectiveId": "714820bb-0642-4159-8ac7-7fe54d9078f1",
-//   "newValue": "20",
-//   "tensileScore": "40",
-//   "currentState": "OnTheRightTrack",
-//   "nextState": "WeExpectToGetTheRightResult",
-//   "problems": "test",
-//   "description": "test",
-//   "closedKeyResult": false,
-// }
 
 
 
@@ -77,7 +62,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
   const addCheckinSuccess = () => {
     afterAddKr()
     cancelo()
-     onsucces(true)
+    onsucces(true)
 
   }
   const { mutate: addCheck, isSuccess,isLoading } = useAddCheckinMeeting(addCheckinSuccess);

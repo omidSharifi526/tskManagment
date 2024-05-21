@@ -1,4 +1,8 @@
-import {GetKeyResultMeetingHistory,GetAllTeamChildByParentId,AddCheckinMeeting} from '../Api/index';
+import {GetKeyResultMeetingHistory,
+    GetAllTeamChildByParentId,
+    AddCheckinMeeting,
+    GetKeyResultHistoryCheckinByKeyResultId
+} from '../Api/index';
 import { useMutation, useQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -72,6 +76,63 @@ const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
  })
 }
 
+// const useGetKeyResultHistoryCheckinByKeyResultId=()=>{
+//     return useQuery(['GetKeyResultHistoryCheckinByKeyResultId'],
+//     GetKeyResultHistoryCheckinByKeyResultId,{
+//         cacheTime:Infinity,
+//         refetchOnWindowFocus:false,
+//         onError:()=>{
+
+//         },
+//         select:(data:any)=>{
+//         // let rawData=data?.data
+//         console.log(data)
+//         // return rawData
+//         },
+//         onSuccess:(data)=>{
+//             console.log('jijijij')
+//         console.log(data)
+//         }
+//     }
+   
+        
+//     )
+// }
+
+
+// (teamId:string | null,meetingId:string | null,priodId:string | null
+const useGetKeyResultHistoryCheckinByKeyResultId=(formIds:any)=>{
+    // let ids={teamId:teamId,meetingId:meetingId,priodId:priodId}
+    return useQuery(['GetKeyResultHistoryCheckinByKeyResultId',formIds],GetKeyResultHistoryCheckinByKeyResultId,{
+    enabled:!!formIds.keyResultId,
+    cacheTime:Infinity,
+    refetchOnWindowFocus:false,
+    onError:(err)=>{
+    // console.log(err)
+    }
+    ,
+    select:(data:any)=>{
+        let rawData=data?.data?.data;
+        return rawData
+       }
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // const useAddMeeting=(addMeetingSuccess:any)=>{
 //     const queryClient=useQueryClient();
@@ -89,5 +150,6 @@ const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
 export{
     useGetKeyResultMeetingHistory,
     useGetAllTeamChildByParentId,
-    useAddCheckinMeeting
+    useAddCheckinMeeting,
+    useGetKeyResultHistoryCheckinByKeyResultId
 }

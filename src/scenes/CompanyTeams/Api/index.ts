@@ -33,10 +33,19 @@ return await axiosInstance.post('Meeting/AddCheckinMeeting',checkinData)
 // }
 
 
+// https://api.myokr.ir/api/Meeting/GetKeyResultHistoryCheckinByKeyResultId?meetingId=e35d40da-0f4b-45a2-bb86-acad391909c3&periodId=9fc71f3a-3235-492d-927f-38eed39e6550&keyResultId=d73dfbde-b311-4849-bd20-2a0cacee96ea
 
+const GetKeyResultHistoryCheckinByKeyResultId=async({queryKey}:any)=>{
+    // formIds
+    // {meetingId:meetingId,periodId:periodId,keyResultId:''}
+    let mainIds=queryKey[1];
+    let{meetingId,periodId,keyResultId}=mainIds
+    return axiosInstance.get(`Meeting/GetKeyResultHistoryCheckinByKeyResultId?meetingId=${meetingId}&periodId=${periodId}&keyResultId=${keyResultId}`)
+}
 
 export{
     GetKeyResultMeetingHistory,
     GetAllTeamChildByParentId,
-    AddCheckinMeeting
+    AddCheckinMeeting,
+    GetKeyResultHistoryCheckinByKeyResultId
 }
