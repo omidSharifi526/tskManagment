@@ -39,9 +39,6 @@ const Tenants = () => {
          wrap:'wrap',
           width: 170,
           flex:1
-
-       
-        
       },
       { field: 'scale',
       align:'center',

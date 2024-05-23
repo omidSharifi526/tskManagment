@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
-import {Box,Grid,Typography} from '@mui/material';
+import {Box,Grid,Typography,TextField} from '@mui/material';
 import { useEditTeam } from '../../Hooks';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
 import { Formik, Form } from 'formik';
@@ -15,11 +15,14 @@ import {useGetTeamDetail } from '../../Hooks';
 //   loading={getTeamLoading}
 // initialValues={teamsData}
 const EditTeam = (props:any) => {
-    let{loading,initialValues,isFetchedData}=props;
+    let{loading,initialValues,isFetchedData,onClose}=props;
     const [teamId,setTeamId]=useState<string|null>(null)
     // const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
-    const{data:teamDetailData,isLoading:getTeamDetailLoading,isFetched:getTeamDetailFetched}=useGetTeamDetail(props?.teamId)
-    const{mutate:callEditTeam}=useEditTeam()
+    const{data:teamDetailData,isLoading:getTeamDetailLoading,isFetched:getTeamDetailFetched}=useGetTeamDetail(props?.teamId);
+    const EditTeamSuccess=()=>{
+    onClose(false)
+    }
+    const{mutate:callEditTeam}=useEditTeam(EditTeamSuccess)
     const[editTeamsinintialValues,setEditTeamsInitialValues]=useState<any>(null);
     const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
     const userId=useSelector((state:any)=>state.loign.userInfo.userId);
@@ -63,7 +66,7 @@ const EditTeam = (props:any) => {
       }
     
     
-    }, [])
+    }, [teamDetailData])
 
     useEffect(() => {
       
@@ -72,8 +75,6 @@ const EditTeam = (props:any) => {
     }, [editTeamsinintialValues])
 
     useEffect(() => {
-
-        // console.log(activePersonData)
         setPersonIdData(activePersonData?.map((item:any)=>{
           let{key,value}=item;
           return {year:value,title:key}
@@ -97,9 +98,14 @@ const EditTeam = (props:any) => {
     if (getTeamDetailLoading) {
         return <Box py={4} textAlign={'center'}  >
             {/* <CircularProgress color='prima'   /> */}
-            <h1>darhaale felan</h1>
+            <CircularProgress/>
         </Box>
     }
+  //   if (personDEtLoading || editPersonLoading) {
+  //     return <Box py={6}   textAlign={'center'}   >
+  //      <CircularProgress/>
+  //     </Box>
+  // }
 
 
     return (
@@ -112,7 +118,8 @@ const EditTeam = (props:any) => {
           <Grid item xs={12}   >
     
       {
-       getTeamDetailFetched ==true ?  <Formik enableReinitialize
+       !getTeamDetailLoading ==true ?  <Formik 
+         enableReinitialize
           initialValues={editTeamsinintialValues}
           onSubmit={(data: any) => {
             initialSubmitForm(data)
@@ -124,18 +131,29 @@ const EditTeam = (props:any) => {
               <Form>
                 <Grid container columnSpacing={1} sx={{ bgcolor: 'background.paper', mx: 'auto', borderRadius: 3 }}   >
     
-                  <Grid item xs={12}   >
-    
-                  </Grid>
+                
                   <Grid item xs={4}  >
-                    <FormikControl
+                    {/* <FormikControl
                       control='textField'
                       type='text'
                       label='نام'
                       name='name'
                       fullWidth
                       value={values?.name || ''}
+                    /> */}
+                   <Box sx={{padding:'8px'}}  >
+                   <TextField
+                    size='small'
+                    fullWidth
+                    label={'نام'}
+                    value={values?.name || ''}
+                    onChange={({target}:any)=>{
+                   let{value}=target;
+                   setFieldValue('name',value)
+                    }}
                     />
+
+                   </Box>
                   </Grid>
     
     
@@ -185,7 +203,9 @@ const EditTeam = (props:any) => {
                           caption={'انصراف'}
                           disbled={false}
                           variant={'outlined'}
-                          onClick={() => { }}
+                          onClick={()=>{
+                            onClose(false)
+                          }}
                         />
                       </Box>
     

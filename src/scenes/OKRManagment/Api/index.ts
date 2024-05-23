@@ -90,6 +90,13 @@ const AddObjective=async(ObjectiveData:any)=>{
 return await axiosInstance.post('OKR/AddObjective',ObjectiveData)
 }
 
+// https://api.myokr.ir/api/OKR/GetObjectiveDetailsById/?id=a29fa52c-7376-49e2-8091-6f5f0a7ccdc2
+
+const getObjectiveDetails=async({queryKey}:any)=>{
+    let objId:string|null=queryKey[1];
+return await axiosInstance.get(`OKR/GetObjectiveDetailsById/?id=${objId}`)
+}
+
 
 
 
@@ -107,5 +114,5 @@ export{
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     AddObjective,
-    
+    getObjectiveDetails
 }

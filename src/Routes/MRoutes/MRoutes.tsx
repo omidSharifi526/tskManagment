@@ -52,7 +52,7 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
 
 
 
-<Route  path="/dashboard/okrManagment/kr"  
+<Route  path="/dashboard/okrManagment/objectiveDetails"  
   element={<Suspense 
   fallback={<div>درحال بارگزاری...</div>} >
     <RequierAuth>

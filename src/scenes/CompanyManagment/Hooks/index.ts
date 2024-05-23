@@ -178,11 +178,12 @@ const useAddTeam=()=>{
 
 
 
-     const useEditTeam=()=>{
+     const useEditTeam=(EditTeamSuccess:any)=>{
       const queryClient=useQueryClient();
       return useMutation(editTeam,{
         onSuccess:()=>{
-          queryClient.invalidateQueries('getAllTeams')
+          queryClient.invalidateQueries('getAllTeams');
+          EditTeamSuccess()
         }
         ,
 

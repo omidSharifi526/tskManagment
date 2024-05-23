@@ -10,6 +10,11 @@ import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton'
 import CreateObjective from '../../Forms/CreateObjective/CreateObjective';
 import {CircularProgress} from '@mui/material';
 import { useNavigate,useParams } from 'react-router-dom';
+import OCart from '../OCart/OCart';
+
+
+
+
 const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
   const navigate=useNavigate();
   const[allObjective,setAllObjective]=useState<any[]>()
@@ -38,11 +43,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
      </Box>
   }
 
-  const initialGoToKrPage=(item:any)=>{
-    // console.log(item);
-    let{id}=item;
-    navigate('/dashboard/okrManagment/kr',{replace:true,state:{objectiveId:id}})
-  }
+
   
   return (
     <>
@@ -98,8 +99,8 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
           </Grid>
           <Grid item xs={12}  >
           
-           <Box  width={'100%'} display={'flex'} justifyContent={'start'} flexWrap={'wrap'}  >
-           {
+            <Grid container spacing={2}  >
+           {/* {
              allObjective && allObjective.map((item:any,i:number)=>{
                return    <Box 
                
@@ -120,11 +121,30 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
                </Button>
                  </Box>
              })
-           }
-           </Box>
+           } */}
+           {
+            allObjective && allObjective.map((o:any,i:number)=>{
+              return <Grid  item xs={12} sm={3}  >
+                <Box width={'100%'} key={i}   >
+                <OCart obj={o}   />
+              </Box>
+              </Grid>
+            })
+          }
+           </Grid> 
+    
+    
+           
+
+
+
+
           </Grid>
          </Grid>
          }
+
+
+         
         </Grid>
 
        

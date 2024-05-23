@@ -56,7 +56,6 @@ function TextFieldF(props:any) {
                type={type}
                size="small"
                placeholder={placeholder}
-              
                InputLabelProps={{
                 htmlFor: name,
                 style: {

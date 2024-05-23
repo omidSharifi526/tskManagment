@@ -27,8 +27,8 @@ import {
 
 
 export default function DyDataGrid(
-  {data,
-    columns,
+  {data=[],
+    columns=[],
     hideFooter,
     selectionModel
     ,initialOnRowClick,

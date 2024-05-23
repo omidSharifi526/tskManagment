@@ -8,6 +8,7 @@ import {GetAllActivePersonByTenantId,
     AddObjective,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
+    getObjectiveDetails
     
 
 } from '../Api/index';
@@ -217,6 +218,23 @@ const useGetAllObjectiveOKRStateByTenantId=(tenantId:string|null)=>{
 }
 
 
+const useGetObjectiveDetails=(objectiveId:string|null)=>{
+return useQuery(['getObjectiveDetails',objectiveId],getObjectiveDetails,{
+enabled:!!objectiveId,
+refetchOnWindowFocus:false,
+cacheTime:Infinity,
+onSuccess:(data:any)=>{
+ console.log(data)
+},
+select:(data)=>{
+ let rawData=data?.data?.data;
+ console.log(rawData)
+ return rawData
+}
+})
+}
+
+
 
 
 export{
@@ -229,5 +247,5 @@ export{
     useAddObjective,
     useGetAllObjectiveDefinitionLevelByTenantId,
     useGetAllObjectiveOKRStateByTenantId,
-    
+    useGetObjectiveDetails
 }

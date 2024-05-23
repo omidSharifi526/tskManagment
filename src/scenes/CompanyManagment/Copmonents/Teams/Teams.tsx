@@ -20,7 +20,7 @@ const Teams = () => {
     const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
     const [teamId,setTeamId]=useState<string|null>(null)
     // const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
-    const{data:teamDetailData,isLoading:getTeamDetailLoading,isFetched:getTeamDetailFetched}=useGetTeamDetail(teamId)
+    // const{data:teamDetailData,isLoading:getTeamDetailLoading,isFetched:getTeamDetailFetched}=useGetTeamDetail(teamId)
     const [showAddTeam, setShowAddTeam] = useState<Boolean | null>(false);
     const[showEditTeam,setShowEditTeam]=useState<Boolean|null>(false);
     const{data:teamsData,isLoading:getTeamLoading,isSuccess,isFetched}=useGetAllTeams(tenantId);
@@ -94,11 +94,12 @@ const Teams = () => {
                             
                             >
                         {
-                            getTeamDetailFetched && <EditTeam 
+                           showEditTeam  && <EditTeam 
                             teamId={teamId}
                             loading={getTeamLoading}
-                            initialValues={teamDetailData}
-                            isFetchedData={getTeamDetailFetched}
+                            onClose={setShowEditTeam}
+                            // initialValues={teamDetailData}
+                            // isFetchedData={getTeamDetailFetched}
                             />
                         }
                 
