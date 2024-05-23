@@ -11,6 +11,7 @@ import CreateObjective from '../../Forms/CreateObjective/CreateObjective';
 import {CircularProgress} from '@mui/material';
 import { useNavigate,useParams } from 'react-router-dom';
 import OCart from '../OCart/OCart';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 
 
 
@@ -19,8 +20,12 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
   const navigate=useNavigate();
   const[allObjective,setAllObjective]=useState<any[]>()
   const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
-  const{data:objetcideData,isLoading:getObjectiveLoading,isError,isFetched}:any=useGetAllObjectiveByPeriodId(periodId,profileTenantId)
+  const{data:objetcideData,isLoading:getObjectiveLoading,isError,isFetched,refetch:getObjectivesAgain}=useGetAllObjectiveByPeriodId(periodId,profileTenantId)
   const [showAddObjective, setShowAddObjective] = useState<boolean>(false);
+  const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
+  const[addObjectiveStatus,setAddObjectiveStatus]=useState<any>(null)
+
+
   const initialAddObjective = (): void => {
     setShowAddObjective(prev => !prev)
   }
@@ -99,7 +104,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
           </Grid>
           <Grid item xs={12}  >
           
-            <Grid container spacing={2}  >
+            <Grid container spacing={2} px={1}  >
            {/* {
              allObjective && allObjective.map((item:any,i:number)=>{
                return    <Box 
@@ -162,11 +167,25 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
             <CreateObjective  
              periodsData={periodsData}
              onSuccess={setShowAddObjective}
+             setShowToastMessage={setShowToastMessage}
+             setAddObjectiveStatus={setAddObjectiveStatus}
+             afterSuccess={getObjectivesAgain}
             />
 
           </ModalLyt>
 
         }
+
+        {
+            showToastMessage && <DYToastMessage
+            isSuccess={addObjectiveStatus?.isSuccess}
+            message={addObjectiveStatus?.metaData.message}
+            setShow={setShowToastMessage}
+            show={showToastMessage}
+            
+              />
+      
+          }
         
       </Grid>
       

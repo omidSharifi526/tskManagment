@@ -16,12 +16,12 @@ const addKrValues:AddKeyResultFace={
 name:'',
 horizontalAlignments:[],
 keyResultType:'',
-forceEndDate:'',
+forceEndDate:null,
 responsibleId:'',
 pointingSystemType:'Regularly',
-startDate:'',
+startDate:null,
 startValue:'',
-weight:'',
+weight:null,
 description:'',
 valuesDetailCommandDtos:[],
 oKRStateId:''
@@ -115,7 +115,7 @@ const addObjectiveInitialValues:addObjectiveFace={
   responsibleId:'',
   TeamIds:[],
   tenantId:'',
-  weight:'',
+  weight:null,
   answerRequest:''
 
 

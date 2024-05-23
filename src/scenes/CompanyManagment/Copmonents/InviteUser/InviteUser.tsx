@@ -16,6 +16,7 @@ import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessa
 
 import { useGetAllPersonByTenantId,useGetPersonDetails,useDeletePerson } from '../../Hooks';
 import EditPerson from '../../Forms/EditPerson/EditPerson';
+// import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 const InviteUser = () => {
  
   
@@ -27,10 +28,13 @@ const InviteUser = () => {
    const[personIdFDelete,setPersonIdFDelete]=useState<string|null>(null)
    const[showEditModal,setShowEditModal]=useState<boolean>(false);
    const[asyncOpStatus,setAsyncOpStatus]=useState<any>(null)
-   const[showToastAsync,setShowToastAsync]=useState<boolean>(false)
+
 
    const{mutate:deletePerson}=useDeletePerson()
     const [showAddStaff, setShowAddStaff] = useState<Boolean | null>(false);
+    const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
+    const[userAsynOpcState,setUserAsyncOpState]=useState<any>(null);
+
     const initialAddStaff = () => {
         setShowAddStaff((prev: any) => !prev)
     }
@@ -107,6 +111,8 @@ const InviteUser = () => {
                         <AddStaff 
                         onSuccesss={initialAddStaff} 
                         onClose={setShowAddStaff}
+                        setShowToastMessage={setShowToastMessage}
+                        setAddStaffState={setUserAsyncOpState}
                         />
                     </ModalLyt>
 
@@ -122,7 +128,9 @@ const InviteUser = () => {
                     <EditPerson
                      personId={personId}
                      onClose={setShowEditModal}
-                     setAsyncOpStatus={setAsyncOpStatus}
+                    //  setAsyncOpStatus={setAsyncOpStatus}
+                     setShowToastMessage={setShowToastMessage}
+                        setAddStaffState={setUserAsyncOpState}
 
                     />
                 </ModalLyt>
@@ -136,9 +144,6 @@ const InviteUser = () => {
             </Grid>
 
             <Grid item xs={12}  >
-         {/* <Box display={'flex'} justifyContent={'start'}     >
-         
-         </Box> */}
          {
             getAllPeronsLoading?<Box display={'flex'} 
             alignItems={'center'} 
@@ -156,11 +161,13 @@ const InviteUser = () => {
                     
                 return <Box key={i}  >
                     <StaffCart 
-                // personIdFDelete,setPersonIdFDelete
+
                 setShowEditModal={setShowEditModal} 
                 setPersonId={setPersonId} 
                 setPersonIdFDelete={setPersonIdFDelete}
                 item={item} 
+                setShowToastMessage={setShowToastMessage}
+                setDeleteState={setUserAsyncOpState}
                  />
                     </Box>
                 })
@@ -168,38 +175,20 @@ const InviteUser = () => {
              </Box>
          }
             </Grid>
-{/* {showModal,setShowModal,title,children,KRHLoading,width */}
-            {/* {
-                showAddStaff && <ModalLyt 
-                showModal={showAddStaff}
-                setShowModal={setShowAddStaff}
-                title={'افزودن کاربر'}
 
 
-                  >
-                            <AddStaff 
-                            // editMode={true}
-                            
-                            onSuccesss={initialAddStaff} 
-                            onClose={setShowAddStaff}
-                            
-                            />
-                </ModalLyt>
-            } */}
-
-       {
-        true && showToastAsync &&
-        <DYToastMessage
-          show={showToastAsync}
-          setShow={setShowToastAsync}
-          message={'موفق'}
-          isSuccess={true}
-        />
-      }
-{/* showToastAsync,setShowAsync */}
-
-       
-{/* showToastAsync,setShowToastAsync */}
+     
+      
+      {
+      showToastMessage && <DYToastMessage
+      isSuccess={userAsynOpcState?.isSuccess}
+      message={userAsynOpcState?.metaData.message}
+      setShow={setShowToastMessage}
+      show={showToastMessage}
+      
+      />
+      
+    }
             
         </Grid>
     )

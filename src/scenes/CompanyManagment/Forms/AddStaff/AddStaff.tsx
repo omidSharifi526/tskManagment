@@ -8,13 +8,15 @@ import { addUserFace } from '../../Interfaces/Interfaces';
 import {addUserSchema } from '../../StaticData';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
-const AddStaff = ({onSuccesss,initialValue,editMode,onClose}:any) => {
-  const[editPersonInitialValues,setEditPersonInitialValues]=useState<any>()
-    const{mutate:inviteUser,data:inviteUserData,isSuccess}=useInviteUser()
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
+// setShowToastMessage={setShowToastMessage}
+// setAddStaffState={userAsynOpcState}
+const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,setAddStaffState}:any) => {
+
+  const{mutate:inviteUser,data:inviteUserData,isSuccess,isError}:any=useInviteUser()
   const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
   const userId:string=useSelector((state:any)=>state.loign.userInfo.userId);
-  const[addUserMesaage,setAddUserMessage]=useState<string>('');
-  const[successAddUser,setSuccessAddUser]=useState<Boolean>(false);
+  const [showToastMessage,setToastMessage]=useState<boolean>(false)
 
   const staffInitialValues:addUserFace={
     firstName:'',
@@ -54,28 +56,27 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose}:any) => {
    
   }, [initialValue])
 
-
+// setShowToastMessage,setAddStaffState
   useEffect(() => {
-    setAddUserMessage(inviteUserData?.data?.metaData.message)
-    setSuccessAddUser(isSuccess)
+ if (inviteUserData) {
+  setShowToastMessage(true);
+  setAddStaffState(inviteUserData?.data)
+  handleClose()
+ }
   
     
-  }, [inviteUserData])
+  }, [inviteUserData,isSuccess])
 
   useEffect(() => {
-    // setAddUserMessage(editUserData?.data?.metaData.message)
-    // setSuccessAddUser(editUserSuccess)
-    // setAddStaffInitialValues({
-    //   firstName:'',
-    //   lastName:'',
-    //  //  createById:'',
-    //   jobType:'',
-    //   phoneNumber:'',
-    //   tenantId:''
-    //    })
-  
     
-  }, [])
+    if (isError) {
+      setToastMessage(true)
+    }
+   
+  }, [isError])
+  
+
+
   
 
     const initialSubmitForm=(data:any)=>{ 
@@ -87,9 +88,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose}:any) => {
     }
 
     const handleClose=()=>{
-      console.log('close')
       onClose((prev:any)=>false)
-
     }
     
 
@@ -104,8 +103,8 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose}:any) => {
 
 
    <Grid item xs={12}   >
-   {
-    !successAddUser?<Formik enableReinitialize
+   
+   <Formik enableReinitialize
     validationSchema={addUserSchema}
     initialValues={addStaffInitialValues}
     onSubmit={(data:any) => {
@@ -243,18 +242,21 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose}:any) => {
         </Form>
     }
 
-  </Formik>:
-    <Box width={'100%'} py={6} textAlign={'center'}  >
-    <Typography variant='body1' fontWeight={700} color={successAddUser?'green':'red'}   >{addUserMesaage}</Typography>
-    <Button variant='outlined' color='info' sx={{my:2}}  onClick={()=>{
-       onSuccesss()
-    }}  >
-     تایید
-    </Button>
-   </Box>
-   }
+  </Formik>
+   
 
    </Grid>
+
+   {
+      showToastMessage && <DYToastMessage
+      isSuccess={false}
+      message={''}
+      setShow={setShowToastMessage}
+      show={showToastMessage}
+      
+      />
+      
+    }
         
     </Grid>
   )

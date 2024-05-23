@@ -37,10 +37,10 @@ export  interface TabPanelProps {
     keyResultType:string,
     startValue:string,
     // onValue:string,
-    weight:string,
+    weight:string|null,
     horizontalAlignments:any[],
-    forceEndDate:string,
-    startDate:string,
+    forceEndDate:string|null,
+    startDate:string|null,
     description:string,
     valuesDetailCommandDtos:any[],
     oKRStateId:string
@@ -140,7 +140,7 @@ export interface addObjectiveFace{
   // createById:string,
   keyResultParentIds:string[],
   TeamIds:string[],
-  weight:string,
+  weight:string|null,
   answerRequest:string
 
 }

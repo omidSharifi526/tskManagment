@@ -120,22 +120,23 @@ return useQuery(['GetAllScoreLevelsByTenantId',tenantId],GetAllScoreLevelsByTena
 
 
 const useAddKeyResult=()=>{
-    return useMutation(AddKeyResult,{
-        onSuccess:(data:any)=>{
-        // console.log(data)
-        }
-        ,
-        onError:(err:any)=>{
-        //  console.log(err)
-        }
-    })
+    const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (data:any) =>AddKeyResult(data),
+    onSuccess: (data) => {
+        queryClient.invalidateQueries('getObjectiveDetails')
+    //   console.log(data)
+    },
+  });
+
+
 }
 
 const useGetAllObjectiveByPeriodId=(periodId:string | null,profileTenantId:string | null)=>{
     // console.log(periodId)
 return useQuery(['GetAllObjectiveByPeriodId',periodId,profileTenantId],getAllObjectiveByPeriodId,{
     enabled:!!periodId,
-    cacheTime:Infinity,
+    // cacheTime:Infinity,
     refetchOnWindowFocus:false,
     onSuccess:(data:any)=>{
     // console.log(data)
@@ -162,14 +163,14 @@ return useQuery(['GetAllObjectiveByPeriodId',periodId,profileTenantId],getAllObj
 
 
 // AddObjective
- const useAddObjective=()=>{
+ const useAddObjective=(onSuccesss:any)=>{
 const queryClient=useQueryClient()
 
       return useMutation({
     mutationFn: (data:any) =>
         AddObjective(data),
     onSuccess: (data) => {
-        
+        onSuccesss()
         queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
     //   console.log(data)
     },

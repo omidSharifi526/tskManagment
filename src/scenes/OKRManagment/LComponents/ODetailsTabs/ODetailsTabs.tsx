@@ -43,12 +43,16 @@ const ODetailsTabs=({krs}:any)=>{
     };
   }
   const[activeKrs,setActiveKrs]=useState<any[]>([]);
+  const[draftKrs,setDraftKrs]=useState<any[]>([])
 
   useEffect(() => {
     
     if (krs) {
         let activeKrs=krs.filter((item:any)=>item.okrStateName==='فعال');
         setActiveKrs(activeKrs)
+
+        let draftsKrs=krs.filter((item:any)=>item.okrStateName==='پیش نویس');
+        setDraftKrs(draftsKrs)
     }
   
    
@@ -74,14 +78,14 @@ const ODetailsTabs=({krs}:any)=>{
     <>
 
       <Grid container   >
-      <Grid item xs={12} md={12}  >
+      <Grid item xs={12} >
 
 <Box sx={{ width: '100%' }}>
   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
       <Tab label="فعال" {...a11yProps(0)} />
       <Tab label="پیش نویس" {...a11yProps(1)} />
-      <Tab label="بسته" {...a11yProps(2)} />
+      {/* <Tab label="بسته" {...a11yProps(2)} /> */}
    
     </Tabs>
   </Box>
@@ -99,16 +103,16 @@ const ODetailsTabs=({krs}:any)=>{
   <CustomTabPanel value={value} index={1}>
   <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
 
-<h1>پیش نویس</h1>
+ <ObjKrs krs={draftKrs}  />
     </Suspense>
   </CustomTabPanel>
 
-  <CustomTabPanel value={value} index={2}>
+  {/* <CustomTabPanel value={value} index={2}>
   <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
   <h1>بسته</h1>
 
     </Suspense>
-  </CustomTabPanel>
+  </CustomTabPanel> */}
 
 
 

@@ -19,7 +19,7 @@ interface TabPanelProps {
 
 
 const Index :React.FC=function(){
- 
+  const[priodId,setPriodId]=useState<string|null>(null)
   const [value, setValue] = React.useState(0);
   function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
@@ -88,6 +88,8 @@ const Index :React.FC=function(){
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  
   
   
   
@@ -95,13 +97,32 @@ const Index :React.FC=function(){
   return (
     <>
     <PeriodSlider 
-    setPriodId={()=>{}}
+    setPriodId={setPeriodId}
+    activeIndex={perData?.findIndex((item:any)=>item.isCurrent)}
     tenantId={tenantId } 
-    activeIndex={activeIndex}
+
+  
     setActiveIndex={setActiveIndex}
     slideData={perData}
     dataLoading={perLoading}
       />
+{/* 
+<PeriodSlider 
+    setPriodId={setPriodId}
+    activeIndex={perData?.findIndex(item=>item.isCurrent)}
+
+    setActiveIndex={setActiveIndex}
+    
+     slideData={perData || []}
+     dataLoading={false}
+     
+
+    
+    /> */}
+
+
+
+
       <Grid container   >
       <Grid item xs={12} md={12}  >
 

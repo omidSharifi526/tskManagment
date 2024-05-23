@@ -25,10 +25,13 @@ const EditPerson = (props:any) => {
         phoneNumber:'',
         tenantId:''
          }
-    let{personId,onClose,setAsyncOpStatus}=props;
+          //  setShowToastMessage={setShowToastMessage}
+    // setAddStaffState={setUserAsyncOpState}
+    let{personId,onClose,setShowToastMessage,setAddStaffState}=props;
     const editSuccess=()=>{
         onClose()
     }
+   
 const{data:personDetailsData,isLoading:personDEtLoading}=useGetPersonDetails(personId);
 const{mutate:callEditPersonStaff,data:editUserData,isSuccess:editUserSuccess,isLoading:editPersonLoading}=useEditPersonStaff(editSuccess)
 
@@ -65,11 +68,7 @@ const handleClose=()=>{
     onClose(false)
 }
 
-useEffect(() => {
-  
-    setAsyncOpStatus(editUserData)
 
-}, [editUserSuccess])
 
 
 const initialSubmitForm=(data:any)=>{
@@ -77,6 +76,26 @@ const initialSubmitForm=(data:any)=>{
     callEditPersonStaff({...data,tenantId:tenantId,createById:userId})
 console.log(data)
 }
+
+useEffect(() => {
+  // setShowToastMessage,setAddStaffState
+  if (editUserData) {
+    console.log(editUserData)
+    setShowToastMessage(true);
+    setAddStaffState(editUserData?.data)
+
+    if(editUserData?.data?.isSuccess){
+      handleClose()
+    }
+
+
+
+
+  }
+
+ 
+}, [editUserData,editUserSuccess])
+
 
 
 

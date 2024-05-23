@@ -36,13 +36,13 @@ const ObjKrs = (props:any) => {
     
     
   return (
-    <Grid container  >
+    <Grid container spacing={2} p={1} >
   {
     krs.map((item:any,i:number)=>{
-        let{name,okrStateName,responsibleName,pointingSystemType,okR_KeyResultType}:any=item
-      return <Box key={i}   >
+    
+      return <Grid item xs={12}  md={6}  >
         <OKRsCart item={item}  />
-      </Box>
+      </Grid>
     })
   }
     </Grid>

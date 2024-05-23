@@ -16,14 +16,17 @@ import ScaleIcon from '@mui/icons-material/Scale';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ODetailsTabs from '../ODetailsTabs/ODetailsTabs';
 import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 const Kr = () => {
   const navigate=useNavigate()
 const[showCreateKr,setShowCreateKr]=useState<Boolean|null>(false);
 const[objectiId,setObjectiId]=useState<string|null>(null);
-const{data:objData,isLoading,}=useGetObjectiveDetails(objectiId);
+const{data:objData,isLoading,refetch:getObjDataAgain}=useGetObjectiveDetails(objectiId);
 const[objectiveDetails,setObjectiveDetails]=useState<any>(null);
 const[keyResults,setKeyResults]=useState<any>([])
 const location:any=useLocation();
+const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
+const[addKrState,setAddKrState]=useState<any>(null)
 
 useEffect(() => {
   
@@ -100,7 +103,7 @@ const initialCreateKr=():void=>{
     />
      </Box>
      <Box>
-      <Typography fontSize={'1.1rem'} fontWeight={600}   >
+      <Typography fontSize={'0.9rem'} fontWeight={600}   >
         جزییات هدف و نتیجه ی کلیدی
       </Typography>
      </Box>
@@ -135,11 +138,11 @@ const initialCreateKr=():void=>{
        sx={{position:'absolute',top:'20px',mx:'auto',transform: 'translate(-50%, -50%)',left: '50%',}} 
        display={'flex'} justifyContent={'space-between'}  
        borderRadius={2}
-       boxShadow={2}
+       boxShadow={4}
        >
        <Grid item xs={9}  >
        <Box p={1}  >
-       <Typography variant='body1' fontWeight={900} >
+       <Typography variant='body1' fontWeight={800} >
           {
             objectiveDetails?.name
           }
@@ -153,7 +156,7 @@ const initialCreateKr=():void=>{
         <PersonOutlineOutlined/>
       </Box>
       <Box>
-       <Typography variant='body1' fontWeight={900} mb={1} >
+       <Typography variant='body1' fontWeight={800} mb={1} >
        {
           objectiveDetails?.createByName
         }
@@ -162,7 +165,7 @@ const initialCreateKr=():void=>{
       </Box>
      </Grid>
 
-     <Grid xs={9}  >
+     <Grid item xs={9}  >
      <Box px={1}>
            <Typography variant='body2' fontWeight={700} >
           {
@@ -182,7 +185,7 @@ const initialCreateKr=():void=>{
      </Grid>
 
      <Grid item  xs={9} >
-       <Box display={'flex'} justifyContent={'start'} p={1}  >
+       <Box display={'flex'} justifyContent={'start'} px={1} py={1} >
         {
           objectiveDetails?.keyResultQueryResultDtosLength<3?<Typography color={'red'} fontWeight={900} variant='caption'  >تعداد نتایج کلیدی شما کمتر از 3 است</Typography>:
           ''
@@ -191,7 +194,7 @@ const initialCreateKr=():void=>{
        </Grid>
 
        <Grid item  xs={3}>
-    <Box width={'100%'} p={1}  >
+    <Box width={'100%'} px={1} py={1} >
     <Typography variant='caption' fontWeight={900}>
       {
         objectiveDetails?.definitionLevelName
@@ -351,8 +354,25 @@ const initialCreateKr=():void=>{
       showModal={showCreateKr}
       setShowModal={setShowCreateKr}
       title={'ایجاد نتیجه کلیدی'}  >
-       <CreateKeyResult/>
+       <CreateKeyResult 
+       setShowCreateKr={setShowCreateKr}
+       addKrSuccess={getObjDataAgain}  
+       setShowToastMessage={setShowToastMessage}
+       setAddKrState={setAddKrState}
+        />
       </ModalLyt>
+    }
+
+    {
+      showToastMessage && <DYToastMessage
+      isSuccess={addKrState?.isSuccess}
+      message={addKrState?.metaData.message}
+      setShow={setShowToastMessage}
+      show={showToastMessage}
+      
+      />
+      
+      
     }
 
 

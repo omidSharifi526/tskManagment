@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Grid,Box, Typography, Button } from '@mui/material';
 import {IconButton} from '@mui/material';
 import {ReactComponent as StaffVector} from '../../StaticData/Vectors/staffVector.svg';
@@ -11,10 +11,12 @@ export const StaffCart = (props:any) => {
     const tenantId:string|null=useSelector((state:any)=>state.meetings.profileTenantId);
     const userPhoneNumber=useSelector((state:any)=>state.loign.userPhoneNumber);
    
-    const{mutate:deletePerson}=useDeletePerson();
-    const{mutate:deleteInvitedPerson}=useDeleteInvitedPerson();
+    const{mutate:deletePerson,data:deletePersonData,isSuccess:deletePerSuccess}=useDeletePerson();
+    const{mutate:deleteInvitedPerson,data:deleteInvitedData,isSuccess}=useDeleteInvitedPerson();
     // let{setPersonId}=props
-    let{item,setPersonId,setShowEditModal,setPersonIdFDelete,actived}=props;
+    //     setShowToastMessage={setShowToastMessage}
+    // setAddStaffState={setUserAsyncOpState}
+    let{item,setPersonId,setShowEditModal,setPersonIdFDelete,actived,setDeleteState,setShowToastMessage}=props;
     console.log(item)
     let{name,jobTypeName,activated,id,phoneNumber}=item;
 
@@ -52,6 +54,27 @@ const initialDelete=(id:any)=>{
     console.log(item)
 
 }
+
+useEffect(() => {
+  
+    if (deleteInvitedData) {
+        setShowToastMessage(true)
+        setDeleteState(deleteInvitedData?.data)
+    }
+
+
+}, [deleteInvitedData,isSuccess])
+
+useEffect(() => {
+  
+    if (deletePersonData) {
+        setShowToastMessage(true)
+        setDeleteState(deleteInvitedData?.data)
+    }
+
+
+}, [deletePersonData,deletePerSuccess])
+
 
 
 

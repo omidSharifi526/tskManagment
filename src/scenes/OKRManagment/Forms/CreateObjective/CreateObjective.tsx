@@ -23,8 +23,9 @@ interface teamIdsFace{
   teamId:string,
   personIds:string[]
 }
-// import { addObjectiveValues } from '../../StaticData';
-const CreateObjective = ({periodsData,onSuccess}:any) => {
+// setShowToastMessage={setShowToastMessage}
+// setAddKrState={setAddObjectiveStatus}
+const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setAddObjectiveStatus,afterSuccess}:any) => {
   const[teamIdObject,setTeameIdObjects]=useState<teamIdsFace>({teamId:'',personIds:[]})
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
     const[HorzIds,setHorzIds]=useState<any>({tenantId:tenantId,definitionId:null})
@@ -45,13 +46,24 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
     const onFailed=()=>{
 
       }
-      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective()
+      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective(onSuccesss)
 
       useEffect(() => {
   if (addObjectiveData) {
     setAddObjectiveMessage(addObjectiveData?.data?.metaData.message)
     setSuccessAddObjective(isSuccess)
+    setShowToastMessage(true)
+    setAddObjectiveStatus(addObjectiveData?.data)
+
+
+    // if (addObjectiveData?.data?.isSuccess) {
+      // onSuccesss()
+      afterSuccess()
+    // }
+
   }
+
+
       }, [addObjectiveData,isSuccess]);
 
 
@@ -91,8 +103,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
 
   return (
     <>
-    {
-        successAddObjective===null?  <Box width={'100%'} maxHeight={'50em'}  >
+    <Box width={'100%'} maxHeight={'50em'}  >
         <Formik enableReinitialize
         validationSchema={addObjectiveSchema}
              validate={(data)=>{
@@ -371,53 +382,14 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                       </Box>
                     </Grid>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     </Form>
             }
 
         </Formik>
-    </Box>:successAddObjective===true?
-    <Box width={'100%'} py={6} textAlign={'center'}  >
-     <Typography variant='body1' fontWeight={700} color={successAddObjective?'green':'red'}   >{addObectiveMessage}</Typography>
-     <Button variant='outlined' color='info' sx={{my:2}}  onClick={()=>{
-        onSuccesss()
-     }}  >
-      تایید
-     </Button>
     </Box>
-    :
-    <Box width={'100%'} py={6} textAlign={'center'}>
-     <Typography variant='body1' fontWeight={700} color={successAddObjective===false?'green':'red'}>خطایی رخ داده</Typography>
-    </Box>
-    }
+    
             </>
   )
 }

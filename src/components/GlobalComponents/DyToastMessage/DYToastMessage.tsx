@@ -6,8 +6,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useEffect,useState } from 'react';
 
+interface ToastFace{
+  show:boolean,
+  message:string|null,
+  isSuccess:boolean|null,
+  setShow:(show:boolean) => void
+}
 
-export default function DYToastMessage({show,setShow,message}:any) {
+
+export default function DYToastMessage({show,setShow,message,isSuccess}:ToastFace) {
     // console.log(show);
   const [open, setOpen] = React.useState(show);
 
@@ -53,8 +60,8 @@ export default function DYToastMessage({show,setShow,message}:any) {
   return (
     <div>
       <Snackbar
-  anchorOrigin={{vertical:'bottom',horizontal:'right'}}
-       color={'danger'}
+  anchorOrigin={{vertical:'bottom',horizontal:'left'}}
+       color={isSuccess?'success':'error'}
         open={show}
         
         autoHideDuration={6000}
@@ -62,7 +69,7 @@ export default function DYToastMessage({show,setShow,message}:any) {
         message={message?message:'خطای سرور'}
         action={action}
       >
-           <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+           <Alert onClose={handleClose} severity={isSuccess?'success':'error'} sx={{ width: '100%' }}>
            {message?message:'خطای سرور'}
         </Alert>
         </Snackbar>

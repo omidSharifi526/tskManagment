@@ -17,11 +17,26 @@ import { useGetAllActivePersonByTenantId,
  } from '../../Hooks';
 import AccordionLyt from '../../../../components/Layouts/AccordionLyt/AccordionLyt';
 import { useSelector } from 'react-redux';
-import {pointSystem,keyResultTypeOptions} from '../../StaticData/index'
-export const CreateKeyResult = () => {
+import {pointSystem,keyResultTypeOptions} from '../../StaticData/index';
+
+interface createKrFace{
+    // addKrSuccess
+    addKrSuccess:() => any,
+    setShowToastMessage:(show:boolean) => void
+    setAddKrState:(show:any) => void,
+    setShowCreateKr:(show:boolean)=>void
+    // message:string|null,
+    // isSuccess:boolean|null,
+    // setShow:(show:boolean) => void
+    // setShowToastMessage={setShowToastMessage}
+    // setAddKrState={setAddKrState}
+  }
+
+
+
+export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,setShowCreateKr}:createKrFace) => {
     const location:any=useLocation();
     let{state:{objectiveId}}:any=location;
-    // console.log(objectiveId)
     const[pointingSystemType,setPointingSystemType]=useState<string>('Regularly');
     const[idsValue,setIdsValue]=useState<any>([]);
     const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
@@ -66,10 +81,17 @@ export const CreateKeyResult = () => {
 
     useEffect(() => {
         if (data) {
-          setAddkrMessage(data?.data?.metaData.message)
+            // console.log(data)
+          setShowCreateKr(false)
+          setAddKrState(data?.data)
           setSuccessAddkr(isSuccess)
+          addKrSuccess()
+          setShowToastMessage(true)
         }
             }, [data,isSuccess]);
+
+         
+            
 
 
   

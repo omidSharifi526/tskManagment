@@ -30,16 +30,20 @@ const OCart = (props:any) => {
         <Box width={'100%'}  
         display={'flex'} 
         alignItems={'center'}
-        p={2}
-        justifyContent={'start'}  > 
+        p={1}
+        minHeight={'80px'} 
+        
+        justifyContent={'center'}  > 
         <Oflag fontSize={'0.9rem'}  />
-        <Typography px={2} >
+        <Typography px={2} variant='caption' fontWeight={600} >
             {
                 name
             }
         </Typography>
         </Box>
          </Grid>
+
+
          <Grid item xs={2}   >
           <Box width={'100%'} py={2} textAlign={'center'}>
             <IconButton>
@@ -50,7 +54,7 @@ const OCart = (props:any) => {
         </Grid>
         <Grid container   >
         <Grid xs={12}  >
-        <Box width={'100%'} p={2} >
+        <Box width={'100%'} p={1} >
         <Typography variant='button' color={'gray'}  >{
             createByName
             }</Typography>

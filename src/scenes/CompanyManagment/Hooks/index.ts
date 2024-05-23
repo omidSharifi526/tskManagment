@@ -127,49 +127,45 @@ const useAddTeam=()=>{
 
 
 
-     const useDeletePerson=()=>{
+
+
+    const useDeletePerson=()=>{
       const queryClient=useQueryClient()
-      return useMutation(deletePerson,{
-        onSuccess:()=>{
-          queryClient.invalidateQueries('getAllPersonByTenantId')
-        }
-        ,
-
-      })
-     }
-
-     const useDeleteInvitedPerson=()=>{
-      const queryClient=useQueryClient()
-      return useMutation(deleteInvitedPerson,{
-        onSuccess:()=>{
-          queryClient.invalidateQueries('getAllPersonByTenantId')
-        }
-        ,
-
-      })
-     }
-
-
-    //  deleteInvitedPerson
-
-     const useEditPersonStaff=(editSuccess:any)=>{
-      const queryClient=useQueryClient();
-      // return useMutation(editPersonStaff,{
-      //   onSuccess:()=>{
-      //     editSuccess()
-      //     queryClient.invalidateQueries('getAllPersonByTenantId')
-      //   }
-      //   ,
-
-      // })
-
       return useMutation({
-        mutationFn: (userData:any) =>editPersonStaff(userData),
-        onSuccess: (data:any) => {
-          editSuccess()
-          queryClient.invalidateQueries('getAllPersonByTenantId')
-        },
-      });
+    mutationFn: (userData:any) =>deletePerson(userData),
+    onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getAllPersonByTenantId')
+    },
+     });
+     }
+
+ 
+
+    const useDeleteInvitedPerson=()=>{
+      const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (userData:any) =>deleteInvitedPerson(userData),
+    onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getAllPersonByTenantId')
+    },
+  });
+     }
+
+     
+
+
+
+
+
+
+    const useEditPersonStaff=(editSuccess:any)=>{
+      const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (userData:any) =>editPersonStaff(userData),
+    onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getAllPersonByTenantId')
+    },
+  });
      }
   
 

@@ -183,18 +183,6 @@ const Meeting :React.FC=function(){
           </Box>
           </ModalLyt>
         }
-
-        {/* {
-          loading && <Box display={'flex'} 
-          alignItems={'center'} 
-          justifyContent={'center'} 
-          width={'100%'} 
-          height={'500px'} 
-          boxShadow={4} borderRadius={3}>
-            <CircularProgress  />
-           </Box>
-        } */}
-   
     </Grid>
   )
 }

@@ -59,7 +59,7 @@ const getAllObjectiveByPeriodId=async({queryKey}:any)=>{
     // profileTenantId
     let periodId=queryKey[1];
     let profileTenantId=queryKey[2];
-    return await axiosInstance.get(`/OKR/GetAllObjectiveByPeriodId/?tenantId=${profileTenantId}&periodId=${periodId}&pageIndex=1&pageSize=15&searchTerm=`)
+    return await axiosInstance.get(`/OKR/GetAllObjectiveByPeriodId/?tenantId=${profileTenantId}&periodId=${periodId}&pageIndex=1&pageSize=50&searchTerm=`)
 }
 
 
