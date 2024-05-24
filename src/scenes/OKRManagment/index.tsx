@@ -68,17 +68,31 @@ const Index :React.FC=function(){
 
 
   useEffect(() => {
-  if (isFetched) {
-    let current=perData?.map((e:any) => e.isCurrent).indexOf(true);
-    setActiveIndex(current||0)
-  }
-  }, [isFetched]);
+    //  console.log(activeIndex)
+    let length=perData?.map((e:any) => e.isCurrent).indexOf(true)
+    // setActiveIndex(4)
+    if(length!==4){
+        setActiveIndex(4)
+    
+        }
+    }, []);
+
 
   useEffect(() => {
+  
+    // console.log(getPeriodFetched)
+    if (perData) {
+        let length:number=perData.length
+        if(length===4){
+        setActiveIndex(0)
     
-  // console.log(perData)
-   
-  }, [perData])
+        }
+    
+    }
+     
+    }, [perData])
+
+
   
 
 
@@ -99,7 +113,7 @@ const Index :React.FC=function(){
     <>
     <PeriodSlider 
     setActiveIndex={setActiveIndex}
-    
+
     setPriodId={setPeriodId}
     activeIndex={perData?.findIndex((item:any)=>item.isCurrent)}
     tenantId={tenantId } 
