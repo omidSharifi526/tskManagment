@@ -9,7 +9,8 @@ import { useSelector } from 'react-redux';
 import {CircularProgress} from '@mui/material';
 import TeamCart from '../TeamCart/TeamCart';
 import {useGetTeamDetail } from '../../Hooks';
-import EditTeam from '../../Forms/EditTeam/EditTeam'
+import EditTeam from '../../Forms/EditTeam/EditTeam';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 
 // import { useGetAllTeams } from '../../Hooks';
 
@@ -23,6 +24,10 @@ const Teams = () => {
     // const{data:teamDetailData,isLoading:getTeamDetailLoading,isFetched:getTeamDetailFetched}=useGetTeamDetail(teamId)
     const [showAddTeam, setShowAddTeam] = useState<Boolean | null>(false);
     const[showEditTeam,setShowEditTeam]=useState<Boolean|null>(false);
+    const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
+    const[teamAsynOpcState,setTeamAsyncOpState]=useState<any>(null);
+
+
     const{data:teamsData,isLoading:getTeamLoading,isSuccess,isFetched}=useGetAllTeams(tenantId);
     const initialAddTeam = () => {
         setShowAddTeam(prev => !prev)
@@ -76,12 +81,18 @@ const Teams = () => {
                             />
                         </Box>
                         {
-
+//    setShowToastMessage={setShowToastMessage}
+// setAddStaffState={setUserAsyncOpState}
+// teamAsynOpcState,setTeamAsyncOpState
                             showAddTeam && <ModalLyt
                                 showModal={showAddTeam}
                                 setShowModal={setShowAddTeam}
                                 title={'ایجاد تیم'}  >
-                                <AddTeam />
+                                <AddTeam 
+                                setShowToastMessage={setShowToastMessage}
+                                setAddTeamState={setTeamAsyncOpState}
+                                onClose={setShowAddTeam}
+                                />
                             </ModalLyt>
 
                         }
@@ -98,8 +109,8 @@ const Teams = () => {
                             teamId={teamId}
                             loading={getTeamLoading}
                             onClose={setShowEditTeam}
-                            // initialValues={teamDetailData}
-                            // isFetchedData={getTeamDetailFetched}
+                            setShowToastMessage={setShowToastMessage}
+                            setEditTeamState={setTeamAsyncOpState}
                             />
                         }
                 
@@ -123,11 +134,25 @@ const Teams = () => {
                   setTeamId={setTeamId} 
                   item={item}  
                   setShowEditForm={setShowEditTeam}
+                  setShowToastMessage={setShowToastMessage}
+                  setDeleteTeamState={setTeamAsyncOpState}
                   />
                     })
                  }
                 </Box>
                 </Grid>
+
+
+                {
+                showToastMessage && <DYToastMessage
+                isSuccess={teamAsynOpcState?.isSuccess}
+                message={teamAsynOpcState?.metaData.message}
+                setShow={setShowToastMessage}
+                show={showToastMessage}
+                
+                />
+                
+                }
             </Grid>
         </>
     )

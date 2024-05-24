@@ -34,7 +34,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
 
     setAllObjective(objetcideData)
 
-  }, [isFetched,showAddObjective])
+  }, [objetcideData])
 
 
   if (getObjectiveLoading || !allObjective || isFetched!==true) {

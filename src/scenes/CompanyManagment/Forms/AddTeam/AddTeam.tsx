@@ -9,13 +9,15 @@ import { addTeamsinintialValues } from '../../StaticData';
 import { useAddTeam } from '../../Hooks';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { addTeamSchema } from '../../StaticData';
 import { useGetAllActivePersonByTenantId } from '../../Hooks';
 import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
 // import { useSelector } from 'react-redux';
 import {Button} from '@mui/material';
 
 
-const AddTeam = () => {
+const AddTeam = (props:any) => {
+  let {setShowToastMessage,setAddTeamState,onClose}=props;
   const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
  const{data:activePersonData,isLoading:getActivePersonLoading}=useGetAllActivePersonByTenantId(tenantId);
  const[personIdData,setPersonIdData]=useState([])
@@ -25,23 +27,23 @@ const AddTeam = () => {
 
 
   useEffect(() => {
-
-    // console.log(activePersonData)
     setPersonIdData(activePersonData?.map((item:any)=>{
       let{key,value}=item;
       return {year:value,title:key}
-
     }))
-
   }, [activePersonData]);
 
 
   useEffect(() => {
-    setAddTeamMessage(addTeamData?.data?.metaData.message)
-    setSuccessAddTeam(isSuccess)
-  
+    // setAddTeamMessage(addTeamData?.data?.metaData.message)
+    // setSuccessAddTeam(isSuccess)
+   if (addTeamData) {
+    setShowToastMessage(true)
+    setAddTeamState(addTeamData?.data)
+    onClose(false)
+   }
     
-  }, [addTeamData])
+  }, [addTeamData,isSuccess])
   
 
 
@@ -60,9 +62,12 @@ const AddTeam = () => {
       </Grid>
       <Grid item xs={12}   >
 
-      {
-      successAddTeam===false ?  <Formik enableReinitialize
+      
+    
+     <Formik 
+      enableReinitialize
       initialValues={addTeamsinintialValues}
+      validationSchema={addTeamSchema}
       onSubmit={(data: any) => {
         initialSubmitForm(data)
 
@@ -121,7 +126,7 @@ const AddTeam = () => {
                       caption={'ذخیره'}
                       color={'#00387C'}
                       onClick={() => { }}
-                      disbled={false}
+                      disbled={!dirty || !isValid}
                       variant={'contained'}
                       bgColor={'#00387C'}
                       type={'submit'}
@@ -133,7 +138,9 @@ const AddTeam = () => {
                       caption={'انصراف'}
                       disbled={false}
                       variant={'outlined'}
-                      onClick={() => { }}
+                      onClick={()=>{
+                        onClose(false)
+                      }}
                     />
                   </Box>
 
@@ -148,19 +155,10 @@ const AddTeam = () => {
       }
 
     </Formik>
-    :<Box py={4}  display={'flex'} alignItems={'center'} justifyContent={'center'}  >
-      <Typography fontWeight={700} color={'green'} >
-        {
-          addTeamMesaage
-        }
-      </Typography>
-      <Button>
+   
+
+
       
-      </Button>
-    </Box>
-
-
-      }
 
       </Grid>
 

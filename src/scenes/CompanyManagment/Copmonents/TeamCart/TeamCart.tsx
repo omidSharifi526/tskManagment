@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Grid,Box,Typography,Button} from '@mui/material'
 import {ReactComponent as ManagerTeamVector} from '../../StaticData/Vectors/managerTeamVector.svg';
 import {ReactComponent as PersonelVector} from '../../StaticData/Vectors/personelVector.svg';
@@ -11,10 +11,11 @@ import { useSelector } from 'react-redux';
 const TeamCart = (props:any) => {
   const userId=useSelector((state:any)=>state.loign.userInfo.userId);
   const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
-
-    let {item,setTeamId,setShowEditForm}:any=props;
+//   setShowToastMessage={setShowToastMessage}
+// setEditTeamState={setTeamAsyncOpState}
+    let {item,setTeamId,setShowEditForm,setShowToastMessage,setDeleteTeamState}:any=props;
     let{name,managerName,personCount,chlidsTeamCount,activated,id}=item;
-    const{mutate:deleteTeam}=useDeleteTeam()
+    const{mutate:deleteTeam,isError,isSuccess,data:deleteData}=useDeleteTeam()
 
 
 
@@ -34,6 +35,17 @@ const TeamCart = (props:any) => {
       setShowEditForm(true)
       setTeamId(id)
     }
+
+    useEffect(() => {
+      
+      if (deleteData) {
+        setShowToastMessage(true);
+        setDeleteTeamState(deleteData?.data)
+      }
+    
+    
+    }, [isSuccess,deleteData])
+    
 
 
 

@@ -10,7 +10,7 @@ const OKRsCart = (props:any) => {
 
 const initialShowDet=()=>{
   setShowKrDetails(true);
-  console.log(okR_GradeDetails)
+  // console.log(okR_GradeDetails)
 }
 
 
@@ -81,7 +81,7 @@ const initialShowDet=()=>{
             <Button variant='text' onClick={initialShowDet}   >
             جزییات
             </Button>
-            <Button variant='text' onClick={initialShowDet}   >
+            <Button variant='text' onClick={()=>{}}   >
             ویرایش
             </Button>
             </Box>

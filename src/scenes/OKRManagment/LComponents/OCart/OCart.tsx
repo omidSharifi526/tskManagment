@@ -8,12 +8,10 @@ import DyLinearProgress from '../../../../components/GlobalComponents/DyLinearPr
 const OCart = (props:any) => {
     const navigate=useNavigate()
     let{obj}=props;
-    let{name,createByName,definitionLevelName,id,weight}=obj;
+    let{name,createByName,definitionLevelName,id,weight,evaluationPercentage}=obj;
 
   const goObjectiveDetails=()=>{
-    
-        // console.log(item);
-        // let{id}=item;
+
         navigate('/dashboard/okrManagment/objectiveDetails',{replace:true,state:{objectiveId:id}})
       
   }
@@ -29,13 +27,13 @@ const OCart = (props:any) => {
          <Grid item xs={10}   >
         <Box width={'100%'}  
         display={'flex'} 
-        alignItems={'center'}
+        alignItems={'start'}
         p={1}
-        minHeight={'80px'} 
+        minHeight={'100px'} 
         
-        justifyContent={'center'}  > 
+        justifyContent={'start'}  > 
         <Oflag fontSize={'0.9rem'}  />
-        <Typography px={2} variant='caption' fontWeight={600} >
+        <Typography px={2} variant='body1'  >
             {
                 name
             }
@@ -75,7 +73,7 @@ const OCart = (props:any) => {
         <Grid container   >
         <Grid item xs={12} >
              <Box width={'100%'} px={1} >
-                <DyLinearProgress value={parseInt(weight)} />
+                <DyLinearProgress value={evaluationPercentage} />
              </Box>
         </Grid>
         </Grid>

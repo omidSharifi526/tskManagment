@@ -59,6 +59,7 @@ const Index :React.FC=function(){
   // const[periodId,setPeriodId]=useState<string|null>(null);
   const[activeIndex,setActiveIndex]=useState<number>(0);
   const[periodId,setPeriodId]=useState<string|null>(null);
+
   useEffect(() => {
   const active:any=perData?perData[activeIndex]:{};
   setPeriodId(active.id);
@@ -97,12 +98,14 @@ const Index :React.FC=function(){
   return (
     <>
     <PeriodSlider 
+    setActiveIndex={setActiveIndex}
+    
     setPriodId={setPeriodId}
     activeIndex={perData?.findIndex((item:any)=>item.isCurrent)}
     tenantId={tenantId } 
 
   
-    setActiveIndex={setActiveIndex}
+    
     slideData={perData}
     dataLoading={perLoading}
       />

@@ -65,10 +65,10 @@ const PersonalOkRs = () => {
             showModal={showCreateKr}
             setShowModal={setShowCreateKr}
             title={'ایجاد پرسنل'}  >
-            <CreateKeyResult />
+            {/* <CreateKeyResult /> */}
           </ModalLyt>
         }
-
+        
 
         <Grid item xs={12} md={2} mx={2}>
           <DyButton

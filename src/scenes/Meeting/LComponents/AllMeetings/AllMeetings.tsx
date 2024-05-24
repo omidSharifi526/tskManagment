@@ -55,6 +55,7 @@ if (perData) {
 <Grid item xs={12}   >
     <PeriodSlider 
     setActiveIndex={setActiveIndex}
+    
     activeIndex={perData?.findIndex(item=>item.isCurrent)}
      slideData={perData || []}
      dataLoading={false}

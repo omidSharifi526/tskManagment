@@ -14,7 +14,7 @@ interface ToastFace{
 }
 
 
-export default function DYToastMessage({show,setShow,message,isSuccess}:ToastFace) {
+export default function DYToastMessage({show,setShow,message,isSuccess}:any) {
     // console.log(show);
   const [open, setOpen] = React.useState(show);
 

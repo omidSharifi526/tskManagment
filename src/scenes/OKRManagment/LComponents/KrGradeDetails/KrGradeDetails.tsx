@@ -6,12 +6,14 @@ const KrGradeDetails = ({gradeDetails}:any) => {
 const[ogd,setOgd]=useState<any[]>([])
 
     useEffect(() => {
-      let ogdWithId=gradeDetails.map((item:any)=>{
-        let{id,...rest}=item;
-      return {id:uuidv4(),...rest}
-      })
-      console.log(ogdWithId)
-        setOgd(ogdWithId)
+  if (!gradeDetails?.includes(null)) {
+    let ogdWithId=gradeDetails.map((item:any)=>{
+      let{id,...rest}=item;
+    return {id:uuidv4(),...rest}
+    })
+    console.log(ogdWithId)
+      setOgd(ogdWithId)
+  }
   
     }, [gradeDetails])
     

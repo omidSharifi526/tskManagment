@@ -52,17 +52,34 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
 }
 
 
-const useAddTeam=()=>{
-    const queryClient=useQueryClient()
-          return useMutation({
-        mutationFn: (teamData:any) =>
-            addTeam(teamData),
-        onSuccess: (data) => {
-          queryClient.invalidateQueries('getAllTeams')
-        //  console.log(data)
-        },
-      });
+// const useAddTeam=()=>{
+//     const queryClient=useQueryClient()
+//           return useMutation({
+//         mutationFn: (teamData:any) =>
+//             addTeam(teamData),
+//         onSuccess: (data) => {
+//           queryClient.invalidateQueries('getAllTeams')
+//         //  console.log(data)
+//         },
+//       });
+//      }
+
+
+     const useAddTeam=()=>{
+      const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (userData:any) =>addTeam(userData),
+    onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getAllTeams')
+    },
+  });
      }
+
+
+
+
+
+
 
      const useGetAllPersonByTenantId=(tenantId:string|null)=>{
      return useQuery(['getAllPersonByTenantId',tenantId],getAllPersonByTenantId,{
@@ -114,15 +131,15 @@ const useAddTeam=()=>{
      }
 
 
-     const useDeleteTeam=()=>{
-      const queryClient=useQueryClient()
-      return useMutation(deleteTeam,{
-        onSuccess:()=>{
-          queryClient.invalidateQueries('getAllTeams')
-        }
-        ,
 
-      })
+    const useDeleteTeam=()=>{
+      const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (userData:any) =>deleteTeam(userData),
+    onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getAllTeams')
+    },
+     });
      }
 
 
@@ -167,24 +184,17 @@ const useAddTeam=()=>{
     },
   });
      }
-  
 
-
-
-
-
-
-     const useEditTeam=(EditTeamSuccess:any)=>{
-      const queryClient=useQueryClient();
-      return useMutation(editTeam,{
-        onSuccess:()=>{
-          queryClient.invalidateQueries('getAllTeams');
-          EditTeamSuccess()
-        }
-        ,
-
-      })
+     const useEditTeam=()=>{
+      const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (userData:any) =>editTeam(userData),
+    onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getAllTeams')
+    },
+  });
      }
+  
 
      const useGetTeamDetail=(teamId:string|null)=>{
        return useQuery(['GetTeamDetails',teamId],getTeamDetail,{

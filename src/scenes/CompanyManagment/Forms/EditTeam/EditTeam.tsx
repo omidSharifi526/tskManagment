@@ -10,36 +10,28 @@ import { useSelector } from 'react-redux';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
 import {useGetTeamDetail } from '../../Hooks';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 
 
-//   loading={getTeamLoading}
-// initialValues={teamsData}
+// setShowToastMessage={setShowToastMessage}
+// setAddTeamState={setTeamAsyncOpState}
 const EditTeam = (props:any) => {
-    let{loading,initialValues,isFetchedData,onClose}=props;
+    let{loading,onClose,setShowToastMessage,setEditTeamState}=props;
     const [teamId,setTeamId]=useState<string|null>(null)
     // const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
     const{data:teamDetailData,isLoading:getTeamDetailLoading,isFetched:getTeamDetailFetched}=useGetTeamDetail(props?.teamId);
-    const EditTeamSuccess=()=>{
-    onClose(false)
-    }
-    const{mutate:callEditTeam}=useEditTeam(EditTeamSuccess)
+    const{mutate:callEditTeam,data:editTeamData,isSuccess,isError}=useEditTeam()
     const[editTeamsinintialValues,setEditTeamsInitialValues]=useState<any>(null);
     const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
     const userId=useSelector((state:any)=>state.loign.userInfo.userId);
     const{data:activePersonData,isLoading:getActivePersonLoading}=useGetAllActivePersonByTenantId(tenantId);
     const[personIdData,setPersonIdData]=useState([]);
-    const[teamPersons,setTeamPersons]=useState<any[]>([])
+    const[teamPersons,setTeamPersons]=useState<any[]>([]);
+    const[showLToastMessage,setLShowToastMessage]=useState<boolean>(false);
+    const[teamAsynOpcState,setTeamAsyncOpState]=useState<any>(null);
 
-    // {"name":"تحقیقات",
-    // "personIds":["e76209ac-35c8-4e13-a85a-ebe0340588cd"],
-    // "managerId":"e76209ac-35c8-4e13-a85a-ebe0340588cd",
-    // "id":"d95a39da-8e5c-4d9e-ba66-df9fd0a61bed",
-    // "tenantId":"eb781974-3cb0-4c3a-881e-97af686ce7f5",
-    // "fromDate":"1403/2/19",
-    // "toDate":null,
-    // "lastModifiedById":"73b54dda-95cf-404e-a641-5abdce6fb8e5"}
+ 
   
-
     useEffect(() => {
       if (teamDetailData) {
         let{name,managerId,personQueryResultDtos,id}:any=teamDetailData;
@@ -69,10 +61,14 @@ const EditTeam = (props:any) => {
     }, [teamDetailData])
 
     useEffect(() => {
-      
-    console.log(editTeamsinintialValues)
+  
+   if (editTeamData) {
+    setShowToastMessage(true)
+    setEditTeamState(editTeamData?.data)
+    onClose(false)
+   }
      
-    }, [editTeamsinintialValues])
+    }, [editTeamData,isSuccess])
 
     useEffect(() => {
         setPersonIdData(activePersonData?.map((item:any)=>{
@@ -82,6 +78,17 @@ const EditTeam = (props:any) => {
         }))
     
       }, [activePersonData]);
+
+      useEffect(() => {
+        
+    if (isError) {
+    
+
+      setLShowToastMessage(true);
+    }
+    // teamAsynOpcState,setTeamAsyncOpState
+      }, [isError,editTeamData])
+      
     
     
 
@@ -101,11 +108,7 @@ const EditTeam = (props:any) => {
             <CircularProgress/>
         </Box>
     }
-  //   if (personDEtLoading || editPersonLoading) {
-  //     return <Box py={6}   textAlign={'center'}   >
-  //      <CircularProgress/>
-  //     </Box>
-  // }
+
 
 
     return (
@@ -133,14 +136,7 @@ const EditTeam = (props:any) => {
     
                 
                   <Grid item xs={4}  >
-                    {/* <FormikControl
-                      control='textField'
-                      type='text'
-                      label='نام'
-                      name='name'
-                      fullWidth
-                      value={values?.name || ''}
-                    /> */}
+
                    <Box sx={{padding:'8px'}}  >
                    <TextField
                     size='small'
@@ -191,7 +187,7 @@ const EditTeam = (props:any) => {
                           caption={'ذخیره'}
                           color={'#00387C'}
                           onClick={() => { }}
-                          disbled={false}
+                          disbled={!dirty || !isValid || !values?.name} 
                           variant={'contained'}
                           bgColor={'#00387C'}
                           type={'submit'}
@@ -201,7 +197,7 @@ const EditTeam = (props:any) => {
                       <Box>
                         <DyButton
                           caption={'انصراف'}
-                          disbled={false}
+                         
                           variant={'outlined'}
                           onClick={()=>{
                             onClose(false)
@@ -224,6 +220,17 @@ const EditTeam = (props:any) => {
        
     
           </Grid>
+
+               {
+                showLToastMessage && <DYToastMessage
+                isSuccess={teamAsynOpcState?.isSuccess}
+                message={teamAsynOpcState?.metaData.message}
+                setShow={setShowToastMessage}
+                show={showLToastMessage}
+                
+                />
+                
+                }
     
         </Grid>
         )
