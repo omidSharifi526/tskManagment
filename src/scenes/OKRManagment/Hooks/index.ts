@@ -8,7 +8,9 @@ import {GetAllActivePersonByTenantId,
     AddObjective,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
-    getObjectiveDetails
+    getObjectiveDetails,
+    getKeyResultDetailsById,
+    editKeyResult
     
 
 } from '../Api/index';
@@ -108,8 +110,8 @@ return useQuery(['GetAllScoreLevelsByTenantId',tenantId],GetAllScoreLevelsByTena
     select:(data:any)=>{
     let rawData=data?.data?.data;
     // console.log(rawData);
-    let levelids=rawData.map(({id}:any)=>{
-        return {scoreLevelId:id,value:''}
+    let levelids=rawData.map(({id,name}:any)=>{
+        return {scoreLevelId:id,value:'',name}
     });
     return levelids
     // console.log(levelids)
@@ -131,6 +133,25 @@ const useAddKeyResult=()=>{
 
 
 }
+
+// const useEditKeyResult=()=>{
+
+// }
+
+const useEditKeyResult=()=>{
+    const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (data:any) =>editKeyResult(data),
+    onSuccess: (data) => {
+        queryClient.invalidateQueries('getObjectiveDetails')
+    //   console.log(data)
+    },
+  });
+
+
+}
+
+
 
 const useGetAllObjectiveByPeriodId=(periodId:string | null,profileTenantId:string | null)=>{
     // console.log(periodId)
@@ -235,6 +256,22 @@ select:(data)=>{
 })
 }
 
+const useGetKeyResultDetailsById=(krId:string|null)=>{
+    return useQuery(['GetKeyResultDetailsById',krId],getKeyResultDetailsById,{
+        enabled:!!krId,
+        refetchOnWindowFocus:false,
+        cacheTime:Infinity,
+        onSuccess:(data:any)=>{
+         console.log(data)
+        },
+        select:(data)=>{
+         let rawData=data?.data?.data;
+        //  console.log(rawData)
+         return rawData
+        }
+        })
+}
+
 
 
 
@@ -248,5 +285,7 @@ export{
     useAddObjective,
     useGetAllObjectiveDefinitionLevelByTenantId,
     useGetAllObjectiveOKRStateByTenantId,
-    useGetObjectiveDetails
+    useGetObjectiveDetails,
+    useGetKeyResultDetailsById,
+    useEditKeyResult
 }

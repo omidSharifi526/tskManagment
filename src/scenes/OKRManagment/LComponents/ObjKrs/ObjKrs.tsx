@@ -5,7 +5,7 @@ import ModalLyt from '../../../../components/Layouts/ModalLyt/ModalLyt';
 import KrDetails from '../../../CompanyTeams/LComponents/KrDetails/KrDetails';
 import OKRsCart from '../OKRsCart/OKRsCart';
 const ObjKrs = (props:any) => {
-    let{krs}:any|null=props;
+    let{krs,setKrId,setShowEditKr}:any|null=props;
     const[krDetails,setKrDetails]=useState<any>();
     const[showKrDetails,setShowKrDetails]=useState<Boolean>(false);
     const[okRGradeDetails,setokRGradeDetails]=useState<any>([])
@@ -30,9 +30,7 @@ const ObjKrs = (props:any) => {
   
     }, [krs])
 
-    useEffect(() => {
-  console.log(okRGradeDetails)
-    }, [okRGradeDetails])
+ 
     
     
   return (
@@ -40,8 +38,8 @@ const ObjKrs = (props:any) => {
   {
     krs.map((item:any,i:number)=>{
     
-      return <Grid item xs={12}  md={6}  >
-        <OKRsCart item={item}  />
+      return <Grid item xs={12}  md={6}  key={i} >
+        <OKRsCart item={item} setKrId={setKrId} setShowEditKr={setShowEditKr}  />
       </Grid>
     })
   }

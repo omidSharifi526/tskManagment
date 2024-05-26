@@ -12,8 +12,8 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
-export default function MultiSelect(props: any) {
-  let { propName,disabled,label,options} = props;
+export default function NewMultiSelect(props: any) {
+  let { propName,disabled,label,options=[],selectedItems} = props;
   // console.log(propName,props.propName)
   const [selected, setSelected] = React.useState([])
   const [loading, setLoading] = React.useState<any>()
@@ -24,13 +24,18 @@ export default function MultiSelect(props: any) {
   }, [props])
 
   useEffect(() => {
-    if (props.initialValues) {
-      setSelected(props.initialValues)
-      // console.log(props.initialValues)
+    if (selectedItems) {
+      setSelected(selectedItems)
+
     }
   
    
-  }, [props.initialValues])
+  }, [selectedItems])
+
+  useEffect(() => {
+   console.log(selectedItems)
+  }, [selectedItems])
+  
 
   
   
@@ -40,7 +45,8 @@ export default function MultiSelect(props: any) {
   const initialSelectItem = (value: any) => {
     let { onChangee } = props;
 
-    setSelected(value);
+    // setSelected(value);
+    console.log(value)
 
 
 
@@ -58,7 +64,7 @@ export default function MultiSelect(props: any) {
         multiple
         size='small'
         id="checkboxes-tags-demo"
-        options={top100Films}
+        options={options}
         disableCloseOnSelect
         value={selected}
         disabled={disabled}
@@ -68,7 +74,7 @@ export default function MultiSelect(props: any) {
           initialSelectItem(value)
           
         }}
-        getOptionLabel={(option) => option?.title}
+        getOptionLabel={(option) => option?.name}
         renderOption={(props, option, { selected }) => (
           <li {...props}>
             <Checkbox
@@ -77,7 +83,7 @@ export default function MultiSelect(props: any) {
               style={{ marginRight: 2 }}
               checked={selected}
             />
-            {option?.title}
+            {option?.key}
           </li>
         )}
 
@@ -103,5 +109,4 @@ export default function MultiSelect(props: any) {
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 

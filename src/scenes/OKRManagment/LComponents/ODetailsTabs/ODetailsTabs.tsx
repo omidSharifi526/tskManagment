@@ -14,7 +14,7 @@ interface TabPanelProps {
 
 // ODetailsTabs
 
-const ODetailsTabs=({krs}:any)=>{
+const ODetailsTabs=({krs,setKrId,setShowEditKr}:any)=>{
   
   const [value, setValue] = React.useState(0);
   function CustomTabPanel(props: TabPanelProps) {
@@ -93,7 +93,7 @@ const ODetailsTabs=({krs}:any)=>{
   
   <CustomTabPanel value={value} index={0}>
     <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
-   <ObjKrs krs={activeKrs}  />
+   <ObjKrs krs={activeKrs} setKrId={setKrId} setShowEditKr={setShowEditKr} />
       
 
     </Suspense>
@@ -103,7 +103,7 @@ const ODetailsTabs=({krs}:any)=>{
   <CustomTabPanel value={value} index={1}>
   <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
 
- <ObjKrs krs={draftKrs}  />
+ <ObjKrs krs={draftKrs}  setKrId={setKrId} />
     </Suspense>
   </CustomTabPanel>
 

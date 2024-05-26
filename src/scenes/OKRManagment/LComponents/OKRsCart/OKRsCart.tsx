@@ -4,13 +4,19 @@ import { Grid,Box,Typography,Button } from '@mui/material';
 import KrGradeDetails from '../KrGradeDetails/KrGradeDetails';
 const OKRsCart = (props:any) => {
   const[showKrDetails,setShowKrDetails]=useState<Boolean>(false);
-  let{item}=props;
-  let{name,okrStateName,responsibleName,pointingSystemType,okR_KeyResultType,okR_GradeDetails}:any=item;
+  let{item,setKrId,setShowEditKr}=props;
+  let{name,okrStateName,responsibleName,pointingSystemType,okR_KeyResultType,okR_GradeDetails,id}:any=item;
 
 
 const initialShowDet=()=>{
   setShowKrDetails(true);
   // console.log(okR_GradeDetails)
+}
+
+const initialEditKr=()=>{
+  setKrId(id)
+  setShowEditKr(true)
+  console.log(id)
 }
 
 
@@ -81,7 +87,7 @@ const initialShowDet=()=>{
             <Button variant='text' onClick={initialShowDet}   >
             جزییات
             </Button>
-            <Button variant='text' onClick={()=>{}}   >
+            <Button variant='text' onClick={initialEditKr}   >
             ویرایش
             </Button>
             </Box>

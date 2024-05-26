@@ -100,6 +100,25 @@ return await axiosInstance.get(`OKR/GetObjectiveDetailsById/?id=${objId}`)
 
 
 
+// {"name":"بهار ۳ ک ","responsibleId":"e76209ac-35c8-4e13-a85a-ebe0340588cd","pointingSystemType":"Regularly","keyResultType":"Numerical","oKRStateId":"e71fa848-bf0f-4471-91b1-07168ae8bc8e","weight":"0","startDate":null,"forceEndDate":null,"description":"","valuesDetailCommandDtos":[{"scoreLevelId":"58e2f9cb-2d3a-41db-892c-63539dafc740","value":"100","tenantId":"eb781974-3cb0-4c3a-881e-97af686ce7f5"}],"tenantId":"eb781974-3cb0-4c3a-881e-97af686ce7f5","startValue":"10","horizontalAlignments":[],"objectiveId":"a83b2ee4-93e7-4674-899f-9c66f9a075df","id":"b74cf949-b982-4591-a97d-3e77c69d2285","lastModifiedById":"73b54dda-95cf-404e-a641-5abdce6fb8e5"}
+  
+
+// https://api.myokr.ir/api/
+
+// https://api.myokr.ir/api/OKR/EditKeyResult
+
+
+const getKeyResultDetailsById=async({queryKey}:any)=>{
+    let krId:string|null=queryKey[1];
+return await axiosInstance.get(`OKR/GetKeyResultDetailsById/?id=${krId}`)
+}
+
+const editKeyResult=async(krData:any)=>{
+return await axiosInstance.post('OKR/EditKeyResult',krData)
+}
+
+
+
 
 
 
@@ -114,5 +133,7 @@ export{
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     AddObjective,
-    getObjectiveDetails
+    getObjectiveDetails,
+    getKeyResultDetailsById,
+    editKeyResult
 }

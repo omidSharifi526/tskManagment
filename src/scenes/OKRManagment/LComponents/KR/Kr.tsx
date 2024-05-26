@@ -3,6 +3,7 @@ import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton'
 import{Box,Button,Grid, Typography} from '@mui/material';
 import ModalLyt from '../../../../components/Layouts/ModalLyt/ModalLyt';
 import { CreateKeyResult } from '../../Forms/CreateKeyResult/CreateKeyResult';
+import { EditKeyResult } from '../../Forms/EditKeyResult/EditKeyResult';
 import { useLocation } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { useGetObjectiveDetails } from '../../Hooks';
@@ -26,13 +27,18 @@ const[objectiveDetails,setObjectiveDetails]=useState<any>(null);
 const[keyResults,setKeyResults]=useState<any>([])
 const location:any=useLocation();
 const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
-const[addKrState,setAddKrState]=useState<any>(null)
+const[addKrState,setAddKrState]=useState<any>(null);
+const[showEditKr,setShowEditKr]=useState<boolean>(false);
+const[krId,setKrId]=useState<string|null>(null)
 
 useEffect(() => {
   
-console.log(objectiveDetails)
+console.log(krId)
+if (krId) {
+  setShowEditKr(true)
+}
  
-}, [objectiveDetails])
+}, [krId])
 
  
 
@@ -332,7 +338,10 @@ const initialCreateKr=():void=>{
 
        
        <Grid item xs={12}  >
-       <ODetailsTabs krs={keyResults}  />
+       <ODetailsTabs krs={keyResults} 
+        setKrId={setKrId}
+        setShowEditKr={setShowEditKr}
+       />
        </Grid>
 
 
@@ -361,6 +370,24 @@ const initialCreateKr=():void=>{
        setAddKrState={setAddKrState}
         />
       </ModalLyt>
+    }
+
+    {
+      showEditKr && <ModalLyt 
+      showModal={showEditKr}
+      setShowModal={setShowEditKr}
+      title={'ویرایش نتیجه کلیدی'}
+      >
+      <EditKeyResult  
+      setShowEditKeyResult={setShowEditKr}
+      editKrSuccess={getObjDataAgain}  
+      setShowToastMessage={setShowToastMessage}
+      setAddKrState={setAddKrState}
+      krId={krId}
+     
+      />
+      </ModalLyt>
+
     }
 
     {

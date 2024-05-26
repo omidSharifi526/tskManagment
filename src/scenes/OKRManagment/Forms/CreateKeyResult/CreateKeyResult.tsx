@@ -47,20 +47,23 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     const{data:levelIds,isFetched:getLevelsIds}:any=useGetAllScoreLevelsByTenantId(tenantId);
     const{mutate:addKeyResulttt,isSuccess,data}=useAddKeyResult();
     const[successAddkr,setSuccessAddkr]=useState<boolean|null>(null);
-    const[addkrMessage,setAddkrMessage]=useState<string>('')
+    const[addkrMessage,setAddkrMessage]=useState<string>('');
+
+    const[tval,setTval]=useState<any>(null)
+    const[hundredValue,setHundredValue]=useState<any>({value:'',scoreLevelId:'',tenantId:tenantId})
     const initialAddKeyR = (data: any) => {
         
         let{pointingSystemType}=data;
 
-        let ids=pointingSystemType==='Regularly'?[]:idsValue;
+        let ids=pointingSystemType==='Regularly'?[{...hundredValue}]:idsValue;
         // console.log(ids)
         // console.log(pointingSystemType)
         // pointingSystemType==="Tensile"?idsValue:[]
-        let totalData={tenantId:tenantId,objectiveId:objectiveId,...data};
+        let totalData={tenantId:tenantId,objectiveId:objectiveId,onValue:'',...data};
         totalData.valuesDetailCommandDtos=ids;      
         // pointingSystemType
 
-        // console.log(totalData);
+        console.log(totalData);
 
 
         addKeyResulttt(totalData)
@@ -70,12 +73,27 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     const[showAdvanceOptions,setShowAdvanceOptions]=useState<Boolean>(false)
 
     useEffect(() => {
-      
-    setIdsValue(levelIds?.map((item:any)=>{
-      return {...item,tenantId:tenantId}
-    }))
+    let idsValues=levelIds?.map((item:any)=>{
+        return {...item,tenantId:tenantId}
+      })
+
+      console.log(levelIds)
+    setIdsValue(idsValues)
+
+
     
-    }, [getLevelsIds])
+    }, [getLevelsIds]);
+
+
+    useEffect(() => {
+        let finded:any = levelIds?.find((o:any) => o.name === "1");
+        // console.log(scoreLevelId)
+        // console.log(levelIds)
+        setTval(finded?.scoreLevelId)
+    // console.log(tval)
+    
+    }, [levelIds])
+    
 
 
 
@@ -104,6 +122,24 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     )
   )
     }
+
+    const initialSetHunderdvalue=(value:any)=>{
+      let iniVal={
+        scoreLevelId:tval,
+        value:value,
+        tenantId:tenantId
+      }
+        // console.log(iniVal)
+        setHundredValue(iniVal)
+    }
+   
+
+    useEffect(() => {
+      
+    console.log(hundredValue)
+  
+    }, [hundredValue])
+    
     
     
 
@@ -118,7 +154,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                     initialAddKeyR(data)
                 }}
                 validate={(data:any)=>{
-                //  console.log(data)
+                 console.log(data)
                  let{pointingSystemType}=data;
                  setPointingSystemType(pointingSystemType)
 
@@ -190,14 +226,31 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                 
                               {
                                 pointingSystemType==='Regularly'?<Grid item xs={12} md={3}  >
-                                <FormikControl
+                                {/* <FormikControl
                                     control='textField'
                                     type={'text'}
                                     label='چه زمانی به 100% میرسد؟ '
                                     name='onValue'
                                     fullWidth
                                     values={values?.onValue}
-                                />
+                                /> */}
+
+                               <Box  sx={{padding:'8px'}}  >
+                               <TextField 
+                                  fullWidth
+                                  size='small'
+                                 
+                                  value={hundredValue?.value}
+                                  onChange={({target}:any)=>{
+                                    let{value}:any=target;
+                                    initialSetHunderdvalue(value)
+                                  }}
+                                  label={'چه زمانی به 100% میرسد؟ '}   />
+                               </Box>
+
+
+
+
                             </Grid>:<>
                             {
                                 idsValue.map((item:any,i:number)=>{
@@ -323,7 +376,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='توضیحات'
                                         name='description'
                                         fullWidth
-                                        values={values?.description}
+                                        value={values?.description}
                                     />
                                 </Grid>
 
