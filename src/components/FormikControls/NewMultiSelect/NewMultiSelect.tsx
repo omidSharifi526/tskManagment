@@ -13,11 +13,11 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
 export default function NewMultiSelect(props: any) {
-  let { propName,disabled,label,options=[],selectedItems} = props;
+  let { propName,disabled,label,options,selectedItems,setHorizontalAlignments}:any = props;
   // console.log(propName,props.propName)
-  const [selected, setSelected] = React.useState([])
+  const [selected, setSelected] = React.useState<any>([])
   const [loading, setLoading] = React.useState<any>()
-  const [top100Films, setTop100Films] = React.useState([{ title: '', year: 0 }])
+  const [top100Films, setTop100Films] = React.useState<any>([])
   React.useEffect(() => {
     setTop100Films(options)
     setLoading(props.isLoading)
@@ -33,8 +33,15 @@ export default function NewMultiSelect(props: any) {
   }, [selectedItems])
 
   useEffect(() => {
-   console.log(selectedItems)
+    setHorizontalAlignments(selectedItems)
   }, [selectedItems])
+  
+
+  useEffect(() => {
+    
+  console.log(selected,selectedItems)
+  
+  }, [selected])
   
 
   
@@ -43,18 +50,18 @@ export default function NewMultiSelect(props: any) {
 
 
   const initialSelectItem = (value: any) => {
-    let { onChangee } = props;
-
-    // setSelected(value);
+    // let { onChangee } = props;
+    setHorizontalAlignments(value)
+    setSelected(value);
     console.log(value)
 
 
 
-    let teamIds = value.map(({ year, title }: any) => {
-      return year
-    })
+    // let teamIds = value.map(({ year, title }: any) => {
+    //   return year
+    // })
 
-    onChangee(propName, teamIds)
+    // onChangee(propName, teamIds)
 
   }
 
@@ -64,17 +71,17 @@ export default function NewMultiSelect(props: any) {
         multiple
         size='small'
         id="checkboxes-tags-demo"
-        options={options}
+        options={top100Films}
         disableCloseOnSelect
         value={selected}
         disabled={disabled}
 
         onChange={(e: any, value: any) => {
-          // console.log(value)
+          console.log(value)
           initialSelectItem(value)
           
         }}
-        getOptionLabel={(option) => option?.name}
+        getOptionLabel={(option) => option.key}
         renderOption={(props, option, { selected }) => (
           <li {...props}>
             <Checkbox

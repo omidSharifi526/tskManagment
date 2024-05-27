@@ -93,7 +93,11 @@ const ODetailsTabs=({krs,setKrId,setShowEditKr}:any)=>{
   
   <CustomTabPanel value={value} index={0}>
     <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
-   <ObjKrs krs={activeKrs} setKrId={setKrId} setShowEditKr={setShowEditKr} />
+   <ObjKrs 
+   krs={activeKrs} 
+   setKrId={setKrId} 
+   setShowEditKr={setShowEditKr}
+    />
       
 
     </Suspense>
@@ -103,7 +107,10 @@ const ODetailsTabs=({krs,setKrId,setShowEditKr}:any)=>{
   <CustomTabPanel value={value} index={1}>
   <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
 
- <ObjKrs krs={draftKrs}  setKrId={setKrId} />
+ <ObjKrs 
+ krs={draftKrs} 
+ setShowEditKr={setShowEditKr}
+ setKrId={setKrId} />
     </Suspense>
   </CustomTabPanel>
 

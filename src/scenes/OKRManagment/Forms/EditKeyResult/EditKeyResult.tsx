@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import {CircularProgress} from '@mui/material';
+import {Button, CircularProgress} from '@mui/material';
 import {InputLabel,Select,MenuItem} from '@mui/material';
 import moment from "jalali-moment";
 import { useParams,useLocation } from 'react-router-dom';
@@ -13,7 +13,8 @@ import { Formik, Form } from 'formik';
 import { addKrValues } from '../../StaticData/index';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useGetAllObjectiveDefinitionLevelByTenantId } from '../../Hooks';
-import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
+
 import { useGetAllActivePersonByTenantId,
     useGetAllHorizontalAlignmentByTenantId,
     useGetAllOKRStateByTenantId,
@@ -32,48 +33,72 @@ interface createKrFace{
     setAddKrState:(show:any) => void,
     setShowEditKeyResult:(show:boolean)=>void,
     krId:string|null
-  
-    // message:string|null,
-    // isSuccess:boolean|null,
-    // setShow:(show:boolean) => void
-    // setShowToastMessage={setShowToastMessage}
-    // setAddKrState={setAddKrState}
+
   }
 
 
 
 export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,setShowEditKeyResult,krId}:createKrFace) => {
+    const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
     const location:any=useLocation();
    const[krDetailInitValues,setKrDetailInitValues]=useState<any>();
-   const[krGradeDetails,setKrGradeDetails]=useState<any[]>([]);
-   const[krHorizontalAlignments,setHorizontalAlignments]=useState<any[]>([])
+   const[krHorizontalAlignments,setHorizontalAlignments]=useState<any[]>([]);
+   const[tval,setTval]=useState<any>(null);
+   const[showLToastMessage,setLShowToastMessage]=useState<boolean>(false);
+   const[okrStateId,setOkrStateId]=useState<null|string>('')
+   
     let{state:{objectiveId}}:any=location;
     const[pointingSystemType,setPointingSystemType]=useState<string>('Regularly');
     const[idsValue,setIdsValue]=useState<any>([]);
-    const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
+  
     const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
     const {data:acPersOptions}=useGetAllActivePersonByTenantId(tenantId);
     const{data:HorzinalAlignData}=useGetAllHorizontalAlignmentByTenantId(tenantId);
     const{data:submitFormOptions}=useGetAllOKRStateByTenantId(tenantId);
     const{data:levelIds,isFetched:getLevelsIds}:any=useGetAllScoreLevelsByTenantId(tenantId);
+    const[hundredValue,setHundredValue]=useState<any>({value:'',scoreLevelId:'',tenantId:tenantId})
+    const{data:krDetailsData,isLoading:krDetLoading,isFetched:kerDetFetched}:any=useGetKeyResultDetailsById(krId);
 
-    const{data:krDetailsData,isLoading:krDetLoading,isFetched:kerDetFetched}:any=useGetKeyResultDetailsById(krId)
-    const{data:editKrData,mutate:callEditKR,isSuccess}=useEditKeyResult()
+    const localEditKrSuccess=()=>{
+        setHorizontalAlignments([])
+        
+    }
+
+
+    const{data:editKrData,mutate:callEditKR,isSuccess,isError}=useEditKeyResult(localEditKrSuccess)
+    const[teamAsynOpcState,setTeamAsyncOpState]=useState<any>(null);
 
     const initialEditKr = (data: any) => {
-        let ids=pointingSystemType==='Regularly'?[]:krGradeDetails;
-    console.log(levelIds)
+        let ids=pointingSystemType==='Regularly'?[{...hundredValue}]:idsValue;
 
-        let{forceEndDate,startDate,...rest}=data;
-        let fjalDate=moment(forceEndDate).format('jYYYY/jM/jD');
-        let sjalDate=moment(startDate).format('jYYYY/jM/jD');
+       let horval=krHorizontalAlignments?.map(({value}:any)=>value)
+        let{forceEndDate,startDate,horizontalAlignments,...rest}=data;
+        console.log(forceEndDate,startDate)
+         if (forceEndDate && startDate) {
+            var fjalDate=moment(forceEndDate).format('jYYYY/jM/jD');
+            var sjalDate=moment(startDate).format('jYYYY/jM/jD');
+
+            let totalData={tenantId:tenantId,
+                objectiveId:objectiveId,
+                horizontalAlignments:[...horval],
+                onValue:'',
+                forceEndDate:fjalDate,
+                startDate:sjalDate,
+                oKRStateId:okrStateId,
+                ...rest};
+            totalData.valuesDetailCommandDtos=ids; 
+            totalData.onValue='';     
+         
+           console.log(totalData);
+           console.log(krHorizontalAlignments)
+           callEditKR(totalData)
+
+
+
+         }
         // let{pointingSystemType}=data;
       
-        let totalData={tenantId:tenantId,objectiveId:objectiveId,horizontalAlignments:[],valuesDetailCommandDtos:[] ,forceEndDate:fjalDate,startDate:sjalDate,...rest};
-        totalData.valuesDetailCommandDtos=ids;      
-     
-       console.log(totalData)
-       callEditKR(totalData)
+       
  
      
     }
@@ -90,23 +115,29 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
     
     }, [getLevelsIds]);
 
-
-
     useEffect(() => {
-      
-    console.log(krGradeDetails)
-     
-    }, [krGradeDetails])
+        let finded:any = levelIds?.find((o:any) => o.name === "1")?.scoreLevelId;
+        setTval(finded)
+       setHundredValue((prev:any)=>{
+       return {...prev,scoreLevelId:finded}
+       })
+       
+        
+        }, [levelIds]);
+
+
+
+        console.log(krHorizontalAlignments)
+
+
     
 
 
 
     useEffect(() => {
         if (editKrData) {
-            // console.log(data)
           setShowEditKeyResult(false)
           setAddKrState(editKrData?.data)
-        //   setSuccessAddkr(isSuccess)
           editKrSuccess()
           setShowToastMessage(true)
         }
@@ -114,7 +145,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
 
     useEffect(() => {
-      
+      setHorizontalAlignments([])
     console.log(krDetailsData)
     if (krDetailsData) {
         console.log(krDetailsData)
@@ -124,7 +155,8 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             // pointingSystemTypeValue,
             okR_KeyResultTypeValue,
             oneValue,
-            weight,forceEndDateRealDate,
+            weight,
+            forceEndDateRealDate,
             id,description,
             startDateRealDate,
             okR_GradeDetails,
@@ -133,17 +165,25 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             // startDateRealDate
 // managerId
              }=krDetailsData;
+             console.log(horizontalAlignments)
+             setHundredValue((prev:any)=>{
+              return {...prev,value:oneValue}
+             });
 
              setPointingSystemType(pointingSystemTypeValue);
-             setHorizontalAlignments(horizontalAlignments?.map(({managerId,name}:any)=>{
-            return{value:managerId,key:name}
-             }))
+             if (horizontalAlignments!==null &&  !horizontalAlignments.includes(null)) {
+                setHorizontalAlignments(horizontalAlignments?.map(({managerId,name}:any)=>{
+                    return{value:managerId,key:name}
+                     }))
+             }
              console.log(okR_GradeDetails)
-           if (!okR_GradeDetails?.includes(null)) {
-            setKrGradeDetails(okR_GradeDetails?.map(({scoreLevelId,value,tenantId,...rest}:any)=>{
+           if (pointingSystemTypeValue==='Tensile') {
+            console.log(okR_GradeDetails)
+            setIdsValue(okR_GradeDetails?.map(({scoreLevelId,value,tenantId,...rest}:any)=>{
                 return {tenantId,value,scoreLevelId}
                  }))
            }
+
         
         let initValue={
             name:name,
@@ -167,6 +207,28 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
      
     }, [krDetailsData])
 
+    useEffect(() => {
+        let finded:any = levelIds?.find((o:any) => o.name === "1");
+
+        setTval(finded?.scoreLevelId)
+  
+    
+    }, [levelIds])
+
+
+  
+
+    useEffect(() => {
+        
+        if (isError) {   
+          setLShowToastMessage(true);
+        }
+          }, [isError,editKrData]);
+
+
+
+          
+
     
          
             
@@ -175,7 +237,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
   
 
     const initialUpdateIdsValue=(i:number,item:any)=>{
-   setKrGradeDetails((prev:any) => 
+   setIdsValue((prev:any) => 
     prev.map((o:any, index:number) => index ===i
       ? { ...o, value:item }
       : o
@@ -183,11 +245,15 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
   )
     }
 
-    useEffect(() => {
-      
-    console.log(krDetailInitValues)
-    
-    }, [krDetailInitValues])
+    const initialSetHunderdvalue=(value:any)=>{
+        let iniVal={
+          scoreLevelId:tval,
+          value:value,
+          tenantId:tenantId
+        }
+          // console.log(iniVal)
+          setHundredValue(iniVal)
+      }
 
 
     if (krDetLoading) {
@@ -356,7 +422,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                 
                         <Grid item xs={12} md={3}  >
 
-                        <Box sx={{padding:'8px'}}  >
+                        {/* <Box sx={{padding:'8px'}}  >
                         <TextField
                         size='small'
                         fullWidth
@@ -369,18 +435,41 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                         }}
                         />
 
+                        </Box> */}
+
+                        
+
+                        <Box sx={{padding:'8px'}} width={'100%'}  >
+                        <TextField
+                        size='small'
+                        fullWidth
+                        type='text'
+                        label={'چه زمانی به 100% میرسد؟ '}
+                        value={hundredValue.value}
+                        onChange={({target}:any)=>{
+                        let{value}=target;
+                        // setFieldValue('onValue',value)
+                        initialSetHunderdvalue(value)
+                        }}
+                        />
+
                         </Box>
+                       
+
+
+
+
                         </Grid>
                         
                         :<>
                         {
-                            krGradeDetails?.map((item:any,i:number)=>{
+                            idsValue?.map((item:any,i:number)=>{
                             return <Grid item  key={i} xs={12} md={3} padding={'8px'} >
                               <TextField 
                               fullWidth
                               size='small'
                              
-                              value={krGradeDetails[i]?.value || ''}
+                              value={idsValue[i]?.value || ''}
                               onChange={({target}:any)=>{
                                 let{value}:any=target;
                                 console.log(value)
@@ -494,10 +583,11 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
                                         <Grid item xs={12} md={3}   >
                                             <NewMultiSelect 
+                                            setHorizontalAlignments={setHorizontalAlignments}
                                             selectedItems={krHorizontalAlignments}
                                             label={'همسویی افقی'}
                                             propName='horizontalAlignments'
-                                            onChangee={setFieldValue}
+                                            // onChangee={setFieldValue}
                                             isLoading={teamOPloading}
                                             options={teamsOptions || []}
                                             />
@@ -598,27 +688,59 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
 
                             <Grid item xs={12} md={12} mt={3} >
-                                <Box width={'100%'} display={'flex'} flexDirection={'row-reverse'} >
-                                    <DySplitButton 
-                                    // disbled={!dirty || !isValid}
-                                    onclick={setFieldValue}
-                                    options={submitFormOptions || []}
+                                <Box width={'100%'} display={'flex'} 
+                                justifyContent={'end'} 
+                                flexDirection={'row-reverse'}   
+                                columnGap={2}
+                                >
 
-                                    />
-                                    {/* <DyButton
-                                        type={'submit'}
-                                        variant={'contained'}
-                                        bgColor={'info'}
-                                        caption={'افزودن نتیجه'}
-                                        onClick={() => { }}
-                                    /> */}
-                                </Box>
+                                   
+                                 {
+                                    submitFormOptions && submitFormOptions?.map((item:any)=>{
+                                        let{label,id}=item;
+                                        console.log(item)
+                                        return   <Box width={'20%'}>
+                                        <DyButton
+                                             type={'submit'}
+                                             variant={'contained'}
+                                             bgColor={'info'}
+                                             caption={label}
+                                             onClick={() => {
+                                                // console.log(id)
+                                                setOkrStateId(id)
+                                              }}
+                                         />
+                                        </Box> 
+                                    })
+                                 }
+
+                              </Box>
+
+                             
                             </Grid>
                         </Grid>
 
 
 
+                        {/* <DyButton
+                                        type={'submit'}
+                                        variant={'contained'}
+                                        bgColor={'info'}
+                                        caption={'فعال'}
+                                        onClick={() => { }}
+                                    />
+                                    </Box>
+                                  
 
+                                   <Box width={'20%'}>
+                                   <DyButton
+                                        type={'submit'}
+                                        variant={'contained'}
+                                        bgColor={'info'}
+                                        caption={'پیش نویس'}
+                                        onClick={() => { }}
+                                    />
+                                   </Box> */}
 
 
 
@@ -634,6 +756,17 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
         </Formik>
            }
+
+               {
+                showLToastMessage && <DYToastMessage
+                isSuccess={teamAsynOpcState?.isSuccess}
+                message={teamAsynOpcState?.metaData.message}
+                setShow={setShowToastMessage}
+                show={showLToastMessage}
+                
+                />
+                
+                }
                
             </Box>
         </>

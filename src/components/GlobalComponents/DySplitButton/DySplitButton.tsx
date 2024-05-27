@@ -18,14 +18,16 @@ export default function DySplitButton({options,onclick,disbled}:any) {
 
   const handleClick = () => {
     console.info(options[selectedIndex]);
-    // oKRStateId
-    onclick('oKRStateId',options[selectedIndex].id)
+    
+    // onclick('oKRStateId',options[selectedIndex].id)
   };
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number,
   ) => {
+    console.log(index);
+    onclick('oKRStateId',options[index].id)
     setSelectedIndex(index);
     setOpen(false);
   };

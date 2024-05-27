@@ -134,11 +134,6 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     }
    
 
-    useEffect(() => {
-      
-    console.log(hundredValue)
-  
-    }, [hundredValue])
     
     
     
@@ -173,7 +168,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='شرح نتیجه کلیدی'
                                         name='name'
                                         fullWidth
-                                        values={values?.name}
+                                        value={values?.name}
                                     />
 
                                 </Grid>
@@ -185,7 +180,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='مسئول'
                                         name='responsibleId'
                                         fullWidth
-                                        values={values?.responsibleId}
+                                        value={values?.responsibleId}
                                     />
 
                                 </Grid>
@@ -197,7 +192,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='سیستم امتیاز دهی '
                                         name='pointingSystemType'
                                         fullWidth
-                                        values={values?.pointingSystemType}
+                                        value={values?.pointingSystemType}
                                     />
                                 </Grid>
 
@@ -209,7 +204,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='نوع نتیجه کلیدی '
                                         name='keyResultType'
                                         fullWidth
-                                        values={values?.keyResultType}
+                                        value={values?.keyResultType}
                                     />
                                 </Grid>
                                 {/* مقدار شروع */}
@@ -220,7 +215,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='مقدار شروع '
                                         name='startValue'
                                         fullWidth
-                                        values={values?.startValue}
+                                        value={values?.startValue}
                                     />
                                 </Grid>
                                 
@@ -322,7 +317,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='وزن'
                                         name='weight'
                                         fullWidth
-                                        values={values?.weight}
+                                        value={values?.weight}
                                     />
                         </Grid>
                              {/* <Grid item xs={12} md={3}  >

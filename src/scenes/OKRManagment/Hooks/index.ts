@@ -138,12 +138,13 @@ const useAddKeyResult=()=>{
 
 // }
 
-const useEditKeyResult=()=>{
+const useEditKeyResult=(localEditKrSuccess:any)=>{
     const queryClient=useQueryClient()
       return useMutation({
     mutationFn: (data:any) =>editKeyResult(data),
     onSuccess: (data) => {
         queryClient.invalidateQueries('getObjectiveDetails')
+        localEditKrSuccess()
     //   console.log(data)
     },
   });
