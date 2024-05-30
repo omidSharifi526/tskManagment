@@ -247,11 +247,11 @@ enabled:!!objectiveId,
 refetchOnWindowFocus:false,
 cacheTime:Infinity,
 onSuccess:(data:any)=>{
- console.log(data)
+//  console.log(data)
 },
 select:(data)=>{
  let rawData=data?.data?.data;
- console.log(rawData)
+//  console.log(rawData)
  return rawData
 }
 })

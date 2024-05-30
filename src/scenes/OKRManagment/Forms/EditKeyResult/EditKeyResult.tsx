@@ -45,16 +45,19 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
    const[krHorizontalAlignments,setHorizontalAlignments]=useState<any[]>([]);
    const[tval,setTval]=useState<any>(null);
    const[showLToastMessage,setLShowToastMessage]=useState<boolean>(false);
-   const[okrStateId,setOkrStateId]=useState<null|string>('')
-   
+   const[okrStateId,setOkrStateId]=useState<null|string>('');
+   const[lstartDate,setlStartDate]=useState<any>('')
+   const[lforceEndDate,setlForceEndDate]=useState<any>('');
+   const[jlStartDate,setJlStartDate]=useState('');
+   const[jlForecDate,setJlForceDate]=useState('')
     let{state:{objectiveId}}:any=location;
     const[pointingSystemType,setPointingSystemType]=useState<string>('Regularly');
     const[idsValue,setIdsValue]=useState<any>([]);
   
-    const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
-    const {data:acPersOptions}=useGetAllActivePersonByTenantId(tenantId);
-    const{data:HorzinalAlignData}=useGetAllHorizontalAlignmentByTenantId(tenantId);
-    const{data:submitFormOptions}=useGetAllOKRStateByTenantId(tenantId);
+    const{data:teamsOptions,isLoading:teamOPloading}:any=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
+    const {data:acPersOptions}:any=useGetAllActivePersonByTenantId(tenantId);
+    const{data:HorzinalAlignData}:any=useGetAllHorizontalAlignmentByTenantId(tenantId);
+    const{data:submitFormOptions}:any=useGetAllOKRStateByTenantId(tenantId);
     const{data:levelIds,isFetched:getLevelsIds}:any=useGetAllScoreLevelsByTenantId(tenantId);
     const[hundredValue,setHundredValue]=useState<any>({value:'',scoreLevelId:'',tenantId:tenantId})
     const{data:krDetailsData,isLoading:krDetLoading,isFetched:kerDetFetched}:any=useGetKeyResultDetailsById(krId);
@@ -73,29 +76,28 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
        let horval=krHorizontalAlignments?.map(({value}:any)=>value)
         let{forceEndDate,startDate,horizontalAlignments,...rest}=data;
-        console.log(forceEndDate,startDate)
-         if (forceEndDate && startDate) {
-            var fjalDate=moment(forceEndDate).format('jYYYY/jM/jD');
-            var sjalDate=moment(startDate).format('jYYYY/jM/jD');
+        // console.log(forceEndDate,startDate)
+        
+         
 
             let totalData={tenantId:tenantId,
                 objectiveId:objectiveId,
                 horizontalAlignments:[...horval],
                 onValue:'',
-                forceEndDate:fjalDate,
-                startDate:sjalDate,
+                forceEndDate:jlForecDate,
+                startDate:jlStartDate,
                 oKRStateId:okrStateId,
                 ...rest};
             totalData.valuesDetailCommandDtos=ids; 
             totalData.onValue='';     
          
-           console.log(totalData);
-           console.log(krHorizontalAlignments)
+        //    console.log(totalData);
+        //    console.log(krHorizontalAlignments)
            callEditKR(totalData)
 
 
 
-         }
+         
         // let{pointingSystemType}=data;
       
        
@@ -127,7 +129,22 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
 
 
-        console.log(krHorizontalAlignments)
+     useEffect(() => {
+       
+   if (lforceEndDate!=='') {
+    setJlForceDate(moment(lforceEndDate).format('jYYYY/jM/jD'))
+   }
+     
+     }, [lforceEndDate])
+
+     useEffect(() => {
+       
+     if (lstartDate!=='') {
+        setJlStartDate(moment(lstartDate).format('jYYYY/jM/jD'))
+     }
+        
+        }, [lstartDate])
+     
 
 
     
@@ -146,9 +163,9 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
     useEffect(() => {
       setHorizontalAlignments([])
-    console.log(krDetailsData)
+    // console.log(krDetailsData)
     if (krDetailsData) {
-        console.log(krDetailsData)
+        // console.log(krDetailsData)
         let{name,
             responsibleId,
             startValue,
@@ -162,23 +179,31 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             okR_GradeDetails,
             pointingSystemTypeValue,
             horizontalAlignments
-            // startDateRealDate
-// managerId
              }=krDetailsData;
-             console.log(horizontalAlignments)
+            //  console.log( typeof  forceEndDateRealDate)
+            if (forceEndDateRealDate!==null) {
+                setlForceEndDate(new Date(forceEndDateRealDate));
+            }
+
+            if (startDateRealDate!==null) {
+                setlStartDate(new Date(startDateRealDate));
+            }
+
+
+            //  console.log(horizontalAlignments)
              setHundredValue((prev:any)=>{
               return {...prev,value:oneValue}
              });
 
              setPointingSystemType(pointingSystemTypeValue);
-             if (horizontalAlignments!==null &&  !horizontalAlignments.includes(null)) {
+             if (horizontalAlignments!==null) {
                 setHorizontalAlignments(horizontalAlignments?.map(({managerId,name}:any)=>{
                     return{value:managerId,key:name}
                      }))
              }
-             console.log(okR_GradeDetails)
+            //  console.log(okR_GradeDetails)
            if (pointingSystemTypeValue==='Tensile') {
-            console.log(okR_GradeDetails)
+            // console.log(okR_GradeDetails)
             setIdsValue(okR_GradeDetails?.map(({scoreLevelId,value,tenantId,...rest}:any)=>{
                 return {tenantId,value,scoreLevelId}
                  }))
@@ -192,7 +217,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             pointingSystemType:pointingSystemTypeValue,
             keyResultType:okR_KeyResultTypeValue,
             onValue:oneValue,
-            weight:null,
+            weight:String(weight),
             forceEndDate:forceEndDateRealDate?new Date(forceEndDateRealDate):'',
             startDate:startDateRealDate?new Date(startDateRealDate):'',
             id:id,
@@ -200,8 +225,6 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             
         }
        
-        console.log(initValue)
-
         setKrDetailInitValues(initValue)
     }
      
@@ -209,10 +232,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
     useEffect(() => {
         let finded:any = levelIds?.find((o:any) => o.name === "1");
-
         setTval(finded?.scoreLevelId)
-  
-    
     }, [levelIds])
 
 
@@ -278,12 +298,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             onSubmit={(data) => {
                 initialEditKr(data)
             }}
-            validate={(data:any)=>{
-             console.log(data)
-            //  let{pointingSystemType}=data;
-            //  setPointingSystemType(pointingSystemType)
-
-            }}
+       
 
 
         >
@@ -360,7 +375,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                                 onChange={({ target }, { props }:any) => {
                                 let { content } = props;
                                 let { value } = target;
-                                console.log(value)
+                                // console.log(value)
                                 setFieldValue('pointingSystemType',value)
                                 setPointingSystemType(value)
                                 }}
@@ -472,7 +487,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                               value={idsValue[i]?.value || ''}
                               onChange={({target}:any)=>{
                                 let{value}:any=target;
-                                console.log(value)
+                                // console.log(value)
                                 initialUpdateIdsValue(i,value)
                               }}
                               label={i==0?'چه زمانی به 30% میرسد؟':i==1?'چه زمانی به 70% میرسد؟':'چه زمانی به 100% میرسد؟'}   />
@@ -602,11 +617,12 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                          
                          slotProps={{ textField: { size: 'small' } }}
                          label={"حداکثر تاریخ انجام"}
-                           value={values?.forceEndDate}
-                           onChange={(newValue)=>{
+                           value={lforceEndDate || ''}
+                           onChange={(newValue:any)=>{
                                var persianDate = moment(newValue).format('jYYYY/jM/jD');
-                               console.log(persianDate)
-                               setFieldValue('forceEndDate',newValue);
+                            //    console.log(persianDate)
+                               setlForceEndDate(newValue)
+                            // console.log(lforceEndDate)
                            }}
                            />
                          </FormControl>
@@ -619,11 +635,10 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                          slotProps={{ textField: { size: 'small' } }}
                          label={"تاریخ شروع نتایج کلیدی"}
                         //    value={values?.forceEndDate }
-                           value={values?.startDate || ''}
-                           onChange={(newValue)=>{
+                           value={lstartDate || ''}
+                           onChange={(newValue:any)=>{
                                var persianDate = moment(newValue).format('jYYYY/jM/jD');
-                               console.log(persianDate)
-                               setFieldValue('startDate',newValue);
+                            setlStartDate(newValue)
                            }}
                            />
                          </FormControl>
@@ -671,22 +686,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                             </AccordionLyt>
                       </Grid>
 
-
-                            
-
-                            
-                       
-
-                      
-                          
-
-                            
-
-                            
-
-
-
-
+                    
                             <Grid item xs={12} md={12} mt={3} >
                                 <Box width={'100%'} display={'flex'} 
                                 justifyContent={'end'} 
@@ -696,11 +696,12 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
                                    
                                  {
-                                    submitFormOptions && submitFormOptions?.map((item:any)=>{
+                                    submitFormOptions && submitFormOptions?.map((item:any,i:number)=>{
                                         let{label,id}=item;
-                                        console.log(item)
+                                        // console.log(item)
                                         return   <Box width={'20%'}>
                                         <DyButton
+                                        key={i}
                                              type={'submit'}
                                              variant={'contained'}
                                              bgColor={'info'}
@@ -719,37 +720,6 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                              
                             </Grid>
                         </Grid>
-
-
-
-                        {/* <DyButton
-                                        type={'submit'}
-                                        variant={'contained'}
-                                        bgColor={'info'}
-                                        caption={'فعال'}
-                                        onClick={() => { }}
-                                    />
-                                    </Box>
-                                  
-
-                                   <Box width={'20%'}>
-                                   <DyButton
-                                        type={'submit'}
-                                        variant={'contained'}
-                                        bgColor={'info'}
-                                        caption={'پیش نویس'}
-                                        onClick={() => { }}
-                                    />
-                                   </Box> */}
-
-
-
-
-
-
-
-
-
 
                     </Form>
             }

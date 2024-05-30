@@ -60,6 +60,8 @@ const LoginForm = ({ setContentState }: any) => {
     // }
   }
 
+
+
   useEffect(() => {
   
     
@@ -421,6 +423,11 @@ const LoginForm = ({ setContentState }: any) => {
     </Box>
   }
 
+  const initialChangePass=()=>{
+    setContentState((prev: any) => ({ ...prev, content: 'resetPassword' }))
+    console.log('initialChangePass')
+  }
+
 
 
   if (isLoading) {
@@ -459,7 +466,7 @@ const LoginForm = ({ setContentState }: any) => {
           <Grid item xs={12} px={3}  >
             <form autoComplete="off">
               <Grid container  >
-                <Grid item xs={12} px={3}  >
+                <Grid item xs={12}   >
                   <FormControl fullWidth>
                     <DyTextField
                       label={'شماره موبایل'}
@@ -476,7 +483,7 @@ const LoginForm = ({ setContentState }: any) => {
 
 
 
-                <Grid item xs={12} px={3} py={3} >
+                <Grid item xs={12}  py={3} >
                   <FormControl fullWidth  >
                     <DyTextField
                       label={'رمز عبور'}
@@ -492,8 +499,8 @@ const LoginForm = ({ setContentState }: any) => {
 
                 {/* 00387C */}
 
-                <Grid item xs={12} >
-                  <Box px={3} py={2} >
+                <Grid item xs={8} columnGap={1} >
+                  <Box  py={2} px={2} >
                     <DyButton
                       caption={'ورود'}
                       color={'#00387C'}
@@ -502,6 +509,21 @@ const LoginForm = ({ setContentState }: any) => {
                       variant={'contained'}
                       bgColor={'#00387C'}
                       type={'submit'}
+                    />
+                  </Box>
+                </Grid>
+
+
+
+                <Grid item xs={4} >
+                  <Box  py={2}  >
+                    <DyButton
+                      caption={'تغییر رمز عبور'}
+                      color={'#00327C'}
+                      onClick={initialChangePass}
+                      variant={'contained'}
+                      // bgColor={'#00347C'}
+                      // type={'submit'}
                     />
                   </Box>
                 </Grid>

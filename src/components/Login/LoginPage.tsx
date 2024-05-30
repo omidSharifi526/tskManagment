@@ -11,6 +11,7 @@ import EmployeesRegistration from './EmployeesRegistration/EmployeesRegistration
 import OwnerRegistration from './OwnerRegistration/OwnerRegistration';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 import LyBackdrop from '../Layouts/BackDrop/BackDrop';
+import ResetPassword from '../../scenes/OKRManagment/Forms/ResetPassword/ResetPassword';
 const LoginPage = () => {
 
   const[contentState,setContentState]=useState({content:'login'});
@@ -60,6 +61,10 @@ switch (content) {
         case 'userTypeSelection':
        return <UserTypeSelection   />
       break;
+
+      case 'resetPassword':
+        return <ResetPassword setContentState={setContentState}  />
+        break;
 
 
 
