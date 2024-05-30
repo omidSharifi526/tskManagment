@@ -118,6 +118,16 @@ return await axiosInstance.post('OKR/EditKeyResult',krData)
 }
 
 
+// const deletePerson=async(personDeletedBody:any|null)=>{
+//     return  await  axiosInstance.post(`/Person/DeletePerson`,personDeletedBody)
+//     }
+
+// https://api.myokr.ir/api/OKR/DeleteKeyResult
+
+const deleteKr=async(delteKrBody:any|null)=>{
+    return await axiosInstance.post(`OKR/DeleteKeyResult`,delteKrBody)
+}
+
 
 
 
@@ -135,5 +145,6 @@ export{
     AddObjective,
     getObjectiveDetails,
     getKeyResultDetailsById,
-    editKeyResult
+    editKeyResult,
+    deleteKr
 }

@@ -64,7 +64,7 @@ export default function DYToastMessage({show,setShow,message,isSuccess}:any) {
        color={isSuccess?'success':'error'}
         open={show}
         
-        autoHideDuration={6000}
+        autoHideDuration={2000}
         onClose={handleClose}
         message={message?message:'خطای سرور'}
         action={action}

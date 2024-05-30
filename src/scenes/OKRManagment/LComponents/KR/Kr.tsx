@@ -338,9 +338,12 @@ const initialCreateKr=():void=>{
 
        
        <Grid item xs={12}  >
-       <ODetailsTabs krs={keyResults} 
+       <ODetailsTabs 
+        krs={keyResults} 
         setKrId={setKrId}
         setShowEditKr={setShowEditKr}
+        setAddKrState={setAddKrState}
+        setShowToastMessage={setShowToastMessage}
        />
        </Grid>
 

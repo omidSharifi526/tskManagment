@@ -77,9 +77,9 @@ const resetFormValues:resetPasswordFace={
 
 
 
-  const pointSystem:pSoFace[]=[
-    {key:'کششی',value:'Tensile'},
-    {key:'متداول',value:'Regularly'}
+  const pointSystem:any[]=[
+    {key:'  کششی  ' ,value:'Tensile',desc:'تعیین مقدار مورد انتظار در سه سطح 30% و 70% و 100 %'},
+    {key:'  متداول  ' ,value:'Regularly',desc:'تعیین مقدار مورد انتظار تنهادر سطح 100%'}
   ]
 
   const keyResultTypeOptions:pSoFace[]=[
@@ -93,7 +93,7 @@ const resetFormValues:resetPasswordFace={
     value:'Percentage'
     },
     {
-        key:'مرحله ایی',
+        key:'مرحله ای',
         value:'Phase'
     }
 
