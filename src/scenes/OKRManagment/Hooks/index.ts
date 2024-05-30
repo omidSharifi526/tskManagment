@@ -6,12 +6,13 @@ import {GetAllActivePersonByTenantId,
     AddKeyResult,
     getAllObjectiveByPeriodId,
     AddObjective,
+    deleteObject,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     getObjectiveDetails,
     getKeyResultDetailsById,
-    deleteObject,
-    editKeyResult
+    editKeyResult,
+    deleteKr
     
 
 } from '../Api/index';
@@ -184,14 +185,7 @@ return useQuery(['GetAllObjectiveByPeriodId',periodId,profileTenantId],getAllObj
 })
 }
 
-// return useMutation({
-//     mutationFn: (data:any) =>
-//         addMeeting(data),
-//     onSuccess: (data) => {
-//         queryClient.invalidateQueries('getAllMeetingByIds')
-//       console.log(data)
-//     },
-//   });
+
 
 
 
@@ -287,6 +281,49 @@ const useGetKeyResultDetailsById=(krId:string|null)=>{
 
 
 
+// const useDeleteKr=(lDeleteSuccess:any)=>{
+//     const queryClient=useQueryClient()
+//       return useMutation({
+//     mutationFn: (krBody:any) =>deleteKr(krBody),
+//     onSuccess: (data) => {
+//         queryClient.invalidateQueries('getObjectiveDetails')
+//         lDeleteSuccess()
+//     //   console.log(data)
+//     },
+//   });
+
+
+// }
+
+// const useDeleteKr=(onSuccesss:any)=>{
+//     const queryClient=useQueryClient()
+    
+//           return useMutation({
+//         mutationFn:(data:any)=>deleteKr(data),
+//         onSuccess: (data) => {
+//             onSuccesss()
+//             queryClient.invalidateQueries('getObjectiveDetails')
+//         //   console.log(data)
+//         },
+//       });
+//      }
+
+const useDeleteKr=()=>{
+    const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (data:any) =>deleteKr(data),
+    onSuccess: (data) => {
+        queryClient.invalidateQueries('getObjectiveDetails')
+    //   console.log(data)
+    },
+  });
+
+
+}
+
+
+
+
 export{
     useGetAllActivePersonByTenantId,
     useGetAllHorizontalAlignmentByTenantId,
@@ -299,6 +336,5 @@ export{
     useGetAllObjectiveOKRStateByTenantId,
     useGetObjectiveDetails,
     useGetKeyResultDetailsById,
-    useEditKeyResult,
-    useDeleteObject
+    useEditKeyResult
 }

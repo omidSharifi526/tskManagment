@@ -347,19 +347,8 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
                             </Grid>
 
-                            {/* <Grid item xs={12} md={3}  >
-                                <FormikControl
-                                    control='select'
-                                    options={pointSystem}
-                                    label='سیستم امتیاز دهی '
-                                    name='pointingSystemType'
-                                    fullWidth
-                                    value={values?.pointingSystemType || ''}
-                                />
-                            </Grid> */}
 
-
-                            <Grid item xs={12} md={3} >
+                            {/* <Grid item xs={12} md={3} >
                             <FormControl fullWidth sx={{ padding: '8px' }} >
                             <InputLabel id="pointingSystemType">سیستم امتیاز دهی </InputLabel>
                             <Select
@@ -387,7 +376,47 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                                 }
                             </Select>
                             </FormControl>
-                            </Grid>
+                            </Grid> */}
+
+
+
+                            <Grid item xs={12} md={3}  >
+                                      <Box sx={{padding:'8px'}}>
+                                   <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">سیستم امتیاز دهی </InputLabel>
+                                    <Select
+                                    sx={{'& .muirtl-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select' :{py:'1px'}}}
+                                    size='small'
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={values?.pointingSystemType || ''}
+                                    label="سیستم امتیاز دهی "
+                                    onChange={({target}:any)=>{
+                                       let{value}=target;
+                                    //    setFieldValue('pointingSystemType',value)
+                                       setPointingSystemType(value)
+                                        setFieldValue('pointingSystemType',value)
+                                    }}
+                                    >
+                                        {
+                                            pointSystem.map((item:any,i:number)=>{
+                                                let{key,value,desc}=item
+                                                return <MenuItem 
+                                                key={i}
+                                                sx={{ fontSize: "0.7rem", bgcolor: "transparent" }}
+                                                value={value}>
+                                                    {key}
+                                                    {'\u00A0'}
+                                                     <Typography fontSize={'0.5rem'}   >{desc}</Typography>
+                                                  
+                                                       </MenuItem>
+                                            })
+                                        }
+                     
+                                    </Select>
+                                </FormControl>
+                                </Box>
+                                </Grid>
 
 
 
@@ -596,7 +625,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                                         />
                                         </Grid> */}
 
-                                        <Grid item xs={12} md={3}   >
+                                        <Grid item xs={12} md={krHorizontalAlignments?.length*3}   >
                                             <NewMultiSelect 
                                             setHorizontalAlignments={setHorizontalAlignments}
                                             selectedItems={krHorizontalAlignments}
@@ -609,7 +638,37 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                                         </Grid>
 
 
+                                        
 
+                          <Grid item xs={12} md={3}>
+
+        <FormControl sx={{p:'8px'}} fullWidth  >
+        <DatePicker 
+
+        slotProps={{ textField: { size: 'small' } }}
+        label={"تاریخ شروع نتایج کلیدی"}
+        //    value={values?.forceEndDate }
+        value={lstartDate || ''}
+        onChange={(newValue:any)=>{
+            var persianDate = moment(newValue).format('jYYYY/jM/jD');
+        setlStartDate(newValue)
+        }}
+        />
+        </FormControl>
+
+
+
+
+        {/* <DatePicker 
+        value={}
+        /> */}
+        {/* <FormikControl
+            control="date"
+            label=
+            name="startDate"
+            value={values?.startDate}
+        /> */}
+                         </Grid>
 
                          <Grid item xs={12} md={3}>
                          <FormControl sx={{p:'8px'}} fullWidth  >
@@ -627,46 +686,11 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                            />
                          </FormControl>
                          </Grid> 
-                         <Grid item xs={12} md={3}>
 
-                         <FormControl sx={{p:'8px'}} fullWidth  >
-                         <DatePicker 
+
                          
-                         slotProps={{ textField: { size: 'small' } }}
-                         label={"تاریخ شروع نتایج کلیدی"}
-                        //    value={values?.forceEndDate }
-                           value={lstartDate || ''}
-                           onChange={(newValue:any)=>{
-                               var persianDate = moment(newValue).format('jYYYY/jM/jD');
-                            setlStartDate(newValue)
-                           }}
-                           />
-                         </FormControl>
-
-
-
-
-                            {/* <DatePicker 
-                            value={}
-                            /> */}
-                            {/* <FormikControl
-                                control="date"
-                                label=
-                                name="startDate"
-                                value={values?.startDate}
-                            /> */}
-                            </Grid>
 
                             <Grid item xs={12} md={12}  >
-                                {/* <FormikControl
-                                    control='textField'
-                                    type={'text'}
-                                    label='توضیحات'
-                                    name='c'
-                                    fullWidth
-                                    value={values?.description || ''}
-                                /> */}
-                                
                             <Box sx={{padding:'8px'}}  >
                             <TextField
                             size='small'
