@@ -63,13 +63,13 @@ const OCart = (props:any) => {
         </Grid>
 
 
-        <Grid item xs={2}   >
+        {/* <Grid item xs={2}   >
         <Box width={'100%'} py={2} textAlign={'center'}>
             <IconButton>
             <MoreVertIcon/>
             </IconButton>
           </Box>
-         </Grid>
+         </Grid> */}
         </Grid>
         <Grid container   >
         <Grid xs={12}  >

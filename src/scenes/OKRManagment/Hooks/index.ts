@@ -6,6 +6,8 @@ import {GetAllActivePersonByTenantId,
     AddKeyResult,
     getAllObjectiveByPeriodId,
     AddObjective,
+    deleteKr,
+    deleteObject,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     getObjectiveDetails,
@@ -334,5 +336,7 @@ export{
     useGetAllObjectiveOKRStateByTenantId,
     useGetObjectiveDetails,
     useGetKeyResultDetailsById,
+    useDeleteObject,
+    useDeleteKr,
     useEditKeyResult
 }
