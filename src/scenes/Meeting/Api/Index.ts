@@ -106,7 +106,17 @@ const getMeetingKeyResultValueById=async({queryKey}:any)=>{
 return await axiosInstance.get(`/Meeting/GetMeetingKeyResultValueById?meetingId=${ids?.meetingId}&keyResultId=${ids?.krId}`)
 }
 
+// https://api.myokr.ir/api/Meeting/GetMeetingDetailById?Id=ec0fe0d3-9aaa-416c-9bad-34725183735b
 
+const getMeetingDetailById=async({queryKey}:any)=>{
+  let meetingId:any=queryKey[1];
+  return await axiosInstance.get(`/Meeting/GetMeetingDetailById?Id=${meetingId}`)
+}
+// https://api.myokr.ir/api/Meeting/editMeeting
+
+const editMeeting=async(meetingData:any)=>{
+  return await axiosInstance.post(`/Meeting/editMeeting`,meetingData)
+}
 
 export{
     getAllMeetingByIds,
@@ -121,5 +131,7 @@ export{
     getAllMeetingsTypeByTenantId,
     addMeeting,
     exportMeetingDetails,
-    getMeetingKeyResultValueById
+    getMeetingKeyResultValueById,
+    getMeetingDetailById,
+    editMeeting
 }

@@ -11,7 +11,9 @@ import {
     getAllTeamsForSelByTenantId,
     getAllMeetingsTypeByTenantId, addMeeting,
     exportMeetingDetails,
-    getMeetingKeyResultValueById
+    getMeetingKeyResultValueById,
+    getMeetingDetailById,
+    editMeeting
 
 } from '../Api/Index';
 import { setMeetingsListR, setObjectivieR, setKeyResultsR, setLoadingR } from '../MeetingsSlice/MeetingsSlice';
@@ -278,18 +280,7 @@ const useGetAllMeetingsTypeByTenantId = (tenantId: any) => {
 
 const useAddMeeting = (addMeetingSuccess: any) => {
     const queryClient = useQueryClient();
-    // return useMutation(addMeeting, {
-    //     onSuccess: (data:any) => {
-    //         addMeetingSuccess()
-    //         queryClient.invalidateQueries('getAllMeetingByIds')
-    //         console.log(data);
-    //         return data
-           
-    //     },
-    //     onError: (err: any) => {
-    //         console.log(err)
-    //     }
-    // })
+
     return useMutation({
         mutationFn: (data:any) =>
             addMeeting(data),
@@ -331,6 +322,34 @@ const useGetMeetingKeyResultValueById=(ids:any)=>{
     })
 }
 
+const useGetMeetingDetailById=(meetId:any)=>{
+    return useQuery(['GetMeetingDetailById',meetId],getMeetingDetailById,{
+        
+        enabled:!!meetId,
+        refetchOnWindowFocus:false,
+        select:(data:any)=>{
+            let rawData=data?.data?.data;
+            console.log(rawData)
+            return rawData
+       
+        }
+    }) 
+}
+
+
+const useEditMeeting=()=>{
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (data:any) =>
+            editMeeting(data),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries('getAllMeetingByIds')
+        //   console.log(data)
+        },
+      });
+}
+
 
 export {
     useGetAllMeetings,
@@ -346,5 +365,7 @@ export {
     useAddMeeting,
     useGetWebObjectiveDetailsCheckinMeetingByTeamId2,
     useExportMeetingDetails,
-    useGetMeetingKeyResultValueById
+    useGetMeetingKeyResultValueById,
+    useGetMeetingDetailById,
+    useEditMeeting
 }

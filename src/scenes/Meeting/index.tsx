@@ -17,6 +17,7 @@ import ModalLyt from '../../components/Layouts/ModalLyt/ModalLyt';
 import AddMeeting from './LComponents/Forms/AddMeeting/AddMeeting';
 import { Link } from 'react-router-dom';
 import DyButton from '../../components/GlobalComponents/DyButton/DyButton';
+import EditMeeting from './LComponents/Forms/EditMeeting/EditMeeting';
 const Meeting :React.FC=function(){
 
   const[showDownloadLink,setShowDownlodLink]=useState<boolean>(false)
@@ -42,7 +43,13 @@ const Meeting :React.FC=function(){
   const [existData,setExistData]=useState<any>(null);
   const [accessForReport,setAccessForReport]=useState<boolean>(false);
   const[meetingLenght,setMeetingLenght]=useState<Number>(0);
-  const[reloadMeetingData,setReloadMeetingData]=useState<boolean>(false)
+  const[reloadMeetingData,setReloadMeetingData]=useState<boolean>(false);
+
+
+  const [showEditMeeting,setshowEditMeeting]=useState<boolean>(false);
+  const [meetingId,setMeetingId]=useState<string|null>(null);
+  
+
  
 
 
@@ -65,6 +72,14 @@ const Meeting :React.FC=function(){
 
        }
      }, [meetingLoadState]);
+
+
+     useEffect(() => {
+       
+     console.log(meetingId)
+  
+     }, [meetingId])
+     
 
 
      
@@ -139,6 +154,9 @@ const Meeting :React.FC=function(){
           prog={i}  
           accessForReport={accessForReport}
           setShowDownlodLink={setShowDownlodLink}
+          setPMeetingId={setMeetingId}
+          setshowEditMeeting={setshowEditMeeting}
+          showEditMeeting={showEditMeeting}
            
            
            />
@@ -181,6 +199,18 @@ const Meeting :React.FC=function(){
           <Box width={'100%'} alignItems={'center'}   >
           <Link target='_blank' to={`https://api.myokr.ir/api/Download/ExportMeetingDetails?meetingId=${meetId}`}>دریافت فایل</Link>
           </Box>
+          </ModalLyt>
+        }
+
+        {
+          showEditMeeting && <ModalLyt 
+          showModal={showEditMeeting}
+          setShowModal={setshowEditMeeting}
+          >
+          <EditMeeting 
+          meetingId={meetingId}
+          
+          />
           </ModalLyt>
         }
     </Grid>
