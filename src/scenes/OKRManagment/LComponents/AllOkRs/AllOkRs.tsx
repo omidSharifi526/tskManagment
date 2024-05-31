@@ -24,6 +24,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
   const [showAddObjective, setShowAddObjective] = useState<boolean>(false);
   const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
   const[addObjectiveStatus,setAddObjectiveStatus]=useState<any>(null);
+  //const[objectiveAsynOpcState,setObjectiveAsyncOpState]=useState<any>(null);
   const[objectiveAsynOpcState,setObjectiveAsyncOpState]=useState<any>(null);
 
 
@@ -109,12 +110,12 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
  
            {
             allObjective && allObjective.map((o:any,i:number)=>{
-              return <Grid  item xs={12} sm={3}  >
+              return <Grid  item xs={12} sm={4}  >
                 <Box width={'100%'} key={i}   >
                 <OCart obj={o}   
                 setShowToastMessage={setShowToastMessage}
-                setDeleteObjectiveState={setObjectiveAsyncOpState}
                 afterSuccess={getObjectivesAgain}
+                setObjectiveAsyncOpState={setObjectiveAsyncOpState}
                 />
               </Box>
               </Grid>
@@ -154,7 +155,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
              periodsData={periodsData}
              onSuccess={setShowAddObjective}
              setShowToastMessage={setShowToastMessage}
-             setAddObjectiveStatus={setAddObjectiveStatus}
+             setObjectiveAsyncOpState={setObjectiveAsyncOpState}
              afterSuccess={getObjectivesAgain}
             />
 
@@ -164,26 +165,16 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
 
         {
             showToastMessage && <DYToastMessage
-            isSuccess={addObjectiveStatus?.isSuccess}
-            message={addObjectiveStatus?.metaData.message}
+            //isSuccess={addObjectiveStatus?.isSuccess}
+            //message={addObjectiveStatus?.metaData.message}
+            isSuccess={objectiveAsynOpcState?.isSuccess}
+            message={objectiveAsynOpcState?.metaData.message}
             setShow={setShowToastMessage}
             show={showToastMessage}
             
               />
       
           }
-        
-        {/* {
-                showToastMessage && <DYToastMessage
-                isSuccess={objectiveAsynOpcState?.isSuccess}
-                message={objectiveAsynOpcState?.metaData.message}
-                setShow={setShowToastMessage}
-                show={showToastMessage}
-                
-                />
-                
-                } */}
-
       </Grid>
       
 

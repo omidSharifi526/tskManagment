@@ -92,7 +92,7 @@ useEffect(() => {
 
    <Grid item xs={12}  >
    <Box textAlign={'center'} py={2}  >
-    <Typography  fontSize={'18px'}
+    <Typography  fontSize={'20px'}
     color={'black'}
     variant='button'>در صورت تمایل بعدا هم میتوانید از طریق پروفایل کاربری،  اکانت خود را تغییر دهید.
     </Typography>
@@ -101,8 +101,8 @@ useEffect(() => {
 
  
     <Grid container mx={'auto'}   display={'flex'}  padding={1} gap={1} py={1} flexWrap={'wrap'}  >
-<Grid item xs={12} md={8} mx={'auto'} >
-<Grid container spacing={3} display={'flex'} flexWrap={'wrap'} justifyContent={'flex-end'} >
+<Grid item xs={12} md={12} mx={'auto'} >
+<Grid container spacing={2} display={'flex'} flexWrap={'wrap'} justifyContent={'flex-end'} >
 {
 userTenantsData && userTenantsData?.map((item:any,i:number)=>{
         return(

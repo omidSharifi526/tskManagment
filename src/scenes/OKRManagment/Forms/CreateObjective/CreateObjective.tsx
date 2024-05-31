@@ -25,7 +25,7 @@ interface teamIdsFace{
 }
 // setShowToastMessage={setShowToastMessage}
 // setAddKrState={setAddObjectiveStatus}
-const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setAddObjectiveStatus,afterSuccess}:any) => {
+const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setObjectiveAsyncOpState,afterSuccess}:any) => {
   const[teamIdObject,setTeameIdObjects]=useState<teamIdsFace>({teamId:'',personIds:[]})
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
     const[HorzIds,setHorzIds]=useState<any>({tenantId:tenantId,definitionId:null})
@@ -53,7 +53,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
     setAddObjectiveMessage(addObjectiveData?.data?.metaData.message)
     setSuccessAddObjective(isSuccess)
     setShowToastMessage(true)
-    setAddObjectiveStatus(addObjectiveData?.data)
+    setObjectiveAsyncOpState(addObjectiveData?.data)
 
 
     // if (addObjectiveData?.data?.isSuccess) {
@@ -94,7 +94,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
  
 
   if (isLoading) {
-    return <Box width={'100%'} py={6} textAlign={'center'}   >
+    return <Box width={'100%'} py={16} textAlign={'center'}   >
         <CircularProgress/>
     </Box>
   }

@@ -81,8 +81,8 @@ useEffect(() => {
 
 
   return (
-    <Box width={'270px'} m={1} height={'100px'} borderRadius={3} boxShadow={4}  >
-        <Grid container px={1} rowGap={2} >
+    <Box width={'335px'} height={'120px'} marginRight={1} borderRadius={3} boxShadow={4}  >
+        <Grid container px={2} rowGap={1} >
             
         <Grid item xs={2}   >
     <Box  display={'flex'} 
@@ -105,16 +105,16 @@ useEffect(() => {
          </Grid>
          <Grid item xs={10} px={1} >
          <Grid container   >
-        <Grid item xs={8} height={'45px'} >
+        <Grid item xs={8}  height={'75px'} >
         <Box  p={1} pt={2}   >
-            <Typography color={'#001733'} fontSize={'15px'} fontWeight={700}  >
+            <Typography color={'#001733'} fontSize={'13px'} fontWeight={900}  >
             {
             name
             }
             </Typography>
         </Box>
         </Grid>
-        <Grid item xs={4} height={'45px'} >
+        <Grid item xs={4} height={'35px'} >
         <Box width={'90px'} textAlign={'end'} px={1} >
       <Box>
       <IconButton onClick={()=>{
@@ -128,10 +128,10 @@ useEffect(() => {
         <DeleteIcon color='error'   />
        </IconButton>
       </Box>
-      <Box pt={1} height={'60px'} marginRight={1} display={'flex'} alignItems={'center'} justifyContent={'end'} >
+      <Box pt={8}  height={'60px'} marginRight={1} display={'flex'} alignItems={'center'} justifyContent={'end'} >
             <Box   height={'25px'} width={'75px'}
                     bgcolor={'#D5f7D4'}   borderRadius={2} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Typography fontSize={'0.70rem'} fontWeight={activated?900:400} color={activated?'green':'red'}  >
+                        <Typography fontSize={'0.7rem'} fontWeight={activated?900:400} color={activated?'green':'red'}  >
                             {
                                 activated?'فعال':'دعوت شده'
 

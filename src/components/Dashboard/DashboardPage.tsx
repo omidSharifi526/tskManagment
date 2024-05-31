@@ -153,12 +153,12 @@ const itemsList = [
     icon: <AboutUsIcon  />,
     to:"/dashboard/aboutus"
   }
-  ,
-  {
-   text:"راهنما",
-   icon: <GuideIcon  />,
-   to:"/dashboard/guide"
-  }
+  // ,
+  // {
+  //  text:"راهنمای نرم افزار",
+  //  icon: <GuideIcon  />,
+  //  to:"/dashboard/aboutus"
+  // }
   // SettingsIcon
 
 
