@@ -87,6 +87,8 @@ const Teams = () => {
                             showAddTeam && <ModalLyt
                                 showModal={showAddTeam}
                                 setShowModal={setShowAddTeam}
+                                height={700}
+                                width={900}
                                 title={'ایجاد تیم'}  >
                                 <AddTeam 
                                 setShowToastMessage={setShowToastMessage}
@@ -101,6 +103,8 @@ const Teams = () => {
                             showEditTeam  && <ModalLyt
                             showModal={showEditTeam }
                             setShowModal={setShowEditTeam}
+                            height={500}
+                            width={600}
                             title={'ویرایش تیم'}
                             
                             >

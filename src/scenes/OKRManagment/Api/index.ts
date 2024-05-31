@@ -118,7 +118,11 @@ return await axiosInstance.post('OKR/EditKeyResult',krData)
 }
 
 
-
+// api/Team/DeleteTeam
+const deleteObject=async(teamDeletedBody:any|null)=>{
+    console.log(teamDeletedBody)
+return await axiosInstance.post(`/OKR/DeleteObjective`,teamDeletedBody)
+}
 
 
 
@@ -133,6 +137,7 @@ export{
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     AddObjective,
+    deleteObject,
     getObjectiveDetails,
     getKeyResultDetailsById,
     editKeyResult

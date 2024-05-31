@@ -263,7 +263,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
 
 
-                    <Grid item xs={12} md={8} >
+                    <Grid item xs={12} md={12} >
 
                       <MultiSelect
                         options={allTeamsData || []}
@@ -275,7 +275,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
                     </Grid>
 
-                    <Grid item xs={12} md={4} >
+                    <Grid item xs={12} md={6} >
                       <FormikControl
                         control='select'
                         type='select'
@@ -286,7 +286,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6}>
                       {/* <DateFieldValue/> */}
                       <FormikControl
                         control="date"
@@ -297,7 +297,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
                     </Grid>
 
 
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6}>
                       <FormikControl
                         control="timePicker"
                         name="fromTime"
@@ -305,7 +305,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
                         value={meetingData.fromTime}
                       />
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6}>
                       <FormikControl
                         control="timePicker"
                         name="toTime"
@@ -339,7 +339,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
                       />
                     </Grid>
                     <Grid item xs={12} mt={1}  >
-                      <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
+                      <Box px={1} columnGap={2} display={'flex'} justifyContent={'center'} flexDirection={'row-reverse'}  >
                         <Box >
                           <DyButton
                             caption={'ذخیره'}
@@ -409,7 +409,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
       <Grid container  >
         <Grid item xs={12}   >
           <Box alignSelf={'center'} textAlign={'center'}   >
-            <AddMeetingVector style={{ width: '400px', height: '100%', alignSelf: 'center', textAlign: 'center' }} />
+            <AddMeetingVector style={{ width: '300px', height: '100%', alignSelf: 'center', textAlign: 'center' }} />
           </Box>
         </Grid>
 

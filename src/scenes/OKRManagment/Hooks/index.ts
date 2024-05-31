@@ -10,6 +10,7 @@ import {GetAllActivePersonByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     getObjectiveDetails,
     getKeyResultDetailsById,
+    deleteObject,
     editKeyResult
     
 
@@ -20,6 +21,16 @@ type option={
     id:string,
     name:string
 }
+
+const useDeleteObject=()=>{
+    const queryClient=useQueryClient()
+    return useMutation({
+  mutationFn: (userData:any) =>deleteObject(userData),
+  onSuccess: (data:any) => {
+    queryClient.invalidateQueries('getAllObjectiveByPeriodId')
+  },
+   });
+   }
 
 // tenantId:any
 const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
@@ -288,5 +299,6 @@ export{
     useGetAllObjectiveOKRStateByTenantId,
     useGetObjectiveDetails,
     useGetKeyResultDetailsById,
-    useEditKeyResult
+    useEditKeyResult,
+    useDeleteObject
 }

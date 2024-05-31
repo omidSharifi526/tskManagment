@@ -16,7 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import SettingsIcon from '@mui/icons-material/Settings';
-
+import GuideIcon from '@mui/icons-material/Help';
 import TenantsList from './LComponents/TenantList/TenantList';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 
@@ -28,7 +28,7 @@ import {ReactComponent as BaseInfoIcon} from './StaticsData/Icons/BaseInfoIcon.s
 import {ReactComponent as MeetingIcon} from './StaticsData/Icons/MeetingIcon.svg';
 import {ReactComponent as CompanyManagmentIcon} from './StaticsData/Icons/companyManagmentIcon.svg';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import AboutUsIcon   from '@mui/icons-material/Info';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -45,7 +45,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { supportedLocales,MUILocaleData } from '../../SupportedLocales';
 
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -122,11 +122,12 @@ const itemsList = [
   //   text: "داشبورد",
   //   icon: <DashboardIcon  />,
   //   to: "/dashboard" 
-  // },
+  // }
+  // ,
   {
-    text: "جلسات",
-    icon: <MeetingIcon  />,
-    to: "/dashboard/meetings" 
+    text: "مدیریت شرکت",
+    icon: <CompanyManagmentIcon  />,
+    to: "/dashboard/companyManagment" 
   }
   ,
   {
@@ -136,15 +137,27 @@ const itemsList = [
   }
   ,
   {
-    text: "مدیریت شرکت",
-    icon: <CompanyManagmentIcon  />,
-    to: "/dashboard/companyManagment" 
+    text: "جلسات",
+    icon: <MeetingIcon  />,
+    to: "/dashboard/meetings" 
   }
   ,
   {
     text: "تنظیمات",
     icon: <SettingsIcon fontSize='large'  />,
     to: "/dashboard/settings" 
+  }
+  ,
+  {
+    text:"درباره ما",
+    icon: <AboutUsIcon  />,
+    to:"/dashboard/aboutus"
+  }
+  ,
+  {
+   text:"راهنما",
+   icon: <GuideIcon  />,
+   to:"/dashboard/guide"
   }
   // SettingsIcon
 

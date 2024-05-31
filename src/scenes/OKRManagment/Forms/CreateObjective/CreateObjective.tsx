@@ -123,7 +123,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                 ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }: any) =>
                     <Form>
                         <Grid container  >
-                            <Grid item xs={12} md={10}  >
+                            <Grid item xs={12} md={12}  >
                                 <FormikControl
                                     control='textField'
                                     type='text'
@@ -136,7 +136,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                             </Grid>
                             {/**/}
 
-                            <Grid item xs={12} md={2}  >
+                            <Grid item xs={12} md={4}  >
                                 <FormikControl
                                     control='select'
                                     options={periodOptions || []}
@@ -148,7 +148,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                             </Grid>
 
 
-                            <Grid item xs={12} md={3}  >
+                            <Grid item xs={12} md={4}  >
 
                             <Box padding={'8px'} >
                                 <FormControl fullWidth size='small'  >
@@ -208,7 +208,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                      
                           }
 
-                            <Grid item xs={12} md={3}  >
+                            <Grid item xs={12} md={4}  >
                                 <FormikControl
                                     control='select'
                                     options={personsOptionds || []}
@@ -236,14 +236,14 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                       expanded={showAdvanceOptions}  >
                      <Grid container  >
                         
-                         <Grid item xs={12} md={3}  >
+                         <Grid item xs={12} md={6}  >
                            <FormikControl 
                            control={'radio'}
                            mainLabel={'قابلیت نمایش'}
                            value={values?.isPublic}
                            setFieldValue={setFieldValue}
                            propName={'isPublic'}
-                           options={[{label:'برای همه',value:'برای همه'},{label:'برای اشخاص خاص',value:'برای اشخاص خاص'}]}
+                           options={[{label:'برای همه',value:'برای همه'}, {label:'برای اشخاص خاص',value:'برای اشخاص خاص'}]}
                              />
                             </Grid>
 
@@ -279,7 +279,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                      </Grid>
 
                      <Grid container >
-                       <Grid item xs={12} md={4}  >
+                       <Grid item xs={12} md={3}  >
                                 <FormikControl
                                     control='textField'
                                     type='text'
@@ -290,7 +290,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                 />
                             </Grid>
 
-                              <Grid item xs={12} md={8}  >
+                              <Grid item xs={12} md={9}  >
                                 <FormikControl
                                     control='textField'
                                     type='text'
@@ -360,7 +360,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
 
 
                             <Grid item xs={12} mt={1}  >
-                      <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
+                      <Box px={1} columnGap={2} display={'flex'} justifyContent={'end'} flexDirection={'row-reverse'}  >
                         <Box >
                           <DySplitButton
                                     options={submitOptions || [] }

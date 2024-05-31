@@ -23,7 +23,8 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
   const{data:objetcideData,isLoading:getObjectiveLoading,isError,isFetched,refetch:getObjectivesAgain}=useGetAllObjectiveByPeriodId(periodId,profileTenantId)
   const [showAddObjective, setShowAddObjective] = useState<boolean>(false);
   const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
-  const[addObjectiveStatus,setAddObjectiveStatus]=useState<any>(null)
+  const[addObjectiveStatus,setAddObjectiveStatus]=useState<any>(null);
+  const[objectiveAsynOpcState,setObjectiveAsyncOpState]=useState<any>(null);
 
 
   const initialAddObjective = (): void => {
@@ -131,7 +132,11 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
             allObjective && allObjective.map((o:any,i:number)=>{
               return <Grid  item xs={12} sm={3}  >
                 <Box width={'100%'} key={i}   >
-                <OCart obj={o}   />
+                <OCart obj={o}   
+                setShowToastMessage={setShowToastMessage}
+                setDeleteObjectiveState={setObjectiveAsyncOpState}
+                afterSuccess={getObjectivesAgain}
+                />
               </Box>
               </Grid>
             })
@@ -162,6 +167,8 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
           <ModalLyt
             showModal={showAddObjective}
             setShowModal={setShowAddObjective}
+            width={700}
+            height={900}
             title={'هدف جدید'}
           >
             <CreateObjective  
@@ -187,6 +194,17 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
       
           }
         
+        {/* {
+                showToastMessage && <DYToastMessage
+                isSuccess={objectiveAsynOpcState?.isSuccess}
+                message={objectiveAsynOpcState?.metaData.message}
+                setShow={setShowToastMessage}
+                show={showToastMessage}
+                
+                />
+                
+                } */}
+
       </Grid>
       
 

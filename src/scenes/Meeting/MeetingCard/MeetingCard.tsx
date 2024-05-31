@@ -89,7 +89,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
               }
             </Box>
             <Box>
-              <Typography sx={{ fontSize: '14px' }}  >
+              <Typography sx={{ fontSize: '12px' }}  >
                 {info.status}
               </Typography>
             </Box>
@@ -101,10 +101,10 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
               variant='caption'
               py={1}
               textAlign={'center'}
-              width={'100%'}
+              width={'80px'}
               color={'info'}
-              border={1}
-              borderColor={'blueviolet'}
+              border={2}
+              borderColor={'#db6e8b'}
               borderRadius={1} >
               {
                 info?.name
@@ -160,16 +160,16 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
 
         <Box>
             {
-              accessForReport && <Box display={'flex'} alignItems={'center'}  flexDirection={'row-reverse'} px={1}  >
+              accessForReport && <Box display={'flex'} alignItems={'center'}  flexDirection={'row-reverse'} px={1} >
                 <IconButton color='info'  onClick={()=>{
                   let{id}=info;
                  setMeetingId(id)
                 }}   >
-                  <Box >
+                  <Box>
                   <Link target='_blank' to={`https://api.myokr.ir/api/Download/ExportMeetingDetails?meetingId=${meetingId}`}>
                   <img
                     src={Exeloo}
-                    style={{ height: 40, width: 43 }}
+                    style={{ height: 40, width: 43}}
                     alt="exelLogo"
                   />
                   </Link>
@@ -183,7 +183,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
 
 
 
-        <Box display={'flex'} justifyContent={'space-between'} px={1} mt={1}  >
+        <Box display={'flex'} justifyContent={'space-between'}  px={1} mt={1}  >
           <Box>
             <ProgressMeeting prog={info?.evaluationPercentage} />
           </Box>

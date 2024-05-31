@@ -3,6 +3,7 @@ import {Grid,Box,Typography,Button} from '@mui/material'
 import {ReactComponent as ManagerTeamVector} from '../../StaticData/Vectors/managerTeamVector.svg';
 import {ReactComponent as PersonelVector} from '../../StaticData/Vectors/personelVector.svg';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {IconButton} from '@mui/material';
 import { useDeleteTeam } from '../../Hooks';
 import { useSelector } from 'react-redux';
@@ -53,14 +54,14 @@ const TeamCart = (props:any) => {
 
 
   return (
-    <Box width={'390px'} 
+    <Box width={'335px'} height={'215px'} 
  borderRadius={3} 
  boxShadow={4}
     m={1}
     >
         <Grid container p={1} >
        <Grid item xs={12}   >
-    <Box width={'100%'} p={1} display={'flex'} justifyContent={'space-between'} >
+    <Box width={'100%'}  display={'flex'} justifyContent={'space-between'} >
       <Box>
       <Typography  color={'#001733'} fontWeight={700}   >
             {
@@ -68,11 +69,16 @@ const TeamCart = (props:any) => {
             }
         </Typography>
       </Box>
-      <Box>
+      <Box marginTop={'0.5'}>
+      <IconButton onClick={()=>{
+            initialEditTeam()
+        }}   >
+        <EditIcon color='primary'   />
+       </IconButton>
         <IconButton onClick={()=>{
             initialDeleteTeam()
         }}  >
-            <DeleteIcon/>
+            <DeleteIcon color='error'/>
         </IconButton>
       </Box>
     </Box>
@@ -154,16 +160,16 @@ const TeamCart = (props:any) => {
         }
      </Typography>
         </Box>
-        <Box py={1}>
+        {/* <Box py={1} bgcolor={'#c5d3de'} width={'70px'} height={'30px'} borderRadius={3} padding={0}>
         <Button variant='text' onClick={initialEditTeam}  >
             ویرایش
         </Button>
-      </Box>
-      <Box py={1}>
-        <Button variant='text'  >
+      </Box> */}
+      {/* <Box py={1} bgcolor={'#c5d3de'} width={'100px'} height={'30px'} borderRadius={3} padding={0} >
+        <Button variant='text'>
         مشاهده جزئیات
         </Button>
-      </Box>
+      </Box> */}
        </Box>
        </Grid>
 

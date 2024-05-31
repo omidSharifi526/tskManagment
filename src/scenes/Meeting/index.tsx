@@ -159,6 +159,8 @@ const Meeting :React.FC=function(){
        {
           createTenantModal &&
           <ModalLyt title={'ایجاد جلسه'}
+            height={700}
+            width={900}
             showModal={Boolean(createTenantModal)}
             setShowModal={setCreateTenantModal}
           >

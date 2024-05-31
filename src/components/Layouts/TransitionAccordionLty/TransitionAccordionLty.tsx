@@ -6,8 +6,8 @@ import Collapse from '@mui/material/Collapse';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 const icon = (
-  <Box sx={{width:'100%',height:'50px',bgcolor:'red'}}  >
-tfhfghg
+  <Box sx={{width:'100%',height:'50px'}}  >
+
   </Box>
 );
 
