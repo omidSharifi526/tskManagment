@@ -14,8 +14,10 @@ import { useSelector } from 'react-redux';
 
 const OCart = (props:any) => {
     const navigate=useNavigate()
-    let{obj,setShowToastMessage,setDeleteObjectiveState}=props;
-    let{name,responsibleName,definitionLevelName,id,weight,evaluationPercentage}=obj;
+    let{obj,setShowToastMessage,setObjectiveAsyncOpState}=props;
+    let{name,responsibleName,definitionLevelName,id,weight,evaluationPercentage
+        ,objectivesStateName,keyResultCount
+    }=obj;
     const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
     const{mutate:deleteObjectve,isError,isSuccess,data:deleteData}=useDeleteObject()
 
@@ -36,13 +38,14 @@ const OCart = (props:any) => {
     useEffect(() => {
         if (deleteData) {
           setShowToastMessage(true);
-          setDeleteObjectiveState(deleteData?.data)
+          setObjectiveAsyncOpState(deleteData?.data)
         }
-      }, [isSuccess,deleteData])
+      }, [deleteData,isSuccess])
       
 
-  return ( <Box >
-    <Grid container boxShadow={4} borderRadius={4} p={1} >
+
+  return (  
+    <Grid container boxShadow={4} borderRadius={4} p={2} width={'100%'} height={'100%'}>
         <Grid item xs={12}  >
    
         <Grid item xs={10}  >
@@ -82,43 +85,52 @@ const OCart = (props:any) => {
         </Grid>
         </Grid>
         <Grid container >
-         <Grid item xs={12}  >
-         <Box >
-         <CompanyManagmentIcon />
-            <Typography variant='button' color={'black'} padding={1}>
+        <Grid xs={12}  >
+        <Box width={'100%'} p={1} >
+        <CompanyManagmentIcon width={'25px'} height={'25px'} />
+        <Typography variant='button' color={'black'} padding={1}>
                 {
                     definitionLevelName
                 }
-            </Typography>
-         </Box>
-         </Grid>
+        </Typography>
+        </Box>
+        </Grid>
         </Grid>
         <Grid container   >
         <Grid item xs={12}  >
-             <Box width={'265px'}  marginLeft={0}  >
+             <Box width={'350px'}  marginLeft={0}  >
                 <DyLinearProgress value={evaluationPercentage}  />
              </Box>
         </Grid>
         </Grid>
-        <Grid item xs={12} >
-        <Box display={'flex'} marginRight={5} justifyContent={'space-between'} >
-        <Box py={1} bgcolor={'#D5f7D4'} width={'70px'} height={'30px'} borderRadius={3} padding={0}>
-        <Button variant='text'  > 
-            فعال
+        <Grid container >
+        <Box  display={'flex'} justifyContent={'space-between'} textAlign={'center'}>
+        <Box  bgcolor={ objectivesStateName === "فعال"?'#D5f7D4':'#bfd3f5'}  width={'90px'} height={'28px'} borderRadius={3} >
+        <Button variant='text' > 
+        <Typography  color={objectivesStateName === "فعال"? 'green':'#3a82fc'} fontSize={'0.8rem'}  >  {
+                objectivesStateName === "فعال"?'فعال':'پیش نویس'
+            }
+        </Typography>
         </Button>
         </Box> 
-        <Box>
+    
         
-        <IconButton onClick={()=>{
-            initialDeleteObject()
-        }}  >
-            <DeleteIcon color='error'/>
-        </IconButton>
-    </Box>   
-        <Box py={1}  width={'90px'} height={'30px'} borderRadius={3} padding={0}>
-        <Button variant='text' onClick={goObjectiveDetails}  > 
-            نمایش جزییات
+        <Box  bgcolor={'#fadbb9'}  width={'100px'} marginLeft={1} height={'28px'} borderRadius={3} >
+        <Button variant='text'  > 
+        <Typography color={'#f77f23'} fontSize={'0.8rem'}>
+          {keyResultCount}  نتیجه کلیدی 
+        </Typography>
         </Button>
+        </Box> 
+       
+    
+        <Box   height={'30px'} marginLeft={0} width={'100px'} borderRadius={3}>
+        <Button variant='text' onClick={goObjectiveDetails}  > 
+        <Typography fontSize={'0.8rem'} color={'#0d0d0c'}>
+         نمایش جزییات
+         </Typography>
+         </Button>
+
         {/* <IconButton onClick={()=>{
             //initialEditTeam()
         }}   >
@@ -130,13 +142,24 @@ const OCart = (props:any) => {
       
       </Box> */}
 
-
+{/* 
+<IconButton onClick={()=>{
+            initialDeleteObject()
+        }}  >
+            <DeleteIcon color='error'/>
+        </IconButton> */}
+        
+        <IconButton onClick={()=>{
+            initialDeleteObject()
+        }}  >
+            <DeleteIcon color='error'/>
+        </IconButton>
 
 
       </Box>
         </Grid>
-        </Grid>
-    </Box>
+    </Grid>
+     
   )
 }
 

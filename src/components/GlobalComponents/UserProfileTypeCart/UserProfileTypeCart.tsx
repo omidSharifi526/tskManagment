@@ -48,13 +48,13 @@ useEffect(() => {
 
 
   return (
-    <Grid item xs={9} mx={'auto'}  md={3} py={2}  onClick={()=>{
+    <Grid item xs={9} mx={'auto'}  md={6} py={2} onClick={()=>{
       handleClickCart()
     }}    >
-    <Box  borderRadius={3} sx={{cursor:'pointer'}}  border={1} borderColor={'gray'} bgcolor={'#C8CCD0'} >
+    <Box  borderRadius={3}  sx={{cursor:'pointer'}}  border={1} borderColor={'black'} bgcolor={'#d4d5d9'} >
     <Box py={3}  display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
     <AccountCircleIcon fontSize='large' />
-    <Box  width={'100%'} textAlign={'center'} minHeight={'50px'} >
+    <Box  width={'100%'} textAlign={'center'} minHeight={'40px'} >
  <Typography  fontWeight={600} variant='caption'  >
     {item.tenantName}
  </Typography>

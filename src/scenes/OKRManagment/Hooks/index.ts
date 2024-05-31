@@ -28,7 +28,7 @@ const useDeleteObject=()=>{
     return useMutation({
   mutationFn: (userData:any) =>deleteObject(userData),
   onSuccess: (data:any) => {
-    queryClient.invalidateQueries('getAllObjectiveByPeriodId')
+    queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
   },
    });
    }

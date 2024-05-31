@@ -164,15 +164,16 @@ const Setting = () => {
     <Button 
     endIcon={asyncState.success?<CheckIcon/>:<SettingsIcon/>}
     disabled={disabledSub}
-    sx={{fontSize:'14px',px:6,py:1,bgcolor:asyncState.success?'green':'#00387C'}}
+    // sx={{fontSize:'14px',px:6,py:1,bgcolor:asyncState.success?'green':'#00387C'}}
+    sx={{fontSize:'14px',px:6,py:1,bgcolor:'#00387C'}}
     variant='contained' 
      onClick={()=>{
      initialAddSetting()
     }}  >
-    {
+    {/* {
      asyncState.success ?'باموفقیت ثبت شد':' ثبت تنظیمات'
-    }
-
+    } */}
+      ثبت تنظیمات
     {/* {
       changeSettingLoading?<CircularProgress size={10} />:null
     } */}

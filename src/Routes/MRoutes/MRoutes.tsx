@@ -20,6 +20,7 @@ const OkrManagmentContainer = lazy(() => import('../../scenes/OKRManagment'));
 const CompanyManagment = lazy(() => import('../../scenes/CompanyManagment'));
 const NotFoundPage = lazy(() => import('../../components/NotFoundPage/NotFoundPage'));
 const Settings = lazy(() => import('../../scenes/Settings/Setting'));
+const Aboutus = lazy(() => import('../../scenes/Aboutus/Index'));
 const Mrouter=createBrowserRouter(createRoutesFromElements(
  <>
  <Route path="/" element={<LoginPage/>} />
@@ -48,6 +49,15 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
   </Suspense>
 } />
 
+
+<Route  path="/dashboard/aboutus"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <Aboutus/>
+    </RequierAuth>
+  </Suspense>
+} />
 
 
 
@@ -88,6 +98,7 @@ element={<Suspense fallback={<div>درحال بارگزاری...</div>}>
 
  </>
 ));
+
 
 
 export default Mrouter
