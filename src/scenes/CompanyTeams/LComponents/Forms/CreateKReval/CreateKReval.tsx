@@ -139,7 +139,7 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,objectiveId, 
     let totalData={...data,tensileScore:String(tensileScore)}
     console.log(totalData)
 
-    addCheck(totalData)
+    // addCheck(totalData)
  
   }
 
@@ -223,14 +223,19 @@ const KRHColumns: any = useMemo(()=>
         headerAlign:'center',
          width: 150,
          renderCell:({value}:any)=>{
-          return <Box>
-           {
-            value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
-            {value}
-          </Tooltip>:
-          <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
-           }
-          </Box>
+          if (value!==null) {
+            return <Box>
+            {
+             value.length>10? <Tooltip  sx={{fontSize:'1.5rem !important'}} title={value}>
+             {value}
+           </Tooltip>:
+           <Typography  sx={{fontSize:'12px'}} >{value}</Typography>
+            }
+           </Box>
+          }
+          else {
+            return null
+          }
         }
         // problems: 
 // "موانعی برای نصب وجود ندارد . فقط باید اطلاع رسانی کمپین گسترده تر برگزار گردد"revenue
@@ -588,53 +593,15 @@ const KRHColumns: any = useMemo(()=>
                    
                        </Grid>
    
-                       <Grid item xs={8} sx={{mt:1}}   >
-                         {/* <FormikControl
-                           control='select'
-                           type='select'
-                           label='وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟'
-                           withIcon={true}
-                           options={nextStateOptions}
-                           name='nextState'
-                           fullWidth
-                           value={values?.nextState || ''}
-                         
-                         /> */}
-                         {/* <ListSelect 
-                         options={nextStateOptions}
-                         withIcon={true}
-                         label={'وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟'}
-                         value={values?.nextState || ''}
-                         setValue={setFieldValue}
-                         name='nextState'
-                         /> */}
-                            <Box width={'100%'}  textAlign={'start'} px={1}   >
-                            <Typography variant='caption'  >وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟</Typography>
+                       <Grid item xs={8}   >
+                
+                      <Box display={'flex'} justifyContent={'start'}   >
+                      <Box   textAlign={'start'} px={1} display={'flex'} alignItems={'center'}  >
+                            <Typography my={'auto'} variant='caption'  >وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟</Typography>
                           </Box>
 
-                          <Box columnGap={6} py={1} >
-                          {/* <ButtonGroup sx={{mt:1}}  variant="contained" aria-label="Basic button group">
-                      {
-                        nextStateOptions && nextStateOptions.map((item:any,i:number)=>{
-                          let{key,value}=item
-                         return <Box>
-                          <Button 
-                          color={i===nextOptCurrIndex?'info':'inherit'}
-                          onClick={()=>{
-                            setNextOptCurrIndex(i)
-                            setFieldValue('nextState',value)
-                          }}
-                          sx={{whiteSpace:'nowrap'}} 
-                          fullWidth endIcon={i===0?<TagFacesIcon/>:
-                                             i===1?<SentimentDissatisfiedIcon/>:
-                                             i===2?<SentimentVeryDissatisfiedIcon/>:''
-                                             } >
-                            <Typography py={1} >{key}</Typography>
-                            </Button>
-                         </Box>
-                        })
-                      }
-                     </ButtonGroup> */}
+                          <Box  >
+         
                      {
                           nextStateOptions && nextStateOptions.map((item:any,i:number)=>{
                             let{key,value}=item
@@ -658,6 +625,7 @@ const KRHColumns: any = useMemo(()=>
                           })
                      }
                           </Box>
+                      </Box>
                  
                        </Grid> 
 

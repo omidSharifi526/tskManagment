@@ -26,7 +26,7 @@ const currentStateOptions:SelectOptionFace[]=[
     ,
     {
         key:'خارج از مسیر مناسب',
-        value:'OfTheRightTrack'
+        value:'OffTheRightTrack'
     }
     ,
     {

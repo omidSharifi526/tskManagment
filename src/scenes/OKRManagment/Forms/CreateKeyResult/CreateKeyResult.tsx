@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useParams,useLocation } from 'react-router-dom';
 import { addKeyResultSchema } from '../../StaticData/index';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
-import { Box, Grid, TextField, Typography } from '@mui/material';
+import { Box, Grid, TextField, Typography,MenuItem,InputLabel,FormControl,Select } from '@mui/material';
 import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import { Formik, Form } from 'formik';
@@ -186,14 +186,42 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                 </Grid>
 
                                 <Grid item xs={12} md={3}  >
-                                    <FormikControl
-                                        control='select'
-                                        options={pointSystem}
-                                        label='سیستم امتیاز دهی '
-                                        name='pointingSystemType'
-                                        fullWidth
-                                        value={values?.pointingSystemType}
-                                    />
+                                      <Box sx={{padding:'8px'}}>
+                                   <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">سیستم امتیاز دهی </InputLabel>
+                                    <Select
+                                    sx={{'& .muirtl-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select' :{py:'1px'}}}
+                                    size='small'
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={values?.pointingSystemType || ''}
+                                    label="سیستم امتیاز دهی "
+                                    onChange={({target}:any)=>{
+                                       let{value}=target;
+                                        setFieldValue('pointingSystemType',value)
+                                    }}
+                                    >
+                                        {
+                                            pointSystem.map((item:any,i:number)=>{
+                                                let{key,value,desc}=item
+                                                return <MenuItem 
+                                                key={i}
+                                                sx={{ fontSize: "0.7rem", bgcolor: "transparent" }}
+                                                value={value}>
+                                                    {key}
+                                                    {'\u00A0'}
+                                                     <Typography fontSize={'0.5rem'}   >{desc}</Typography>
+                                                  
+                                                       </MenuItem>
+                                            })
+                                        }
+                     
+                                    </Select>
+                                </FormControl>
+                                </Box>
+
+
+
                                 </Grid>
 
 
@@ -344,6 +372,15 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                             />
                                             </Grid>
 
+                                <Grid item xs={12} md={3}>
+                                <FormikControl
+                                    control="date"
+                                    label="تاریخ شروع نتایج کلیدی"
+                                    name="startDate"
+                                    value={values.startDate}
+                                />
+                                </Grid>
+
 
 
 
@@ -355,14 +392,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                   value={values.forceEndDate}
                               />
                              </Grid> 
-                             <Grid item xs={12} md={3}>
-                                <FormikControl
-                                    control="date"
-                                    label="تاریخ شروع نتایج کلیدی"
-                                    name="startDate"
-                                    value={values.startDate}
-                                />
-                                </Grid>
+                          
 
                                 <Grid item xs={12} md={12}  >
                                     <FormikControl

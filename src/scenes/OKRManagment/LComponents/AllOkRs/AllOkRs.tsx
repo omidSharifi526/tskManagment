@@ -106,28 +106,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
           <Grid item xs={12}  >
           
             <Grid container spacing={2} px={1}  >
-           {/* {
-             allObjective && allObjective.map((item:any,i:number)=>{
-               return    <Box 
-               
-               sx={{cursor:'pointer'}}
-               
-               key={i} 
-               width={'150px'}
-                height={'150px'} 
-               m={2} boxShadow={1} 
-               borderRadius={2} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}   >
-               <Typography>
-                 {item?.name}
-               </Typography>
-               <Button variant='outlined' color='info' onClick={()=>{
-                initialGoToKrPage(item)
-               }} >
-                 افزودن نتیجه کلیدی
-               </Button>
-                 </Box>
-             })
-           } */}
+ 
            {
             allObjective && allObjective.map((o:any,i:number)=>{
               return <Grid  item xs={12} sm={3}  >

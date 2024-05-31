@@ -1,23 +1,63 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import ModalLyt from '../../../../components/Layouts/ModalLyt/ModalLyt';
 import { Grid,Box,Typography,Button } from '@mui/material';
 import KrGradeDetails from '../KrGradeDetails/KrGradeDetails';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {IconButton} from '@mui/material';
+import { useDeleteKr } from '../../Hooks';
+import { useSelector } from 'react-redux';
+
 const OKRsCart = (props:any) => {
   const[showKrDetails,setShowKrDetails]=useState<Boolean>(false);
-  let{item,setKrId,setShowEditKr}=props;
+  const userId=useSelector((state:any)=>state.loign.userInfo.userId);
+  const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
+  // const lDeleteSuccess=()=>{
+  //   setShowKrDetails(false)
+  // }
+  const{mutate:callDeleteKr,data:deleteData,isSuccess}=useDeleteKr()
+  let{item,setKrId,setShowEditKr,setAddKrState,setShowToastMessage}=props;
   let{name,okrStateName,responsibleName,pointingSystemType,okR_KeyResultType,okR_GradeDetails,id}:any=item;
 
 
 const initialShowDet=()=>{
   setShowKrDetails(true);
-  // console.log(okR_GradeDetails)
+
 }
 
 const initialEditKr=()=>{
-  setKrId(id)
-  setShowEditKr(true)
-  console.log(id)
+  setKrId(id);
+  setShowEditKr(true);
 }
+
+const initialDeleteKr=()=>{
+  let deleteBody={
+    deletedId:id,
+    userId:userId,
+    tenantId:tenantId
+}
+
+callDeleteKr(deleteBody)
+}
+
+useEffect(() => {
+      
+  if (deleteData) {
+    console.log(deleteData)
+    setShowToastMessage(true);
+    setAddKrState(deleteData?.data)
+  }
+
+
+}, [isSuccess,deleteData])
+
+useEffect(() => {
+  
+console.log(deleteData)
+
+}, [deleteData])
+
+
+
 
 
   return (
@@ -83,10 +123,14 @@ const initialEditKr=()=>{
             <Box width={'100%'} 
             p={1}
              display={'flex'}
+             flexDirection={'row-reverse'}
              justifyContent={'space-between'}   >
-            <Button variant='text' onClick={initialShowDet}   >
+            {/* <Button variant='text' onClick={initialShowDet}   >
             جزییات
-            </Button>
+            </Button> */}
+            <IconButton onClick={initialDeleteKr}   >
+              <DeleteIcon/>
+            </IconButton>
             <Button variant='text' onClick={initialEditKr}   >
             ویرایش
             </Button>
