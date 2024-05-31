@@ -6,13 +6,13 @@ import {GetAllActivePersonByTenantId,
     AddKeyResult,
     getAllObjectiveByPeriodId,
     AddObjective,
+    deleteKr,
+    deleteObject,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     getObjectiveDetails,
     getKeyResultDetailsById,
-    editKeyResult,
-    deleteKr,
-    deleteObject
+    editKeyResult
     
 
 } from '../Api/index';
