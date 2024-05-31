@@ -7,7 +7,7 @@ import MultiSelect from '../../../../components/FormikControls/MultiSelect/Multi
 import { useSelector } from 'react-redux';
 import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
 import AccordionLyt from '../../../../components/Layouts/AccordionLyt/AccordionLyt';
-import { addObjectiveInitialValues } from '../../StaticData';
+import { addObjectiveFace } from '../../Interfaces/Interfaces';
 import { useGetAllHorizontalAlignmentByTenantId,
      useGetAllObjectiveDefinitionLevelByTenantId,
      useGetAllObjectiveOKRStateByTenantId,
@@ -23,8 +23,7 @@ interface teamIdsFace{
   teamId:string,
   personIds:string[]
 }
-// setShowToastMessage={setShowToastMessage}
-// setAddKrState={setAddObjectiveStatus}
+
 const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setAddObjectiveStatus,afterSuccess}:any) => {
   const[teamIdObject,setTeameIdObjects]=useState<teamIdsFace>({teamId:'',personIds:[]})
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
@@ -37,7 +36,7 @@ const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setAddObject
     const{data:personsOptionds}=useGetAllActivePersonByTenantId(tenantId);
     const{data:submitOptions}=useGetAllObjectiveOKRStateByTenantId(tenantId);
     const{data:HorzinalAlignData, isLoading:HorzDataLoading}=useGetAllHorizontalAlignmentByTenantId(HorzIds);
-     
+    const periodId=useSelector((state:any)=>state.meetings.priodId);
 const[periodOptions,setPeriodOptions]=useState<any>([])
     const onSuccesss=()=>{
         onSuccess((prev:any)=>!prev)
@@ -65,6 +64,26 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
 
 
       }, [addObjectiveData,isSuccess]);
+
+      const addObjectiveInitialValues:addObjectiveFace={
+        name:'',
+        periodId:periodId,
+        CalculateProgressType:'',
+        // createById:'',
+        definitionLevelId:'',
+        description:'',
+        isPublic:false,
+        keyResultParentIds:[],
+        oKRStateId:'',
+        responsibleId:'',
+        TeamIds:[],
+        tenantId:'',
+        weight:null,
+        answerRequest:''
+      
+      
+      
+      }
 
 
       
@@ -136,7 +155,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                             </Grid>
                             {/**/}
 
-                            <Grid item xs={12} md={2}  >
+                            {/* <Grid item xs={12} md={2}  >
                                 <FormikControl
                                     control='select'
                                     options={periodOptions || []}
@@ -145,7 +164,50 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                     fullWidth
                                     values={values?.periodId}
                                 />
-                            </Grid>
+                            </Grid> */}
+
+                                <Grid item xs={12} md={2}  >
+                                      <Box sx={{padding:'8px'}}>
+                                   <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">دوره زمانی</InputLabel>
+                                    <Select
+                                    defaultValue={periodId}
+                                    // sx={{'& .muirtl-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select' :{py:'1px'}}}
+                                    size='small'
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={values?.periodId || ''}
+                                    label='دوره زمانی'
+                                    onChange={({target}:any)=>{
+                                       let{value}=target;
+                                        setFieldValue('periodId',value)
+                                    }}
+                                    >
+                                        {
+                                            periodOptions.map((item:any,i:number)=>{
+                                                let{key,value,desc}=item
+                                                return <MenuItem 
+                                                key={i}
+                                                sx={{ fontSize: "0.7rem", bgcolor: "transparent" }}
+                                                value={value}>
+                                                    {key}
+                                                 
+                                                  
+                                            </MenuItem>
+                                            })
+                                        }
+                     
+                                    </Select>
+                                </FormControl>
+                                </Box>
+
+
+
+                                </Grid>
+
+
+
+
 
 
                             <Grid item xs={12} md={3}  >
