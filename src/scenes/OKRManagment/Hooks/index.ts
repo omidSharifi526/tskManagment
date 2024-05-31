@@ -11,7 +11,8 @@ import {GetAllActivePersonByTenantId,
     getObjectiveDetails,
     getKeyResultDetailsById,
     editKeyResult,
-    deleteKr
+    deleteKr,
+    deleteObject
     
 
 } from '../Api/index';
