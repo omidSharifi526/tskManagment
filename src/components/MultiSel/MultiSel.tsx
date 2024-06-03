@@ -61,6 +61,7 @@ export default function MultiSel({ data, extractTag, tagSelected, editMode,lengt
   return (
 
     <Autocomplete
+    fullWidth
       size='small'
       multiple={true}
       sx={{ fontFamily: 'yekan !important', '& .muirtl-6od3lo-MuiChip-label': { fontFamily: 'yekan', fontSize: '0.7rem' }, '& .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.muirtl-15rklqy-MuiAutocomplete-root .MuiOutlinedInput-root': { padding: '0px !important' } }}

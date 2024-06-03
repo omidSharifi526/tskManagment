@@ -12,6 +12,7 @@ import{FormControl,InputLabel,Select,MenuItem} from '@mui/material';
 import AddMeetingSuccess from '../../AddMeetingSuccess/AddMeetingSuccess';
 import {CircularProgress} from '@mui/material';
 import { addMeetingSchema } from '../../../MeetingCard/StaticData';
+import MultiSel from '../../../../../components/MultiSel/MultiSel';
 // import 
 
 interface Values {
@@ -66,7 +67,8 @@ const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData,setMeetingAsyn
 const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}=useAddMeeting(addMeetingSuccess)
   const { data: allTeamsData, isLoading } = useGetAllTeamsForSelByTenantId(profileTenantId);
   
-  const { data: allmeetingTypeData } = useGetAllMeetingsTypeByTenantId(profileTenantId)
+  const { data: allmeetingTypeData } = useGetAllMeetingsTypeByTenantId(profileTenantId);
+  const[teamIds,setTeamIds]=useState<any[]>([])
   const repeatTypeData = [
     { key: 'بدون تکرار', value: 'none' },
     { key: 'هفتگی', value: 'OnOneWeekDay' },
@@ -87,9 +89,9 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
   useEffect(() => {
     
-  // console.log(addMeetingStatus)
+ console.log(teamIds)
     
-  }, [addMeetingStatus])
+  }, [teamIds])
   
 
 
@@ -141,7 +143,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
   }
 
   const initialAddMeeting=(data:any)=>{
-
+    data.teamIds=teamIds.map(({value})=>value)
     console.log(data)
     addMeeting(data)
     // if(isSuccess){
@@ -236,14 +238,25 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
                     <Grid item xs={12} md={8} >
 
-                      <MultiSelect
+                      {/* <MultiSelect
                         options={allTeamsData || []}
                         isLoading={isLoading}
                         onChangee={setFieldValue}
                         propName='teamIds'
                         label={'انتخاب سطح'}
-                      />
+                      /> */}
 
+                    
+                    <Box sx={{padding:'8px'}}   >
+                    <MultiSel
+                      data={allTeamsData}
+                      label={'انتخاب سطح'}
+                      extractTag={setTeamIds}
+
+                      />
+                    </Box>
+
+                  
                     </Grid>
 
                     <Grid item xs={12} md={4} >
