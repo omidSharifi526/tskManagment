@@ -202,7 +202,7 @@ setOkTotime(time_str)
       
 
     if (meetUpdatedData) {
-        console.log(meetUpdatedData?.data.isSuccess);
+       
 
         if (meetUpdatedData?.data.isSuccess) {
           hideModal((prev:any):any=>!prev)
@@ -217,11 +217,7 @@ setOkTotime(time_str)
     }
         }, [meetUpdatedData,updateSuccess]);
 
-        useEffect(() => {
-          
-        console.log(TeamIds)
-        
-        }, [TeamIds])
+
         
   
 

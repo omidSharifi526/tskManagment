@@ -5,7 +5,7 @@ import {GetAllActivePersonByTenantId,
     GetAllScoreLevelsByTenantId,
     AddKeyResult,
     getAllObjectiveByPeriodId,
-    AddObjective,
+    addObjective,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     getObjectiveDetails,
@@ -181,19 +181,36 @@ return useQuery(['GetAllObjectiveByPeriodId',periodId,profileTenantId],getAllObj
 
 
 // AddObjective
- const useAddObjective=(onSuccesss:any)=>{
-const queryClient=useQueryClient()
+//  const useAddObjective=(onSuccesss:any)=>{
+// const queryClient=useQueryClient()
 
-      return useMutation({
-    mutationFn: (data:any) =>
-        AddObjective(data),
-    onSuccess: (data) => {
-        onSuccesss()
-        queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
-    //   console.log(data)
-    },
-  });
- }
+//       return useMutation({
+//     mutationFn: (data:any) => addObjective(data),
+//     onSuccess: (data) => {
+//         onSuccesss()
+//         queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
+//     //   console.log(data)
+//     },
+//   });
+//  }
+
+const useAddObjective=()=>{
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (data:any) =>addObjective(data),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
+
+        },
+        onError:(err)=>{
+        console.log(err)
+        }
+      });
+}
+
+
+
 
  const useGetAllObjectiveDefinitionLevelByTenantId=(tenantId:string|null)=>{
    return useQuery(['getAllObjectiveDefinitionLevelByTenantId',tenantId],getAllObjectiveDefinitionLevelByTenantId,{
@@ -277,7 +294,7 @@ const useGetAllObjectiveNameWithKeyResultsByTenantId=(Ids:any|null)=>{
         refetchOnWindowFocus:false,
         cacheTime:Infinity,
         onSuccess:(data:any)=>{
-         console.log(data)
+        //  console.log(data)
         },
         select:(data)=>{
          let rawData=data?.data?.data;

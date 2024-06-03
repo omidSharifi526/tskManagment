@@ -86,9 +86,13 @@ const GetAllObjectiveOKRStateByTenantId=async({queryKey}:any)=>{
 // https://api.myokr.ir/api/OKR/AddObjective
 // {"name":"تست","periodId":"d3fe4f1c-e2ce-470e-9e48-87ffb411a997","definitionLevelId":"ab6af938-af16-4d3d-8d6f-b7079a145c4a","oKRStateId":"b913a620-5078-4249-aa48-3269ded442a7","responsibleId":"e76209ac-35c8-4e13-a85a-ebe0340588cd","tenantId":"3f2d72cf-cdff-413c-abcd-d5459d97890c","isPublic":true,"answerRequest":"تست","description":"تست","CalculateProgressType":"BasedOnKR","createById":"73b54dda-95cf-404e-a641-5abdce6fb8e5","keyResultParentIds":[],"TeamIds":[],"weight":"100"}
 
-const AddObjective=async(ObjectiveData:any)=>{
-return await axiosInstance.post('OKR/AddObjective',ObjectiveData)
-}
+// const addObjective=async(ObjectiveData:any)=>{
+// return await axiosInstance.post('OKR/AddObjective',ObjectiveData)
+// }
+
+const addObjective=async(ObjectiveData:any)=>{
+    return await axiosInstance.post(`OKR/AddObjective`,ObjectiveData)
+  }
 
 // https://api.myokr.ir/api/OKR/GetObjectiveDetailsById/?id=a29fa52c-7376-49e2-8091-6f5f0a7ccdc2
 
@@ -155,7 +159,7 @@ export{
     getAllObjectiveByPeriodId,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
-    AddObjective,
+    addObjective,
     getObjectiveDetails,
     getKeyResultDetailsById,
     editKeyResult,

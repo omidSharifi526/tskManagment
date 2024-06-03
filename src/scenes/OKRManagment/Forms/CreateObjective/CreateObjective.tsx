@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
 import AccordionLyt from '../../../../components/Layouts/AccordionLyt/AccordionLyt';
 import { addObjectiveFace } from '../../Interfaces/Interfaces';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 import GroupedMultiSel from '../../../../components/FormikControls/GroupedMultiSel/GroupedMultiSel';
 import { useGetAllHorizontalAlignmentByTenantId,
      useGetAllObjectiveDefinitionLevelByTenantId,
@@ -30,22 +31,22 @@ interface teamIdsFace{
 // allIds
 
 const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setAddObjectiveStatus,afterSuccess}:any) => {
-  const[teamIdObject,setTeameIdObjects]=useState<teamIdsFace>({teamId:'',personIds:[]})
+
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
-    const[HorzIds,setHorzIds]=useState<any>({tenantId:tenantId,definitionId:null})
-    const[definitionLevel,setDefinitionLevel]=useState<string | null>(null);
     const[showAdvanceOptions,setShowAdvanceOptions]=useState<boolean>(false)
-   const[successAddObjective,setSuccessAddObjective]=useState<boolean|null>(null);
-   const[addObectiveMessage,setAddObjectiveMessage]=useState<string>('')
+
     const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
     const{data:personsOptionds}=useGetAllActivePersonByTenantId(tenantId);
     const{data:submitOptions}=useGetAllObjectiveOKRStateByTenantId(tenantId);
-    const{data:HorzinalAlignData, isLoading:HorzDataLoading}=useGetAllHorizontalAlignmentByTenantId(HorzIds);
+   
     const periodId=useSelector((state:any)=>state.meetings.priodId);
 const[periodOptions,setPeriodOptions]=useState<any>([]);
 const[horzinalAliIds,setHorzinalAliIds]=useState<any[]>([]);
 const[allIds,setAllIds]=useState<any>([]);
-const[okrStateId,setOkrStateId]=useState<string>('')
+const[okrStateId,setOkrStateId]=useState<string>('');
+const[lIsPublic,setlIsPublic]=useState<any>(false);
+const[showLtoastMessage,setShowLtoastMessage]=useState<any>(null);
+const[addObjError,setAddObjError]=useState<any>(null)
 const[objNameIds,setObjNameIds]=useState<any>({
   tenantId:tenantId,
   periodId:periodId,
@@ -56,37 +57,39 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
     const {data:ObjectiveNameOptions}=useGetAllObjectiveNameWithKeyResultsByTenantId(objNameIds)
 
     const onSuccesss=()=>{
-        onSuccess((prev:any)=>!prev)
+        // onSuccess((prev:any)=>!prev)
     }
 
     const onFailed=()=>{
 
       }
-      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective(onSuccesss)
+      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective()
 
       useEffect(() => {
   if (addObjectiveData) {
-    setAddObjectiveMessage(addObjectiveData?.data?.metaData.message)
-    setSuccessAddObjective(isSuccess)
-    setShowToastMessage(true)
-    setAddObjectiveStatus(addObjectiveData?.data)
 
-
-    // if (addObjectiveData?.data?.isSuccess) {
-      // onSuccesss()
-      afterSuccess()
-    // }
+      if (addObjectiveData?.data.isSuccess) {
+            // setSuccessAddObjective(isSuccess)
+            setShowToastMessage(true)
+            setAddObjectiveStatus(addObjectiveData?.data)
+            onSuccess()
+  
+      } else {
+          setShowLtoastMessage(true);
+          setAddObjError(addObjectiveData?.data)
+      }
+    
 
   }
   
 
 
-      }, [addObjectiveData,isSuccess]);
+      }, [addObjectiveData]);
 
       const addObjectiveInitialValues:addObjectiveFace={
         name:'',
         periodId:periodId,
-        calculateProgressType:'BasedOnKR',
+        calculateProgressType:'',
         // createById:'',
         definitionLevelId:'',
         description:'',
@@ -96,7 +99,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
         responsibleId:'',
         allIds:[],
         tenantId:'',
-        weight:null,
+        weight:0,
         answerRequest:'',
   
       
@@ -107,12 +110,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
      
       
-      
-
-      
-
-
-// const{data:perData,isLoading:perLoading,isError:periodError,isFetched}=useGetPriodById(tenantId,onSuccesss,onFailed);
+  
 
   const initialAddObjective=(data:any)=>{
     let{isPublic}=data;
@@ -121,7 +119,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
     let total={...data,...resIsPublic,tenantId:tenantId,keyResultParentIds:[...horzinalAliIds],allIds:allIds.map(({value}:any)=>value)};
     // console.log(total)
     total.okRStateId=okrStateId;
-    console.log(total)
+    // console.log(total)
     addObjective(total)
 
   }
@@ -134,11 +132,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
   setPeriodOptions(transformed)
   }, [])
 
-  // useEffect(() => {
-    
-  // console.log(allIds)
-   
-  // }, [allIds])
+
   
   
 
@@ -155,12 +149,17 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
   return (
     <>
     <Box width={'100%'} maxHeight={'50em'}  >
-        <Formik enableReinitialize
+        <Formik 
         validationSchema={addObjectiveSchema}
              validate={(data)=>{
-                let{definitionLevelId,responsibleId}=data;
-                setTeameIdObjects((prev:teamIdsFace)=>({...prev,personIds:[responsibleId]}))
-                setHorzIds((prev:any)=>({...prev,definitionId:definitionLevelId}))
+                let{definitionLevelId,responsibleId,isPublic}:any=data;
+                // console.log(isPublic)
+                setlIsPublic(isPublic)
+                if (isPublic==='برای همه') {
+                  setAllIds([])
+                }
+                // setTeameIdObjects((prev:teamIdsFace)=>({...prev,personIds:[responsibleId]}))
+                // setHorzIds((prev:any)=>({...prev,definitionId:definitionLevelId}))
             // console.log(data)
              }}
             initialValues={{...addObjectiveInitialValues}}
@@ -252,10 +251,10 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                                           setObjNameIds((prev:any)=>({...prev,definitionLevelId:value}))
                                         }
                                        
-                                        setDefinitionLevel(keyName)
+                                        // setDefinitionLevel(keyName)
                                         let {target}=e
                                         let{value}=target;
-                                        setTeameIdObjects((prev:teamIdsFace)=>({...prev,teamId:value}))
+                                        // setTeameIdObjects((prev:teamIdsFace)=>({...prev,teamId:value}))
                                         setFieldValue('definitionLevelId',value)
                                     
                                     }}
@@ -339,22 +338,18 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
 
                             <Grid item xs={12} md={6} >
-                        {/* <MultiSelect
-                          options={[]}
-                          isLoading={HorzDataLoading}
-                          onChangee={setFieldValue}
-                          propName='TeamIds'
-                          disabled={values?.isPublic==='برای همه' }
-                          label={'انتخاب تیم ها'}
-                          
-                          
-                        /> */}
 
-                        <MultiSel 
-                        data={allTeamAndPersonData||[]}
-                        extractTag={setAllIds}
-                        label={'یا اشخاص انتخاب تیم ها'}
-                        />
+
+                              {
+                                lIsPublic==='برای اشخاص خاص' ?  <MultiSel 
+                                data={allTeamAndPersonData||[]}
+                                extractTag={setAllIds}
+                                label={'یا اشخاص انتخاب تیم ها'}
+                                />:<></>
+                              }
+                 
+
+                       
   
                       </Grid>
 
@@ -365,7 +360,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                                 <FormikControl 
                                 setFieldValue={setFieldValue}
                                 control={'radio'}
-                                propName={'CalculateProgressType'}
+                                propName={'calculateProgressType'}
                                 mainLabel={'نحوه محاسبه پیشرفت:'}
                                 options={[{label:'بر اساس okr های همسو',value:'ForSpecialPeople'},{label:'بر اساس تحقق نتایج کلیدی',value:'BasedOnKR'}]}
                              />
@@ -376,11 +371,12 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                        <Grid item xs={12} md={4}  >
                                 <FormikControl
                                     control='textField'
-                                    type='text'
+                                    // type='text'
                                     label='وزن'
                                     name='weight'
                                     fullWidth
-                                    values={values?.weight}
+                                    values={values?.weight||0}
+                                    type={'number'}
                                 />
                             </Grid>
 
@@ -494,7 +490,22 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
             }
 
         </Formik>
+
+
+        {
+      showLtoastMessage && <DYToastMessage
+      isSuccess={addObjError?.isSuccess}
+      message={addObjError?.metaData.message}
+      setShow={setShowLtoastMessage}
+      show={showLtoastMessage}
+      
+      />
+      
+      
+    }
     </Box>
+
+
     
             </>
   )
