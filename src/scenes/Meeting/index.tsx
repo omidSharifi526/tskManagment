@@ -18,10 +18,13 @@ import AddMeeting from './LComponents/Forms/AddMeeting/AddMeeting';
 import { Link } from 'react-router-dom';
 import DyButton from '../../components/GlobalComponents/DyButton/DyButton';
 import EditMeeting from './LComponents/Forms/EditMeeting/EditMeeting';
+import DYToastMessage from '../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 const Meeting :React.FC=function(){
 
   const[showDownloadLink,setShowDownlodLink]=useState<boolean>(false)
   const[meetId,setMeetId]=useState<any>('');
+  const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
+  const[meetingAsyncState,setMeetingAsyncState]=useState<any|null>(null)
   const [createTenantModal,setCreateTenantModal]=useState<boolean>(false)
   const navigate=useNavigate();
   const getDetSuccess=()=>{
@@ -180,9 +183,13 @@ const Meeting :React.FC=function(){
             showModal={Boolean(createTenantModal)}
             setShowModal={setCreateTenantModal}
           >
+            {/* showToastMessage,setShowToastMessage */}
             <AddMeeting  
             meetingLenght={meetingLenght}
             hideModal={setCreateTenantModal}
+            setMeetingAsyncState={setMeetingAsyncState}
+            setShowToastMessage={setShowToastMessage}
+
             // setReloadMeetingData={setReloadMeetingData}
             
             />
@@ -209,10 +216,25 @@ const Meeting :React.FC=function(){
           >
           <EditMeeting 
           meetingId={meetingId}
-          
+          hideModal={setshowEditMeeting}
+          setMeetingAsyncState={setMeetingAsyncState}
+            setShowToastMessage={setShowToastMessage}
           />
           </ModalLyt>
         }
+
+        {/* meetingAsyncState,setMeetingAsyncState */}
+    {
+      showToastMessage && <DYToastMessage
+      isSuccess={meetingAsyncState?.isSuccess}
+      message={meetingAsyncState?.metaData.message}
+      setShow={setShowToastMessage}
+      show={showToastMessage}
+      
+      />
+      
+      
+    }
     </Grid>
   )
 }

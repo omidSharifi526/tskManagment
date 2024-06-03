@@ -47,11 +47,11 @@ type periodSliderProps = {
     
     return (
     <Box width={'700px'} py={1} mx={'auto'} display={'flex'} >
-     <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+     {/* <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
     <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
     دوره قبل
      </Typography>
-    </Box>
+    </Box> */}
       <Swiper
       initialSlide={activeIndex}
       style={{textAlign:'center',fontSize:'2rem'}}
@@ -94,11 +94,11 @@ type periodSliderProps = {
        </div> */}
  
      </Swiper>
-     <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+     {/* <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
     <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
     دوره بعد
      </Typography>
-    </Box>
+    </Box> */}
     </Box>
    );
 }

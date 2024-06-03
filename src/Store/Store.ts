@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { loginSlice } from '../components/Login/LoginSlice/LoginSlice';
 import { meetingsSlice } from '../scenes/Meeting/MeetingsSlice/MeetingsSlice';
+import { okrManageSlice } from '../scenes/OKRManagment/OKRManageSlice/OKRManageSlice';
 import{useDispatch,TypedUseSelectorHook,useSelector} from 'react-redux';
 // ...
 
@@ -35,6 +36,7 @@ export const store = configureStore({
   reducer: {
    loign:loginSlice.reducer,
    meetings:meetingsSlice.reducer,
+   okrManage:okrManageSlice.reducer
   },
   preloadedState: persistedState,
   

@@ -54,9 +54,11 @@ interface progValueFace{
   score:null|number
 }
 
+// setShowToastMessage={setShowToastMessage}
+// setAddEvalAsyncData={setAddEvalAsyncData}
 
 
-export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,objectiveId, kresultId,afterAddKr,onsucces}:any) => {
+export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,objectiveId, kresultId,afterAddKr,onsucces,setAddEvalAsyncData,setShowToastMessage}:any) => {
   const meetSelectedDate = useSelector((state: any) => state.meetings.meetSelectedDate);
     const meetingId: any = useSelector((state: any) => state.meetings.meetingId);
     const teamId: any = useSelector((state: any) => state.meetings.teamInfo?.id);
@@ -75,30 +77,30 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,objectiveId, 
     const addKrStatusData:any=useSelector((state:any)=>state.meetings.addKrStatusData);
     const[addKrStatus,setAddKrStatus]=useState<any>(null);
 
-    const addCheckinSuccess = () => {
-        // afterAddKr()
+    // const addCheckinSuccess = () => {
+    //     // afterAddKr()
        
-    //     let{isSuccess,metaData}=addKrStatusData;
-    // let addSt={
-    //   isSuccess:isSuccess,
-    //   message:metaData?.message
-    // }
-    //     if (isSuccess) {
-    //         // cancelo(false)
-    //         //  onsucces(true)
+    // //     let{isSuccess,metaData}=addKrStatusData;
+    // // let addSt={
+    // //   isSuccess:isSuccess,
+    // //   message:metaData?.message
+    // // }
+    // //     if (isSuccess) {
+    // //         // cancelo(false)
+    // //         //  onsucces(true)
            
-    //     }
-    //     else{
-    //       setAddKrStatus(addSt)
-    //     }
-    // afterAddKr()
-    cancelo()
-    onsucces(true)
+    // //     }
+    // //     else{
+    // //       setAddKrStatus(addSt)
+    // //     }
+    // // afterAddKr()
+    // cancelo()
+    // onsucces(true)
         
-      }
+    //   }
 
     const {data:historyData,isLoading:historyDataLoading}:any=useGetKeyResultHistoryCheckinByKeyResultId(formIds)
-    const { mutate: addCheck, isSuccess,isLoading:AddChekinLoading,data:addCheckingData } = useAddCheckinMeeting(addCheckinSuccess);
+    const { mutate: addCheck, isSuccess,isLoading:AddChekinLoading,data:addCheckingData } = useAddCheckinMeeting();
     
 
 
@@ -139,7 +141,7 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,objectiveId, 
     let totalData={...data,tensileScore:String(tensileScore)}
     console.log(totalData)
 
-    // addCheck(totalData)
+    addCheck(totalData)
  
   }
 
@@ -409,6 +411,44 @@ const KRHColumns: any = useMemo(()=>
     ],[]);
 
 
+    useEffect(() => {
+      // setAddEvalAsyncData,setShowToastMessage
+    // console.log(addCheckingData)
+    // setShowToastMessage(true)
+    // setAddEvalAsyncData(addCheckingData?.data)
+
+    if (addCheckingData) {
+ console.log(addCheckingData)
+
+      if (addCheckingData?.data.isSuccess) {
+          // setShowEditKeyResult(false)
+          // setAddKrState(editKrData?.data)
+          // editKrSuccess()
+          // setShowToastMessage(true)
+         setShowToastMessage(true)
+         setAddEvalAsyncData(addCheckingData?.data)
+         onsucces(false)
+      } else {
+        console.log('locall')
+          // setLShowToastMessage(true);
+          // setEditAsyncData(editKrData?.data)
+      }
+   
+  }
+
+
+
+    }, [addCheckingData])
+
+    useEffect(() => {
+      
+    console.log(addCheckingData)
+    
+    }, [addCheckingData])
+    
+    
+
+
 
 
 
@@ -517,7 +557,7 @@ const KRHColumns: any = useMemo(()=>
    
                        {/* <Grid item xs={4}   >
                        </Grid> */}
-                      <Grid item xs={8}  >
+                      <Grid item xs={8.5}  >
                          <FormikControl
                            control='textField'
                           //  type='text'
@@ -567,7 +607,7 @@ const KRHColumns: any = useMemo(()=>
                        </Grid>:''
                          }
    
-                       <Grid item xs={10}   >
+                       <Grid item xs={12}  md={8.5}  >
                          <FormikControl
                            control='textField'
                            type='text'
@@ -582,7 +622,7 @@ const KRHColumns: any = useMemo(()=>
                        </Grid>
 
                        
-                       <Grid item xs={12} md={2} >
+                       <Grid item xs={12} md={3} >
                        <Box width={'100%'} textAlign={'center'} py={1} >
                        <Assessor 
                         setSelectedInitialValue={setSelectedInitialValue}
@@ -593,14 +633,14 @@ const KRHColumns: any = useMemo(()=>
                    
                        </Grid>
    
-                       <Grid item xs={8}   >
+                       <Grid item xs={4}   >
                 
-                      <Box display={'flex'} justifyContent={'start'}   >
+                      <Box display={'flex'} flexDirection={'column'} justifyContent={'start'} alignItems={'start'}  >
                       <Box   textAlign={'start'} px={1} display={'flex'} alignItems={'center'}  >
                             <Typography my={'auto'} variant='caption'  >وضعیت آتی این نتیجه کلیدی را چگونه پیش بینی می کنید؟</Typography>
                           </Box>
 
-                          <Box  >
+                          <Box mt={1} >
          
                      {
                           nextStateOptions && nextStateOptions.map((item:any,i:number)=>{
@@ -628,51 +668,19 @@ const KRHColumns: any = useMemo(()=>
                       </Box>
                  
                        </Grid> 
-
+{/* 
                        <Grid item xs={4}  >
                        <Box  py={5} textAlign={'center'}  >
                         {
                           addKrStatus && <Typography mt={2} fontWeight={900} color={'red'}>*{addKrStatus?.message}</Typography>
                         }
                        </Box>
-                       </Grid>
+                       </Grid> */}
    
    
-                       <Grid item xs={12} md={12} sx={{mt:1}} >
+                       <Grid item xs={12} md={5}   >
 
-                      {/* <Box display={'flex'}  > 
-                      {
-                        currentStateOptions && currentStateOptions.map((item:any,i:number)=>{
-                     return  <DyButtonPopper item={item}   />
-                   
-                        }) 
-                      }
-                      </Box> */}
-
-                    {/* <DyButtonPopper   /> */}
-                     
-
-
-
-
-                         {/* <FormikControl
-                           control='select'
-                           type='select'
-                           label='وضعیت فعلی  نتیجه کلیدی را چگونه ارزیابی می کنید؟'
-                         
-                           options={currentStateOptions}
-                           name='currentState'
-                           fullWidth
-                           value={values?.currentState || ''}
-                   
-                         /> */}
-                         {/* <ListSelect 
-                         options={currentStateOptions}
-                         label={'وضعیت فعلی  نتیجه کلیدی را چگونه ارزیابی می کنید؟'}
-                         name='currentState'
-                         setValue={setFieldValue}
-                         value={values?.currentState || ''}
-                         /> */}
+              
                     <Box width={'99%'} mx={'auto'}   textAlign={'start'}   >
                       <Typography variant='caption'  >وضعیت فعلی  نتیجه کلیدی را چگونه ارزیابی می کنید؟</Typography>
                     </Box>
@@ -681,8 +689,9 @@ const KRHColumns: any = useMemo(()=>
                           {
                             currentStateOptions && currentStateOptions.map((item:any,i:number)=>{
                               let{key,value}=item
-                            return <Box>
+                            return <Box  >
                               <Button 
+                              
                               // variant={i===currOptIndex?'contained':'text'} 
                               
                               onClick={()=>{
@@ -690,7 +699,7 @@ const KRHColumns: any = useMemo(()=>
                                 setCurrOptIndex(i)
                                 setFieldValue('currentState',value)
                               }}
-                              sx={{whiteSpace:'nowrap',bgcolor:value===values?.currentState?'#E5F1FF':'inherit'}} 
+                              sx={{whiteSpace:'nowrap',bgcolor:value===values?.currentState?'#E5F1FF':'inherit', minWidth:80}} 
                               fullWidth 
                                               
                                >
@@ -705,7 +714,7 @@ const KRHColumns: any = useMemo(()=>
 
                        </Grid>
    
-                       <Grid item xs={12} md={10} mt={1} >
+                       <Grid item xs={12} md={10}  >
                          <FormikControl
                            control='textField'
                            type='text'
@@ -731,6 +740,7 @@ const KRHColumns: any = useMemo(()=>
                           additionalToolbar={false}
                           drName={'hisTable'}
                           initialOnRowClick={()=>{}}
+                          withoutOptions={true}
                           />
                         
                       </Grid>

@@ -66,7 +66,7 @@ const Index :React.FC=function(){
     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
       <Tab label="پرسنل" {...a11yProps(0)} />
       <Tab label="تیم" {...a11yProps(1)} />
-      <Tab label="اطلاعات شرکت" {...a11yProps(2)} />
+      {/* <Tab label="اطلاعات شرکت" {...a11yProps(2)} /> */}
    {/* */}
     </Tabs>
   </Box>

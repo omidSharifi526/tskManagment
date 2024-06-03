@@ -1,6 +1,6 @@
 import {GetKeyResultMeetingHistory,
     GetAllTeamChildByParentId,
-    AddCheckinMeeting,
+    addCheckinMeeting,
     GetKeyResultHistoryCheckinByKeyResultId
 } from '../Api/index';
 import { useDispatch } from 'react-redux';
@@ -10,13 +10,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { useQueryClient } from 'react-query';
 
 const useGetKeyResultMeetingHistory=(krId:string|null,prId:string|null,meetId:string|null)=>{
-    // console.log(krId)
 return useQuery(['GetKeyResultMeetingHistory',krId,prId,meetId],GetKeyResultMeetingHistory,{
     refetchOnWindowFocus:false,
     cacheTime:Infinity,
     enabled:!!krId
     ,
-
     onError:(err)=>{
     //  console.log(err)
     }
@@ -53,50 +51,67 @@ const useGetAllTeamChildByParentId=(teamId:string | null,meetingId:string | null
     })
 }
 
-// const useAddCheckinMeeting=()=>{
-//     return useMutation(AddCheckinMeeting,{
-//         onSuccess:(data:any)=>{
-//        console.log(data)
-//         }
-//         ,
-//         onError:(err:any)=>{
-//         console.log(err)
-//         }
-//     })
-// }
+
+
+
 
 // const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
-//     // const queryClient=useQueryClient();
-//  return useMutation({
-//     mutationFn:(checkinData)=>
-//     AddCheckinMeeting(checkinData),
-//     onSuccess:()=>{
+//     const dispatch=useDispatch();
+//     const queryClient=useQueryClient()
+//     return useMutation({
+//   mutationFn: (checkinData:any) =>AddCheckinMeeting(checkinData),
+//   onSuccess: (data:any) => {
+//     dispatch(setAddKrStatusDataR(data?.data))
 //         addCheckinSuccess()
-     
+
+ 
+//   },
+// });
+//    }
+
+// const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
+//     const dispatch=useDispatch();
+//     const queryClient=useQueryClient()
+//       return useMutation({
+//     mutationFn: (data:any) =>AddCheckinMeeting(data),
+//     onSuccess: (data) => {
+
+//         dispatch(setAddKrStatusDataR(data?.data))
+//         addCheckinSuccess()
+
+//         // queryClient.invalidateQueries('getObjectiveDetails')
+//         // localEditKrSuccess()
+//     //   console.log(data)
 //     },
-//     onError:(err:any)=>{
-   
-//     }
-//  })
+//   });
 // }
 
-const useAddCheckinMeeting=(addCheckinSuccess:any)=>{
-    const dispatch=useDispatch();
-    const queryClient=useQueryClient()
-    return useMutation({
-  mutationFn: (checkinData:any) =>
-    AddCheckinMeeting(checkinData),
-  onSuccess: (data:any) => {
-    // console.log(data?.data)
-    dispatch(setAddKrStatusDataR(data?.data))
-        addCheckinSuccess()
+const useAddCheckinMeeting=()=>{
+        const dispatch=useDispatch();
+    // const queryClient=useQueryClient()
+      return useMutation({
+    mutationFn: (data:any) =>addCheckinMeeting(data),
+    onSuccess: (data) => {
+        // dispatch(setAddKrStatusDataR(data?.data))
+        // addCheckinSuccess()
+    },
+  });
+}
 
-    // console.log(data)
-    // queryClient.invalidateQueries('GetTenantSetting')
-  },
-});
-   }
 
+// const useAddObjective=(onSuccesss:any)=>{
+//     const queryClient=useQueryClient()
+    
+//           return useMutation({
+//         mutationFn: (data:any) =>
+//             AddObjective(data),
+//         onSuccess: (data) => {
+//             onSuccesss()
+//             queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
+//         //   console.log(data)
+//         },
+//       });
+//      }
 
 
 

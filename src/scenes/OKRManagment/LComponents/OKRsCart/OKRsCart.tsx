@@ -5,15 +5,25 @@ import KrGradeDetails from '../KrGradeDetails/KrGradeDetails';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {IconButton} from '@mui/material';
 import { useDeleteKr } from '../../Hooks';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { setOkrDeleteStateR } from '../../OKRManageSlice/OKRManageSlice';
 
 const OKRsCart = (props:any) => {
+  const dispatch=useDispatch();
+  const deleteOkrState=useSelector((state:any)=>state.okrManage.okrDeleteData);
+
   const[showKrDetails,setShowKrDetails]=useState<Boolean>(false);
   const userId=useSelector((state:any)=>state.loign.userInfo.userId);
   const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
   // const lDeleteSuccess=()=>{
   //   setShowKrDetails(false)
   // }
+
+  const afterSuccessDelete=()=>{
+    setTimeout(() => {
+      dispatch(setOkrDeleteStateR(null))
+    }, 3000);
+  }
   const{mutate:callDeleteKr,data:deleteData,isSuccess}=useDeleteKr()
   let{item,setKrId,setShowEditKr,setAddKrState,setShowToastMessage}=props;
   let{name,okrStateName,responsibleName,pointingSystemType,okR_KeyResultType,okR_GradeDetails,id}:any=item;
@@ -41,20 +51,29 @@ callDeleteKr(deleteBody)
 
 useEffect(() => {
       
-  if (deleteData) {
-    console.log(deleteData)
+  if (deleteOkrState) {
     setShowToastMessage(true);
-    setAddKrState(deleteData?.data)
+    setAddKrState(deleteOkrState?.data)
   }
 
 
-}, [isSuccess,deleteData])
+}, [deleteOkrState])
+
+useEffect(() => {
+  
+  setTimeout(() => {
+    dispatch(setOkrDeleteStateR(null))
+}, 3000);
+
+}, [deleteOkrState])
+
 
 useEffect(() => {
   
 console.log(deleteData)
 
 }, [deleteData])
+
 
 
 

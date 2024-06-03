@@ -45,7 +45,8 @@ export default function DyDataGrid(
     initialMount,
     setPointSys,
     drName,
-    setRowSelectedData
+    setRowSelectedData,
+    withoutOptions
     
   }:any) {
     const[selectedRowData,setSelectedRowData]=React.useState(null);
@@ -54,13 +55,8 @@ export default function DyDataGrid(
       return (
         <GridToolbarContainer>
        
-          {/* <span>hi</span> */}
           <Grid>
-          {/* <IconButton size='small'  onClick={()=>{
-          setShowToolbarModal((prev:any)=>!prev)
-          }}   >
-            <KrChartIcon style={{color:'red',backgroundColor:'red !important'}}  />
-          </IconButton> */}
+       
        
           {
        selectedRowData && additionalToolbar &&    <Button sx={{fontSize:'10px'}} variant='text'  onClick={()=>{
@@ -168,7 +164,7 @@ const dispatch=useDispatch();
    }}
    density="compact"
    initialState={initState}
-   slots={{ toolbar:CustomToolbar}}
+   slots={{ toolbar:withoutOptions?null:CustomToolbar}}
 
    rowHeight={40}
       sx={{

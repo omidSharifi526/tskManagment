@@ -33,6 +33,7 @@ export default function NewMultiSelect(props: any) {
   }, [selectedItems])
 
   useEffect(() => {
+    console.log(selectedItems)
     setHorizontalAlignments(selectedItems)
   }, [selectedItems])
   
@@ -51,17 +52,13 @@ export default function NewMultiSelect(props: any) {
 
   const initialSelectItem = (value: any) => {
     // let { onChangee } = props;
-    setHorizontalAlignments(value)
+    // setHorizontalAlignments(value)
     setSelected(value);
     console.log(value)
 
 
 
-    // let teamIds = value.map(({ year, title }: any) => {
-    //   return year
-    // })
 
-    // onChangee(propName, teamIds)
 
   }
 
@@ -71,7 +68,7 @@ export default function NewMultiSelect(props: any) {
         multiple
         size='small'
         id="checkboxes-tags-demo"
-        options={top100Films}
+        options={options}
         disableCloseOnSelect
         value={selected}
         disabled={disabled}

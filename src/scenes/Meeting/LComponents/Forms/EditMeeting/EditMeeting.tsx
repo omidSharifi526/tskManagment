@@ -1,6 +1,8 @@
 import React, { useState,useEffect } from 'react';
+import { TimePicker } from '@mui/x-date-pickers';
 import { Box, Button, Grid, Typography,TextField } from '@mui/material';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
+import NewMultiSelect from '../../../../../components/FormikControls/NewMultiSelect/NewMultiSelect';
 import DyButton from '../../../../../components/GlobalComponents/DyButton/DyButton';
 import { ReactComponent as AddMeetingVector } from '../../../Statics/Svg/CreateMeeting.svg';
 import { useGetAllTeamsForSelByTenantId, useGetAllMeetingsTypeByTenantId,useAddMeeting } from '../../../Hooks/index'
@@ -17,47 +19,33 @@ import { meetingValuesFace } from '../../../interfaces/interfaces';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from "jalali-moment";
 import { useEditMeeting } from '../../../Hooks/index';
-// import TextField from '@mui/material';
-
-// import 
-
+import DYToastMessage from '../../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
+import MultiSel from '../../../../../components/MultiSel/MultiSel';
 
 
 
 
 
-
-
-
-
-const EditMeeting = ({hideModal,meetingLenght,setReloadMeetingData,meetingId}:any) => {
+const EditMeeting = ({hideModal,meetingLenght,setReloadMeetingData,meetingId,setMeetingAsyncState,setShowToastMessage}:any) => {
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const licenseType : any = useSelector((state: any) => state.meetings.meetingsList?.licenseType);
-  
-  // console.log(licenseType)
-  const priodId: any = useSelector((state: any) => state.meetings.priodId);
+  const[showLtoastMessage,setLToastMessage]=useState<boolean>(false);
+  const[updateErrorData,setUpdateErrorDate]=useState<any>(null)
+  const periodId: any = useSelector((state: any) => state.meetings.priodId);
 
-  const meetingData: meetingValuesFace = {
-    name: 'Check_in',
-    description: '',
-    meetingTypeId: "22e56360-33aa-432f-8c50-034e6c2008d1",
-    periodId: priodId,
-    tenantId: profileTenantId,
-    meetingDate: '',
-    fromTime: '',
-    toTime: '',
-    meetingRepeatType: '',
-    teamIds: [],
-    personIds: []
-    //  email:''
 
-  }
 
   const[addMeetingStatus,setAddMeetingStatus]=useState<any>(null)
   const[addMeetingMessage,setAddMeetingMessage]=useState<any|null>(null);
  const[updateMeetingInitialValues,setUpdateMeetingInitialValues]=useState<any>();
  const[meetingLRealDate,setMeetingLRealDate]=useState<any>('');
- const[meetingjLRealDate,setMeetingjLRealDate]=useState<any>('')
+ const[meetingjLRealDate,setMeetingjLRealDate]=useState<any>('');
+ const[lFromTime,setLfromTime]=useState<any>('');
+ const[lToTime,setLtoTime]=useState<any>('');
+ const[okTotime,setOkTotime]=useState<any>('');
+ const[okFromTime,setOkFromTime]=useState<any>('');
+ const[TeamIds,setTeamIds]=useState<any>([]);
+ 
 
   const addMeetingSuccess=()=>{
     setReloadMeetingData((prev:any):any=>!prev)
@@ -65,9 +53,8 @@ const EditMeeting = ({hideModal,meetingLenght,setReloadMeetingData,meetingId}:an
   }
 // const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}=useAddMeeting(addMeetingSuccess);
 const{data:meetingDetails,isLoading:meetingDetLoading,isError,isFetched}=useGetMeetingDetailById(meetingId);
-const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=useEditMeeting()
-  // const profileTenantId=useSelector((state)=>state.meetings.profileTenantId)
-  const { data: allTeamsData, isLoading } = useGetAllTeamsForSelByTenantId(profileTenantId);
+const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData,isSuccess:updateSuccess}:any=useEditMeeting()
+  const { data: allTeamsData, isLoading:getAllTeamLoading } = useGetAllTeamsForSelByTenantId(profileTenantId);
   
   const { data: allmeetingTypeData } = useGetAllMeetingsTypeByTenantId(profileTenantId)
   const repeatTypeData = [
@@ -82,15 +69,9 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
 
 
 
-  useEffect(() => {
-    
-  console.log(meetingId)
-    
-  }, [meetingId]);
+
 
   useEffect(() => {
-    
-    console.log(meetingDetails)
     if (meetingDetails) {
       let {
         meetingRepeatType,
@@ -103,9 +84,14 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
         toTime,
         name,
         persons,
-        teams
+        teams,
+        realFromTime,
+        realToTime,
+        teamss
 
       }=meetingDetails;
+
+      
        let initVal={
         meetingRepeatType:meetingRepeatType,
         description:description,
@@ -116,13 +102,36 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
         toTime:toTime,
         name:name,
         personIds:persons,
-        teamIds:['ffad00c7-5f27-4ea7-a878-8710c429d427']
+        periodId:periodId,
+        teamIds:[]
        }
        setUpdateMeetingInitialValues(initVal)
+
+      if (teams) {
+        setTeamIds(teamss)
+      }
+
+      
 
     if (realMeetingDate!==null) {
       setMeetingLRealDate(new Date(realMeetingDate));
     }
+    if (realFromTime!==null) {
+      console.log(new Date(realFromTime))
+      setLfromTime(new Date(realFromTime))
+  
+    }
+    if (realToTime!==null) {
+      setLtoTime(new Date(realToTime))
+  
+    }
+    if (toTime) {
+      setOkTotime(toTime)
+    }
+    if (fromTime) {
+      setOkFromTime(fromTime)
+    }
+
     }
 
    
@@ -139,6 +148,27 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
     }
       
       }, [meetingLRealDate])
+
+    useEffect(() => {
+      if (lToTime) {
+        var hour = lToTime.getHours();
+        var minute = lToTime.getMinutes();
+        var time_str = ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2);
+setOkTotime(time_str)
+      }
+    }, [lToTime])
+
+
+    useEffect(() => {
+   if (lFromTime) {
+    var hour = lFromTime.getHours();
+    var minute = lFromTime.getMinutes();
+    var time_str = ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2);
+     setOkFromTime(time_str)  
+   }
+    }, [lFromTime])
+    
+    
   
 
 
@@ -155,31 +185,51 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
   const initialUpdateMeeting=(data:any)=>{
     // let{,...rest}=data;
     console.log(data);
+    data.fromTime=okFromTime;
+    data.toTime=okTotime;
+    data.meetingDate=meetingjLRealDate;
+    data.teamIds=TeamIds?.map(({value}:any)=>{
+      return value
+    })
 
+  console.log(data)
     callEditMeeting(data)
 
-
-    
-
-
-    // let totalData={
-
-    //   forceEndDate:jlForecDate,
-    
-    //   ...rest};
- 
-  
-
-//    console.log(totalData);
-//    console.log(krHorizontalAlignments)
-//  callEditKR(totalData)
   }
 
 
+  useEffect(() => {
+      
+
+    if (meetUpdatedData) {
+        console.log(meetUpdatedData?.data.isSuccess);
+
+        if (meetUpdatedData?.data.isSuccess) {
+          hideModal((prev:any):any=>!prev)
+          setMeetingAsyncState(meetUpdatedData?.data)
+          setShowToastMessage(true)
+ 
+        } else {
+            setLToastMessage(true);
+            setUpdateErrorDate(meetUpdatedData?.data)
+        }
+     
+    }
+        }, [meetUpdatedData,updateSuccess]);
+
+        useEffect(() => {
+          
+        console.log(TeamIds)
+        
+        }, [TeamIds])
+        
+  
+
+
 
  
 
-  if (meetingDetLoading) {
+  if (meetingDetLoading ) {
     return <Box width={'100%'} textAlign={'center'} py={5}   > 
     <CircularProgress/>
     </Box>
@@ -215,118 +265,111 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
                 <Form>
                   <Grid container   >
 
+                  {
+                    editMeetLoading?<Box width={'100%'} textAlign={'center'} py={5}   > 
+                    <CircularProgress/>
+                    </Box>:<>
                     <Grid item xs={12} md={8} >
 
-                      <MultiSelect
-                        options={allTeamsData || []}
-                        isLoading={isLoading}
-                        onChangee={setFieldValue}
-                        propName='teamIds'
-                        label={'انتخاب سطح'}
-                      />
+                   
 
-                    </Grid>
-
-                    <Grid item xs={12} md={4} >
-                      <FormikControl
-                        control='select'
-                        type='select'
-                        label='نحوه تکرار جلسه '
-                        options={repeatTypeData}
-                        name='meetingRepeatType'
-                        fullWidth
-                        value={values?.meetingRepeatType || ''}
-                      />
-                    </Grid>
-
-                    {/* <Grid item xs={12} md={4}>
-       
-                      <FormikControl
-                        control="date"
-                        label="تاریخ جلسه"
-                        name="meetingDate"
-                        value={meetingData.meetingDate || ''}
-                      />
-                    </Grid> */}
+<FormControl sx={{padding:'8px'}} fullWidth  >
+<MultiSel
+   editMode={true} 
+   tagSelected={TeamIds}   
+   extractTag={setTeamIds} 
+   data={allTeamsData||[]}
+   label={'انتخاب سطح'}
+   // length={orderDescriptions.length}
 
 
-                      <Grid item xs={12} md={3}>
-                         <FormControl sx={{p:'8px'}} fullWidth  >
-                         <DatePicker 
-                         
-                         slotProps={{ textField: { size: 'small' } }}
-                         label={"حداکثر تاریخ انجام"}
-                           value={meetingLRealDate || ''}
-                           onChange={(newValue:any)=>{
-                               var persianDate = moment(newValue).format('jYYYY/jM/jD');
-           
-                               setMeetingLRealDate(newValue)
-                          
-                           }}
-                           />
-                         </FormControl>
-                         </Grid> 
+/>
+</FormControl>
+ 
+</Grid>
+
+<Grid item xs={12} md={4} >
+ <FormikControl
+   control='select'
+   type='select'
+   label='نحوه تکرار جلسه '
+   options={repeatTypeData}
+   name='meetingRepeatType'
+   fullWidth
+   value={values?.meetingRepeatType || ''}
+ />
+</Grid>
+
+
+ <Grid item xs={12} md={4}>
+    <FormControl sx={{p:'8px'}} fullWidth  >
+    <DatePicker 
+    
+    slotProps={{ textField: { size: 'small' } }}
+    label={'تاریخ جلسه'}
+      value={meetingLRealDate || ''}
+      onChange={(newValue:any)=>{
+          setMeetingLRealDate(newValue)     
+      }}
+      />
+    </FormControl>
+    </Grid> 
 
 
 
 
-                    <Grid item xs={12} md={4}>
-                      <FormikControl
-                        control="timePicker"
-                        name="fromTime"
-                        label='ساعت شروع جلسه '
-                        value={meetingData.fromTime}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <FormikControl
-                        control="timePicker"
-                        name="toTime"
-                        label='ساعت پایان جلسه '
-                        value={meetingData.toTime}
-                      />
-                    </Grid>
+<Grid item xs={12} md={4}>
+<FormControl fullWidth sx={{padding:'8px'}}   >
+<TimePicker
+disableOpenPicker
+ampm={false}
+slotProps={{ textField: { size: 'small' } }}
+// sx={mStyle}
+label={'ساعت شروع جلسه '}
+value={lFromTime}
+onChange={(newValue:any) => {
+setLfromTime(newValue)
+}}
+/>
+</FormControl>
 
-                    {/* <Grid item xs={12} md={4}>
-                      <FormikControl
-                        control="timePicker"
-                      
-                        name="toTime"
-                        label='ساعت پایان جلسه '
-                        value={meetingData.toTime}
-                      />
-                    </Grid> */}
+{/* lToTime */}
+</Grid>
+<Grid item xs={12} md={4}>
+
+<FormControl fullWidth sx={{padding:'8px'}}   >
+<TimePicker
+disableOpenPicker
+ampm={false}
+slotProps={{ textField: { size: 'small' } }}
+// sx={mStyle}
+label={'ساعت پایان جلسه '}
+value={lToTime}
+onChange={(newValue:any) => {
+setLtoTime(newValue)          
+}}
+/>
+</FormControl>
+</Grid>
 
 
+ <Grid item xs={12} md={12}  >
+       <Box sx={{padding:'8px'}}  >
+       <TextField
+       size='small'
+       fullWidth
+       label={'توضیحات'}
+       value={values?.description || ''}
+       onChange={({target}:any)=>{
+       let{value}=target;
+       setFieldValue('description',value)
+       }}
+       />
 
-
-                    {/* multiSelect */}
-                    {/* <Grid item xs={12}  >
-                      <FormikControl
-                        control='textField'
-                        type='text'
-                        label='توضیحات'
-
-                        name='description'
-                        fullWidth
-                      />
-                    </Grid> */}
-
-                      <Grid item xs={12} md={12}  >
-                            <Box sx={{padding:'8px'}}  >
-                            <TextField
-                            size='small'
-                            fullWidth
-                            label={'توضیحات'}
-                            value={values?.description || ''}
-                            onChange={({target}:any)=>{
-                            let{value}=target;
-                            setFieldValue('description',value)
-                            }}
-                            />
-
-                            </Box>
-                            </Grid>
+       </Box>
+       </Grid>
+                    </>
+                  }
 
 
 
@@ -336,9 +379,10 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
                         <Box >
                           <DyButton
                             caption={'ذخیره'}
+                            
                             color={'#00387C'}
                             onClick={()=>{}}
-                            // disbled={!dirty || !isValid}
+                            disbled={editMeetLoading}
                             variant={'contained'}
                             bgColor={'#00387C'}
                             type={'submit'}
@@ -376,10 +420,22 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData}=use
         
 
         </Grid>
+        {
+      showLtoastMessage && <DYToastMessage
+      isSuccess={updateErrorData?.isSuccess}
+      message={updateErrorData?.metaData.message}
+      setShow={setLToastMessage}
+      show={showLtoastMessage}
+      
+      />
+      
+      
+    }
         
 
 
       </Grid>
+      
     </Box>
   )
 }

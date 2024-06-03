@@ -248,7 +248,7 @@ const useGetAllTeamsForSelByTenantId = (tenantId: any) => {
         select: (data) => {
             let rawData = data?.data?.data;
             let readyData = rawData.map(({ id, name }: any) => {
-                return { title: name, year: id }
+                return { key: name, value: id }
             })
             return readyData
         }
@@ -329,7 +329,7 @@ const useGetMeetingDetailById=(meetId:any)=>{
         refetchOnWindowFocus:false,
         select:(data:any)=>{
             let rawData=data?.data?.data;
-            console.log(rawData)
+            // console.log(rawData)
             return rawData
        
         }
@@ -341,8 +341,7 @@ const useEditMeeting=()=>{
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data:any) =>
-            editMeeting(data),
+        mutationFn: (data:any) =>editMeeting(data),
         onSuccess: (data) => {
             queryClient.invalidateQueries('getAllMeetingByIds')
         //   console.log(data)

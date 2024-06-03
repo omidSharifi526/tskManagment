@@ -45,6 +45,8 @@ const TeamCart = (props:any) => {
     
     
     }, [isSuccess,deleteData])
+
+    
     
 
 

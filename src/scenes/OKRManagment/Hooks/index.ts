@@ -11,11 +11,15 @@ import {GetAllActivePersonByTenantId,
     getObjectiveDetails,
     getKeyResultDetailsById,
     editKeyResult,
-    deleteKr
+    deleteKr,
+    getAllObjectiveNameWithKeyResultsByTenantId,
+    getAllTeamAndPersonNameByTenantId
     
 
 } from '../Api/index';
 import { QueryClient } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { setOkrDeleteStateR } from '../OKRManageSlice/OKRManageSlice';
 
 type option={
     id:string,
@@ -135,9 +139,7 @@ const useAddKeyResult=()=>{
 
 }
 
-// const useEditKeyResult=()=>{
 
-// }
 
 const useEditKeyResult=(localEditKrSuccess:any)=>{
     const queryClient=useQueryClient()
@@ -203,9 +205,11 @@ const queryClient=useQueryClient()
     },
     select:(data:any)=>{
      let rawData=data?.data?.data;
+    //  console.log(rawData)
      let transformed=rawData.map((item:any)=>{
-        let {name:key,id:value}=item
-       return {key,value}
+        let {name:key,id:value,isCompany
+        }=item
+       return {key,value,isCompany}
      })
      return transformed
     }
@@ -267,46 +271,62 @@ const useGetKeyResultDetailsById=(krId:string|null)=>{
         })
 }
 
+const useGetAllObjectiveNameWithKeyResultsByTenantId=(Ids:any|null)=>{
+    return useQuery(['GetAllObjectiveNameWithKeyResultsByTenantId',Ids],getAllObjectiveNameWithKeyResultsByTenantId,{
+        enabled:!!Ids.definitionLevelId,
+        refetchOnWindowFocus:false,
+        cacheTime:Infinity,
+        onSuccess:(data:any)=>{
+         console.log(data)
+        },
+        select:(data)=>{
+         let rawData=data?.data?.data;
+         let transFormed=rawData?.map((item:any)=>{
+        let{name,keyResultsQueryResultDtos}=item;
+        let teransformedd={gName:name,items:keyResultsQueryResultDtos}
+        return teransformedd
+         })
+         return transFormed
+        }
+        })
+}
+
+const useGetAllTeamAndPersonNameByTenantId=(tenantId:any|string)=>{
+    return useQuery(['GetAllTeamAndPersonNameByTenantId',tenantId],getAllTeamAndPersonNameByTenantId,{
+        enabled:!!tenantId,
+        refetchOnWindowFocus:false,
+        cacheTime:Infinity,
+        onSuccess:(data:any)=>{
+        //  console.log(data)
+        },
+        select:(data)=>{
+         let rawData=data?.data?.data;
+         return rawData      
+       
+        }
+        })
+
+}
 
 
 
-// const useDeleteKr=(lDeleteSuccess:any)=>{
-//     const queryClient=useQueryClient()
-//       return useMutation({
-//     mutationFn: (krBody:any) =>deleteKr(krBody),
-//     onSuccess: (data) => {
-//         queryClient.invalidateQueries('getObjectiveDetails')
-//         lDeleteSuccess()
-//     //   console.log(data)
-//     },
-//   });
 
 
-// }
-
-// const useDeleteKr=(onSuccesss:any)=>{
-//     const queryClient=useQueryClient()
-    
-//           return useMutation({
-//         mutationFn:(data:any)=>deleteKr(data),
-//         onSuccess: (data) => {
-//             onSuccesss()
-//             queryClient.invalidateQueries('getObjectiveDetails')
-//         //   console.log(data)
-//         },
-//       });
-//      }
 
 const useDeleteKr=()=>{
-    const queryClient=useQueryClient()
+    const queryClient=useQueryClient();
+    const dispatch=useDispatch();
       return useMutation({
-    mutationFn: (data:any) =>deleteKr(data),
+    mutationFn: (data:any) =>{
+        return deleteKr(data)
+    },
     onSuccess: (data) => {
-        queryClient.invalidateQueries('getObjectiveDetails')
-    //   console.log(data)
+       console.log(data)
+       dispatch(setOkrDeleteStateR(data))
+        queryClient.invalidateQueries('getObjectiveDetails');
+
     },
   });
-
 
 }
 
@@ -326,5 +346,7 @@ export{
     useGetObjectiveDetails,
     useGetKeyResultDetailsById,
     useEditKeyResult,
-    useDeleteKr
+    useDeleteKr,
+    useGetAllObjectiveNameWithKeyResultsByTenantId,
+    useGetAllTeamAndPersonNameByTenantId
 }

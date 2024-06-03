@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { EmptyDataIcon } from '../StataicData/index';
 import TeamsNavigations from '../LComponents/TeamsNavigation/TeamsNavigations';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import DYToastMessage from '../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 
 import smil from '../../../Asset/Svgs/Emojys/smil.png';
 import meh from '../../../Asset/Svgs/Emojys/meh.png';
@@ -57,6 +58,8 @@ const ObjectiveKeyResults: React.FC = () => {
   const[objectiveSelectedData,setObjectiveSelectedData]=useState<any>(null);
   const[objectiveManiInfo,setObjectiveMainInfo]=useState<ObjectiveSelectedFace|null>(null);
   const[krMainInfo,setKrMainInfo]=useState<krSelectedFace|null>(null);
+  const[showToastMessage,setShowToastMessage]=useState<any>(false);
+  const[addEvalAsyncData,setAddEvalAsyncData]=useState<any>(null);
   // const[object]
   const getObjectiveSuccess=()=>{
 
@@ -74,19 +77,16 @@ if (getObjectiveAgainFetched) {
   setSuccessState(false)
 }
 
-
-
-
-
   }, [getObjectiveAgainFetched])
 
   useEffect(() => {
     
-    if (SuccessState) {
+    if (addEvalAsyncData) {
       callAgain()
+      setSuccessState(true)
     }
    
-  }, [SuccessState])
+  }, [addEvalAsyncData])
   
   const [objcSelectionModel, setObjSelectionModel] = useState<string>('')
   const [krSelectionModel, setKrSelectionModel] = useState<string>('');
@@ -1151,8 +1151,12 @@ console.log(rowSelectedData)
               objectiveId={objectivee?.id}
               kresultId={krId}
               // afterAddKr={initialAfterAddKr}
-              onsucces={setSuccessState}
-              // krMainInfo={krMainInfo}
+              onsucces={setShowAddEvalModal}
+              setShowToastMessage={setShowToastMessage}
+              setAddEvalAsyncData={setAddEvalAsyncData}
+
+              
+            
             
             
             
@@ -1184,26 +1188,22 @@ console.log(rowSelectedData)
             </LyBackdrop>
         }
 
-        {/* {
-          getObjectiveAgainFetched  && <ModalLyt 
-          title={'ارزیابی'}
-          showModal={Boolean(addEvalSuccessModal)}
-            setShowModal={setAddEvalSuccessModal}
-          >
-            <AddMeetingSuccess
-            formName={'ارزیابی'}
-            resetButton={false}
-            resetForm={()=>{}}
-            />
-    
-
-          </ModalLyt>
-        } */}
-{/* CircularProgress */}
-{/* {formName,resetButton,resetForm} */}
+       {
+         
+          showToastMessage && <DYToastMessage
+          isSuccess={addEvalAsyncData?.isSuccess}
+          message={addEvalAsyncData?.metaData.message}
+          setShow={setShowToastMessage}
+          show={showToastMessage}
+          
+          />
+          
+          
+       }
 
 
-
+{/* const[showToastMessage,setShowToastMessage]=useState<any>(false);
+  const[addEvalAsyncData,setAddEvalAsyncData]=useState<any>(null); */}
 
       </Grid>
     </>

@@ -124,10 +124,23 @@ return await axiosInstance.post('OKR/EditKeyResult',krData)
 
 // https://api.myokr.ir/api/OKR/DeleteKeyResult
 
-const deleteKr=async(delteKrBody:any|null)=>{
+const deleteKr=async(delteKrBody:any)=>{
     return await axiosInstance.post(`OKR/DeleteKeyResult`,delteKrBody)
 }
 
+// https://api.myokr.ir/api/OKR/GetAllObjectiveNameWithKeyResultsByTenantId/?tenantId=eb781974-3cb0-4c3a-881e-97af686ce7f5&definitionLevelId=b25fa8c6-d624-4b41-bc8c-230afabc580a&periodId=a0fcb059-bca7-4dcf-874b-aa0ce7c032b5
+
+
+
+const getAllObjectiveNameWithKeyResultsByTenantId=async({queryKey}:any)=>{
+let ids:any|null=queryKey[1];
+return await axiosInstance.get(`OKR/GetAllObjectiveNameWithKeyResultsByTenantId/?tenantId=${ids.tenantId}&definitionLevelId=${ids.definitionLevelId}&periodId=${ids.periodId}`)
+}
+
+const getAllTeamAndPersonNameByTenantId=async({queryKey}:any)=>{
+    let tenantId=queryKey[1];
+    return await axiosInstance.get(`/Team/WebGetAllTeamAndPersonNameByTenantId/?tenantId=${tenantId}`)
+}
 
 
 
@@ -146,5 +159,7 @@ export{
     getObjectiveDetails,
     getKeyResultDetailsById,
     editKeyResult,
-    deleteKr
+    deleteKr,
+    getAllObjectiveNameWithKeyResultsByTenantId,
+    getAllTeamAndPersonNameByTenantId
 }

@@ -72,6 +72,7 @@ export default function TimePickerF(props:any) {
        
           <FormControl sx={sxStyle}   >
             <TimePicker
+            disableOpenPicker
             ampm={false}
             slotProps={{ textField: { size: 'small' } }}
             sx={mStyle}

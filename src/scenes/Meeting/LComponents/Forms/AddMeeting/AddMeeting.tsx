@@ -36,7 +36,7 @@ interface Values {
 
 
 
-const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
+const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData,setMeetingAsyncState,setShowToastMessage}:any) => {
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const licenseType : any = useSelector((state: any) => state.meetings.meetingsList?.licenseType);
   // console.log(licenseType)
@@ -54,7 +54,6 @@ const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
     meetingRepeatType: '',
     teamIds: [],
     personIds: []
-    //  email:''
 
   }
   const [confrimForm, setConfrimForm] = useState<string>(licenseType);
@@ -65,12 +64,10 @@ const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
     hideModal((prev:any):any=>!prev)
   }
 const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}=useAddMeeting(addMeetingSuccess)
-  // const profileTenantId=useSelector((state)=>state.meetings.profileTenantId)
   const { data: allTeamsData, isLoading } = useGetAllTeamsForSelByTenantId(profileTenantId);
   
   const { data: allmeetingTypeData } = useGetAllMeetingsTypeByTenantId(profileTenantId)
   const repeatTypeData = [
-    // { key: 'روزانه', value: 'Daily' },
     { key: 'بدون تکرار', value: 'none' },
     { key: 'هفتگی', value: 'OnOneWeekDay' },
     { key: 'ماهانه', value: 'OneOneMonthDay' }]
@@ -97,17 +94,40 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
 
 
-  useEffect(() => {
-   if (isSuccess) {
-    let{data}:any=addMeetData;
-    let{isSuccess:isSuccesss}:any=data;
-    setAddMeetingStatus(isSuccesss);
-    let{metaData}:any=data;
-    let{message}=metaData;
-    setAddMeetingMessage(message)
-   }
+  // useEffect(() => {
+  //  if (isSuccess) {
+  //   let{data}:any=addMeetData;
+  //   let{isSuccess:isSuccesss}:any=data;
+  //   setAddMeetingStatus(isSuccesss);
+  //   let{metaData}:any=data;
+  //   let{message}=metaData;
+  //   setAddMeetingMessage(message)
+  //  }
    
-  }, [addMeetData])
+  // }, [addMeetData])
+
+  useEffect(() => {
+      
+
+    if (addMeetData) {
+        console.log(addMeetData?.data.isSuccess);
+
+        if (addMeetData?.data.isSuccess) {
+          hideModal((prev:any):any=>!prev)
+          setMeetingAsyncState(addMeetData?.data)
+          setShowToastMessage(true)
+ 
+        } else {
+            // setLShowToastMessage(true);
+            // setEditAsyncData(editKrData?.data)
+        }
+     
+    }
+        }, [addMeetData,isSuccess]);
+
+
+
+
   
   
 
@@ -123,7 +143,7 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
   const initialAddMeeting=(data:any)=>{
 
     console.log(data)
-    // addMeeting(data)
+    addMeeting(data)
     // if(isSuccess){
     //   console.log(addMeetData)
     //   let{data}:any=addMeetData;
@@ -353,6 +373,12 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
         // resetForm={setConfrimForm}   />
         // break;
     }
+  }
+
+  if (AddLoading) {
+    return <Box width={'100%'} py={5} textAlign={'center'}  >
+      <CircularProgress/>
+    </Box>
   }
 
   return (
