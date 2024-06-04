@@ -99,7 +99,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
         responsibleId:'',
         allIds:[],
         tenantId:'',
-        weight:0,
+        weight:null,
         answerRequest:'',
   
       

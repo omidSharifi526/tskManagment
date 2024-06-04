@@ -43,7 +43,7 @@ export default function Grouped({data,setSpecialIds}:any) {
       getOptionLabel={(option: any) => option.name}
       onChange={handleChange}
     
-      renderInput={(params) => <TextField {...params} label="همسویی افقی" />}
+      renderInput={(params) => <TextField {...params} label="همسویی عمودی" />}
     />
 </FormControl>
   );
