@@ -1,69 +1,180 @@
 import React,{useEffect,useState} from 'react';
 import PeriodSlider from '../../../../components/GlobalComponents/PeriodSlider/PeriodSlider';
-import { Grid,Box } from '@mui/material';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
+import {Box,Button,Grid, Typography, BottomNavigationAction,} from '@mui/material';
+import { useSelector } from 'react-redux';
+//import {LoginState} from '../../components/Login/Types/index'
+import MeetingCard from '../../MeetingCard/MeetingCard';
+import { useGetAllMyMeetings } from '../../Hooks';
+import CircularProgress from '@mui/material/CircularProgress';
+//import Loading from '../../components/Loading/Loading';
+import Skeleton from '@mui/material/Skeleton';
+import { useDispatch } from 'react-redux';
+import { setLoadingR } from '../../MeetingsSlice/MeetingsSlice';
+import { UseGetWebCheckinMeetingDetailsByMeetingId } from '../../Hooks';
+import{useNavigate} from 'react-router-dom';
+//import LyBackdrop from '../../components/Layouts/BackDrop/BackDrop';
+//import ModalLyt from ' ../../components/Layouts/ModalLyt/ModalLyt';
+//import AddMeeting from './LComponents/Forms/AddMeeting/AddMeeting';
+import { Link } from 'react-router-dom';
+///import DyButton from '../../components/GlobalComponents/DyButton/DyButton';
+//import EditMeeting from './LComponents/Forms/EditMeeting/EditMeeting';
+//import DYToastMessage from '../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 export const AllMeetings = () => {
-    const[priodId,setPriodId]=useState<string|null>(null)
+  //const AllMeetings :React.FC=function(){
+
+    const[showDownloadLink,setShowDownlodLink]=useState<boolean>(false)
+    const[meetId,setMeetId]=useState<any>('');
+    const[showToastMessage,setShowToastMessage]=useState<boolean>(false);
+    const[meetingAsyncState,setMeetingAsyncState]=useState<any|null>(null)
+    const [createTenantModal,setCreateTenantModal]=useState<boolean>(false)
+    const navigate=useNavigate();
+    const getDetSuccess=()=>{
+    navigate('/companyTeams',{replace:true})
+    }
+    const getDetFailed=()=>{
+  
+    }
+    // userPhoneNumber(pin):"09121223615"
+  
+    const{data:MeetDetData,isLoading:meetLoading,refetch:getAgain}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,meetId);
     const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
-    const[activeIndex,setActiveIndex]=useState<number|undefined>(4);
-    const{data:perData,isLoading:perLoading,isError:periodError,isFetched:getPeriodFetched,refetch:getPeriodAgain}=useGetPriodById(profileTenantId,()=>{},()=>{});
-useEffect(() => {
-//  console.log(activeIndex)
-let length=perData?.map((e:any) => e.isCurrent).indexOf(true)
-// setActiveIndex(4)
-if(length!==4){
-    setActiveIndex(4)
-
-    }
-}, []);
-
-
-useEffect(() => {
+    const priodId=useSelector((state:any)=>state.meetings.priodId);
+    const userPhoneNumber:string=useSelector((state:any)=>state.loign.userPhoneNumber);
+    const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMyMeetings({tenantId:profileTenantId,priodId:priodId,userPhoneNumber:userPhoneNumber})
+    const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
+    const periodList=useSelector((state:any)=>state.meetings.periodList);
+    const meetingLoadState=useSelector((state:any)=>state?.meetings?.meetingsList);
+    const [existData,setExistData]=useState<any>(null);
+    const [accessForReport,setAccessForReport]=useState<boolean>(false);
+    const[meetingLenght,setMeetingLenght]=useState<Number>(0);
+    const[reloadMeetingData,setReloadMeetingData]=useState<boolean>(false);
   
-// console.log(activeIndex,perData)
-let currentIndex=perData?.map((e:any) => e.isCurrent).indexOf(true)
-// console.log(currentIndex)
-}, [perData,getPeriodFetched]);
-
-useEffect(() => {
   
-// console.log(getPeriodFetched)
-if (perData) {
-    let length:number=perData.length
-    if(length===4){
-    setActiveIndex(0)
-
+    const [showEditMeeting,setshowEditMeeting]=useState<boolean>(false);
+    const [meetingId,setMeetingId]=useState<string|null>(null);
+    
+  
+   
+  
+  
+    useEffect(() => {
+    
+      if (meetdata) {
+        let{accessibleForReport}=meetdata;
+        setAccessForReport(accessibleForReport)
+      }
+    // console.log(meetdata)
+       },[meetdata]);
+  
+  
+       useEffect(() => {
+         if (meetingLoadState!==null) {
+         let {meetingsList}=meetingLoadState;
+        setExistData(meetingsList)
+        setMeetingLenght(meetingsList.length)
+        //  console.log(meetingsList.length)
+  
+         }
+       }, [meetingLoadState]);
+  
+  
+       useEffect(() => {
+         
+       console.log(meetingId)
+    
+       }, [meetingId])
+       
+  
+  
+       
+  
+  
+       
+       
+  
+  
+    
+  
+       const initialCreateMeeting=()=>{
+        setCreateTenantModal(!createTenantModal)
+       }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+   
+  
+  
+    
+  
+   
+  
+  
+    if (meetLoadin || existData===null || isFetched!==true) {
+      return <Box display={'flex'} 
+      alignItems={'center'} 
+      justifyContent={'center'} 
+      width={'100%'} 
+      height={'500px'} 
+      boxShadow={4} borderRadius={3}>
+        <CircularProgress  />
+       </Box>
     }
-
-}
- 
-}, [perData])
-
-
-
-
-
-
-
-
-
-
-
-  return (
-<Grid container   >
-<Grid item xs={12}   >
-    <PeriodSlider 
-    setActiveIndex={setActiveIndex}
+  
+  
+  
+    return (
+      <Grid container  spacing={1} >
+        <Grid item xs={12}    >
+                       <Box display={'flex'}  flexDirection={'row-reverse'}>
+                      <Box width={'150px'}   >
+                      
+                      </Box>
+                       </Box>
+        </Grid>
+      
+     {
+   existData && existData.map((data:any,i:number):any=>{
+          return (<Grid item md={3} xs={12}  key={i}>
+  
     
-    activeIndex={perData?.findIndex(item=>item.isCurrent)}
-     slideData={perData || []}
-     dataLoading={false}
-     setPriodId={setPriodId}
-
-    
-    />
-</Grid>
-</Grid>
-  )
-}
+            <MeetingCard 
+            setMeetId={setMeetId}
+            info={data}
+            prog={i}  
+            accessForReport={accessForReport}
+            setShowDownlodLink={setShowDownlodLink}
+            setPMeetingId={setMeetingId}
+            setshowEditMeeting={setshowEditMeeting}
+            showEditMeeting={showEditMeeting}
+             
+             
+             />
+            
+            
+            </Grid>)
+        })
+      }
+  
+      {/* {
+        meetingsDataa?.length==0 && <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
+        <Typography>
+          در این دوره جلسه ایی وجود ندارد
+        </Typography>
+        </Box>
+      } */}
+  
+        
+  
+        
+      </Grid>
+    )
+  }
+  //export default AllMeetings

@@ -61,13 +61,9 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData,isSu
     // { key: 'روزانه', value: 'Daily' },
     { key: 'بدون تکرار', value: 'none' },
     { key: 'هفتگی', value: 'OnOneWeekDay' },
-    { key: 'ماهانه', value: 'OneOneMonthDay' }]
-
-
-
-
-
-
+    { key: 'دو هفته یکبار', value: 'OneTwoWeekDay' },
+    { key: 'چهار هفته یکبار', value: 'OneOneMonthDay' }]
+   
 
 
 

@@ -28,10 +28,10 @@ interface teamIdsFace{
   teamId:string,
   personIds:string[]
 }
-// setShowToastMessage={setShowToastMessage}
-// setAddKrState={setAddObjectiveStatus}
-const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setAddObjectiveStatus,afterSuccess}:any) => {
-  const[teamIdObject,setTeameIdObjects]=useState<teamIdsFace>({teamId:'',personIds:[]})
+// allIds
+
+const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setObjectiveAsyncOpState,afterSuccess}:any) => {
+
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
     const[showAdvanceOptions,setShowAdvanceOptions]=useState<boolean>(false)
 
@@ -67,27 +67,49 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
       useEffect(() => {
   if (addObjectiveData) {
-    setAddObjectiveMessage(addObjectiveData?.data?.metaData.message)
-    setSuccessAddObjective(isSuccess)
-    setShowToastMessage(true)
-    setAddObjectiveStatus(addObjectiveData?.data)
 
-
-    // if (addObjectiveData?.data?.isSuccess) {
-      // onSuccesss()
-      afterSuccess()
-    // }
+      if (addObjectiveData?.data.isSuccess) {
+            // setSuccessAddObjective(isSuccess)
+            setShowToastMessage(true)
+            setObjectiveAsyncOpState(addObjectiveData?.data)
+            onSuccess()
+  
+      } else {
+          setShowLtoastMessage(true);
+          setAddObjError(addObjectiveData?.data)
+      }
+    
 
   }
+  
 
 
-      }, [addObjectiveData,isSuccess]);
+      }, [addObjectiveData]);
 
-
+      const addObjectiveInitialValues:addObjectiveFace={
+        name:'',
+        periodId:periodId,
+        calculateProgressType:'',
+        // createById:'',
+        definitionLevelId:'',
+        description:'',
+        isPublic:false,
+        keyResultParentIds:[],
+        // :'',
+        responsibleId:'',
+        allIds:[],
+        tenantId:'',
+        answerRequest:'',
+  
       
+      
+      
+      }
 
 
-// const{data:perData,isLoading:perLoading,isError:periodError,isFetched}=useGetPriodById(tenantId,onSuccesss,onFailed);
+     
+      
+  
 
   const initialAddObjective=(data:any)=>{
     let{isPublic}=data;
@@ -116,7 +138,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
  
 
   if (isLoading) {
-    return <Box width={'100%'} py={16} textAlign={'center'}   >
+    return <Box width={'100%'} py={6} textAlign={'center'}   >
         <CircularProgress/>
     </Box>
   }
@@ -150,7 +172,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                 ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }: any) =>
                     <Form>
                         <Grid container  >
-                            <Grid item xs={12} md={12}  >
+                            <Grid item xs={12} md={10}  >
                                 <FormikControl
                                     control='textField'
                                     type='text'
@@ -165,10 +187,17 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
                       
 
-                            <Grid item xs={12} md={2}  >
-                                <FormikControl
-                                    control='select'
-                                    options={periodOptions || []}
+                                <Grid item xs={12} md={2}  >
+                                      <Box sx={{padding:'8px'}}>
+                                   <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">دوره زمانی</InputLabel>
+                                    <Select
+                                    defaultValue={periodId}
+                                    // sx={{'& .muirtl-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select' :{py:'1px'}}}
+                                    size='small'
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={values?.periodId || ''}
                                     label='دوره زمانی'
                                     onChange={({target}:any)=>{
                                        let{value}=target;
@@ -202,7 +231,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
 
 
-                            <Grid item xs={12} md={4}  >
+                            <Grid item xs={12} md={3}  >
 
                             <Box padding={'8px'} >
                                 <FormControl fullWidth size='small'  >
@@ -267,7 +296,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                             }
 
 
-                            <Grid item xs={12} md={4}  >
+                            <Grid item xs={12} md={3}  >
                                 <FormikControl
                                     control='select'
                                     options={personsOptionds || []}
@@ -295,14 +324,14 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                       expanded={showAdvanceOptions}  >
                      <Grid container  >
                         
-                         <Grid item xs={12} md={6}  >
+                         <Grid item xs={12} md={3}  >
                            <FormikControl 
                            control={'radio'}
                            mainLabel={'قابلیت نمایش'}
                            value={values?.isPublic}
                            setFieldValue={setFieldValue}
                            propName={'isPublic'}
-                           options={[{label:'برای همه',value:'برای همه'}, {label:'برای اشخاص خاص',value:'برای اشخاص خاص'}]}
+                           options={[{label:'برای همه',value:'برای همه'},{label:'برای اشخاص خاص',value:'برای اشخاص خاص'}]}
                              />
                             </Grid>
 
@@ -338,19 +367,19 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                      </Grid>
 
                      <Grid container >
-                       <Grid item xs={12} md={3}  >
+                       <Grid item xs={12} md={4}  >
                                 <FormikControl
                                     control='textField'
                                     // type='text'
                                     label='وزن'
                                     name='weight'
                                     fullWidth
-                                    values={values?.weight||0}
+                                    values={values?.weight||null}
                                     type={'number'}
                                 />
                             </Grid>
 
-                              <Grid item xs={12} md={9}  >
+                              <Grid item xs={12} md={8}  >
                                 <FormikControl
                                     control='textField'
                                     type='text'
@@ -419,25 +448,35 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
 
 
-                            <Grid item xs={12} mt={1}  >
-                      <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
-                        <Box >
-                          <DySplitButton
-                                    options={submitOptions || [] }
-                                    onclick={setFieldValue}
-                                    disbled={!dirty || !isValid}
-                                    // name={'oKRStateId'}
-                                    />
-                        </Box>
+      
+                         <Grid item xs={12} md={12} mt={3} >
+                                <Box width={'100%'} display={'flex'} 
+                                justifyContent={'end'} 
+                                flexDirection={'row-reverse'}   
+                                columnGap={2}
+                                >
 
-                        <Box>
-                          <DyButton
-                            caption={'انصراف'}
-                            disbled={false}
-                            variant={'outlined'}
-                            onClick={onSuccesss}
-                          />
-                        </Box>
+                                   
+                                 {
+                                    submitOptions && submitOptions?.map((item:any,i:number)=>{
+                                        let{label,id}=item;
+                                        // console.log(item)
+                                        return   <Box width={'20%'}>
+                                        <DyButton
+                                        disabled={!dirty|| !isValid}
+                                        key={i}
+                                             type={'submit'}
+                                             variant={'contained'}
+                                             bgColor={'info'}
+                                             caption={label}
+                                             onClick={() => {
+                                              
+                                                setOkrStateId(id)
+                                              }}
+                                         />
+                                        </Box> 
+                                    })
+                                 }
 
                               </Box>
 

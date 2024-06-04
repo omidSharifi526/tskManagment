@@ -16,6 +16,11 @@ const GetAllHorizontalAlignmentByTenantId=async({queryKey}:any)=>{
 return await axiosInstance.get(`/OKR/GetAllHorizontalAlignmentByTenantId/?tenantId=${ids.tenantId}&definitionLevelId=${ids.definitionId}`)
 }
 
+const getAllObjectiveNameWithKeyResultsByTenantId=async({queryKey}:any)=>{
+    let ids:any|null=queryKey[1];
+    return await axiosInstance.get(`OKR/GetAllObjectiveNameWithKeyResultsByTenantId/?tenantId=${ids.tenantId}&definitionLevelId=${ids.definitionLevelId}&periodId=${ids.periodId}`)
+    }
+
 // https://api.myokr.ir/api/OKR/GetAllOKRStateByTenantId?tenantId=eb781974-3cb0-4c3a-881e-97af686ce7f5
 
 
@@ -81,6 +86,10 @@ const GetAllObjectiveOKRStateByTenantId=async({queryKey}:any)=>{
     return await axiosInstance.get(`OKR/GetAllOKRStateByTenantId?tenantId=${tenantId}`)
 }
 
+const getAllTeamAndPersonNameByTenantId=async({queryKey}:any)=>{
+    let tenantId:string|null=queryKey[1];
+    return await axiosInstance.get(`Team/WebGetAllTeamAndPersonNameByTenantId?tenantId=${tenantId}`)
+}
 
 // درج هدف
 // https://api.myokr.ir/api/OKR/AddObjective
@@ -90,7 +99,7 @@ const GetAllObjectiveOKRStateByTenantId=async({queryKey}:any)=>{
 // return await axiosInstance.post('OKR/AddObjective',ObjectiveData)
 // }
 
-const addObjective=async(ObjectiveData:any)=>{
+const AddObjective=async(ObjectiveData:any)=>{
     return await axiosInstance.post(`OKR/AddObjective`,ObjectiveData)
   }
 
@@ -133,6 +142,10 @@ const deleteKr=async(delteKrBody:any)=>{
 }
 
 
+const deleteObjective=async(delteKrBody:any)=>{
+    return await axiosInstance.post(`OKR/DeleteObjective`,delteKrBody)
+}
+
 
 
 
@@ -151,6 +164,7 @@ export{
     getKeyResultDetailsById,
     editKeyResult,
     deleteKr,
+    deleteObjective,
     getAllObjectiveNameWithKeyResultsByTenantId,
     getAllTeamAndPersonNameByTenantId
 }

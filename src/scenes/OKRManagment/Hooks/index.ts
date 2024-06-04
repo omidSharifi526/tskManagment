@@ -11,7 +11,10 @@ import {GetAllActivePersonByTenantId,
     getObjectiveDetails,
     getKeyResultDetailsById,
     editKeyResult,
-    deleteKr
+    deleteKr,
+getAllObjectiveNameWithKeyResultsByTenantId,
+getAllTeamAndPersonNameByTenantId,
+    deleteObjective
     
 
 } from '../Api/index';
@@ -27,7 +30,7 @@ type option={
 const useDeleteObject=()=>{
     const queryClient=useQueryClient()
     return useMutation({
-  mutationFn: (userData:any) =>deleteObject(userData),
+  mutationFn: (userData:any) =>deleteObjective(userData),
   onSuccess: (data:any) => {
     queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
   },
@@ -206,7 +209,7 @@ const useAddObjective=()=>{
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data:any) =>addObjective(data),
+        mutationFn: (data:any) =>AddObjective(data),
         onSuccess: (data) => {
             queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
 
@@ -371,5 +374,8 @@ export{
     useGetObjectiveDetails,
     useGetKeyResultDetailsById,
     useEditKeyResult,
-    useDeleteKr
+    useDeleteKr,
+    useDeleteObject,
+    useGetAllObjectiveNameWithKeyResultsByTenantId,
+    useGetAllTeamAndPersonNameByTenantId
 }

@@ -72,7 +72,8 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
   const repeatTypeData = [
     { key: 'بدون تکرار', value: 'none' },
     { key: 'هفتگی', value: 'OnOneWeekDay' },
-    { key: 'ماهانه', value: 'OneOneMonthDay' }]
+    { key: 'دو هفته یکبار', value: 'OneTwoWeekDay' },
+    { key: 'چهار هفته یکبار', value: 'OneOneMonthDay' }]
 
   const initialCreateMeeting = () => {
     setConfrimForm('Premium')

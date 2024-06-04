@@ -20,6 +20,8 @@ import {IconButton} from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 // import {ReactComponent as Exeloo} from '../MeetingCard/StaticData/Svg/exeloo.svg';
 import Exeloo from '../MeetingCard/StaticData/Svg/exeloo.svg';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useExportMeetingDetails } from '../Hooks/index';
 import EditMeeting from '../LComponents/Forms/EditMeeting/EditMeeting';
 
@@ -91,9 +93,10 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
                 {info.status}
               </Typography>
             </Box>
+            
           </Box>
 
-          <Box width={'100px'} display={'flex'} alignItems={'center'} justifyContent={'center'} >
+          <Box width={'100px'}  display={'flex'} alignItems={'center'} justifyContent={'center'} >
             <Typography
               fontWeight={500}
               variant='caption'
@@ -112,6 +115,20 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
 
             
           </Box>
+          <Box display={'flex'} flexDirection={'row-reverse'}>
+       <IconButton onClick={()=>{
+           let {id} = info;
+           setPMeetingId(id)
+           setshowEditMeeting(true)
+        }}   >
+        <EditIcon color='primary'   />
+       </IconButton>
+       <IconButton onClick={()=>{
+            
+        }}   >
+        <DeleteIcon color='error'   />
+       </IconButton>
+       </Box>
 
         </Box>
 
@@ -187,7 +204,17 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
           </Box>
 
 
-       <Box    >
+       {/* <Box>
+       <IconButton onClick={()=>{
+           let {id} = info;
+           setPMeetingId(id)
+           setshowEditMeeting(true)
+        }}   >
+        <EditIcon color='primary'   />
+       </IconButton>
+       </Box> */}
+
+{/* 
         <Button variant='text'  onClick={()=>{
               let {id} = info;
               setPMeetingId(id)
@@ -196,7 +223,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
         }} >
          ویرایش
         </Button>
-       </Box>
+       </Box> */}
 
 
 

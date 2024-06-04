@@ -54,7 +54,7 @@ const Index = (props:any) => {
   
     return (
     <Grid container>
-    {/* <Grid item xs={12}>
+    <Grid item xs={12}>
     <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'} margin={2}>
     <Box width={'500px'} height={'100px'} bgcolor={'gray'} marginTop={4}>
     </Box>
@@ -79,7 +79,7 @@ const Index = (props:any) => {
     <Box width={'280px'} height={'150px'} bgcolor={'yellow'} marginTop={4}>
     </Box>
     </Box>
-    </Grid> */}
+    </Grid>
     </Grid>
     )
   }

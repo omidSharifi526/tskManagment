@@ -148,7 +148,7 @@ const Meeting :React.FC=function(){
     
    {
  existData && existData.map((data:any,i:number):any=>{
-        return (<Grid item md={3} xs={12}  key={i}>
+        return (<Grid item md={4} xs={12}  key={i}>
 
   
           <MeetingCard 

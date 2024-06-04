@@ -125,6 +125,12 @@ const itemsList = [
   // }
   // ,
   {
+    text: "داشبورد",
+    icon: <DashboardIcon fontSize='large' />,
+    to: "/dashboard/TenantDash" 
+  }
+  ,
+  {
     text: "مدیریت شرکت",
     icon: <CompanyManagmentIcon  />,
     to: "/dashboard/companyManagment" 
@@ -136,17 +142,17 @@ const itemsList = [
     to: "/dashboard/okrManagment" 
   }
   ,
-  {
-    text: "نمایه کلی",
-    icon: <DashboardIcon />,
-    to: "/dashboard/AllTenantOkrs" 
-  }
-  ,
   
   {
     text: "جلسات",
     icon: <MeetingIcon  />,
     to: "/dashboard/meetings" 
+  }
+  ,
+  {
+    text: "نمای کلی",
+    icon: <DashboardIcon fontSize='large'/>,
+    to: "/dashboard/AllTenantOkrs" 
   }
   ,
   

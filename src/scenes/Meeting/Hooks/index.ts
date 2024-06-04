@@ -13,7 +13,8 @@ import {
     exportMeetingDetails,
     getMeetingKeyResultValueById,
     getMeetingDetailById,
-    editMeeting
+    editMeeting,
+    getAllMyMeetingByIds
 
 } from '../Api/Index';
 import { setMeetingsListR, setObjectivieR, setKeyResultsR, setLoadingR } from '../MeetingsSlice/MeetingsSlice';
@@ -41,6 +42,24 @@ const useGetAllMeetings = (meetIds: any | null) => {
     })
 }
 
+const useGetAllMyMeetings = (meetIds: any | null) => {
+    const dispatch = useDispatch();
+    return useQuery(['getAllMyMeetingByIds', meetIds], getAllMyMeetingByIds, {
+        // staleTime: 0,
+        cacheTime:Infinity,
+        enabled: !!meetIds,
+        refetchOnWindowFocus: false,
+        onError: (err) => {
+            // console.log(err)
+        },
+        select: (data: any) => {
+            let rawData = data?.data.data;
+            // console.log(rawData)
+            dispatch(setMeetingsListR(rawData))
+            return rawData
+        }
+    })
+}
 
 const useGetTeamsByTenantId = (getTeamsSuccess: any, getTeamsFailed: any, id: string) => {
 
@@ -278,6 +297,7 @@ const useGetAllMeetingsTypeByTenantId = (tenantId: any) => {
     })
 }
 
+
 const useAddMeeting = (addMeetingSuccess: any) => {
     const queryClient = useQueryClient();
 
@@ -366,5 +386,6 @@ export {
     useExportMeetingDetails,
     useGetMeetingKeyResultValueById,
     useGetMeetingDetailById,
-    useEditMeeting
+    useEditMeeting,
+    useGetAllMyMeetings
 }

@@ -110,11 +110,12 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
  
            {
             allObjective && allObjective.map((o:any,i:number)=>{
-              return <Grid  item xs={12} sm={3}  >
+              return <Grid  item xs={12} sm={4}  >
                 <Box width={'100%'} key={i}   >
                 <OCart obj={o}   
                 setShowToastMessage={setShowToastMessage}
                 afterSuccess={getObjectivesAgain}
+                setAddObjectiveStatus = {setAddObjectiveStatus}
                 setObjectiveAsyncOpState={setObjectiveAsyncOpState}
                 />
               </Box>
@@ -154,6 +155,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
              periodsData={periodsData}
              onSuccess={setShowAddObjective}
              setShowToastMessage={setShowToastMessage}
+             //setAddObjectiveStatus = {setAddObjectiveStatus}
              setObjectiveAsyncOpState={setObjectiveAsyncOpState}
              afterSuccess={getObjectivesAgain}
             />
