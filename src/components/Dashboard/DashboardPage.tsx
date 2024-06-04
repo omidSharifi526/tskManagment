@@ -124,12 +124,12 @@ const itemsList = [
   //   to: "/dashboard/dashboard"                   
   // }
   // ,
-  {
-    text: "داشبورد",
-    icon: <DashboardIcon fontSize='large' />,
-    to: "/dashboard/TenantDash" 
-  }
-  ,
+  // {
+  //   text: "داشبورد",
+  //   icon: <DashboardIcon fontSize='large' />,
+  //   to: "/dashboard/TenantDash" 
+  // }
+  // ,
   {
     text: "مدیریت شرکت",
     icon: <CompanyManagmentIcon  />,
@@ -149,12 +149,12 @@ const itemsList = [
     to: "/dashboard/meetings" 
   }
   ,
-  {
-    text: "نمای کلی",
-    icon: <DashboardIcon fontSize='large'/>,
-    to: "/dashboard/AllTenantOkrs" 
-  }
-  ,
+  // {
+  //   text: "نمای کلی",
+  //   icon: <DashboardIcon fontSize='large'/>,
+  //   to: "/dashboard/AllTenantOkrs" 
+  // }
+  // ,
   
   {
     text: "تنظیمات",

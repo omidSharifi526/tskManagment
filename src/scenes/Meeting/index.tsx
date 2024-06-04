@@ -131,7 +131,7 @@ const Meeting :React.FC=function(){
     <Grid container  spacing={1} >
       <Grid item xs={12}    >
                      <Box display={'flex'}  flexDirection={'row-reverse'}>
-                    <Box width={'150px'}   >
+                    <Box  width={'10%'}  marginRight={2} >
                     <DyButton
                             caption={'ایجاد جلسه'}
                             color={'#00l387C'}

@@ -71,12 +71,105 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
 
 
   return (
-    <Card sx={{ width: '100%', boxShadow: 6, borderRadius: 5 }}>
+    <Card sx={{ width: '100%', boxShadow: 6, borderRadius: 5 }} >
 
       <CardContent  >
         <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
-          <Box display={'flex'} justifyContent={'space-between'} >
-            <Box >
+        <Box
+          display={'flex'}
+        
+          justifyContent={'space-between'}
+          columnGap={1}
+          // p={info?.name.length150 ? 0 : 1}
+          
+        >
+          <Typography fontWeight={900} fontSize={'18px'}> 
+            
+            {
+              info?.meetingDate
+            }
+          </Typography>
+      
+        </Box>
+          
+          {/* <Box
+          display={'flex'}
+          justifyContent={'space-between'}
+          columnGap={1}
+          // p={info?.name.length150 ? 0 : 1}
+          py={1}
+        >
+          <Typography fontWeight={900}> 
+            
+            {
+              info?.meetingDate
+            }
+          </Typography>
+      
+        </Box> */}
+
+          <Box width={'100px'}  display={'flex'} alignItems={'center'} justifyContent={'center'} >
+            <Typography
+              fontWeight={900}
+              variant='caption'
+              py={1}
+              textAlign={'center'}
+              width={'80px'}
+              color={'primary'}
+              border={2}
+              borderColor={'00387C'}
+              borderRadius={1} >
+              {
+                info?.name
+              }
+
+            </Typography>
+            
+
+            
+          </Box>
+          
+          <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'left'}>
+       
+       <IconButton onClick={()=>{
+            
+        }}   >
+        <DeleteIcon color='error'   />
+       </IconButton>
+       <IconButton onClick={()=>{
+           let {id} = info;
+           setPMeetingId(id)
+           setshowEditMeeting(true)
+        }}   >
+        <EditIcon color='primary'   />
+       </IconButton>
+       </Box>
+
+        </Box>
+
+        <Box display={'flex'} justifyContent={'space-between'} flexDirection={'row-reverse'} py={1}>
+      
+        <Box display={'flex'} justifyContent={'space-between'} >
+              <Typography sx={{ fontSize: '15px' }}  >
+                {info.status}
+              </Typography>
+              <Typography sx={{ fontSize: '15px' }}  >
+                {info.MeetingNumber}
+              </Typography>
+            </Box>
+
+
+
+            <Box
+          display={'flex'}
+          justifyContent={'space-between'}
+          columnGap={1}
+          alignItems={'center'}>
+        <Typography color={'black'}>
+            از {info?.fromTime} تا {info?.toTime}
+          </Typography>
+        </Box>
+        <Box  display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
               {
                 info.type == 1 && <HeldIcon />
 
@@ -88,82 +181,55 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
                 info.type == 3 && <ReadyPerformIcon />
               }
             </Box>
-            <Box>
-              <Typography sx={{ fontSize: '12px' }}  >
-                {info.status}
-              </Typography>
-            </Box>
-            
-          </Box>
 
-          <Box width={'100px'}  display={'flex'} alignItems={'center'} justifyContent={'center'} >
-            <Typography
-              fontWeight={500}
-              variant='caption'
-              py={1}
-              textAlign={'center'}
-              width={'80px'}
-              color={'info'}
-              border={2}
-              borderColor={'#db6e8b'}
-              borderRadius={1} >
+
+
+
+
+          
+            <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+            <Typography fontWeight={900} fontSize={'18px'}>
               {
-                info?.name
+                info?.meetingNumber
               }
+              </Typography>
+               </Box>
 
-            </Typography>
 
             
           </Box>
-          <Box display={'flex'} flexDirection={'row-reverse'}>
-       <IconButton onClick={()=>{
-           let {id} = info;
-           setPMeetingId(id)
-           setshowEditMeeting(true)
-        }}   >
-        <EditIcon color='primary'   />
-       </IconButton>
-       <IconButton onClick={()=>{
-            
-        }}   >
-        <DeleteIcon color='error'   />
-       </IconButton>
-       </Box>
-
-        </Box>
-
-
-
-        <Box>
+        <Box  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
           <Typography variant="button" color="gray">
             {
               info.level
             }
 
           </Typography>
-        </Box>
+          
+          </Box>
+        {/* </Box>
         <Box
           display={'flex'}
           justifyContent={'space-between'}
-          columnGap={1}
-          // p={info?.name.length150 ? 0 : 1}
-          py={1}
+          columnGap={1} */}
+          {/* // p={info?.name.length150 ? 0 : 1}
+          py={2}
         >
-          <Typography>
-            درتاریخ
-            {
+          {/* <Typography fontWeight={900} color={'green'}>  */}
+            
+            {/* {
               info?.meetingDate
             }
-          </Typography>
-          <Typography>
+          </Typography> */} 
+          {/* <Typography color={'green'}>
             از {info?.fromTime} تا {info?.toTime}
           </Typography>
-        </Box>
-        <Box px={1}    >
+        </Box> */}
+        <Box minHeight={'50px'}  >
           {
             info?.definitionLevel.length > 120 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={info?.definitionLevel}>
-              <Typography sx={{ fontSize: '12px !important', color: 'gray',cursor:'pointer',textAlign:'left' }}   >{info?.definitionLevel.slice(0, 120)}</Typography>
-            </Tooltip> : <Typography sx={{ fontSize: '12px !important', color: 'gray',cursor:'pointer',textAlign:'left' }}    >
+              <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}   >{info?.definitionLevel.slice(0, 120)}</Typography>
+            </Tooltip> : <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}    >
               {
                 info?.definitionLevel
               }
@@ -173,7 +239,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
 
         </Box>
 
-        <Box>
+        {/* <Box>
             {
               accessForReport && <Box display={'flex'} alignItems={'center'}  flexDirection={'row-reverse'} px={1} >
                 <IconButton color='info'  onClick={()=>{
@@ -184,7 +250,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
                   <Link target='_blank' to={`https://api.myokr.ir/api/Download/ExportMeetingDetails?meetingId=${meetingId}`}>
                   <img
                     src={Exeloo}
-                    style={{ height: 40, width: 43}}
+                    style={{ height: 35, width: 38}}
                     alt="exelLogo"
                   />
                   </Link>
@@ -194,54 +260,56 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
                 </IconButton>
                 </Box>
             }
-        </Box>
+        </Box> */}
 
+         
+            
+            <Box   display={'flex'}  flexDirection={'row-reverse'} justifyContent={'space-between'} >
+            <Box  marginTop={1} display={'flex'}  justifyContent={'center'}  bgcolor={'#00387C'} borderRadius={2} maxHeight={'29px'} width={'95px'}>
 
+    <Button
+      variant='text'
+      onClick={() => {
+        LoginMeeting()
+      }}  >
+      <Typography color={'white'} fontSize={'12px'}>        
+      ورود به جلسه
+      </Typography>  
+    </Button>
 
-        <Box display={'flex'} justifyContent={'space-between'}  px={1} mt={1}  >
-          <Box>
-            <ProgressMeeting prog={info?.evaluationPercentage} />
-          </Box>
+    </Box>
+            
+            
+              <Box display={'flex'} justifyContent={'center'}  >
+                {
+                  accessForReport && <Box  display={'flex'} justifyContent={'center'} >
+                    <IconButton color='info'  onClick={()=>{
+                      let{id}=info;
+                    setMeetingId(id)
+                    }}   >
+                      <Box  >
+                      <Link target='_blank' to={`https://api.myokr.ir/api/Download/ExportMeetingDetails?meetingId=${meetingId}`}>
+                      <img
+                        src={Exeloo}
+                        style={{ height: 25, width: 30}}
+                        alt="exelLogo"
+                      />
+                      </Link>
+                      </Box>
+                      </IconButton>
+                      </Box>
+                }
+            </Box>
+            <Box display={'flex'}  justifyContent={'center'} alignItems={'center'}>
+                <ProgressMeeting prog={info?.evaluationPercentage} />
+              </Box>
+              
+            </Box>
 
+          </CardContent>
 
-       {/* <Box>
-       <IconButton onClick={()=>{
-           let {id} = info;
-           setPMeetingId(id)
-           setshowEditMeeting(true)
-        }}   >
-        <EditIcon color='primary'   />
-       </IconButton>
-       </Box> */}
+        </Card>
+      );
+    }
 
-{/* 
-        <Button variant='text'  onClick={()=>{
-              let {id} = info;
-              setPMeetingId(id)
-              setshowEditMeeting(true)
-            //  setMeetingId(id)
-        }} >
-         ویرایش
-        </Button>
-       </Box> */}
-
-
-
-          <Box >
-            <Button
-              variant='text'
-              onClick={() => {
-                LoginMeeting()
-              }}  >
-              ورود به جلسه
-            </Button>
-          </Box>
-        </Box>
-
-      </CardContent>
-
-    </Card>
-  );
-}
-
-export default MeetingCard;
+    export default MeetingCard;
