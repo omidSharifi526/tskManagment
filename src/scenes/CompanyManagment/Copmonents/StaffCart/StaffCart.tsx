@@ -81,7 +81,7 @@ useEffect(() => {
 
 
   return (
-    <Box width={'335px'} height={'120px'} marginRight={1} borderRadius={3} boxShadow={4}  >
+    <Box width={'335px'} height={'120px'} marginRight={1} borderRadius={3} boxShadow={3}  >
         <Grid container px={2} rowGap={1} >
             
         <Grid item xs={2}   >
@@ -105,7 +105,7 @@ useEffect(() => {
          </Grid>
          <Grid item xs={10} px={1} >
          <Grid container   >
-        <Grid item xs={8}  height={'75px'} >
+        <Grid item xs={8}  height={'73px'} >
         <Box  p={1} pt={2}   >
             <Typography color={'#001733'} fontSize={'13px'} fontWeight={900}  >
             {
@@ -130,8 +130,8 @@ useEffect(() => {
       </Box>
       <Box pt={8}  height={'60px'} marginRight={1} display={'flex'} alignItems={'center'} justifyContent={'end'} >
             <Box   height={'25px'} width={'75px'}
-                    bgcolor={'#D5f7D4'}   borderRadius={2} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Typography fontSize={'0.7rem'} fontWeight={activated?900:400} color={activated?'green':'red'}  >
+                    bgcolor={activated?'#D5f7D4':'#bfd3f5'}  borderRadius={2} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                        <Typography fontSize={'0.7rem'} fontWeight={activated?900:400} color={activated?'green':'#3a82fc'}  >
                             {
                                 activated?'فعال':'دعوت شده'
 

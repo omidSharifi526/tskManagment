@@ -1,6 +1,7 @@
 import React,{useMemo,useState,useEffect} from 'react'
 import { Box, CircularProgress,Grid,Typography,Tooltip } from '@mui/material';
 import DyDataGrid from '../../../../components/GlobalComponents/DyDataGrid/DyDataGrid';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend,Tooltip as tooltip, ResponsiveContainer } from 'recharts';
 // import{Grid,Box,Typography, IconButton, Tooltip} from '@mui/material';
 import { useSelector } from 'react-redux';
 const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
@@ -330,10 +331,30 @@ const KrHistoryModalContent = ({data,loadingFlag,krDetail,objective}:any) => {
       />
     </Box>
     </Grid>
-    <Grid item xs={12}   >
-  {/* <Box  minHeight={'600px'} width={'100%'}   >
- 
-  </Box> */}
+    <Grid container item  xs={16} justifyContent="center" width={'400px'} height={'300px'}
+    bgcolor={'#effeff'}>
+<ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="meetingDate" />
+          <YAxis yAxisId="left" />
+          <YAxis yAxisId="right" orientation="right" />
+          {/* <Tooltip /> */}
+          <Legend />
+          <Line yAxisId="left" type="monotone" dataKey="reportScore" stroke="#e28743" activeDot={{ r: 8 }} />
+          <Line yAxisId="right" type="monotone" dataKey="reportNewValue" stroke="##e28743" />
+        </LineChart>
+      </ResponsiveContainer>
     </Grid>
     </Grid>
   )

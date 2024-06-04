@@ -68,7 +68,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
                هنوز هدفی در این دوره‌‌زمانی تعریف نشده است.
              </Typography>
            </Box>
-           <Box mt={2} p={1} width={'15%'} mx={'auto'} textAlign={'center'}  >
+           <Box mt={2} p={1} width={'15%'} mx={'auto'}  textAlign={'center'}  >
              <DyButton
                caption={'هدف جدید'}
                onClick={initialAddObjective}
@@ -91,7 +91,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
          {
           allObjective.length>0 &&  <Grid container  >
           <Grid item xs={12} >
-     <Box py={2} px={1} width={'100%'} display={'flex'} flexDirection={'row-reverse'}   >
+     <Box display={'flex'} flexDirection={'row-reverse'} py={1} px={2}    >
      <Box>
      <DyButton
                 caption={'هدف جدید'}
@@ -105,8 +105,8 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
      </Box>
           </Grid>
           <Grid item xs={12}  >
-          
-            <Grid container spacing={2} px={1}  >
+         
+            <Grid container spacing={1} px={1} >
  
            {
             allObjective && allObjective.map((o:any,i:number)=>{
@@ -124,18 +124,17 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
            </Grid> 
     
     
-           
-
-
-
 
           </Grid>
+          
          </Grid>
+   
          }
 
 
          
         </Grid>
+              
 
        
 

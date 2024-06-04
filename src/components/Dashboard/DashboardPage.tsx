@@ -121,7 +121,7 @@ const itemsList = [
   // {
   //   text: "داشبورد",
   //   icon: <DashboardIcon  />,
-  //   to: "/dashboard" 
+  //   to: "/dashboard/dashboard"                   
   // }
   // ,
   {
@@ -137,11 +137,19 @@ const itemsList = [
   }
   ,
   {
+    text: "نمایه کلی",
+    icon: <DashboardIcon />,
+    to: "/dashboard/AllTenantOkrs" 
+  }
+  ,
+  
+  {
     text: "جلسات",
     icon: <MeetingIcon  />,
     to: "/dashboard/meetings" 
   }
   ,
+  
   {
     text: "تنظیمات",
     icon: <SettingsIcon fontSize='large'  />,
@@ -149,16 +157,16 @@ const itemsList = [
   }
   ,
   {
+    text:"راهنمای نرم افزار",
+    icon: <GuideIcon  />,
+    to:"/dashboard/helpsoftware"
+  }
+  ,
+  {
     text:"درباره ما",
     icon: <AboutUsIcon  />,
     to:"/dashboard/aboutus"
   }
-  // ,
-  // {
-  //  text:"راهنمای نرم افزار",
-  //  icon: <GuideIcon  />,
-  //  to:"/dashboard/aboutus"
-  // }
   // SettingsIcon
 
 
