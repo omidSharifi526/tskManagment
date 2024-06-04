@@ -131,16 +131,15 @@ export interface addObjectiveFace{
   name:string,
   periodId:string,
   definitionLevelId:string,
-  oKRStateId:string,
+  // oKRStateId:string,
   responsibleId:string,
   tenantId:string,
   isPublic:boolean,
   description:string,
-  CalculateProgressType:string,
-  // createById:string,
+  calculateProgressType:string,
   keyResultParentIds:string[],
-  TeamIds:string[],
-  weight:string|null,
+  allIds:string[],
+  weight:number,
   answerRequest:string
 
 }

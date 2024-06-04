@@ -102,25 +102,7 @@ const resetFormValues:resetPasswordFace={
 
 
 
-const addObjectiveInitialValues:addObjectiveFace={
-  name:'',
-  periodId:'',
-  CalculateProgressType:'',
-  // createById:'',
-  definitionLevelId:'',
-  description:'',
-  isPublic:false,
-  keyResultParentIds:[],
-  oKRStateId:'',
-  responsibleId:'',
-  TeamIds:[],
-  tenantId:'',
-  weight:null,
-  answerRequest:''
 
-
-
-}
 
 const addObjectiveSchema = yup.object().shape({
   name:yup.string().required(''),
@@ -151,7 +133,7 @@ const addKeyResultSchema=yup.object().shape({
 
 export   {
     addKrValues,
-    addObjectiveInitialValues,
+    // addObjectiveInitialValues,
     pointSystem,
     keyResultTypeOptions,
     

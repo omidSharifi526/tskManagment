@@ -65,7 +65,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
     onsucces(true)
 
   }
-  const { mutate: addCheck, isSuccess,isLoading } = useAddCheckinMeeting(addCheckinSuccess);
+  const { mutate: addCheck, isSuccess,isLoading } = useAddCheckinMeeting();
   const {data:initialNewValue,isLoading:iniValLoading}=useGetMeetingKeyResultValueById({meetingId:meetingId,krId:kresultId})
 
   const [renderState, setRenderState] = useState<string>('add');
@@ -119,15 +119,7 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                     <Grid container columnSpacing={1} sx={{bgcolor: 'background.paper',mx:'auto',borderRadius:3}}   >
 
                     <Grid item xs={12}   >
-                      {/* <Box>
-                        <Typography>
-                          تعداد مشترکین به 50,000 نفر افزایش یابد.
-                        </Typography>
-                        <Typography>
-                          مقدار قبلی:  37,000
-                        </Typography>
-                     
-                      </Box> */}
+      
                     </Grid>
                    { !iniValLoading && <Grid item xs={6}  >
                       <FormikControl
@@ -210,20 +202,10 @@ const [pointSystemsL,setPointSystemL]=useState<string>('')
                       />
                     </Grid>
 
-                    {/* <Grid item xs={12}     >
-                      <FormikControl
-                        control='checkBox'
-                        label='میخوام این نتیجه کلیدی بسته شود.'
-                        name='closedKeyResult'
-                     
+               
 
 
-
-                      />
-                    </Grid> */}
-
-
-                    {/* obstacles */}
+                
 
 
 

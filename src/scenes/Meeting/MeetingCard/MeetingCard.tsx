@@ -21,6 +21,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 // import {ReactComponent as Exeloo} from '../MeetingCard/StaticData/Svg/exeloo.svg';
 import Exeloo from '../MeetingCard/StaticData/Svg/exeloo.svg';
 import { useExportMeetingDetails } from '../Hooks/index';
+import EditMeeting from '../LComponents/Forms/EditMeeting/EditMeeting';
 
 // setMeetId={setMeetId}
 // info={data}
@@ -29,10 +30,11 @@ import { useExportMeetingDetails } from '../Hooks/index';
 
 
 
-const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: any) => {
+const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,setPMeetingId,setshowEditMeeting}: any) => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const[meetingId,setMeetingId]=useState<string>('')
+  const[meetingId,setMeetingId]=useState<string>('');
   const getDetSuccess = () => {
     navigate('/companyTeams', { replace: true })
   }
@@ -40,11 +42,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
 
   }
  
-  useEffect(() => {
-    
-  // console.log(meetingId)
-   
-  }, [meetingId])
+
   
 
   // const{data:MeetDetData,isLoading}=UseGetWebCheckinMeetingDetailsByMeetingId(getDetSuccess,getDetFailed,tenantId);
@@ -187,6 +185,20 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink}: a
           <Box>
             <ProgressMeeting prog={info?.evaluationPercentage} />
           </Box>
+
+
+       <Box    >
+        <Button variant='text'  onClick={()=>{
+              let {id} = info;
+              setPMeetingId(id)
+              setshowEditMeeting(true)
+            //  setMeetingId(id)
+        }} >
+         ویرایش
+        </Button>
+       </Box>
+
+
 
           <Box >
             <Button

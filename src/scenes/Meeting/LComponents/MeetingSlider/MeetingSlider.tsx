@@ -138,11 +138,11 @@ if (perData) {
   return (
    <Box width={'700px'} py={1} mx={'auto'} display={'flex'} >
 
-      <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+      {/* <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
       <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
       دوره قبل
        </Typography>
-      </Box>
+      </Box> */}
         <Swiper
         initialSlide={perData?.findIndex((item:any)=>item.isCurrent)}
         style={{textAlign:'center',fontSize:'2rem'}}
@@ -179,11 +179,11 @@ if (perData) {
      
    
        </Swiper>
-       <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+       {/* <Box  width={'200px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
       <Typography color={'blueviolet'} textAlign={'center'} fontSize={'0.7rem'}  >
       دوره بعد
        </Typography>
-      </Box>
+      </Box> */}
       
    </Box>
   );

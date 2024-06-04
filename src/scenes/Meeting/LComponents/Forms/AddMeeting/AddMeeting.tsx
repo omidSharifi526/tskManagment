@@ -12,6 +12,7 @@ import{FormControl,InputLabel,Select,MenuItem} from '@mui/material';
 import AddMeetingSuccess from '../../AddMeetingSuccess/AddMeetingSuccess';
 import {CircularProgress} from '@mui/material';
 import { addMeetingSchema } from '../../../MeetingCard/StaticData';
+import MultiSel from '../../../../../components/MultiSel/MultiSel';
 // import 
 
 interface Values {
@@ -36,7 +37,7 @@ interface Values {
 
 
 
-const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
+const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData,setMeetingAsyncState,setShowToastMessage}:any) => {
   const profileTenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
   const licenseType : any = useSelector((state: any) => state.meetings.meetingsList?.licenseType);
   // console.log(licenseType)
@@ -54,7 +55,6 @@ const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
     meetingRepeatType: '',
     teamIds: [],
     personIds: []
-    //  email:''
 
   }
   const [confrimForm, setConfrimForm] = useState<string>(licenseType);
@@ -65,12 +65,11 @@ const AddMeeting = ({hideModal,meetingLenght,setReloadMeetingData}:any) => {
     hideModal((prev:any):any=>!prev)
   }
 const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}=useAddMeeting(addMeetingSuccess)
-  // const profileTenantId=useSelector((state)=>state.meetings.profileTenantId)
   const { data: allTeamsData, isLoading } = useGetAllTeamsForSelByTenantId(profileTenantId);
   
-  const { data: allmeetingTypeData } = useGetAllMeetingsTypeByTenantId(profileTenantId)
+  const { data: allmeetingTypeData } = useGetAllMeetingsTypeByTenantId(profileTenantId);
+  const[teamIds,setTeamIds]=useState<any[]>([])
   const repeatTypeData = [
-    // { key: 'روزانه', value: 'Daily' },
     { key: 'بدون تکرار', value: 'none' },
     { key: 'هفتگی', value: 'OnOneWeekDay' },
     { key: 'ماهانه', value: 'OneOneMonthDay' }]
@@ -90,24 +89,47 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
   useEffect(() => {
     
-  // console.log(addMeetingStatus)
+ console.log(teamIds)
     
-  }, [addMeetingStatus])
+  }, [teamIds])
   
 
 
 
-  useEffect(() => {
-   if (isSuccess) {
-    let{data}:any=addMeetData;
-    let{isSuccess:isSuccesss}:any=data;
-    setAddMeetingStatus(isSuccesss);
-    let{metaData}:any=data;
-    let{message}=metaData;
-    setAddMeetingMessage(message)
-   }
+  // useEffect(() => {
+  //  if (isSuccess) {
+  //   let{data}:any=addMeetData;
+  //   let{isSuccess:isSuccesss}:any=data;
+  //   setAddMeetingStatus(isSuccesss);
+  //   let{metaData}:any=data;
+  //   let{message}=metaData;
+  //   setAddMeetingMessage(message)
+  //  }
    
-  }, [addMeetData])
+  // }, [addMeetData])
+
+  useEffect(() => {
+      
+
+    if (addMeetData) {
+        console.log(addMeetData?.data.isSuccess);
+
+        if (addMeetData?.data.isSuccess) {
+          hideModal((prev:any):any=>!prev)
+          setMeetingAsyncState(addMeetData?.data)
+          setShowToastMessage(true)
+ 
+        } else {
+            // setLShowToastMessage(true);
+            // setEditAsyncData(editKrData?.data)
+        }
+     
+    }
+        }, [addMeetData,isSuccess]);
+
+
+
+
   
   
 
@@ -121,6 +143,8 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
   }
 
   const initialAddMeeting=(data:any)=>{
+    data.teamIds=teamIds.map(({value})=>value)
+    console.log(data)
     addMeeting(data)
     // if(isSuccess){
     //   console.log(addMeetData)
@@ -202,61 +226,10 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
               ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }) =>
                 <Form>
                   <Grid container   >
-                    {/* <Grid item xs={12} md={4}   >
-                      <FormikControl
-                        control='select'
-                        label='نوع جلسه'
-                        name='meetingTypeId'
-                        options={allmeetingTypeData || []}
-                      />
-                    </Grid> */}
 
 
-                    {/* <Grid item xs={12} md={4}   position={'relative'}>
-                      <Box display={'flex'}  >
-            
-                        <FormControl fullWidth sx={{ padding: '8px' }} >
-                          <InputLabel id="meetingTypeId">نوع جلسه</InputLabel>
-                          <Select
-                            error={touched.meetingTypeId && !values.meetingTypeId }
-                            disabled
-                            id="meetingTypeId"
-                            label='نوع جلسه'
-                            fullWidth
-                            size='small'
-                            name='meetingTypeId'
-                            type='text'
-                            value={values.meetingTypeId || ''}
-                            onChange={({ target }, { props }:any) => {
-                              let { content } = props;
-                              let { value } = target;
-                            console.log(content,value)
-                              // setOrderType(content)
-                              setFieldValue('meetingTypeId',value)
-                              setFieldValue('name',content)
-                            }}
-                            onBlur={()=>{
-                              // setFieldTouched('klischeThicknessId', true, false); // Set the field as touched
-                            }}
-                          >
-                    
-                            {
-                              allmeetingTypeData && allmeetingTypeData?.map((klische:any, i:number) => {
-                                return <MenuItem className='font-num' sx={{ fontSize: '0.7rem' }} key={i} content={klische.key} id={i.toString()} value={klische.value} >{klische.key}</MenuItem>
-                              })
-                            }
-                          </Select>
-                        </FormControl>
-                      </Box>
-                      <Box sx={{position:'absolute',bottom:'-13px'}}>
-                          {errors.meetingTypeId || touched.meetingTypeId ? (
-                            <span className="fm-error-text"> {errors.meetingTypeId}</span>
-                          ) : (
-                            ""
-                          )}
-                        </Box>
-  
-                  </Grid> */}
+
+          
 
 
 
@@ -265,14 +238,25 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
 
                     <Grid item xs={12} md={12} >
 
-                      <MultiSelect
+                      {/* <MultiSelect
                         options={allTeamsData || []}
                         isLoading={isLoading}
                         onChangee={setFieldValue}
                         propName='teamIds'
                         label={'انتخاب سطح'}
-                      />
+                      /> */}
 
+                    
+                    <Box sx={{padding:'8px'}}   >
+                    <MultiSel
+                      data={allTeamsData}
+                      label={'انتخاب سطح'}
+                      extractTag={setTeamIds}
+
+                      />
+                    </Box>
+
+                  
                     </Grid>
 
                     <Grid item xs={12} md={6} >
@@ -402,6 +386,12 @@ const {mutate:addMeeting,isLoading:AddLoading,data:addMeetData,status,isSuccess}
         // resetForm={setConfrimForm}   />
         // break;
     }
+  }
+
+  if (AddLoading) {
+    return <Box width={'100%'} py={5} textAlign={'center'}  >
+      <CircularProgress/>
+    </Box>
   }
 
   return (

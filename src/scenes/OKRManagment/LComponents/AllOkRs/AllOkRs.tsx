@@ -110,7 +110,7 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
  
            {
             allObjective && allObjective.map((o:any,i:number)=>{
-              return <Grid  item xs={12} sm={4}  >
+              return <Grid  item xs={12} sm={3}  >
                 <Box width={'100%'} key={i}   >
                 <OCart obj={o}   
                 setShowToastMessage={setShowToastMessage}

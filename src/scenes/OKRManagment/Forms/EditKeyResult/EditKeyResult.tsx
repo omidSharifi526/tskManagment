@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import {Button, CircularProgress} from '@mui/material';
 import {InputLabel,Select,MenuItem} from '@mui/material';
 import moment from "jalali-moment";
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 import { useParams,useLocation } from 'react-router-dom';
 import NewMultiSelect from '../../../../components/FormikControls/NewMultiSelect/NewMultiSelect';
 import { addKeyResultSchema } from '../../StaticData/index';
@@ -13,7 +14,7 @@ import { Formik, Form } from 'formik';
 import { addKrValues } from '../../StaticData/index';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useGetAllObjectiveDefinitionLevelByTenantId } from '../../Hooks';
-import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
+// import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 
 import { useGetAllActivePersonByTenantId,
     useGetAllHorizontalAlignmentByTenantId,
@@ -53,6 +54,9 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
     let{state:{objectiveId}}:any=location;
     const[pointingSystemType,setPointingSystemType]=useState<string>('Regularly');
     const[idsValue,setIdsValue]=useState<any>([]);
+    const[showLtoastMessage,setShowLtoastMessage]=useState<any>(false);
+    const[editAsyncData,setEditAsyncData]=useState<any>(null)
+
   
     const{data:teamsOptions,isLoading:teamOPloading}:any=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
     const {data:acPersOptions}:any=useGetAllActivePersonByTenantId(tenantId);
@@ -69,17 +73,14 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
 
     const{data:editKrData,mutate:callEditKR,isSuccess,isError}=useEditKeyResult(localEditKrSuccess)
-    const[teamAsynOpcState,setTeamAsyncOpState]=useState<any>(null);
+    // const[teamAsynOpcState,setTeamAsyncOpState]=useState<any>(null);
 
     const initialEditKr = (data: any) => {
         let ids=pointingSystemType==='Regularly'?[{...hundredValue}]:idsValue;
 
        let horval=krHorizontalAlignments?.map(({value}:any)=>value)
         let{forceEndDate,startDate,horizontalAlignments,...rest}=data;
-        // console.log(forceEndDate,startDate)
         
-         
-
             let totalData={tenantId:tenantId,
                 objectiveId:objectiveId,
                 horizontalAlignments:[...horval],
@@ -90,15 +91,13 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                 ...rest};
             totalData.valuesDetailCommandDtos=ids; 
             totalData.onValue='';     
-         
-        //    console.log(totalData);
-        //    console.log(krHorizontalAlignments)
+     
            callEditKR(totalData)
 
 
 
          
-        // let{pointingSystemType}=data;
+
       
        
  
@@ -152,20 +151,28 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
 
     useEffect(() => {
+      
+
         if (editKrData) {
-          setShowEditKeyResult(false)
-          setAddKrState(editKrData?.data)
-          editKrSuccess()
-          setShowToastMessage(true)
+            console.log(editKrData?.data.isSuccess);
+
+            if (editKrData?.data.isSuccess) {
+                setShowEditKeyResult(false)
+                setAddKrState(editKrData?.data)
+                editKrSuccess()
+                setShowToastMessage(true)
+            } else {
+                setLShowToastMessage(true);
+                setEditAsyncData(editKrData?.data)
+            }
+         
         }
             }, [editKrData,isSuccess]);
 
 
     useEffect(() => {
       setHorizontalAlignments([])
-    // console.log(krDetailsData)
     if (krDetailsData) {
-        // console.log(krDetailsData)
         let{name,
             responsibleId,
             startValue,
@@ -180,7 +187,6 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             pointingSystemTypeValue,
             horizontalAlignments
              }=krDetailsData;
-            //  console.log( typeof  forceEndDateRealDate)
             if (forceEndDateRealDate!==null) {
                 setlForceEndDate(new Date(forceEndDateRealDate));
             }
@@ -189,8 +195,6 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                 setlStartDate(new Date(startDateRealDate));
             }
 
-
-            //  console.log(horizontalAlignments)
              setHundredValue((prev:any)=>{
               return {...prev,value:oneValue}
              });
@@ -201,9 +205,8 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                     return{value:managerId,key:name}
                      }))
              }
-            //  console.log(okR_GradeDetails)
+
            if (pointingSystemTypeValue==='Tensile') {
-            // console.log(okR_GradeDetails)
             setIdsValue(okR_GradeDetails?.map(({scoreLevelId,value,tenantId,...rest}:any)=>{
                 return {tenantId,value,scoreLevelId}
                  }))
@@ -348,35 +351,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                             </Grid>
 
 
-                            {/* <Grid item xs={12} md={3} >
-                            <FormControl fullWidth sx={{ padding: '8px' }} >
-                            <InputLabel id="pointingSystemType">سیستم امتیاز دهی </InputLabel>
-                            <Select
-                                // error={touched.meetingTypeId && !values.meetingTypeId }
-                            
-                                id="pointingSystemType"
-                                label='سیستم امتیاز دهی '
-                                fullWidth
-                                size='small'
-                                name='pointingSystemType'
-                                type='text'
-                                value={values?.pointingSystemType || ''}
-                                onChange={({ target }, { props }:any) => {
-                                let { content } = props;
-                                let { value } = target;
-                                // console.log(value)
-                                setFieldValue('pointingSystemType',value)
-                                setPointingSystemType(value)
-                                }}
-                            >
-                                {
-                                pointSystem && pointSystem.map((item:any, i:number) => {
-                                    return <MenuItem className='font-num' sx={{ fontSize: '0.7rem' }} key={i}  value={item.value} >{item.key}</MenuItem>
-                                })
-                                }
-                            </Select>
-                            </FormControl>
-                            </Grid> */}
+                        
 
 
 
@@ -466,23 +441,6 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                 
                         <Grid item xs={12} md={3}  >
 
-                        {/* <Box sx={{padding:'8px'}}  >
-                        <TextField
-                        size='small'
-                        fullWidth
-                        type='text'
-                        label={'چه زمانی به 100% میرسد؟ '}
-                        value={values?.onValue || ''}
-                        onChange={({target}:any)=>{
-                        let{value}=target;
-                        setFieldValue('onValue',value)
-                        }}
-                        />
-
-                        </Box> */}
-
-                        
-
                         <Box sx={{padding:'8px'}} width={'100%'}  >
                         <TextField
                         size='small'
@@ -492,16 +450,11 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                         value={hundredValue.value}
                         onChange={({target}:any)=>{
                         let{value}=target;
-                        // setFieldValue('onValue',value)
                         initialSetHunderdvalue(value)
                         }}
                         />
 
                         </Box>
-                       
-
-
-
 
                         </Grid>
                         
@@ -523,36 +476,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                             </Grid>
                             })
                         }
-                        {/* <Grid item xs={12} md={3}  >
-                            <FormikControl
-                                control='textField'
-                                type={'text'}
-                                label='چه زمانی به 30% میرسد؟ '
-                                name='onValue'
-                                fullWidth
-                                values={values?.onValue}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={3}  >
-                            <FormikControl
-                                control='textField'
-                                type={'text'}
-                                label='چه زمانی به 70% میرسد؟ '
-                                name='onValue'
-                                fullWidth
-                                values={values?.onValue}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={3}  >
-                            <FormikControl
-                                control='textField'
-                                type={'text'}
-                                label='چه زمانی به 100% میرسد؟ '
-                                name='onValue'
-                                fullWidth
-                                values={values?.onValue}
-                            />
-                        </Grid> */}
+                       
                         </>
                         
                         
@@ -570,16 +494,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                     //   showAdvanceOptions,setShowAdvanceOptions
                       expanded={showAdvanceOptions}  >
                       <Grid container  >
-                      {/* <Grid item xs={12} md={3}  >
-                                <FormikControl
-                                    control='textField'
-                                    type={'text'}
-                                    label='وزن'
-                                    name='weight'
-                                    fullWidth
-                                    values={values?.weight}
-                                />
-                    </Grid> */}
+        
 
                             <Grid item xs={12} md={3}  >
 
@@ -598,34 +513,8 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                             </Box>
                             </Grid>
 
-
-
-
-                         {/* <Grid item xs={12} md={3}  >
-                                <FormikControl
-                                    control='select'
-                                    options={HorzinalAlignData||[]}
-                                    label='همسویی افقی'
-                                    name='horizontalAlignment'
-                                    fullWidth
-                                    values={values?.horizontalAlignment}
-                                />
-                            </Grid> */}
-
-                                   {/* <Grid item xs={12} md={3} >
-                                        <MultiSelect
-                                        options={teamsOptions?.map((item:any)=>{
-                                         let{key,value}=item;
-                                         return{year:value,title:key}
-                                        }) || []}
-                                        isLoading={teamOPloading}
-                                        onChangee={setFieldValue}
-                                        propName='horizontalAlignments'
-                                        label={'همسویی افقی'}
-                                        />
-                                        </Grid> */}
-
-                                        <Grid item xs={12} md={krHorizontalAlignments?.length*3}   >
+                                  
+                                        <Grid item xs={12} md={3}   >
                                             <NewMultiSelect 
                                             setHorizontalAlignments={setHorizontalAlignments}
                                             selectedItems={krHorizontalAlignments}
@@ -647,7 +536,6 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
         slotProps={{ textField: { size: 'small' } }}
         label={"تاریخ شروع نتایج کلیدی"}
-        //    value={values?.forceEndDate }
         value={lstartDate || ''}
         onChange={(newValue:any)=>{
             var persianDate = moment(newValue).format('jYYYY/jM/jD');
@@ -749,13 +637,13 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
             }
 
         </Formik>
-           }
+           } 
 
                {
                 showLToastMessage && <DYToastMessage
-                isSuccess={teamAsynOpcState?.isSuccess}
-                message={teamAsynOpcState?.metaData.message}
-                setShow={setShowToastMessage}
+                isSuccess={editAsyncData?.isSuccess}
+                message={editAsyncData?.metaData.message}
+                setShow={setLShowToastMessage}
                 show={showLToastMessage}
                 
                 />

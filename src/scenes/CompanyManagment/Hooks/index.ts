@@ -132,15 +132,28 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
 
 
 
-    const useDeleteTeam=()=>{
-      const queryClient=useQueryClient()
-      return useMutation({
-    mutationFn: (userData:any) =>deleteTeam(userData),
-    onSuccess: (data:any) => {
-      queryClient.invalidateQueries('getAllTeams')
-    },
-     });
-     }
+    // const useDeleteTeam=()=>{
+    //   const queryClient=useQueryClient()
+    //   return useMutation({
+    // mutationFn: (userData:any) =>deleteTeam(userData),
+    // onSuccess: (data:any) => {
+    //   queryClient.invalidateQueries('getAllTeams')
+    // },
+    //  });
+    //  }
+// localEditKrSuccess:any
+      const useDeleteTeam=()=>{
+        const queryClient=useQueryClient()
+          return useMutation({
+        mutationFn: (data:any) =>deleteTeam(data),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries('getAllTeams')
+
+        },
+      });
+    
+    
+    }
 
 
 

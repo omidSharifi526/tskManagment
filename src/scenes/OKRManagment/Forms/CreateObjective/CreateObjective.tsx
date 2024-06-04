@@ -7,53 +7,70 @@ import MultiSelect from '../../../../components/FormikControls/MultiSelect/Multi
 import { useSelector } from 'react-redux';
 import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
 import AccordionLyt from '../../../../components/Layouts/AccordionLyt/AccordionLyt';
-import { addObjectiveInitialValues } from '../../StaticData';
+import { addObjectiveFace } from '../../Interfaces/Interfaces';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
+import GroupedMultiSel from '../../../../components/FormikControls/GroupedMultiSel/GroupedMultiSel';
 import { useGetAllHorizontalAlignmentByTenantId,
      useGetAllObjectiveDefinitionLevelByTenantId,
      useGetAllObjectiveOKRStateByTenantId,
-    useAddObjective
+    useAddObjective,
+    useGetAllObjectiveNameWithKeyResultsByTenantId,
+    useGetAllTeamAndPersonNameByTenantId
     } from '../../Hooks';
 import { useGetAllActivePersonByTenantId } from '../../Hooks';
 import {CircularProgress} from '@mui/material';
 import DyLoadingCircular from '../../../../components/GlobalComponents/DyLoadingCircular/DyLoadingCircular';
 import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
-import { ifError } from 'assert';
+import MultiSel from '../../../../components/MultiSel/MultiSel';
+
 interface teamIdsFace{
   teamId:string,
   personIds:string[]
 }
 // setShowToastMessage={setShowToastMessage}
 // setAddKrState={setAddObjectiveStatus}
-const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setObjectiveAsyncOpState,afterSuccess}:any) => {
+const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setAddObjectiveStatus,afterSuccess}:any) => {
   const[teamIdObject,setTeameIdObjects]=useState<teamIdsFace>({teamId:'',personIds:[]})
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
-    const[HorzIds,setHorzIds]=useState<any>({tenantId:tenantId,definitionId:null})
-    const[definitionLevel,setDefinitionLevel]=useState<string | null>(null);
     const[showAdvanceOptions,setShowAdvanceOptions]=useState<boolean>(false)
-   const[successAddObjective,setSuccessAddObjective]=useState<boolean|null>(null);
-   const[addObectiveMessage,setAddObjectiveMessage]=useState<string>('')
+
     const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
     const{data:personsOptionds}=useGetAllActivePersonByTenantId(tenantId);
     const{data:submitOptions}=useGetAllObjectiveOKRStateByTenantId(tenantId);
-    const{data:HorzinalAlignData, isLoading:HorzDataLoading}=useGetAllHorizontalAlignmentByTenantId(HorzIds);
-     
-const[periodOptions,setPeriodOptions]=useState<any>([])
+   
+    const periodId=useSelector((state:any)=>state.meetings.priodId);
+const[periodOptions,setPeriodOptions]=useState<any>([]);
+const[horzinalAliIds,setHorzinalAliIds]=useState<any[]>([]);
+const[allIds,setAllIds]=useState<any>([]);
+const[okrStateId,setOkrStateId]=useState<string>('');
+const[lIsPublic,setlIsPublic]=useState<any>(false);
+const[showLtoastMessage,setShowLtoastMessage]=useState<any>(null);
+const[addObjError,setAddObjError]=useState<any>(null)
+const[objNameIds,setObjNameIds]=useState<any>({
+  tenantId:tenantId,
+  periodId:periodId,
+  definitionLevelId:null
+
+})
+const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenantId)
+    const {data:ObjectiveNameOptions}=useGetAllObjectiveNameWithKeyResultsByTenantId(objNameIds)
+
     const onSuccesss=()=>{
-        onSuccess((prev:any)=>!prev)
+        // onSuccess((prev:any)=>!prev)
     }
 
     const onFailed=()=>{
 
       }
-      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective(onSuccesss)
+      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective()
 
       useEffect(() => {
   if (addObjectiveData) {
     setAddObjectiveMessage(addObjectiveData?.data?.metaData.message)
     setSuccessAddObjective(isSuccess)
     setShowToastMessage(true)
-    setObjectiveAsyncOpState(addObjectiveData?.data)
+    setAddObjectiveStatus(addObjectiveData?.data)
 
 
     // if (addObjectiveData?.data?.isSuccess) {
@@ -75,9 +92,11 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
   const initialAddObjective=(data:any)=>{
     let{isPublic}=data;
     // 
-    let resIsPublic={isPublic:isPublic==='برای همه'?true:false,TeamIds:isPublic==='برای همه'?[]:[{...teamIdObject}]};
-    let total={...data,...resIsPublic,tenantId:tenantId};
-    console.log(total)
+    let resIsPublic={isPublic:isPublic==='برای همه'?true:false};
+    let total={...data,...resIsPublic,tenantId:tenantId,keyResultParentIds:[...horzinalAliIds],allIds:allIds.map(({value}:any)=>value)};
+    // console.log(total)
+    total.okRStateId=okrStateId;
+    // console.log(total)
     addObjective(total)
 
   }
@@ -89,6 +108,9 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
   })
   setPeriodOptions(transformed)
   }, [])
+
+
+  
   
 
  
@@ -104,12 +126,17 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
   return (
     <>
     <Box width={'100%'} maxHeight={'50em'}  >
-        <Formik enableReinitialize
+        <Formik 
         validationSchema={addObjectiveSchema}
              validate={(data)=>{
-                let{definitionLevelId,responsibleId}=data;
-                setTeameIdObjects((prev:teamIdsFace)=>({...prev,personIds:[responsibleId]}))
-                setHorzIds((prev:any)=>({...prev,definitionId:definitionLevelId}))
+                let{definitionLevelId,responsibleId,isPublic}:any=data;
+                // console.log(isPublic)
+                setlIsPublic(isPublic)
+                if (isPublic==='برای همه') {
+                  setAllIds([])
+                }
+                // setTeameIdObjects((prev:teamIdsFace)=>({...prev,personIds:[responsibleId]}))
+                // setHorzIds((prev:any)=>({...prev,definitionId:definitionLevelId}))
             // console.log(data)
              }}
             initialValues={{...addObjectiveInitialValues}}
@@ -134,18 +161,45 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                 />
 
                             </Grid>
-                            {/**/}
+                          
 
-                            <Grid item xs={12} md={4}  >
+                      
+
+                            <Grid item xs={12} md={2}  >
                                 <FormikControl
                                     control='select'
                                     options={periodOptions || []}
                                     label='دوره زمانی'
-                                    name='periodId'
-                                    fullWidth
-                                    values={values?.periodId}
-                                />
-                            </Grid>
+                                    onChange={({target}:any)=>{
+                                       let{value}=target;
+                                        setFieldValue('periodId',value)
+                                    }}
+                                    >
+                                        {
+                                            periodOptions.map((item:any,i:number)=>{
+                                                let{key,value,desc}=item
+                                                return <MenuItem 
+                                                key={i}
+                                                sx={{ fontSize: "0.7rem", bgcolor: "transparent" }}
+                                                value={value}>
+                                                    {key}
+                                                 
+                                                  
+                                            </MenuItem>
+                                            })
+                                        }
+                     
+                                    </Select>
+                                </FormControl>
+                                </Box>
+
+
+
+                                </Grid>
+
+
+
+
 
 
                             <Grid item xs={12} md={4}  >
@@ -161,12 +215,16 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                     label="تیم"
                                     onChange={(e: any,other:any) => {
                                         let{props}=other;
-                                        let{children:keyName}=props;
-                                        setDefinitionLevel(keyName)
+
+                                        let{children:keyName,content}=props;
+                                        if (!content) {
+                                          setObjNameIds((prev:any)=>({...prev,definitionLevelId:value}))
+                                        }
+                                       
+                                        // setDefinitionLevel(keyName)
                                         let {target}=e
                                         let{value}=target;
-                                    
-                                        setTeameIdObjects((prev:teamIdsFace)=>({...prev,teamId:value}))
+                                        // setTeameIdObjects((prev:teamIdsFace)=>({...prev,teamId:value}))
                                         setFieldValue('definitionLevelId',value)
                                     
                                     }}
@@ -178,10 +236,10 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                  }
 
                                     { teamsOptions && teamsOptions.map((item:any) => {
-                                        let{key,value}=item
+                                        let{key,value,isCompany}=item
                                     return (
                                       
-                                        <MenuItem key={key} value={value}>
+                                        <MenuItem key={key} value={value} content={isCompany} >
                                         {key}
                                         </MenuItem>
                                     );
@@ -192,21 +250,22 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                               
                             </Grid>
 
-                            {
-                            definitionLevel!=='شرکت' && definitionLevel!==null && 
 
-                        <Grid item xs={12} md={6} >
-                        <MultiSelect
-                          options={HorzinalAlignData || []}
-                          isLoading={HorzDataLoading}
-                          onChangee={setFieldValue}
-                          propName='keyResultParentIds'
-                          label={'همسویی عمودی'}
-                        />
-  
-                      </Grid>
-                     
-                          }
+
+                            {
+                              objNameIds?.definitionLevelId!==null?
+                              <Grid xs={6}  >
+                              <GroupedMultiSel 
+                              data={ObjectiveNameOptions||[]}
+                              setSpecialIds={setHorzinalAliIds}
+                              // extraTag={()=>{}}
+                              />
+
+                              </Grid>:
+                              
+                              <></>
+                            }
+
 
                             <Grid item xs={12} md={4}  >
                                 <FormikControl
@@ -249,18 +308,18 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
 
 
                             <Grid item xs={12} md={6} >
-                        <MultiSelect
-                          options={teamsOptions?.map((item:any)=>{
-                          return{year:item.value,title:item.key}
-                          }) || []}
-                          isLoading={HorzDataLoading}
-                          onChangee={setFieldValue}
-                          propName='TeamIds'
-                          disabled={values?.isPublic==='برای همه' }
-                          label={'انتخاب تیم ها'}
-                          
-                          
-                        />
+
+
+                              {
+                                lIsPublic==='برای اشخاص خاص' ?  <MultiSel 
+                                data={allTeamAndPersonData||[]}
+                                extractTag={setAllIds}
+                                label={'یا اشخاص انتخاب تیم ها'}
+                                />:<></>
+                              }
+                 
+
+                       
   
                       </Grid>
 
@@ -271,7 +330,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                                 <FormikControl 
                                 setFieldValue={setFieldValue}
                                 control={'radio'}
-                                propName={'CalculateProgressType'}
+                                propName={'calculateProgressType'}
                                 mainLabel={'نحوه محاسبه پیشرفت:'}
                                 options={[{label:'بر اساس okr های همسو',value:'ForSpecialPeople'},{label:'بر اساس تحقق نتایج کلیدی',value:'BasedOnKR'}]}
                              />
@@ -282,11 +341,12 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                        <Grid item xs={12} md={3}  >
                                 <FormikControl
                                     control='textField'
-                                    type='text'
+                                    // type='text'
                                     label='وزن'
                                     name='weight'
                                     fullWidth
-                                    values={values?.weight}
+                                    values={values?.weight||0}
+                                    type={'number'}
                                 />
                             </Grid>
 
@@ -360,7 +420,7 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
 
 
                             <Grid item xs={12} mt={1}  >
-                      <Box px={1} columnGap={2} display={'flex'} justifyContent={'end'} flexDirection={'row-reverse'}  >
+                      <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
                         <Box >
                           <DySplitButton
                                     options={submitOptions || [] }
@@ -379,8 +439,10 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
                           />
                         </Box>
 
-                      </Box>
-                    </Grid>
+                              </Box>
+
+                             
+                            </Grid>
 
                         </Grid>
 
@@ -388,7 +450,22 @@ const[periodOptions,setPeriodOptions]=useState<any>([])
             }
 
         </Formik>
+
+
+        {
+      showLtoastMessage && <DYToastMessage
+      isSuccess={addObjError?.isSuccess}
+      message={addObjError?.metaData.message}
+      setShow={setShowLtoastMessage}
+      show={showLtoastMessage}
+      
+      />
+      
+      
+    }
     </Box>
+
+
     
             </>
   )

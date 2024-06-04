@@ -72,6 +72,7 @@ export default function TimePickerF(props:any) {
        
           <FormControl sx={sxStyle}   >
             <TimePicker
+            disableOpenPicker
             ampm={false}
             slotProps={{ textField: { size: 'small' } }}
             sx={mStyle}
@@ -79,7 +80,8 @@ export default function TimePickerF(props:any) {
           // renderInput={(params:any) => <TextField size="small" {...params} />}
           // value={value}
           onChange={(newValue:any) => {
-            setValue(newValue)
+            setValue(newValue);
+            console.log(newValue)
             var hour = newValue.getHours();
             var minute = newValue.getMinutes();
             var time_str = ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2);
