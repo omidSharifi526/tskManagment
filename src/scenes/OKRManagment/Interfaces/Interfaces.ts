@@ -136,10 +136,13 @@ export interface addObjectiveFace{
   tenantId:string,
   isPublic:boolean,
   description:string,
-  calculateProgressType:string,
+  // calculateProgressType:string,
   keyResultParentIds:string[],
   allIds:string[],
+<<<<<<< HEAD
   weight:number|null,
+=======
+>>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
   answerRequest:string
 
 }

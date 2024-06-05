@@ -107,6 +107,8 @@ const InviteUser = () => {
                     showAddStaff && <ModalLyt
                         showModal={showAddStaff}
                         setShowModal={setShowAddStaff}
+                        height={600}
+                        width={700}
                         title={'ثبت پرسنل'}  >
                         <AddStaff 
                         onSuccesss={initialAddStaff} 
@@ -122,6 +124,8 @@ const InviteUser = () => {
                 showEditModal && <ModalLyt
                 showModal={showEditModal}
                 setShowModal={setShowEditModal}
+                height={500}
+                width={600}
                 title={'ویرایش کاربر'}
                 >
                     {/* asyncOpStatus,setAsyncOpStatus */}

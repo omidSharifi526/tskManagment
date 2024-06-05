@@ -12,6 +12,13 @@ const getAllMeetingByIds=async({queryKey:info}:any)=>{
 }
 
 
+const getAllMyMeetingByIds=async({queryKey:info}:any)=>{
+  // console.log(info);
+  let ids=info[1];
+ return await axiosInstance.get(`Meeting/WebGetMyMeetingsByPersonId?tenantId=${ids.tenantId}&periodId=${ids.priodId}`)
+}
+
+
 const getAllTeamsByTenantId=async({queryKey}:any)=>{
   let id=queryKey[1];
   // console.log(id)
@@ -147,5 +154,9 @@ export{
     getMeetingKeyResultValueById,
     getMeetingDetailById,
     editMeeting,
+<<<<<<< HEAD
     deleteMeeting
+=======
+    getAllMyMeetingByIds
+>>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
 }

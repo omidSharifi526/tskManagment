@@ -105,7 +105,7 @@ const AddTeam = (props:any) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} >
+              <Grid item xs={12} md={4} >
 
               <MultiSelect
                 options={personIdData || []}
@@ -120,7 +120,7 @@ const AddTeam = (props:any) => {
 
 
               <Grid item xs={12} mt={1}  >
-                <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
+                <Box px={1} columnGap={2} display={'flex'} justifyContent={'end'} flexDirection={'row-reverse'}  >
                   <Box >
                     <DyButton
                       caption={'ذخیره'}

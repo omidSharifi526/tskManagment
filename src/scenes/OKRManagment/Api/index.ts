@@ -16,6 +16,11 @@ const GetAllHorizontalAlignmentByTenantId=async({queryKey}:any)=>{
 return await axiosInstance.get(`/OKR/GetAllHorizontalAlignmentByTenantId/?tenantId=${ids.tenantId}&definitionLevelId=${ids.definitionId}`)
 }
 
+const getAllObjectiveNameWithKeyResultsByTenantId=async({queryKey}:any)=>{
+    let ids:any|null=queryKey[1];
+    return await axiosInstance.get(`OKR/GetAllObjectiveNameWithKeyResultsByTenantId/?tenantId=${ids.tenantId}&definitionLevelId=${ids.definitionLevelId}&periodId=${ids.periodId}`)
+    }
+
 // https://api.myokr.ir/api/OKR/GetAllOKRStateByTenantId?tenantId=eb781974-3cb0-4c3a-881e-97af686ce7f5
 
 
@@ -63,6 +68,16 @@ const getAllObjectiveByPeriodId=async({queryKey}:any)=>{
 }
 
 
+// دریافت دوره ها
+// https://api.myokr.ir/api/OKR/GetAllObjectiveByPeriodId/?tenantId=3f2d72cf-cdff-413c-abcd-d5459d97890c&periodId=d3fe4f1c-e2ce-470e-9e48-87ffb411a997&pageIndex=1&pageSize=5&searchTerm=
+const getAllObjectiveByPersonId=async({queryKey}:any)=>{
+    // profileTenantId
+    let periodId=queryKey[1];
+    let profileTenantId=queryKey[2];
+    return await axiosInstance.get(`/OKR/WebGetAllObjectiveByPersonId/?periodId=${periodId}&pageIndex=1&pageSize=50&searchTerm=`)
+}
+
+
 // https://api.myokr.ir/api/OKR/getAllDefinitionLevelByTenantId?tenantId=3f2d72cf-cdff-413c-abcd-d5459d97890c
 // دریافت تیم ها
 const getAllObjectiveDefinitionLevelByTenantId=async({queryKey}:any)=>{
@@ -81,6 +96,10 @@ const GetAllObjectiveOKRStateByTenantId=async({queryKey}:any)=>{
     return await axiosInstance.get(`OKR/GetAllOKRStateByTenantId?tenantId=${tenantId}`)
 }
 
+const getAllTeamAndPersonNameByTenantId=async({queryKey}:any)=>{
+    let tenantId:string|null=queryKey[1];
+    return await axiosInstance.get(`Team/WebGetAllTeamAndPersonNameByTenantId?tenantId=${tenantId}`)
+}
 
 // درج هدف
 // https://api.myokr.ir/api/OKR/AddObjective
@@ -90,8 +109,12 @@ const GetAllObjectiveOKRStateByTenantId=async({queryKey}:any)=>{
 // return await axiosInstance.post('OKR/AddObjective',ObjectiveData)
 // }
 
-const addObjective=async(ObjectiveData:any)=>{
+const AddObjective=async(ObjectiveData:any)=>{
     return await axiosInstance.post(`OKR/AddObjective`,ObjectiveData)
+  }
+
+  const EditObjective=async(ObjectiveData:any)=>{
+    return await axiosInstance.post(`OKR/EditObjective`,ObjectiveData)
   }
 
 // https://api.myokr.ir/api/OKR/GetObjectiveDetailsById/?id=a29fa52c-7376-49e2-8091-6f5f0a7ccdc2
@@ -117,6 +140,13 @@ const getKeyResultDetailsById=async({queryKey}:any)=>{
 return await axiosInstance.get(`OKR/GetKeyResultDetailsById/?id=${krId}`)
 }
 
+
+const getObjectiveDetailsById=async({queryKey}:any)=>{
+    let obId:string|null=queryKey[1];
+return await axiosInstance.get(`OKR/GetObjectiveDetailsById/?id=${obId}`)
+}
+
+
 const editKeyResult=async(krData:any)=>{
 return await axiosInstance.post('OKR/EditKeyResult',krData)
 }
@@ -132,18 +162,9 @@ const deleteKr=async(delteKrBody:any)=>{
     return await axiosInstance.post(`OKR/DeleteKeyResult`,delteKrBody)
 }
 
-// https://api.myokr.ir/api/OKR/GetAllObjectiveNameWithKeyResultsByTenantId/?tenantId=eb781974-3cb0-4c3a-881e-97af686ce7f5&definitionLevelId=b25fa8c6-d624-4b41-bc8c-230afabc580a&periodId=a0fcb059-bca7-4dcf-874b-aa0ce7c032b5
 
-
-
-const getAllObjectiveNameWithKeyResultsByTenantId=async({queryKey}:any)=>{
-let ids:any|null=queryKey[1];
-return await axiosInstance.get(`OKR/GetAllObjectiveNameWithKeyResultsByTenantId/?tenantId=${ids.tenantId}&definitionLevelId=${ids.definitionLevelId}&periodId=${ids.periodId}`)
-}
-
-const getAllTeamAndPersonNameByTenantId=async({queryKey}:any)=>{
-    let tenantId=queryKey[1];
-    return await axiosInstance.get(`/Team/WebGetAllTeamAndPersonNameByTenantId/?tenantId=${tenantId}`)
+const deleteObjective=async(delteKrBody:any)=>{
+    return await axiosInstance.post(`OKR/DeleteObjective`,delteKrBody)
 }
 
 
@@ -157,13 +178,17 @@ export{
     GetAllScoreLevelsByTenantId,
     AddKeyResult,
     getAllObjectiveByPeriodId,
+    getAllObjectiveByPersonId,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
-    addObjective,
+    AddObjective,
     getObjectiveDetails,
     getKeyResultDetailsById,
     editKeyResult,
     deleteKr,
+    EditObjective,
+    deleteObjective,
+    getObjectiveDetailsById,
     getAllObjectiveNameWithKeyResultsByTenantId,
     getAllTeamAndPersonNameByTenantId
 }

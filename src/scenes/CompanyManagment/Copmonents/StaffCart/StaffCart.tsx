@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useDeletePerson,useDeleteInvitedPerson} from '../../Hooks';
 import { useSelector } from 'react-redux';
+import EditIcon from '@mui/icons-material/Edit';
 export const StaffCart = (props:any) => {
     const userId=useSelector((state:any)=>state.loign.userInfo.userId);
     const tenantId:string|null=useSelector((state:any)=>state.meetings.profileTenantId);
@@ -80,8 +81,8 @@ useEffect(() => {
 
 
   return (
-    <Box width={'396px'} m={1}  borderRadius={3} boxShadow={4}  >
-        <Grid container px={1} rowGap={2} >
+    <Box width={'335px'} height={'100px'} marginRight={1} borderRadius={3} boxShadow={3}  >
+        <Grid container px={2} rowGap={1} >
             
         <Grid item xs={2}   >
     <Box  display={'flex'} 
@@ -97,7 +98,6 @@ useEffect(() => {
     alignItems={'center'}
     flexDirection={'column'}
     justifyContent={'cenetr'}
-
     >
         <StaffVector fontSize='large'  />
         </Box>
@@ -105,27 +105,15 @@ useEffect(() => {
          </Grid>
          <Grid item xs={10} px={1} >
          <Grid container   >
-        <Grid item xs={8} height={'45px'} >
+        <Grid item xs={8}  height={'70px'} >
         <Box  p={1} pt={2}   >
-            <Typography color={'#001733'} fontWeight={700}  >
+            <Typography color={'#001733'} fontSize={'18px'} fontWeight={900}  >
             {
             name
             }
             </Typography>
         </Box>
-        </Grid>
-        <Grid item xs={4} height={'45px'} >
-      <Box py={1}>
-        <Button variant='text'  onClick={()=>{
-            // console.log(id)
-            initialEditPerson(id)
-        }} >
-            ویرایش
-        </Button>
-      </Box>
-        </Grid>
-        <Grid item xs={7} height={'52px'}  >
-        <Box height={'100%'} p={1} display={'flex'} alignItems={'end'} justifyContent={'start'}>
+        <Box  p={1} display={'flex'} alignItems={'end'} justifyContent={'start'}>
             <Typography fontSize={'0.7rem'} color={'#001733'} fontWeight={600}>
                 {
                  jobTypeName
@@ -133,39 +121,38 @@ useEffect(() => {
             </Typography>
         </Box>
         </Grid>
-        <Grid item xs={5}   >
-     
-            <Box pt={2}  height={'60px'} >
-            <Box   height={'80%'} width={'100%'}
-                    bgcolor={'#D5f7D4'} px={4} borderRadius={2} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Typography fontSize={'0.80rem'} fontWeight={activated?900:400} color={activated?'green':'red'}  >
-                            {
-                                activated?'فعال':'دعوت شده'
-
-                            }</Typography>
-                    </Box>
-            </Box>
-     
-        </Grid>
-         </Grid>
-         </Grid>
-
-      
-
-     
-   
-        </Grid>
-       
-         <Box width={'100%'}  textAlign={'end'} px={2} >
+        <Grid item xs={4} height={'35px'} >
+        <Box width={'90px'} textAlign={'end'} px={1} >
       <Box>
+      <IconButton onClick={()=>{
+            initialEditPerson(id)
+        }}   >
+        <EditIcon color='primary'   />
+       </IconButton>
         <IconButton onClick={()=>{
             initialDelete(id)
         }}   >
         <DeleteIcon color='error'   />
        </IconButton>
       </Box>
-         </Box>
-       
+      <Box pt={2}  height={'60px'} marginRight={1} display={'flex'} alignItems={'center'} justifyContent={'end'} >
+            <Box   height={'25px'} width={'75px'}
+                    bgcolor={activated?'#D5f7D4':'#bfd3f5'}  borderRadius={2} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                        <Typography fontSize={'0.7rem'} fontWeight={activated?900:400} color={activated?'green':'#3a82fc'}  >
+                            {
+                                activated?'فعال':'دعوت شده'
+
+                            }</Typography>
+                    </Box>
+            </Box>
+      </Box>
+        </Grid>
+        {/* <Grid item xs={7} height={'42px'}  >
+
+        </Grid> */}
+        </Grid>
+        </Grid>   
+        </Grid>
     </Box>
   )
 }

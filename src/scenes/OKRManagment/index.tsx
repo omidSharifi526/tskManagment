@@ -167,7 +167,10 @@ const Index :React.FC=function(){
 
   <CustomTabPanel value={value} index={1}>
   <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
-  {/* <PersonalOkRs/> */}
+  <PersonalOkRs
+   periodId={periodId}  
+   periodsData={perData}
+  />
 
     </Suspense>
   </CustomTabPanel>

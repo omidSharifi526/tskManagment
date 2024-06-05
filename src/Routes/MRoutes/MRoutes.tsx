@@ -14,12 +14,17 @@ import OverView from "../../scenes/OverView/OverView";
 
 
 import LoginPage from "../../components/Login/LoginPage";
-import Dashboard from "../../components/Dashboard";
+import Dashboard from "../../components/Dashboard"; 
 
 const OkrManagmentContainer = lazy(() => import('../../scenes/OKRManagment'));
 const CompanyManagment = lazy(() => import('../../scenes/CompanyManagment'));
 const NotFoundPage = lazy(() => import('../../components/NotFoundPage/NotFoundPage'));
 const Settings = lazy(() => import('../../scenes/Settings/Setting'));
+const Aboutus = lazy(() => import('../../scenes/Aboutus/Index'));
+const AllTenantOkrs = lazy(() => import('../../scenes/AllTenantOkrs/Index'));
+const Helpsoftware = lazy(() => import('../../scenes/Helpsoftware/Index'));
+const TenantDash = lazy(() => import('../../scenes/TenantDash/Index'));
+
 const Mrouter=createBrowserRouter(createRoutesFromElements(
  <>
  <Route path="/" element={<LoginPage/>} />
@@ -30,6 +35,19 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
   <Route index path="/dashboard/meetings"  element={<MeetingTabsContainer/>} />
   <Route  path="/dashboard/tenants" element={<ReqPhone><Tenants/></ReqPhone>} />
   
+  
+  
+  <Route  path="/dashboard/AllTenantokrs"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <AllTenantOkrs/>
+    </RequierAuth>
+  </Suspense>
+} />
+
+  
+
   <Route  path="/dashboard/okrManagment"  
   element={<Suspense 
   fallback={<div>درحال بارگزاری...</div>} >
@@ -49,7 +67,33 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
 } />
 
 
+<Route  path="/dashboard/aboutus"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <Aboutus/>
+    </RequierAuth>
+  </Suspense>
+} />
 
+<Route  path="/dashboard/Helpsoftware"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <Helpsoftware/>
+    </RequierAuth>
+  </Suspense>
+} />
+
+
+<Route  path="/dashboard/TenantDash"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <TenantDash/>
+    </RequierAuth>
+  </Suspense>
+} />
 
 
 <Route  path="/dashboard/okrManagment/objectiveDetails"  
@@ -88,6 +132,7 @@ element={<Suspense fallback={<div>درحال بارگزاری...</div>}>
 
  </>
 ));
+
 
 
 export default Mrouter

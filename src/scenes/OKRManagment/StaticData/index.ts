@@ -112,6 +112,15 @@ const addObjectiveSchema = yup.object().shape({
 
 });
 
+
+const editObjectiveSchema = yup.object().shape({
+  name:yup.string().required(''),
+  periodId:yup.string().required(''),
+  responsibleId:yup.string().required(''),
+  definitionLevelId:yup.string().required(''),
+
+});
+
 // name:string,
 // responsibleId:string,
 // pointingSystemType:string,
@@ -143,6 +152,7 @@ export   {
     addCompanyValues,
     resetFormValues,
     addObjectiveSchema,
+    editObjectiveSchema,
     addKeyResultSchema
     
     

@@ -23,9 +23,9 @@ export default function DyLinearProgress(props: any & { value: number}) {
     
     <Box sx={{ display: 'flex', alignItems: 'center',p:1 }}>
     <Box sx={{ width: '100%', mr: 1 }}>
-      <LinearProgress variant="determinate" {...props} />
+      <LinearProgress  variant="determinate" {...props} />
     </Box>
-    <Box sx={{ minWidth: 35 }}>
+    <Box sx={{ minWidth: 19 }}>
       <Typography variant="body2" color="text.secondary">{`${Math.round(
         props.value,
       )}%`}</Typography>

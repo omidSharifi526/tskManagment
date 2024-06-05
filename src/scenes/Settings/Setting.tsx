@@ -6,6 +6,7 @@ import {CircularProgress} from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import {ReactComponent as SettingVector} from './StaticData/Svgs/settingVector.svg';
 import SettingsIcon from '@mui/icons-material/Settings';
+import DYToastMessage from '../../../src/components/GlobalComponents/DyToastMessage/DYToastMessage';
 // import {CircularProgress} from '@mui/material';
 
 interface settingItemFace{
@@ -32,8 +33,9 @@ const Setting = () => {
 
     const[disabledSub,setDisabledSub]=useState<any>(true)
     const[initSett,setInitSett]=useState<any>(null);
-
-
+    const [loginStatusLocal, setLoginStatusLocal] = useState<boolean | null>(null);
+    const [loginMessage, setLoginMessage] = useState<string | null>(null)
+    const loginStatus: any = useSelector((state: any) => state.loign.loginStatus);
     const initialChangeSetting=(key:string,value:boolean)=>{
      
       setAsyncState({
@@ -90,7 +92,20 @@ const Setting = () => {
             callAddTenantSetting({settings:[...SettingsState],...remainData})
         }
 
-
+        useEffect(() => {
+          if (settingData) {
+            // console.log(logdata)
+            let { data: { isSuccess, data, metaData } }: any = settingData;
+            let { message }: any = metaData;
+            let logStatus = { success: isSuccess };
+            // console.log(message)
+            setLoginMessage(message);
+            // loginMessage,setLoginMessage
+            setLoginStatusLocal(!loginStatus)
+            // console.log(isSuccess, data)
+          }
+      
+        }, [settingData])
         if (getTenantSettinLoading) {
           return <Box width={'100%'} py={6} textAlign={'center'}   >
               <CircularProgress/>
@@ -105,9 +120,15 @@ const Setting = () => {
    <Grid item xs={12}  md={6} > 
 
    <Box
+   margin={4}
+   borderColor={'#EAEAEA '}
+   borderRadius={10}
+   boxShadow={10}
      py={2}
      px={4}
+    
     width={'100%'}
+    height={'100%'}
     display={'flex'}
     flexDirection={'column'} alignItems={'start'} >
    {
@@ -149,15 +170,16 @@ const Setting = () => {
     <Button 
     endIcon={asyncState.success?<CheckIcon/>:<SettingsIcon/>}
     disabled={disabledSub}
-    sx={{fontSize:'14px',px:6,py:1,bgcolor:asyncState.success?'green':'#00387C'}}
+    // sx={{fontSize:'14px',px:6,py:1,bgcolor:asyncState.success?'green':'#00387C'}}
+    sx={{fontSize:'18px',px:6,py:1,bgcolor:'#00387C',borderRadius:10  }}
     variant='contained' 
      onClick={()=>{
      initialAddSetting()
     }}  >
-    {
+    {/* {
      asyncState.success ?'باموفقیت ثبت شد':' ثبت تنظیمات'
-    }
-
+    } */}
+      ثبت تنظیمات
     {/* {
       changeSettingLoading?<CircularProgress size={10} />:null
     } */}
@@ -172,6 +194,15 @@ const Setting = () => {
 
    </Box>
    </Grid>
+   {
+        loginStatusLocal && loginMessage &&
+        <DYToastMessage
+          show={!loginStatus}
+          setShow={setLoginStatusLocal}
+          message={loginMessage}
+          isSuccess={loginMessage ==  "شما دسترسی تغییر تنظیمات را ندارید" ? false:true}
+        />
+      }
    </Grid>
   )
 }

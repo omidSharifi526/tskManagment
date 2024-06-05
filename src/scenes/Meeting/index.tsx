@@ -131,7 +131,7 @@ const Meeting :React.FC=function(){
     <Grid container  spacing={1} >
       <Grid item xs={12}    >
                      <Box display={'flex'}  flexDirection={'row-reverse'}>
-                    <Box width={'150px'}   >
+                    <Box  width={'10%'}  marginRight={2} >
                     <DyButton
                             caption={'ایجاد جلسه'}
                             color={'#00l387C'}
@@ -148,7 +148,7 @@ const Meeting :React.FC=function(){
     
    {
  existData && existData.map((data:any,i:number):any=>{
-        return (<Grid item md={3} xs={12}  key={i}>
+        return (<Grid item md={4} xs={12}  key={i}>
 
   
           <MeetingCard 
@@ -180,6 +180,8 @@ const Meeting :React.FC=function(){
        {
           createTenantModal &&
           <ModalLyt title={'ایجاد جلسه'}
+            height={700}
+            width={900}
             showModal={Boolean(createTenantModal)}
             setShowModal={setCreateTenantModal}
           >

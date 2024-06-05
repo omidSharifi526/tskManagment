@@ -40,7 +40,7 @@ const EditTeam = (props:any) => {
             managerId:managerId,
             id:id,
             tenantId:tenantId,
-             fromDate:"1403/2/19",
+             fromDate:"",
              toDate:null,
              lastModifiedById:userId,
              PersonIds:personQueryResultDtos?.map(({id}:any)=>id)
@@ -135,7 +135,7 @@ const EditTeam = (props:any) => {
                 <Grid container columnSpacing={1} sx={{ bgcolor: 'background.paper', mx: 'auto', borderRadius: 3 }}   >
     
                 
-                  <Grid item xs={4}  >
+                  <Grid item xs={12}  >
 
                    <Box sx={{padding:'8px'}}  >
                    <TextField
@@ -154,7 +154,7 @@ const EditTeam = (props:any) => {
     
     
     
-                  <Grid item xs={12} md={4}  >
+                  <Grid item xs={12} md={12}  >
                     <FormikControl
                       control='select'
                       options={activePersonData||[]}
@@ -181,7 +181,7 @@ const EditTeam = (props:any) => {
     
     
                   <Grid item xs={12} mt={1}  >
-                    <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
+                    <Box px={1} columnGap={2} display={'flex'} justifyContent={'center'} flexDirection={'row-reverse'}  >
                       <Box >
                         <DyButton
                           caption={'ذخیره'}

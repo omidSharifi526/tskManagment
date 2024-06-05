@@ -79,20 +79,20 @@ useEffect(() => {
 
   return (
    
-    <Grid py={'1rem'}  item  xs={12} md={12} minHeight={'100vh'} mx={'auto'}  bgcolor={'whitesmoke'} borderRadius={2}  >
+    <Grid py={'1rem'}  item  xs={12} md={12} bgcolor={'white'} minHeight={'100vh'} mx={'auto'}  >
    <Grid container  >
   
    
    <Grid item xs={12} >
-   <Box mx={'auto'}   >
-    <Typography color={'black'} variant='h6' textAlign={'center'}  >لطفا اکانت مورد نظر خود را انتخاب کنید.</Typography>
+   <Box mx={'auto'}  >
+    <Typography fontSize={'25px'} color={'black'} variant='h6' fontWeight={900} textAlign={'center'}  >لطفا اکانت مورد نظر خود را انتخاب کنید.</Typography>
    </Box>
    </Grid>
 
 
    <Grid item xs={12}  >
-   <Box   textAlign={'center'} py={2}  >
-    <Typography 
+   <Box textAlign={'center'} py={2}  >
+    <Typography  fontSize={'20px'} fontWeight={900}
     color={'black'}
     variant='button'>در صورت تمایل بعدا هم میتوانید از طریق پروفایل کاربری،  اکانت خود را تغییر دهید.
     </Typography>
@@ -100,13 +100,13 @@ useEffect(() => {
    </Grid>
 
  
-    <Grid container mx={'auto'} display={'flex'} gap={1} py={1} flexWrap={'wrap'}  >
-<Grid item xs={12} md={6} mx={'auto'}  >
-<Grid container spacing={2}  >
+    <Grid container mx={'auto'}   display={'flex'}  padding={1} gap={1} py={1} flexWrap={'wrap'}  >
+<Grid item xs={12} md={12} mx={'auto'} >
+<Grid container spacing={2} display={'flex'} flexWrap={'wrap'} justifyContent={'flex-end'} >
 {
 userTenantsData && userTenantsData?.map((item:any,i:number)=>{
         return(
-          <UserProfileTypeCart 
+          <UserProfileTypeCart  
           priodsIds={currenPriod}
           setTenantId={setTenantId}  
           changeTenant={props.changeT}

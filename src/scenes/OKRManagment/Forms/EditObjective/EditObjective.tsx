@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
 import {Box,Grid,Typography,FormControl,InputLabel,Select,MenuItem, Button} from '@mui/material';
 import { Formik,Form } from 'formik';
-import { addObjectiveSchema } from '../../StaticData';
+import { editObjectiveSchema } from '../../StaticData';
 import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
 import { useSelector } from 'react-redux';
 import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
@@ -13,7 +13,8 @@ import GroupedMultiSel from '../../../../components/FormikControls/GroupedMultiS
 import { useGetAllHorizontalAlignmentByTenantId,
      useGetAllObjectiveDefinitionLevelByTenantId,
      useGetAllObjectiveOKRStateByTenantId,
-    useAddObjective,
+     useEditObjective,
+     useGetObjectiveDetailsById,
     useGetAllObjectiveNameWithKeyResultsByTenantId,
     useGetAllTeamAndPersonNameByTenantId
     } from '../../Hooks';
@@ -30,11 +31,11 @@ interface teamIdsFace{
 }
 // allIds
 
-const CreateObjective = ({periodsData,onSuccess,setShowToastMessage,setObjectiveAsyncOpState,afterSuccess}:any) => {
+const EditObjective = ({objectiveId,periodsData,onSuccess,setShowToastMessage,setObjectiveAsyncOpState,afterSuccess}:any) => {
 
     const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
     const[showAdvanceOptions,setShowAdvanceOptions]=useState<boolean>(false)
-
+    const{data:objectiveDetailData,isLoading:getObjectiveDetailLoading}=useGetObjectiveDetailsById(objectiveId);
     const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
     const{data:personsOptionds}=useGetAllActivePersonByTenantId(tenantId);
     const{data:submitOptions}=useGetAllObjectiveOKRStateByTenantId(tenantId);
@@ -45,8 +46,9 @@ const[horzinalAliIds,setHorzinalAliIds]=useState<any[]>([]);
 const[allIds,setAllIds]=useState<any>([]);
 const[okrStateId,setOkrStateId]=useState<string>('');
 const[lIsPublic,setlIsPublic]=useState<any>(false);
+const[editObjectiveinintialValues,setEditObjectiveInitialValues]=useState<any>(null);
 const[showLtoastMessage,setShowLtoastMessage]=useState<any>(null);
-const[addObjError,setAddObjError]=useState<any>(null)
+const[editObjError,setEditObjError]=useState<any>(null)
 const[objNameIds,setObjNameIds]=useState<any>({
   tenantId:tenantId,
   periodId:periodId,
@@ -63,59 +65,56 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
     const onFailed=()=>{
 
       }
-      const{mutate:addObjective,data:addObjectiveData,isSuccess,isLoading}=useAddObjective()
+      const{mutate:editObjective,data:editObjectiveData,isSuccess,isLoading}=useEditObjective()
 
       useEffect(() => {
-  if (addObjectiveData) {
+  if (editObjectiveData) {
 
-      if (addObjectiveData?.data.isSuccess) {
-            // setSuccessAddObjective(isSuccess)
+      if (editObjectiveData?.data.isSuccess) {
             setShowToastMessage(true)
-            setObjectiveAsyncOpState(addObjectiveData?.data)
+            setObjectiveAsyncOpState(editObjectiveData?.data)
             onSuccess()
   
       } else {
           setShowLtoastMessage(true);
-          setAddObjError(addObjectiveData?.data)
+          setEditObjError(editObjectiveData?.data)
       }
-    
-
   }
-  
+      }, [editObjectiveData]);
 
+ 
+      useEffect(() => {
+        if (objectiveDetailData) {
+          let{name,periodId,description,definitionLevelId,calculateProgressType,weight
+            ,isPublic,keyResultParentIds,responsibleId,allIds,tenantId,answerRequest
+            ,personQueryResultDtos,id}:any=objectiveDetailData;
+          let initValue={
+            id:id,
+            name:name,
+            periodId:periodId,
+            calculateProgressType:calculateProgressType,
+            definitionLevelId:definitionLevelId,
+            description:description,
+            isPublic:isPublic,
+            keyResultParentIds:keyResultParentIds,
+            responsibleId:responsibleId,
+            allIds:allIds,
+            tenantId:tenantId,
+            Sweight:weight,
+            answerRequest:answerRequest,
+            //PersonIds:personQueryResultDtos?.map(({id}:any)=>id)
+          }
+          
+        //   setHorzinalAliIds(keyResultParentIds?.map((item:any)=>{
+        //    let{id:year,name:title}=item;
+        //    return{year,title}
+        //   }))
+         setEditObjectiveInitialValues(initValue)
+        }
+      }, [objectiveDetailData])
+ 
 
-      }, [addObjectiveData]);
-
-      const addObjectiveInitialValues:addObjectiveFace={
-        name:'',
-        periodId:periodId,
-        //calculateProgressType:'',
-        // createById:'',
-        definitionLevelId:'',
-        description:'',
-        isPublic:false,
-        keyResultParentIds:[],
-        // :'',
-        responsibleId:'',
-        allIds:[],
-        tenantId:'',
-<<<<<<< HEAD
-        weight:null,
-=======
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
-        answerRequest:'',
-  
-      
-      
-      
-      }
-
-
-     
-      
-  
-
-  const initialAddObjective=(data:any)=>{
+  const initialEditObjective=(data:any)=>{
     let{isPublic}=data;
     // 
     let resIsPublic={isPublic:isPublic==='برای همه'?true:false};
@@ -123,7 +122,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
     // console.log(total)
     total.okRStateId=okrStateId;
     // console.log(total)
-    addObjective(total)
+    editObjective(total)
 
   }
 
@@ -136,27 +135,22 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
   }, [])
 
 
-  
-  
-
- 
-
-  if (isLoading) {
+  if (getObjectiveDetailLoading) {
     return <Box width={'100%'} py={6} textAlign={'center'}   >
         <CircularProgress/>
     </Box>
   }
   
-
-
   return (
     <>
     <Box width={'100%'} maxHeight={'50em'}  >
-        <Formik 
-        validationSchema={addObjectiveSchema}
+        {
+
+            !getObjectiveDetailLoading ==true ? <Formik 
+        //validationSchema={editObjectiveSchema}
+             enableReinitialize
              validate={(data)=>{
                 let{definitionLevelId,responsibleId,isPublic}:any=data;
-                // console.log(isPublic)
                 setlIsPublic(isPublic)
                 if (isPublic==='برای همه') {
                   setAllIds([])
@@ -165,9 +159,9 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                 // setHorzIds((prev:any)=>({...prev,definitionId:definitionLevelId}))
             // console.log(data)
              }}
-            initialValues={{...addObjectiveInitialValues}}
+             initialValues={editObjectiveinintialValues}
             onSubmit={(data) => {
-              initialAddObjective(data)
+              initialEditObjective(data)
             }}
 
 
@@ -187,10 +181,6 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                                 />
 
                             </Grid>
-                          
-
-                      
-
                                 <Grid item xs={12} md={4}  >
                                       <Box sx={{padding:'8px'}}>
                                    <FormControl fullWidth>
@@ -307,18 +297,9 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                                     label='مسئول هدف'
                                     name='responsibleId'
                                     fullWidth
-                                    values={values?.responsibleId || ''}
+                                    value ={values?.responsibleId || ''}
                                 />
                             </Grid>
-
-
-                         
-
-      
-
-                           
-
-
 
 
                    <Grid item xs={12}  >
@@ -492,13 +473,12 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                     </Form>
             }
 
-        </Formik>
-
-
+        </Formik> :""
+        }
         {
       showLtoastMessage && <DYToastMessage
-      isSuccess={addObjError?.isSuccess}
-      message={addObjError?.metaData.message}
+      isSuccess={editObjError?.isSuccess}
+      message={editObjError?.metaData.message}
       setShow={setShowLtoastMessage}
       show={showLtoastMessage}
       
@@ -514,4 +494,4 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
   )
 }
 
-export default CreateObjective
+export default EditObjective

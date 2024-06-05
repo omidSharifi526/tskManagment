@@ -118,7 +118,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,
           <Grid container columnSpacing={1} sx={{bgcolor: 'background.paper',mx:'auto',borderRadius:3}}   >
 
     
-            <Grid item xs={12} md={4}  >
+            <Grid item xs={12} md={12}  >
               <FormikControl
                 control='textField'
                 type='text'
@@ -131,7 +131,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,
             
            
 
-            <Grid item xs={4}  >
+            <Grid item xs={12}  >
               <FormikControl
                 control='textField'
                 type='text'
@@ -143,7 +143,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,
               />
             </Grid>
 
-            <Grid item xs={12} md={4} >
+            <Grid item xs={12} md={12} >
               <FormikControl
                 control='textField'
                 type='text'
@@ -210,7 +210,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,
 
 
             <Grid item xs={12} mt={1}  >
-              <Box px={1} columnGap={2} display={'flex'} flexDirection={'row-reverse'}  >
+              <Box px={1} columnGap={2} display={'flex'} justifyContent={'center'} flexDirection={'row-reverse'}  >
                 <Box >
                   <DyButton
                     caption={'ذخیره'}
