@@ -65,7 +65,7 @@ const initialEditObject=(perId:string|null)=>{
         justifyContent={'space-between'}  > 
         <Box display={'flex'}>
         <Oflag fontSize={'0.9rem'}  />
-        <Typography px={1} variant='body1'  >
+        <Typography px={1} variant='body1' fontWeight={900} >
             {
                 name
             }
@@ -112,7 +112,7 @@ const initialEditObject=(perId:string|null)=>{
         <Grid xs={12}  >
         <Box width={'100%'} marginLeft={1} display={'flex'} alignItems={'center'} justifyContent={'start'}>
         <PersonIcon width={'15px'}  height={'15px'} />
-        <Typography px={1} variant='button' color={'black'} >{
+        <Typography px={1} variant='button' fontWeight={900} color={'black'} >{
             responsibleName
             }</Typography>
         </Box>
@@ -121,7 +121,7 @@ const initialEditObject=(perId:string|null)=>{
         <Grid xs={12}  >
         <Box width={'100%'} marginLeft={1}  display={'flex'} alignItems={'center'} justifyContent={'start'}>
         <CompanyManagmentIcon width={'20px'} height={'20px'} />
-        <Typography px={1} variant='button' color={'black'} >
+        <Typography px={1} variant='button' fontWeight={900} color={'black'} >
                 {
                     definitionLevelName
                 }

@@ -65,9 +65,10 @@ const Index = (props:any) => {
          */}
   
      <Grid item xs={12} >
-     <Box  padding={2}  margin={2}  >
+     <Box  padding={2}  margin={2}  borderRadius={10}
+   boxShadow={10} >
       <Box>
-      <Typography variant='h1' fontSize={'25px'} color={'red'}>
+      <Typography variant='h1' fontSize={'25px'} color={'red'} fontWeight={900}>
      معرفی ما:
       </Typography>
       </Box>

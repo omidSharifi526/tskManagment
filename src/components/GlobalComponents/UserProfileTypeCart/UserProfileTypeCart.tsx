@@ -52,12 +52,12 @@ useEffect(() => {
       handleClickCart()
     }}    >
     
-    <Box  borderRadius={2} boxShadow={3} sx={{cursor:'pointer'}}  border={2} borderColor={'black'} bgcolor={'#a4a5a6'} >
+    <Box  borderRadius={5} boxShadow={3} sx={{cursor:'pointer'}}  borderColor={'black'} bgcolor={'#A2ADB1 '} >
    
     <Box py={4}  display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
     <AccountCircleIcon fontSize='large' />
-    <Box bgcolor={' #cccdcf'} borderRadius={1} width={'100%'} margin={1}  textAlign={'center'} minHeight={'40px'} >
- <Typography fontSize={'20px'} fontWeight={900} variant='caption'  >
+    <Box bgcolor={'#C0CFD6 '} borderRadius={1} width={'100%'} margin={1}  textAlign={'center'} minHeight={'40px'} >
+ <Typography fontSize={'18px'} fontWeight={900} variant='caption'  >
     {item.tenantName}
  </Typography>
  </Box>

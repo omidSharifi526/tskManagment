@@ -120,9 +120,15 @@ const Setting = () => {
    <Grid item xs={12}  md={6} > 
 
    <Box
+   margin={4}
+   borderColor={'#EAEAEA '}
+   borderRadius={10}
+   boxShadow={10}
      py={2}
      px={4}
+    
     width={'100%'}
+    height={'100%'}
     display={'flex'}
     flexDirection={'column'} alignItems={'start'} >
    {
@@ -165,7 +171,7 @@ const Setting = () => {
     endIcon={asyncState.success?<CheckIcon/>:<SettingsIcon/>}
     disabled={disabledSub}
     // sx={{fontSize:'14px',px:6,py:1,bgcolor:asyncState.success?'green':'#00387C'}}
-    sx={{fontSize:'14px',px:6,py:1,bgcolor:'#00387C'}}
+    sx={{fontSize:'18px',px:6,py:1,bgcolor:'#00387C',borderRadius:10  }}
     variant='contained' 
      onClick={()=>{
      initialAddSetting()
