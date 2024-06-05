@@ -1,21 +1,16 @@
 import React,{useEffect,useState} from 'react';
 import PeriodSlider from '../../../../components/GlobalComponents/PeriodSlider/PeriodSlider';
-<<<<<<< HEAD
-import { Grid,Box } from '@mui/material';
-import { useSelector } from 'react-redux';
-import ImageSelector from '../../../../components/GlobalComponents/ImageSelector/ImageSelector';
-=======
 // import { useSelector } from 'react-redux';
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
 import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
 import {Box,Button,Grid, Typography, BottomNavigationAction,} from '@mui/material';
 import { useSelector } from 'react-redux';
 //import {LoginState} from '../../components/Login/Types/index'
 import MeetingCard from '../../MeetingCard/MeetingCard';
-import { useGetAllMyMeetings } from '../../Hooks';
+import { useGetAllMeetings } from '../../Hooks';
 import CircularProgress from '@mui/material/CircularProgress';
 //import Loading from '../../components/Loading/Loading';
 import Skeleton from '@mui/material/Skeleton';
+// import { useGetAllMeetings } from '../../Hooks';
 import { useDispatch } from 'react-redux';
 import { setLoadingR } from '../../MeetingsSlice/MeetingsSlice';
 import { UseGetWebCheckinMeetingDetailsByMeetingId } from '../../Hooks';
@@ -48,7 +43,7 @@ export const AllMeetings = () => {
     const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
     const priodId=useSelector((state:any)=>state.meetings.priodId);
     const userPhoneNumber:string=useSelector((state:any)=>state.loign.userPhoneNumber);
-    const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMyMeetings({tenantId:profileTenantId,priodId:priodId,userPhoneNumber:userPhoneNumber})
+    const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMeetings({tenantId:profileTenantId,priodId:priodId,userPhoneNumber:userPhoneNumber})
     const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
     const periodList=useSelector((state:any)=>state.meetings.periodList);
     const meetingLoadState=useSelector((state:any)=>state?.meetings?.meetingsList);
@@ -133,11 +128,10 @@ export const AllMeetings = () => {
         <CircularProgress  />
        </Box>
     }
-<<<<<<< HEAD
 
-}
+// }
  
-}, [perData])
+// }, [perData])
 
 
 
@@ -153,7 +147,7 @@ export const AllMeetings = () => {
 <Grid container   >
 <Grid item xs={12}   >
 
-  <ImageSelector/>
+  {/* <ImageSelector/> */}
     {/* <PeriodSlider 
     setActiveIndex={setActiveIndex}
     
@@ -168,57 +162,3 @@ export const AllMeetings = () => {
 </Grid>
   )
 }
-=======
-  
-  
-  
-    return (
-      <Grid container  spacing={1} >
-        <Grid item xs={12}    >
-                       <Box display={'flex'}  flexDirection={'row-reverse'}>
-                      <Box width={'150px'}   >
-                      
-                      </Box>
-                       </Box>
-        </Grid>
-      
-     {
-   existData && existData.map((data:any,i:number):any=>{
-          return (<Grid item md={4} xs={12}  key={i}>
-  
-    
-            <MeetingCard 
-            setMeetId={setMeetId}
-            info={data}
-            prog={i}  
-            accessForReport={accessForReport}
-            setShowDownlodLink={setShowDownlodLink}
-            setPMeetingId={setMeetingId}
-            setshowEditMeeting={setshowEditMeeting}
-            showEditMeeting={showEditMeeting}
-             
-             
-             />
-            
-            
-            
-            </Grid>)
-        })
-      }
-  
-      {/* {
-        meetingsDataa?.length==0 && <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
-        <Typography>
-          در این دوره جلسه ایی وجود ندارد
-        </Typography>
-        </Box>
-      } */}
-  
-        
-  
-        
-      </Grid>
-    )
-  }
-  //export default AllMeetings
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
