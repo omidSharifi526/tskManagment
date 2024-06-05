@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react';
+import ImageSelector from '../../../../components/GlobalComponents/ImageSelector/ImageSelector';
 import PeriodSlider from '../../../../components/GlobalComponents/PeriodSlider/PeriodSlider';
 // import { useSelector } from 'react-redux';
 import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
@@ -147,7 +148,7 @@ export const AllMeetings = () => {
 <Grid container   >
 <Grid item xs={12}   >
 
-  {/* <ImageSelector/> */}
+  <ImageSelector/>
     {/* <PeriodSlider 
     setActiveIndex={setActiveIndex}
     

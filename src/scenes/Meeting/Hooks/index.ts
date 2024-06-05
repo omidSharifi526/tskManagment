@@ -14,11 +14,8 @@ import {
     getMeetingKeyResultValueById,
     getMeetingDetailById,
     editMeeting,
-<<<<<<< HEAD
-    deleteMeeting
-=======
-    getAllMyMeetingByIds
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
+    deleteMeeting,
+    // getAllMeetingByIds
 
 } from '../Api/Index';
 import { setMeetingsListR, setObjectivieR, setKeyResultsR, setLoadingR } from '../MeetingsSlice/MeetingsSlice';
@@ -48,7 +45,7 @@ const useGetAllMeetings = (meetIds: any | null) => {
 
 const useGetAllMyMeetings = (meetIds: any | null) => {
     const dispatch = useDispatch();
-    return useQuery(['getAllMyMeetingByIds', meetIds], getAllMyMeetingByIds, {
+    return useQuery(['getAllMyMeetingByIds', meetIds], getAllMeetingByIds, {
         // staleTime: 0,
         cacheTime:Infinity,
         enabled: !!meetIds,
@@ -402,9 +399,5 @@ export {
     useGetMeetingKeyResultValueById,
     useGetMeetingDetailById,
     useEditMeeting,
-<<<<<<< HEAD
     useDeleteMeeting
-=======
-    useGetAllMyMeetings
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
 }

@@ -154,9 +154,5 @@ export{
     getMeetingKeyResultValueById,
     getMeetingDetailById,
     editMeeting,
-<<<<<<< HEAD
     deleteMeeting
-=======
-    getAllMyMeetingByIds
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
 }

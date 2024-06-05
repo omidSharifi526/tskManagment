@@ -21,7 +21,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 // import {ReactComponent as Exeloo} from '../MeetingCard/StaticData/Svg/exeloo.svg';
 import Exeloo from '../MeetingCard/StaticData/Svg/exeloo.svg';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import DeleteIcon from '@mui/icons-material/Delete';
 import { useExportMeetingDetails } from '../Hooks/index';
 import EditMeeting from '../LComponents/Forms/EditMeeting/EditMeeting';
 import { useDeleteMeeting,useEditMeeting } from '../Hooks/index';
@@ -339,33 +339,4 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
       );
     }
 
-<<<<<<< HEAD
-
-
-          <Box >
-            <Button
-              variant='text'
-              onClick={() => {
-                LoginMeeting()
-              }}  >
-              ورود به جلسه
-            </Button>
-          </Box>
-
-          <Box>
-            <IconButton onClick={initialDeleteMeeting}   >
-             <DeleteIcon/>
-            </IconButton>
-          </Box>
-        </Box>
-
-      </CardContent>
-
-    </Card>
-  );
-}
-
-export default MeetingCard;
-=======
     export default MeetingCard;
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c

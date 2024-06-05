@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react';
-import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
-import { Box, Grid } from '@mui/material';
-import ModalLyt from '../../../../components/Layouts/ModalLyt/ModalLyt';
-import { CreateKeyResult } from '../../Forms/CreateKeyResult/CreateKeyResult';
-import AddTeam from '../../../CompanyManagment/Forms/AddTeam/AddTeam';
-import AddStaff from '../../../CompanyManagment/Forms/AddStaff/AddStaff';
-import AddMession from '../../Forms/AddMession/AddMession';
-import AddContract from '../../Forms/AddContract/AddContract';
-import AddCompany from '../../Forms/AddCompay/AddCompany';
-import ResetPassword from '../../../CompanyManagment/Forms/ResetPassword/ResetPassword';
-const PersonalOkRs = () => {
-=======
 // import React, { useState, useEffect } from 'react';
 // import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 // import { Box, Grid } from '@mui/material';
@@ -34,7 +20,6 @@ const PersonalOkRs = () => {
 //   const initialCreateKr = (): void => {
 //     setShowCreateKr(prev => !prev)
 //   }
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
 
 //   const initialAddStaff = () => {
 //     setShowAddStaff(prev => !prev)
@@ -56,42 +41,6 @@ const PersonalOkRs = () => {
 //     setshowAddCompany(prev => !prev)
 //   }
 
-<<<<<<< HEAD
-  const initialAddContract = () => {
-    setShowAddContract(prev => !prev)
-  }
-
-  const initialAddNewCompany = () => {
-    setshowAddCompany(prev => !prev)
-  }
-
-  const initialResetPassword = () => {
-    setShowResetPassword(prev => !prev)
-  }
-  return (
-    <>
-      <Grid container >
-        <Grid item xs={12} md={2} >
-          <DyButton
-            caption={'تعریف نتیجه کلیدی'}
-            onClick={initialCreateKr}
-            color={'red'}
-            disbled={false}
-            variant={'contained'}
-            type={'button'}
-            bgColor={'#00387C'}
-          />
-        </Grid>
-        {
-          showCreateKr && <ModalLyt
-            showModal={showCreateKr}
-            setShowModal={setShowCreateKr}
-            title={'ایجاد پرسنل'}  >
-            {/* <CreateKeyResult /> */}
-          </ModalLyt>
-        }
-
-=======
 //   const initialResetPassword = () => {
 //     setShowResetPassword(prev => !prev)
 //   }
@@ -118,7 +67,6 @@ const PersonalOkRs = () => {
 //           </ModalLyt>
 //         }
         
->>>>>>> 2d1341de30cc1e5fa56fd827e68a6d42b629019c
 
 //         <Grid item xs={12} md={2} mx={2}>
 //           <DyButton
