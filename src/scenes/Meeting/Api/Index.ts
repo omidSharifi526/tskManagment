@@ -1,5 +1,6 @@
 
 import axiosInstance from "../../../Axios/Axios";
+import MeetingCard from "../MeetingCard/MeetingCard";
 
 
 // https://localhost:7169/api/Meeting/GetAllMeetingsByTenantId?tenantId=004e13a4-1f2e-4fc9-9899-09569ff8b1fe&periodId=62f8b843-28dd-488b-9aaf-5c375b8988ed
@@ -118,6 +119,18 @@ const editMeeting=async(meetingData:any)=>{
   return await axiosInstance.post(`/Meeting/editMeeting`,meetingData)
 }
 
+// https://api.myokr.ir/api/Meeting/DeleteMeet
+// const deleteMeeting=async({queryKey}:any)=>{
+//   let meetingId:any=queryKey[1];
+//   console.log(meetingId)
+// return await axiosInstance.post(`/Meeting/DeleteMeet`,meetingId)
+// }
+
+const deleteMeeting=async(Ids:any)=>{
+  // let meetingId:any=queryKey[1];
+  return await axiosInstance.post(`/Meeting/DeleteMeeting`,Ids)
+}
+
 export{
     getAllMeetingByIds,
     getAllTeamsByTenantId,
@@ -133,5 +146,6 @@ export{
     exportMeetingDetails,
     getMeetingKeyResultValueById,
     getMeetingDetailById,
-    editMeeting
+    editMeeting,
+    deleteMeeting
 }

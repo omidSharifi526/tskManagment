@@ -22,16 +22,23 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import Exeloo from '../MeetingCard/StaticData/Svg/exeloo.svg';
 import { useExportMeetingDetails } from '../Hooks/index';
 import EditMeeting from '../LComponents/Forms/EditMeeting/EditMeeting';
+import { useDeleteMeeting,useEditMeeting } from '../Hooks/index';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useSelector } from 'react-redux';
 
 // setMeetId={setMeetId}
 // info={data}
 // prog={i}  
 // accessForReport={accessForReport}
 
+// {"deletedId":"d4a6a006-025c-4884-ae6c-c30c2e590c70","userId":"73b54dda-95cf-404e-a641-5abdce6fb8e5","tenantId":"eb781974-3cb0-4c3a-881e-97af686ce7f5"}
+
 
 
 const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,setPMeetingId,setshowEditMeeting}: any) => {
-
+  const userId=useSelector((state:any)=>state.loign.userInfo.userId);
+  const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
+  const[deleteIds,setDeleteIds]=useState<any>()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const[meetingId,setMeetingId]=useState<string>('');
@@ -62,6 +69,26 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
     dispatch(setMeetingIdR(meetDetail))
   
   }
+  const{mutate:deleteMeeting}=useDeleteMeeting();
+  // const{mutate:EditMeet}=useEditMeeting()
+  const initialDeleteMeeting=()=>{
+    let{id}=info;
+  let ids={
+      tenantId:tenantId,
+      userId:userId,
+      deletedId:id
+    }
+    // setDeleteIds((prev:any)=>({...prev,deletedId:id}))
+    deleteMeeting(ids)
+    
+  }
+
+  // useEffect(() => {
+    
+  // console.log(deleteMeetingData)
+   
+  // }, [deleteMeetingData])
+  
 
  
 
@@ -208,6 +235,12 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
               }}  >
               ورود به جلسه
             </Button>
+          </Box>
+
+          <Box>
+            <IconButton onClick={initialDeleteMeeting}   >
+             <DeleteIcon/>
+            </IconButton>
           </Box>
         </Box>
 

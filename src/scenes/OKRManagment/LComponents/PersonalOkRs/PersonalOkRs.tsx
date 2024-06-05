@@ -8,7 +8,7 @@ import AddStaff from '../../../CompanyManagment/Forms/AddStaff/AddStaff';
 import AddMession from '../../Forms/AddMession/AddMession';
 import AddContract from '../../Forms/AddContract/AddContract';
 import AddCompany from '../../Forms/AddCompay/AddCompany';
-import ResetPassword from '../../Forms/ResetPassword/ResetPassword';
+import ResetPassword from '../../../CompanyManagment/Forms/ResetPassword/ResetPassword';
 const PersonalOkRs = () => {
 
 
@@ -68,7 +68,7 @@ const PersonalOkRs = () => {
             {/* <CreateKeyResult /> */}
           </ModalLyt>
         }
-        
+
 
         <Grid item xs={12} md={2} mx={2}>
           <DyButton

@@ -4,7 +4,10 @@ import {addTeam,getAllTeams,getAllActivePersonByTenantId,
   editPerson,deleteTeam,deletePerson,
   editPersonStaff,deleteInvitedPerson,
   getTeamDetail,
-  editTeam
+  editTeam,
+  sendSms,
+  checkForgetCode,
+  addNewPassWord
 } from '../Api/index'
 
 
@@ -226,6 +229,34 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
  
        })
      }
+
+     const useSendSms=(sucessSendSms:any)=>{
+      return useMutation({
+    mutationFn: (body:any) =>sendSms(body),
+    onSuccess: (data:any) => {
+      sucessSendSms()
+    },
+  });
+     }
+
+     const useCheckForgetCode=(successCheckForgetCode:any)=>{
+      return useMutation({
+        mutationFn: (body:any) =>checkForgetCode(body),
+        onSuccess: (data:any) => {
+          successCheckForgetCode()
+        },
+      });
+     }
+    //  forgetPassword
+
+    const useAddNewPassWord=(sucessForgetPassword:any)=>{
+      return useMutation({
+        mutationFn: (body:any) =>addNewPassWord(body),
+        onSuccess: (data:any) => {
+          sucessForgetPassword()
+        },
+      });
+     }
      
 
      export{
@@ -240,5 +271,8 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
        useEditPersonStaff,
        useDeleteInvitedPerson,
        useGetTeamDetail,
-       useEditTeam
+       useEditTeam,
+       useSendSms,
+       useCheckForgetCode,
+       useAddNewPassWord
      }

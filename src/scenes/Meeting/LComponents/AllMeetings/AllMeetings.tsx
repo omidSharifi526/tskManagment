@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 import PeriodSlider from '../../../../components/GlobalComponents/PeriodSlider/PeriodSlider';
 import { Grid,Box } from '@mui/material';
 import { useSelector } from 'react-redux';
+import ImageSelector from '../../../../components/GlobalComponents/ImageSelector/ImageSelector';
 import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
 export const AllMeetings = () => {
     const[priodId,setPriodId]=useState<string|null>(null)
@@ -53,7 +54,9 @@ if (perData) {
   return (
 <Grid container   >
 <Grid item xs={12}   >
-    <PeriodSlider 
+
+  <ImageSelector/>
+    {/* <PeriodSlider 
     setActiveIndex={setActiveIndex}
     
     activeIndex={perData?.findIndex(item=>item.isCurrent)}
@@ -62,7 +65,7 @@ if (perData) {
      setPriodId={setPriodId}
 
     
-    />
+    /> */}
 </Grid>
 </Grid>
   )

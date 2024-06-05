@@ -781,7 +781,7 @@ const KRHColumns: any = useMemo(()=>
                                caption={'ذخیره'}
                                color={'#00387C'}
                                onClick={() => { }}
-                               disbled={!dirty || !isValid || AddChekinLoading || (pointSystemsL==="مرحله ای" && tensileScore==='' )}
+                               disabled={!dirty || !isValid || AddChekinLoading || (pointSystemsL==="مرحله ای" && tensileScore==='' )}
                                // !isValid || !dirty 
                                variant={'contained'}
                                bgColor={'#00387C'}

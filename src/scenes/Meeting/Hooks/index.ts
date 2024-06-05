@@ -13,7 +13,8 @@ import {
     exportMeetingDetails,
     getMeetingKeyResultValueById,
     getMeetingDetailById,
-    editMeeting
+    editMeeting,
+    deleteMeeting
 
 } from '../Api/Index';
 import { setMeetingsListR, setObjectivieR, setKeyResultsR, setLoadingR } from '../MeetingsSlice/MeetingsSlice';
@@ -348,6 +349,17 @@ const useEditMeeting=()=>{
         },
       });
 }
+const useDeleteMeeting=()=>{
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (data:any) =>deleteMeeting(data),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries('getAllMeetingByIds')
+        //   console.log(data)
+        },
+      });
+}
 
 
 export {
@@ -366,5 +378,6 @@ export {
     useExportMeetingDetails,
     useGetMeetingKeyResultValueById,
     useGetMeetingDetailById,
-    useEditMeeting
+    useEditMeeting,
+    useDeleteMeeting
 }
