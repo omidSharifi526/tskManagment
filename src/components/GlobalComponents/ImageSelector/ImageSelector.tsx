@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 // import ImagePreview from "../ImagePreview/ImagePreview";
 import { useState, useEffect,useRef } from "react";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-// import { DamageFileIcon } from "./Statics/index";
+
 
 const ImageSelector = ({
   imageSelectedType,

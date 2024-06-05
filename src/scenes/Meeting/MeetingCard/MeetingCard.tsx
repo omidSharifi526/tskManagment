@@ -159,7 +159,8 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
           <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'left'}>
        
        <IconButton onClick={()=>{
-            
+        initialDeleteMeeting()
+      
         }}   >
         <DeleteIcon color='error'   />
        </IconButton>
