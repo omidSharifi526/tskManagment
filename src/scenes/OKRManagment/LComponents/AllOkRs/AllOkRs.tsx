@@ -8,6 +8,7 @@ import { ReactComponent as ObjectiveVector } from '../../StaticData/Svgs/Objecti
 import ModalLyt from '../../../../components/Layouts/ModalLyt/ModalLyt';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import CreateObjective from '../../Forms/CreateObjective/CreateObjective';
+import EditObjective from '../../Forms/EditObjective/EditObjective';
 import {CircularProgress} from '@mui/material';
 import { useNavigate,useParams } from 'react-router-dom';
 import OCart from '../OCart/OCart';
@@ -26,6 +27,8 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
   const[addObjectiveStatus,setAddObjectiveStatus]=useState<any>(null);
   //const[objectiveAsynOpcState,setObjectiveAsyncOpState]=useState<any>(null);
   const[objectiveAsynOpcState,setObjectiveAsyncOpState]=useState<any>(null);
+  const [objectiveId,setObjectiveId]=useState<string|null>(null)
+  const[showEditObjective,setShowEditObjective]=useState<Boolean|null>(false);
 
 
   const initialAddObjective = (): void => {
@@ -37,6 +40,15 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
     setAllObjective(objetcideData)
 
   }, [objetcideData])
+
+
+  useEffect(() => {
+      
+    if (objectiveId) {
+        setShowEditObjective(true)
+    }
+    }, [objectiveId])
+    
 
 
   if (getObjectiveLoading || !allObjective || isFetched!==true) {
@@ -115,7 +127,10 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
                 <OCart obj={o}   
                 setShowToastMessage={setShowToastMessage}
                 afterSuccess={getObjectivesAgain}
-                setAddObjectiveStatus = {setAddObjectiveStatus}
+                setObjectiveId = {setObjectiveId}
+                item={o}
+                setShowEditForm={setShowEditObjective}
+                // setAddObjectiveStatus = {setAddObjectiveStatus}
                 setObjectiveAsyncOpState={setObjectiveAsyncOpState}
                 />
               </Box>
@@ -163,7 +178,48 @@ const AllOkRs = ({periodId,periodsData}:AllOKRComponentFace) => {
           </ModalLyt>
 
         }
+        {
+          <ModalLyt
+            showModal={showEditObjective}
+            setShowModal={setShowEditObjective}
+            width={700}
+            height={900}
+            title={'ویرایش هدف'}
+          >
+            <EditObjective  
+             periodsData={periodsData}
+             onSuccess={setShowEditObjective}
+             setShowToastMessage={setShowToastMessage}
+             setObjectiveAsyncOpState={setObjectiveAsyncOpState}
+             afterSuccess={getObjectivesAgain}
+             objectiveId={objectiveId}
+             onClose={setShowEditObjective}
+             //setEditObjectiveState={setObjectiveAsyncOpState}
+            />
 
+          </ModalLyt>
+
+        }
+        {/* {
+          showEditObjective  && <ModalLyt
+          showModal={showEditObjective }
+          setShowModal={setShowEditObjective}
+          height={500}
+          width={600}
+          title={'ویرایش هدف'}
+
+          >
+          {
+          showEditObjective  && <EditObjective
+          objectiveId={objectiveId}
+          loading={getObjectiveLoading}
+          onClose={setShowEditObjective}
+          setShowToastMessage={setShowToastMessage}
+          setEditObjectiveState={setObjectiveAsyncOpState}
+          />
+          }
+        </ModalLyt>
+        } */}
         {
             showToastMessage && <DYToastMessage
             //isSuccess={addObjectiveStatus?.isSuccess}

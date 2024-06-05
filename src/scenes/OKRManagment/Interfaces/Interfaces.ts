@@ -136,7 +136,7 @@ export interface addObjectiveFace{
   tenantId:string,
   isPublic:boolean,
   description:string,
-  calculateProgressType:string,
+  // calculateProgressType:string,
   keyResultParentIds:string[],
   allIds:string[],
   answerRequest:string

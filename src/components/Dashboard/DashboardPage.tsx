@@ -393,12 +393,12 @@ if (showTenantItem) {
         <List 
         component={'nav'} 
         // subheader={}
-        sx={{backgroundColor:'#00387C',height:'100%'}}
+        sx={{backgroundColor:'#00387C',height:'100%',}}
         >
           {itemsList.map((item, index) => {
             const { text, } = item;
             return(
-              <ListItem color='white ' sx={{fontSize:'0.7 rem'}} component={Link} to={item.to}  key={text}>
+              <ListItem color='white '  sx={{fontSize:'0.7 rem'}} component={Link} to={item.to}  key={text}>
                <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon>
               <Typography variant='body2' sx={{color:'white',fontWeight:600}} >{item.text}</Typography>
               </ListItem>

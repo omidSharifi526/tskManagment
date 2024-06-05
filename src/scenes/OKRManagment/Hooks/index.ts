@@ -6,10 +6,13 @@ import {GetAllActivePersonByTenantId,
     AddKeyResult,
     getAllObjectiveByPeriodId,
     AddObjective,
+    getObjectiveDetailsById,
+    EditObjective,
     getAllObjectiveDefinitionLevelByTenantId,
     GetAllObjectiveOKRStateByTenantId,
     getObjectiveDetails,
     getKeyResultDetailsById,
+    getAllObjectiveByPersonId,
     editKeyResult,
     deleteKr,
 getAllObjectiveNameWithKeyResultsByTenantId,
@@ -187,6 +190,24 @@ return useQuery(['GetAllObjectiveByPeriodId',periodId,profileTenantId],getAllObj
 })
 }
 
+const useGetAllObjectiveByPersonId=(periodId:string | null,profileTenantId:string | null)=>{
+    // console.log(periodId)
+return useQuery(['GetAllObjectiveByPersonId',periodId,profileTenantId],getAllObjectiveByPersonId,{
+    enabled:!!periodId,
+    // cacheTime:Infinity,
+    refetchOnWindowFocus:false,
+    onSuccess:(data:any)=>{
+    // console.log(data)
+    }
+    ,onError:(err)=>{
+    // console.log(err)
+    } ,
+    select:(data)=>{
+    let rawData=data?.data?.data;
+    return rawData
+    }
+})
+}
 
 
 
@@ -210,6 +231,21 @@ const useAddObjective=()=>{
 
     return useMutation({
         mutationFn: (data:any) =>AddObjective(data),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
+
+        },
+        onError:(err)=>{
+        console.log(err)
+        }
+      });
+}
+
+const useEditObjective=()=>{
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (data:any) =>EditObjective(data),
         onSuccess: (data) => {
             queryClient.invalidateQueries('GetAllObjectiveByPeriodId')
 
@@ -299,6 +335,23 @@ const useGetKeyResultDetailsById=(krId:string|null)=>{
         })
 }
 
+
+const useGetObjectiveDetailsById=(krId:string|null)=>{
+    return useQuery(['GetObjectiveDetailsById',krId],getObjectiveDetailsById,{
+        enabled:!!krId,
+        refetchOnWindowFocus:false,
+        cacheTime:Infinity,
+        onSuccess:(data:any)=>{
+         console.log(data)
+        },
+        select:(data)=>{
+         let rawData=data?.data?.data;
+        //  console.log(rawData)
+         return rawData
+        }
+        })
+}
+
 const useGetAllObjectiveNameWithKeyResultsByTenantId=(Ids:any|null)=>{
     return useQuery(['GetAllObjectiveNameWithKeyResultsByTenantId',Ids],getAllObjectiveNameWithKeyResultsByTenantId,{
         enabled:!!Ids.definitionLevelId,
@@ -368,12 +421,15 @@ export{
     useGetAllScoreLevelsByTenantId,
     useAddKeyResult,
     useGetAllObjectiveByPeriodId,
+    useGetAllObjectiveByPersonId,
     useAddObjective,
     useGetAllObjectiveDefinitionLevelByTenantId,
     useGetAllObjectiveOKRStateByTenantId,
     useGetObjectiveDetails,
     useGetKeyResultDetailsById,
     useEditKeyResult,
+    useEditObjective,
+    useGetObjectiveDetailsById,
     useDeleteKr,
     useDeleteObject,
     useGetAllObjectiveNameWithKeyResultsByTenantId,

@@ -13,8 +13,8 @@ import DyLinearProgress from '../../../../components/GlobalComponents/DyLinearPr
 import { useSelector } from 'react-redux';
 const OCart = (props:any) => {
     const navigate=useNavigate()
-    let{obj,setShowToastMessage,setObjectiveAsyncOpState}=props;
-    let{name,responsibleName,definitionLevelName,setPersonId,setShowEditModal,id,weight,evaluationPercentage
+    let{obj,setObjectiveId,setShowEditForm,setShowToastMessage,setObjectiveAsyncOpState}=props;
+    let{name,responsibleName,definitionLevelName,setShowEditModal,id,weight,evaluationPercentage
         ,objectivesStateName,keyResultCount
     }=obj;
     const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
@@ -41,9 +41,9 @@ const OCart = (props:any) => {
         }
       }, [deleteData,isSuccess])
       
-const initialEditPerson=(perId:string|null)=>{
-  setShowEditModal(true)
-  setPersonId(id)
+const initialEditObject=(perId:string|null)=>{
+  setShowEditForm(true)
+  setObjectiveId(id)
   }
   
       
@@ -74,7 +74,7 @@ const initialEditPerson=(perId:string|null)=>{
         <Box display={'flex'} justifyContent={'end'} >
         <Box >
         <IconButton onClick={()=>{
-            initialEditPerson(id)
+            initialEditObject(id)
         }}   >
         <EditIcon color='primary'   />
        </IconButton>

@@ -40,7 +40,7 @@ const EditTeam = (props:any) => {
             managerId:managerId,
             id:id,
             tenantId:tenantId,
-             fromDate:"1403/2/19",
+             fromDate:"",
              toDate:null,
              lastModifiedById:userId,
              PersonIds:personQueryResultDtos?.map(({id}:any)=>id)
