@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 // import uuid from "react-uuid";
 // import ImagePreview from "../ImagePreview/ImagePreview";
 import { useState, useEffect,useRef } from "react";
+import axios from "axios";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 
@@ -31,9 +32,11 @@ const ImageSelector = ({
   setSampleInformationImages,deleteImageHock
 }:any) => {
   const [orderImages, setOrderImages] = useState([]);
+  const existToken = localStorage.getItem('accessToken');
   const [unauthorizedFiles, setUnauthorizedFiles] = useState(null);
   const theme = useTheme();
   const fileRef:any =useRef<any>(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 //   const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
 
@@ -45,48 +48,95 @@ const ImageSelector = ({
   }, [images]);
 
   const handleSetImages = (imgs:any) => {
-    const { type, data } = imgs;
+    var formData = new FormData();
+ 
+    const {data } = imgs;
+    let file=data[0];
+    setSelectedFile(file);
+
+    // headers: {}
+
+
     const imagesArray = Array.from(data);
     const authorizedFiles:any[] = [];
     const unauthorizedFiles = [];
 
-    for (let i = 0; i < imagesArray.length; i++) {
-      const file:any = imagesArray[i];
-      if (
-        (file.type.includes("image/") &&
-          ["png", "jpeg", "jpg", "svg+xml"].includes(
-            file.type.split("/")[1]
-          )) ||
-        file.name.endsWith(".svg")
-      ) {
-        authorizedFiles.push(file);
-      } else {
-        unauthorizedFiles.push(file);
-        // setUnauthorizedFiles(unauthorizedFiles);
-      }
-    }
+    // const convertToBase64 = (file) => {
+    //   return new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onload = () => resolve(reader.result);
+    //     reader.onerror = (error) => reject(error);
+    //   });
+    // };
 
-    if (imagesArray.length > 0 && unauthorizedFiles.length === 0) {
-      setUnauthorizedFiles(null);
-      let images = imagesArray.map((file:any) => {
-        return {
-        //   id: uuid(),
-          picture: file,
-          imageSelectedType: imageSelectedType,
-          imageName: file.name,
-          title: file.name,
-          url: URL.createObjectURL(file),
-          // type:editMode?'added':null
-        };
-      });
-      setImages((prev:any)=>[...prev ,...images]);
-    }
+    // for (let i = 0; i < imagesArray.length; i++) {
+    //   const file:any = imagesArray[i];
+    //   if (
+    //     (file.type.includes("image/") &&
+    //       ["png", "jpeg", "jpg", "svg+xml"].includes(
+    //         file.type.split("/")[1]
+    //       )) ||
+    //     file.name.endsWith(".svg")
+    //   ) {
+    //     authorizedFiles.push(file);
+    //   } else {
+    //     unauthorizedFiles.push(file);
+    //     // setUnauthorizedFiles(unauthorizedFiles);
+    //   }
+    // }
+
+    // if (imagesArray.length > 0 && unauthorizedFiles.length === 0) {
+    //   setUnauthorizedFiles(null);
+    //   let images = imagesArray.map((file:any) => {
+    //     return {
+    //     //   id: uuid(),
+    //       picture: file,
+    //       imageSelectedType: imageSelectedType,
+    //       imageName: file.name,
+    //       title: file.name,
+    //       url: URL.createObjectURL(file),
+    //       // type:editMode?'added':null
+    //     };
+    //   });
+    //   setImages((prev:any)=>[...prev ,...images]);
+    // }
   };
 
   useEffect(() => {
     setOrderImages(images);
     // console.log(images);
   }, []);
+
+  const convertToBase64 = (file:any) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert("Please select a file first!");
+      return;
+    }
+
+    try {
+      const base64String = await convertToBase64(selectedFile);
+      console.log(base64String);
+
+      axios.post('https://api.myokr.ir/Api/Upload/Upload', base64String, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${existToken}`
+        }
+    })
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
 
   return (
     <Grid
@@ -117,6 +167,9 @@ const ImageSelector = ({
           >
             {title}
           </Typography>
+          <Button onClick={handleUpload}  >
+            uploadFile
+          </Button>
           <Button
             variant={AddButtonVariant ? AddButtonVariant : ""}
             color={addButtonColor ? addButtonColor : ""}

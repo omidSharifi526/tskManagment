@@ -94,6 +94,7 @@ return await axiosInstance.post(`/Account/CheckForgetCode`,body)
 const addNewPassWord=async(body:any)=>{
 return await axiosInstance.post(`/Account/ForgetPassword`,body)
 }
+// Api/Upload/Upload
 
     export{
         addTeam,

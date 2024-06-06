@@ -72,7 +72,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
     }
 
 
-    const{data:editKrData,mutate:callEditKR,isSuccess,isError}=useEditKeyResult(localEditKrSuccess)
+    const{data:editKrData,mutate:callEditKR,isSuccess,isError,isLoading:editLoading}=useEditKeyResult(localEditKrSuccess)
     // const[teamAsynOpcState,setTeamAsyncOpState]=useState<any>(null);
 
     const initialEditKr = (data: any) => {
@@ -202,8 +202,8 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
 
              setPointingSystemType(pointingSystemTypeValue);
              if (horizontalAlignments!==null) {
-                setHorizontalAlignments(horizontalAlignments?.map(({managerId,name}:any)=>{
-                    return{value:managerId,key:name}
+                setHorizontalAlignments(horizontalAlignments?.map(({managerId,name,id}:any)=>{
+                    return{value:id,key:name}
                      }))
              }
 
@@ -596,6 +596,8 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                                         <DyButton
                                         key={i}
                                         // disabled={dirty || !isValid}
+
+                                        disabled={editLoading}
                                              type={'submit'}
                                              variant={'contained'}
                                              bgColor={'info'}

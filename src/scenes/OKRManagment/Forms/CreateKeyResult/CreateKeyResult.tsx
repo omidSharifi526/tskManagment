@@ -42,7 +42,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     const{data:HorzinalAlignData}=useGetAllHorizontalAlignmentByTenantId(tenantId);
     const{data:submitFormOptions}=useGetAllOKRStateByTenantId(tenantId);
     const{data:levelIds,isFetched:getLevelsIds}:any=useGetAllScoreLevelsByTenantId(tenantId);
-    const{mutate:addKeyResulttt,isSuccess,data}=useAddKeyResult();
+    const{mutate:addKeyResulttt,isSuccess,data,isLoading:AddKrLoading}=useAddKeyResult();
     const[successAddkr,setSuccessAddkr]=useState<boolean|null>(null);
     const[addkrMessage,setAddkrMessage]=useState<string>('');
     const [horizontalAlignments,setHorizontalAlignments]=useState([]);
@@ -136,41 +136,9 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     }
 
 
-    useEffect(() => {
-        let valid=false
-//   if (hundredValue.value!=='') {
-//     valid=false
-//   }
 
-//     setValidationIds(valid)
-
-
-if (pointingSystemType==='Regularly') {
-      if (hundredValue.value!=='') {
-    setValidationIds(true)
-  }
-//   else{
-//     idsValue.forEach((item:any)=>{
-//     if (item.value==='') {
-//        valid=true
-//     }
-//     })
-//   }
-
-
-//   setValidationIds(valid)
-
-
-
-
-}
     
-     
-    }, [])
-    
-    useEffect(() => {
-   console.log(pointingSystemType)
-    }, [pointingSystemType])
+
     
     
    
@@ -297,6 +265,7 @@ if (pointingSystemType==='Regularly') {
                                   value={hundredValue?.value}
                                   onChange={({target}:any)=>{
                                     let{value}:any=target;
+                                    setValidationIds(false)
                                     initialSetHunderdvalue(value)
                                   }}
                                   label={'چه زمانی به 100% میرسد؟ '}   />
@@ -415,7 +384,7 @@ if (pointingSystemType==='Regularly') {
                                         <DyButton
                                             key={i}
                                             // || validationPIds
-                                             disabled={!dirty || !isValid }
+                                             disabled={!dirty || !isValid || AddKrLoading || validationPIds }
                                              type={'submit'}
                                              variant={'contained'}
                                              bgColor={'info'}

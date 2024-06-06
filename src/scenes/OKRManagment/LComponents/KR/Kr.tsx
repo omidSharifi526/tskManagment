@@ -57,7 +57,9 @@ if (krId) {
     let{name,createByName,objectivesStateName,
       periodName,definitionLevelName,
       keyResultQueryResultDtos,calculateProgressType,
-      weight,answerRequest,description}=objData;
+      weight,answerRequest,description,
+      responsibleName
+    }=objData;
       setKeyResults(keyResultQueryResultDtos)
     let objjjdata={
       name:name,
@@ -69,7 +71,8 @@ if (krId) {
       calculateProgressType:calculateProgressType,
       weight:weight,
       answerRequest:answerRequest,
-      description:description
+      description:description,
+      responsibleName:responsibleName
 
     }
 
@@ -164,8 +167,10 @@ const initialCreateKr=():void=>{
       <Box>
        <Typography variant='body1' fontWeight={800} mb={1} >
        {
-          objectiveDetails?.createByName
+          objectiveDetails?.responsibleName
+          // 'ایمنننن'
         }
+        
        </Typography>
       </Box>
       </Box>
