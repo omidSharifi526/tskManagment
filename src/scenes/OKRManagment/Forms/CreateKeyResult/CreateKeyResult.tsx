@@ -3,12 +3,14 @@ import { useParams,useLocation } from 'react-router-dom';
 import { addKeyResultSchema } from '../../StaticData/index';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
 import { Box, Grid, TextField, Typography,MenuItem,InputLabel,FormControl,Select } from '@mui/material';
-import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
+// import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import { Formik, Form } from 'formik';
+import MultiSel from '../../../../components/MultiSel/MultiSel';
 import { addKrValues } from '../../StaticData/index';
+import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
 import { useGetAllObjectiveDefinitionLevelByTenantId } from '../../Hooks';
-import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
+// import DySplitButton from '../../../../components/GlobalComponents/DySplitButton/DySplitButton';
 import { useGetAllActivePersonByTenantId,
     useGetAllHorizontalAlignmentByTenantId,
     useGetAllOKRStateByTenantId,
@@ -20,16 +22,11 @@ import { useSelector } from 'react-redux';
 import {pointSystem,keyResultTypeOptions} from '../../StaticData/index';
 
 interface createKrFace{
-    // addKrSuccess
     addKrSuccess:() => any,
     setShowToastMessage:(show:boolean) => void
     setAddKrState:(show:any) => void,
     setShowCreateKr:(show:boolean)=>void
-    // message:string|null,
-    // isSuccess:boolean|null,
-    // setShow:(show:boolean) => void
-    // setShowToastMessage={setShowToastMessage}
-    // setAddKrState={setAddKrState}
+
   }
 
 
@@ -48,6 +45,10 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     const{mutate:addKeyResulttt,isSuccess,data}=useAddKeyResult();
     const[successAddkr,setSuccessAddkr]=useState<boolean|null>(null);
     const[addkrMessage,setAddkrMessage]=useState<string>('');
+    const [horizontalAlignments,setHorizontalAlignments]=useState([]);
+    const[showLtoastMessage,setShowLtoastMessage]=useState<any>(null);
+    const[addKrStatusData,setAddKrStatusData]=useState<any>(null);
+    const[validationPIds,setValidationIds]=useState<boolean>(true)
 
     const[tval,setTval]=useState<any>(null)
     const[hundredValue,setHundredValue]=useState<any>({value:'',scoreLevelId:'',tenantId:tenantId})
@@ -56,13 +57,9 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
         let{pointingSystemType}=data;
 
         let ids=pointingSystemType==='Regularly'?[{...hundredValue}]:idsValue;
-        // console.log(ids)
-        // console.log(pointingSystemType)
-        // pointingSystemType==="Tensile"?idsValue:[]
         let totalData={tenantId:tenantId,objectiveId:objectiveId,onValue:'',...data};
-        totalData.valuesDetailCommandDtos=ids;      
-        // pointingSystemType
-
+        totalData.valuesDetailCommandDtos=ids;
+        totalData.horizontalAlignments=horizontalAlignments.map((({value})=>value))      
         console.log(totalData);
 
 
@@ -87,25 +84,30 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
 
     useEffect(() => {
         let finded:any = levelIds?.find((o:any) => o.name === "1");
-        // console.log(scoreLevelId)
-        // console.log(levelIds)
         setTval(finded?.scoreLevelId)
-    // console.log(tval)
-    
     }, [levelIds])
     
 
 
-
     useEffect(() => {
         if (data) {
-            // console.log(data)
-          setShowCreateKr(false)
-          setAddKrState(data?.data)
-          setSuccessAddkr(isSuccess)
-          addKrSuccess()
-          setShowToastMessage(true)
+      
+            if (data?.data.isSuccess) {
+                  // setSuccessAddObjective(isSuccess)
+                  setShowToastMessage(true)
+                  setAddKrState(data?.data)
+                  setShowCreateKr(false)
+        
+            } else {
+                setShowLtoastMessage(true);
+                setAddKrStatusData(data?.data)
+            }
+          
+      
         }
+        
+      
+      
             }, [data,isSuccess]);
 
          
@@ -132,6 +134,45 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
         // console.log(iniVal)
         setHundredValue(iniVal)
     }
+
+
+    useEffect(() => {
+        let valid=false
+//   if (hundredValue.value!=='') {
+//     valid=false
+//   }
+
+//     setValidationIds(valid)
+
+
+if (pointingSystemType==='Regularly') {
+      if (hundredValue.value!=='') {
+    setValidationIds(true)
+  }
+//   else{
+//     idsValue.forEach((item:any)=>{
+//     if (item.value==='') {
+//        valid=true
+//     }
+//     })
+//   }
+
+
+//   setValidationIds(valid)
+
+
+
+
+}
+    
+     
+    }, [])
+    
+    useEffect(() => {
+   console.log(pointingSystemType)
+    }, [pointingSystemType])
+    
+    
    
 
     
@@ -141,15 +182,15 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     return (
         <>
             <Box width={'100%'} maxHeight={'50em'}  >
-               {
-                !isSuccess? <Formik enableReinitialize
+               
+         <Formik enableReinitialize
                 initialValues={addKrValues}
                 validationSchema={addKeyResultSchema}
                 onSubmit={(data) => {
                     initialAddKeyR(data)
                 }}
                 validate={(data:any)=>{
-                 console.log(data)
+                //  console.log(data)
                  let{pointingSystemType}=data;
                  setPointingSystemType(pointingSystemType)
 
@@ -248,21 +289,11 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                 </Grid>
                                 
                               {
-                                pointingSystemType==='Regularly'?<Grid item xs={12} md={3}  >
-                                {/* <FormikControl
-                                    control='textField'
-                                    type={'text'}
-                                    label='چه زمانی به 100% میرسد؟ '
-                                    name='onValue'
-                                    fullWidth
-                                    values={values?.onValue}
-                                /> */}
-
+                                pointingSystemType==='Regularly'?<Grid item xs={12} md={3}>
                                <Box  sx={{padding:'8px'}}  >
                                <TextField 
                                   fullWidth
-                                  size='small'
-                                 
+                                  size='small'                  
                                   value={hundredValue?.value}
                                   onChange={({target}:any)=>{
                                     let{value}:any=target;
@@ -291,36 +322,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                 </Grid>
                                 })
                             }
-                            {/* <Grid item xs={12} md={3}  >
-                                <FormikControl
-                                    control='textField'
-                                    type={'text'}
-                                    label='چه زمانی به 30% میرسد؟ '
-                                    name='onValue'
-                                    fullWidth
-                                    values={values?.onValue}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={3}  >
-                                <FormikControl
-                                    control='textField'
-                                    type={'text'}
-                                    label='چه زمانی به 70% میرسد؟ '
-                                    name='onValue'
-                                    fullWidth
-                                    values={values?.onValue}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={3}  >
-                                <FormikControl
-                                    control='textField'
-                                    type={'text'}
-                                    label='چه زمانی به 100% میرسد؟ '
-                                    name='onValue'
-                                    fullWidth
-                                    values={values?.onValue}
-                                />
-                            </Grid> */}
+              
                             </>
                             
                             
@@ -335,7 +337,6 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                           <AccordionLyt 
                           collapse={setShowAdvanceOptions}
                           title={' تنظیمات پیشرفته ( اختیاری)'} 
-                        //   showAdvanceOptions,setShowAdvanceOptions
                           expanded={showAdvanceOptions}  >
                           <Grid container  >
                           <Grid item xs={12} md={3}  >
@@ -345,31 +346,20 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         label='وزن'
                                         name='weight'
                                         fullWidth
-                                        value={values?.weight}
+                                        value={values?.weight || ''}
                                     />
                         </Grid>
-                             {/* <Grid item xs={12} md={3}  >
-                                    <FormikControl
-                                        control='select'
-                                        options={HorzinalAlignData||[]}
-                                        label='همسویی افقی'
-                                        name='horizontalAlignment'
-                                        fullWidth
-                                        values={values?.horizontalAlignment}
-                                    />
-                                </Grid> */}
 
-                                       <Grid item xs={12} md={3} >
-                                            <MultiSelect
-                                            options={teamsOptions?.map((item:any)=>{
-                                             let{key,value}=item;
-                                             return{year:value,title:key}
-                                            }) || []}
-                                            isLoading={teamOPloading}
-                                            onChangee={setFieldValue}
-                                            propName='horizontalAlignments'
+
+                                       <Grid item xs={12} md={3} >         
+                                        <Box sx={{padding:'8px'}}   >
+                                        <MultiSel 
+                                            data={teamsOptions||[]}
+                                            extractTag={setHorizontalAlignments}
                                             label={'همسویی افقی'}
+                                           
                                             />
+                                        </Box>
                                             </Grid>
 
                                 <Grid item xs={12} md={3}>
@@ -409,39 +399,45 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                 </AccordionLyt>
                           </Grid>
 
+                             <Grid item xs={12} md={12} mt={3} >
+                                <Box width={'100%'} display={'flex'} 
+                                justifyContent={'end'} 
+                                flexDirection={'row-reverse'}   
+                                columnGap={2}
+                                >
 
-                                
+                                   
+                                 {
+                                    submitFormOptions && submitFormOptions?.map((item:any,i:number)=>{
+                                        let{label,id}=item;
+                                        // console.log(item)
+                                        return   <Box width={'20%'}>
+                                        <DyButton
+                                            key={i}
+                                            // || validationPIds
+                                             disabled={!dirty || !isValid }
+                                             type={'submit'}
+                                             variant={'contained'}
+                                             bgColor={'info'}
+                                             caption={label}
+                                             onClick={() => {
+                                                // console.log(id)
+                                                setFieldValue('oKRStateId',id)
+                                                // console.log(id)
+                                                // setOkrStateId(id)
+                                              }}
+                                         />
+                                        </Box> 
+                                    })
+                                 }
 
-                                
-                           
+                              </Box>
 
-                          
-                              
-
-                                
-
-                                
+                             
+                            </Grid>
 
 
 
-
-                                <Grid item xs={12} md={12} mt={3} >
-                                    <Box width={'100%'} display={'flex'} flexDirection={'row-reverse'} >
-                                        <DySplitButton 
-                                        disbled={!dirty || !isValid}
-                                        onclick={setFieldValue}
-                                        options={submitFormOptions || []}
-
-                                        />
-                                        {/* <DyButton
-                                            type={'submit'}
-                                            variant={'contained'}
-                                            bgColor={'info'}
-                                            caption={'افزودن نتیجه'}
-                                            onClick={() => { }}
-                                        /> */}
-                                    </Box>
-                                </Grid>
                             </Grid>
 
 
@@ -460,14 +456,19 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                         </Form>
                 }
 
-            </Formik>:<Box py={5} textAlign={'center'} >
-            <Typography fontWeight={700}  color={'green'} >
-                
-                   {addkrMessage}
-                
-            </Typography>
-            </Box>
-               }
+            </Formik>
+
+            {
+            showLtoastMessage && <DYToastMessage
+            isSuccess={addKrStatusData?.isSuccess}
+            message={addKrStatusData?.metaData.message}
+            setShow={setShowLtoastMessage}
+            show={showLtoastMessage}
+            
+            />
+            }
+          
+               
             </Box>
         </>
     )

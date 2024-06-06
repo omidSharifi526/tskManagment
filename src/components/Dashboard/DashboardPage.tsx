@@ -164,13 +164,13 @@ const itemsList = [
   ,
   {
     text:"راهنمای نرم افزار",
-    icon: <GuideIcon  />,
+    icon: <GuideIcon fontSize='large'  />,
     to:"/dashboard/helpsoftware"
   }
   ,
   {
     text:"درباره ما",
-    icon: <AboutUsIcon  />,
+    icon: <AboutUsIcon fontSize='large'  />,
     to:"/dashboard/aboutus"
   }
   // SettingsIcon
@@ -188,6 +188,7 @@ const itemsList = [
 
 export default function MiniDrawer() {
   // const theme=useTheme();
+  const[activeIndex,setActiveIndex]=React.useState<number>(0)
 
 
   const { locale, setLocale, toggleColorMode }:any =
@@ -288,20 +289,7 @@ if (showTenantItem) {
 
                       <Box sx={{display:'flex'}} columnGap={2} alignItems={'center'} > 
                     
-                     {/* <IconButton>
-                     <Badge overlap="circular"  variant="dot"  color="success" >
-                      <NotificationsNoneIcon color="action" />
-                      </Badge>
-                     </IconButton> */}
-        
-                      {/* <Typography  fontSize={'0.8rem'} fontWeight={600} pr={3}  color={'black'}>
-                    {tenantName}
-                      </Typography> */}
-                      {/* <IconButton   onClick={initialShowTenantList}   >
-                     <Typography sx={{fontSize:'15px',fontWeight:600}}>
-                     {tenantName}
-                     </Typography>
-                      </IconButton> */}
+          
                 
                       
                       {
@@ -398,9 +386,24 @@ if (showTenantItem) {
           {itemsList.map((item, index) => {
             const { text, } = item;
             return(
-              <ListItem color='white '  sx={{fontSize:'0.7 rem'}} component={Link} to={item.to}  key={text}>
+              <ListItem color='white ' 
+              onClick={()=>{
+                console.log(index)
+                setActiveIndex(index)
+              }}
+              sx={{fontSize:'0.7 rem'}} component={Link} to={item.to}  key={text}>
                <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon>
-              <Typography variant='body2' sx={{color:'white',fontWeight:600}} >{item.text}</Typography>
+              <Typography variant='button' sx={{
+                color:index===activeIndex?'white':'white',
+                fontWeight:600,
+       
+                bgcolor:index===activeIndex?'#F85700':'#00387C',
+                borderRadius:4,
+               
+                p:1
+              }
+                
+                } >{item.text}</Typography>
               </ListItem>
 
 

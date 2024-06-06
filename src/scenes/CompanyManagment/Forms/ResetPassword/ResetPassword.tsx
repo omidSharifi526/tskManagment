@@ -9,17 +9,32 @@ import { useSendSms,useCheckForgetCode,useAddNewPassWord } from '../../Hooks';
 import CloseIcon from '@mui/icons-material/Close';
 
 import LockResetIcon from '@mui/icons-material/LockReset';
-// setContentState={setContentState}
-const ResetPassword = (props: any) => {
 
+const ResetPassword = (props: any) => {
+  const [StatusCheckCode,setStatusCheckCode]=useState<boolean|null>(false)
 const sucessSendSms=()=>{
           
-  setContent('enterCode')
+  // setContent('enterCode')
+
+  if (true) {
+    setContent('enterCode')
+  }
+  // else{
+ 
+  // }
 }
 
-const successCheckForgetCode=()=>{
-setContent('enterNewPassword')
-}
+// const successCheckForgetCode=()=>{
+//   if (StatusCheckCode) {
+//     setContent('enterNewPassword')
+//   } else {
+//        setContentMessage('کد وارد شده اشتباه است')
+//        setTimeout(() => {
+//         setStatusCheckCode(true)
+//        }, 1000);
+//   }
+
+// }
 
 const sucessForgetPassword=()=>{
   setContentState({ content: 'login' })
@@ -27,7 +42,7 @@ const sucessForgetPassword=()=>{
 
   const{mutate:callAddNewPassWord,data:AddNewPassWordData,isLoading:addPassLoad}=useAddNewPassWord(sucessForgetPassword)
   const{mutate:sendSms,isLoading:sendSmsLoading,data:sendSmsData}=useSendSms(sucessSendSms);
-  const{mutate:checkCode,isLoading:checkCodeLoading,data:checkCodeData}=useCheckForgetCode(successCheckForgetCode);
+  const{mutate:checkCode,isLoading:checkCodeLoading,data:checkCodeData}=useCheckForgetCode();
   // const{mutata:callAddNewPassWord,isLoading:addPassLoading,data:addPassData}=useForgetPassword(sucessForgetPassword)
 
   const[userPhoneNumber,setUserPhoneNumber]=useState<string>('')
@@ -56,8 +71,22 @@ const sucessForgetPassword=()=>{
   }, [content])
 
   useEffect(() => {
+
+    if (checkCodeData) {
+      // console.log(checkCodeData)
+
+      let{data}=checkCodeData;
+      if (data) {
+        setContent('enterNewPassword')
+      }
+      else{
+        setContentMessage('کد وارد شده اشتباه است')
+      }
+      
+    }
+
     
-  console.log(checkCodeData)
+
 
   }, [checkCodeData])
   

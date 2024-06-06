@@ -239,11 +239,11 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
   });
      }
 
-     const useCheckForgetCode=(successCheckForgetCode:any)=>{
+     const useCheckForgetCode=()=>{
       return useMutation({
         mutationFn: (body:any) =>checkForgetCode(body),
         onSuccess: (data:any) => {
-          successCheckForgetCode()
+          // successCheckForgetCode()
         },
       });
      }

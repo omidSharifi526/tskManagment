@@ -14,7 +14,7 @@ import { Formik, Form } from 'formik';
 import { addKrValues } from '../../StaticData/index';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useGetAllObjectiveDefinitionLevelByTenantId } from '../../Hooks';
-// import DYToastMessage from '../../../../components/GlobalComponents/DyToastMessage/DYToastMessage';
+import MultiSel from '../../../../components/MultiSel/MultiSel';
 
 import { useGetAllActivePersonByTenantId,
     useGetAllHorizontalAlignmentByTenantId,
@@ -91,6 +91,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                 ...rest};
             totalData.valuesDetailCommandDtos=ids; 
             totalData.onValue='';     
+            console.log(totalData)
      
            callEditKR(totalData)
 
@@ -309,17 +310,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                 ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }: any) =>
                     <Form>
                         <Grid container  >
-                            {/* <Grid item xs={12} md={3}  >
-                                <FormikControl
-                                    control='textField'
-                                    type='text'
-                                    label='شرح نتیجه کلیدی'
-                                    name='name'
-                                    fullWidth
-                                    value={values?.name || ''}
-                                />
 
-                            </Grid> */}
 
                             <Grid item xs={12} md={3}  >
 
@@ -366,7 +357,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                                     id="demo-simple-select"
                                     value={values?.pointingSystemType || ''}
                                     label="سیستم امتیاز دهی "
-                                    onChange={({target}:any)=>{
+                                    onChange={({target}:any,)=>{
                                        let{value}=target;
                                     //    setFieldValue('pointingSystemType',value)
                                        setPointingSystemType(value)
@@ -479,12 +470,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                        
                         </>
                         
-                        
-                    
-                        
-
                           }
-
 
 
                       <Grid item xs={12} >
@@ -506,25 +492,31 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                             value={values?.weight || 0}
                             onChange={({target}:any)=>{
                             let{value}=target;
-                            setFieldValue('weight',value)
+                             if (value) {
+                                setFieldValue('weight',value)
+                             }
+                             else{
+                                setFieldValue('weight',null)
+                             }
                             }}
                             />
 
                             </Box>
                             </Grid>
 
-                                  
-                                        <Grid item xs={12} md={3}   >
-                                            <NewMultiSelect 
-                                            setHorizontalAlignments={setHorizontalAlignments}
-                                            selectedItems={krHorizontalAlignments}
+
+
+                                       <Grid item xs={12} md={3} >         
+                                        <Box sx={{padding:'8px'}}   >
+                                        <MultiSel 
+                                            data={teamsOptions||[]}
+                                            extractTag={setHorizontalAlignments}
                                             label={'همسویی افقی'}
-                                            propName='horizontalAlignments'
-                                            // onChangee={setFieldValue}
-                                            isLoading={teamOPloading}
-                                            options={teamsOptions || []}
+                                            editMode={true}
+                                            tagSelected={krHorizontalAlignments}
                                             />
-                                        </Grid>
+                                        </Box>
+                                            </Grid>
 
 
                                         
@@ -545,17 +537,6 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
         </FormControl>
 
 
-
-
-        {/* <DatePicker 
-        value={}
-        /> */}
-        {/* <FormikControl
-            control="date"
-            label=
-            name="startDate"
-            value={values?.startDate}
-        /> */}
                          </Grid>
 
                          <Grid item xs={12} md={3}>
@@ -614,6 +595,7 @@ export const EditKeyResult = ({editKrSuccess,setShowToastMessage,setAddKrState,s
                                         return   <Box width={'20%'}>
                                         <DyButton
                                         key={i}
+                                        // disabled={dirty || !isValid}
                                              type={'submit'}
                                              variant={'contained'}
                                              bgColor={'info'}
