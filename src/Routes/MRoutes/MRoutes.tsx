@@ -9,7 +9,7 @@ import { AuthProvider } from "../../Context/AuthProvider";
 import {RequierAuth,ReqPhone} from "../../components/RequierAuth/RequierAuth";
 import { useSelector } from "react-redux";
 import Kr from "../../scenes/OKRManagment/LComponents/KR/Kr";
-
+// import Profile from "../../scenes/CompanyManagment/Copmonents/Profile/Profile";
 import OverView from "../../scenes/OverView/OverView";
 
 
@@ -24,15 +24,14 @@ const Aboutus = lazy(() => import('../../scenes/Aboutus/Index'));
 const AllTenantOkrs = lazy(() => import('../../scenes/AllTenantOkrs/Index'));
 const Helpsoftware = lazy(() => import('../../scenes/Helpsoftware/Index'));
 const TenantDash = lazy(() => import('../../scenes/TenantDash/Index'));
-
+const Profile = lazy(() => import('../../scenes/CompanyManagment/Copmonents/Profile/Profile'));
 const Mrouter=createBrowserRouter(createRoutesFromElements(
  <>
  <Route path="/" element={<LoginPage/>} />
- {/* <RequierAuth><CompanyTeams/></RequierAuth> */}
- {/* <RequierAuth><Dashboard/></RequierAuth> */}
+  
   <Route path="/companyTeams"  element={<RequierAuth><CompanyTeams/></RequierAuth>} />
   <Route  path="/dashboard" element={<RequierAuth><Dashboard/></RequierAuth>}>
-  <Route index path="/dashboard/meetings"  element={<MeetingTabsContainer/>} />
+  <Route  path="/dashboard/meetings"  element={<MeetingTabsContainer/>} />
   <Route  path="/dashboard/tenants" element={<ReqPhone><Tenants/></ReqPhone>} />
   
   
@@ -62,6 +61,15 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
   fallback={<div>درحال بارگزاری...</div>} >
     <RequierAuth>
     <CompanyManagment/>
+    </RequierAuth>
+  </Suspense>
+} />
+
+<Route index path="/dashboard/companyManagment/profile"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <Profile/>
     </RequierAuth>
   </Suspense>
 } />

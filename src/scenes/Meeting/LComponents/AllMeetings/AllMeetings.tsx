@@ -148,7 +148,7 @@ export const AllMeetings = () => {
 <Grid container   >
 <Grid item xs={12}   >
 
-  <ImageSelector/>
+  {/* <ImageSelector/> */}
     {/* <PeriodSlider 
     setActiveIndex={setActiveIndex}
     

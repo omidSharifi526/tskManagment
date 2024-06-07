@@ -7,7 +7,10 @@ import {addTeam,getAllTeams,getAllActivePersonByTenantId,
   editTeam,
   sendSms,
   checkForgetCode,
-  addNewPassWord
+  addNewPassWord,
+  getUserProfileDetail,
+  getPersonPicture,
+  addPersonPicture
 } from '../Api/index'
 
 
@@ -257,6 +260,65 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
         },
       });
      }
+
+    //  getUserProfileDetail
+
+    const useGetUserProfileDetail=(ids:string|null)=>{
+      return useQuery(['getUserProfileDetail',ids],getUserProfileDetail,{
+       enabled:!!ids,
+       refetchOnWindowFocus:false,
+       cacheTime:Infinity,
+       onError:(err:any)=>{
+       console.log(err)
+       }
+       ,
+      select:(data)=>{
+        let rawData=data?.data?.data;
+        return rawData
+
+      }
+
+      })
+    }
+    // getPersonPicture
+
+    const useGetPersonPicture=(personId:string|null)=>{
+      return useQuery(['getUserProfileImg',personId],getPersonPicture,{
+       enabled:!!personId,
+       refetchOnWindowFocus:false,
+       cacheTime:Infinity,
+       onError:(err:any)=>{
+       console.log(err)
+       }
+       ,
+      select:(data)=>{
+        let rawData=data?.data?.data;
+        return rawData
+
+      }
+
+      })
+    }
+
+    // const useAddPersonPicture=()=>{
+    //   return useMutation({
+    //     mutationFn: (body:any) =>addNewPassWord(body),
+    //     onSuccess: (data:any) => {
+    //       sucessForgetPassword()
+    //     },
+    //   });
+    // }
+
+    const useAddPersonPicture=(sucessSendSms:any)=>{
+      const queryClient=useQueryClient()
+      return useMutation({
+     mutationFn: (body:any) =>addPersonPicture(body),
+     onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getUserProfileImg')
+      sucessSendSms()
+    },
+  });
+     }
      
 
      export{
@@ -274,5 +336,8 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
        useEditTeam,
        useSendSms,
        useCheckForgetCode,
-       useAddNewPassWord
+       useAddNewPassWord,
+       useGetUserProfileDetail,
+       useGetPersonPicture,
+       useAddPersonPicture
      }

@@ -18,7 +18,7 @@ export const StaffCart = (props:any) => {
     //     setShowToastMessage={setShowToastMessage}
     // setAddStaffState={setUserAsyncOpState}
     let{item,setPersonId,setShowEditModal,setPersonIdFDelete,actived,setDeleteState,setShowToastMessage}=props;
-    console.log(item)
+    // console.log(item)
     let{name,jobTypeName,activated,id,phoneNumber}=item;
 
 
@@ -48,11 +48,11 @@ const initialDelete=(id:any)=>{
         tenantId:tenantId
 
     }
-    console.log(invitedPersonBody)
+    // console.log(invitedPersonBody)
     deleteInvitedPerson(invitedPersonBody)
    }
 
-    console.log(item)
+    // console.log(item)
 
 }
 

@@ -1,15 +1,17 @@
 import React from "react";
-import { Grid, Box, Typography, useTheme, Button, Stack } from "@mui/material";
+import { Grid, Box, Typography, useTheme, Button, Stack, IconButton } from "@mui/material";
 // import { tokens } from "../../../../theme";
 import { useDispatch } from "react-redux";
-// import { setImageFilesR } from "../../OrderSlice/OrderSlice";
-// import { setOrderImagesR } from "../../../OnlineOrder/OrderOnlineSlice/OrderOnlineSlice";
-// import { ImageUploaderLogo } from "./Statics/index";
-// import uuid from "react-uuid";
-// import ImagePreview from "../ImagePreview/ImagePreview";
+
 import { useState, useEffect,useRef } from "react";
 import axios from "axios";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { useSelector } from "react-redux";
+import { useGetPersonPicture,useAddPersonPicture } from "../../../scenes/CompanyManagment/Hooks";
+import Delete from "@mui/icons-material/Delete";
+import SaveIcon from '@mui/icons-material/Save';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+
+// import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 
 const ImageSelector = ({
@@ -27,116 +29,110 @@ const ImageSelector = ({
   addButtonColor,
   AddButtonVariant,
   fillPadd,
-  setDeleteImageId,
-  editMode,
-  setSampleInformationImages,deleteImageHock
+  setChangeImgData,
+  setShowToastMessage
+
 }:any) => {
-  const [orderImages, setOrderImages] = useState([]);
+  const [selectedFile, setSelectedFile] = useState({
+    picture: null,
+    imageName: '',
+    title: '',
+    url: '',
+  });
+  const personId=useSelector((state:any)=>state.loign.personId);
+  const{data:personPictureData}=useGetPersonPicture(personId);
+  const afterChangeImage=()=>{
+  setSelectedFile({
+    picture: null,
+    imageName: '',
+    title: '',
+    url: '',
+  })
+  }
+  const{mutate:addPersonImg,isLoading,data}=useAddPersonPicture(afterChangeImage);
+  const[authorizedFiles,setAuthorizedFiles]=useState<any>(null)
+  
+
   const existToken = localStorage.getItem('accessToken');
-  const [unauthorizedFiles, setUnauthorizedFiles] = useState(null);
+  // const [unauthorizedFiles, setUnauthorizedFiles] = useState(null);
+  const tenantId:string=useSelector((state:any)=>state.meetings.profileTenantId);
   const theme = useTheme();
   const fileRef:any =useRef<any>(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-//   const colors = tokens(theme.palette.mode);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    
-    if (images && images.length === 0) {
-      setUnauthorizedFiles(null);
-    }
-  }, [images]);
+ 
 
   const handleSetImages = (imgs:any) => {
-    var formData = new FormData();
+   
  
     const {data } = imgs;
     let file=data[0];
-    setSelectedFile(file);
-
-    // headers: {}
 
 
-    const imagesArray = Array.from(data);
-    const authorizedFiles:any[] = [];
-    const unauthorizedFiles = [];
-
-    // const convertToBase64 = (file) => {
-    //   return new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     reader.onload = () => resolve(reader.result);
-    //     reader.onerror = (error) => reject(error);
-    //   });
-    // };
-
-    // for (let i = 0; i < imagesArray.length; i++) {
-    //   const file:any = imagesArray[i];
-    //   if (
-    //     (file.type.includes("image/") &&
-    //       ["png", "jpeg", "jpg", "svg+xml"].includes(
-    //         file.type.split("/")[1]
-    //       )) ||
-    //     file.name.endsWith(".svg")
-    //   ) {
-    //     authorizedFiles.push(file);
-    //   } else {
-    //     unauthorizedFiles.push(file);
-    //     // setUnauthorizedFiles(unauthorizedFiles);
-    //   }
-    // }
-
-    // if (imagesArray.length > 0 && unauthorizedFiles.length === 0) {
-    //   setUnauthorizedFiles(null);
-    //   let images = imagesArray.map((file:any) => {
-    //     return {
-    //     //   id: uuid(),
-    //       picture: file,
-    //       imageSelectedType: imageSelectedType,
-    //       imageName: file.name,
-    //       title: file.name,
-    //       url: URL.createObjectURL(file),
-    //       // type:editMode?'added':null
-    //     };
-    //   });
-    //   setImages((prev:any)=>[...prev ,...images]);
-    // }
+  if (file) {
+    // console.log(file)
+    if ((file.type.includes("image/") &&["png"].includes(file.type.split("/")[1])) && file.size<=40000 ) 
+    
+      {
+        let imgFile:any={
+          picture: file,
+          imageName: file.name,
+          title: file.name,
+          url: URL.createObjectURL(file),
+        };
+        setSelectedFile(imgFile);
+        // authorizedFiles.push(file);
+      }
+      else{
+        setAuthorizedFiles('unuuuuu')
+      }
+  }
+ 
+ 
   };
 
-  useEffect(() => {
-    setOrderImages(images);
-    // console.log(images);
-  }, []);
+  
 
   const convertToBase64 = (file:any) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file.picture);
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
   };
 
   const handleUpload = async () => {
-    if (!selectedFile) {
-      alert("Please select a file first!");
-      return;
+if (selectedFile.picture!==null) {
+  try {
+    const base64String = await convertToBase64(selectedFile);
+    let body={
+      personId:personId,
+      extension:'.png',
+      PictureBase64String :base64String
     }
+    addPersonImg(body)
 
-    try {
-      const base64String = await convertToBase64(selectedFile);
-      console.log(base64String);
 
-      axios.post('https://api.myokr.ir/Api/Upload/Upload', base64String, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${existToken}`
-        }
-    })
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
+
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
+  
+}
+
+
+
+
   };
+
+  useEffect(() => {
+    
+  if (data) {
+    setChangeImgData(data)
+    setShowToastMessage(true)
+  }
+   
+  }, [data])
+  
 
   return (
     <Grid
@@ -159,20 +155,20 @@ const ImageSelector = ({
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Typography
-            variant="caption"
-            color="#3592FB"
-            fontSize={"12px"}
-            px={2}
-          >
-            {title}
-          </Typography>
-          <Button onClick={handleUpload}  >
-            uploadFile
+
+       
+
+          <Button  disabled={selectedFile.picture===null || isLoading}  
+
+          
+          
+          onClick={handleUpload} endIcon={<SaveIcon/>}  >
+            ذخیره
           </Button>
+     
           <Button
             variant={AddButtonVariant ? AddButtonVariant : ""}
-            color={addButtonColor ? addButtonColor : ""}
+            color={addButtonColor ? addButtonColor : "contained"}
             sx={{
               px: "16px",
               borderRadius: "8px",
@@ -195,6 +191,9 @@ const ImageSelector = ({
           </Button>
         </Box>
       </Grid>
+
+
+
       <Grid item xs={12} md={12}>
         <Stack
           p={"10px"}
@@ -218,7 +217,7 @@ const ImageSelector = ({
             }}
           />
 
-          {images?.length > 0 && unauthorizedFiles === null ? (
+          {selectedFile.picture!==null ? (
             <>
               <Stack
                 direction={"row"}
@@ -226,30 +225,29 @@ const ImageSelector = ({
                 flexWrap={"wrap"}
                 overflow={overflow ? overflow : "hidden"}
                 width={"100%"}
-                height={"220px"}
+                py={2}
               >
-                {images &&
-                  images.map((image:any, i:number) => {
-                   
-                    return (
-                        <></>
-                    //   <ImagePreview
-                    //     imageWidth={imageWidth}
-                    //     imageHeight={imageHeight}
-                    //     setDeleteImageId={setDeleteImageId?setDeleteImageId:null}
-                    //     file={image}
-                    //     key={i}
-                    //     type={3}
-                    //     setUpdatedImages={setImages}
-                    //     images={images}
-                    //     setSampleInformationImages={setSampleInformationImages}
-                    //     deleteImageHock={deleteImageHock}
-                    //   />
-                    );
-                  })}
+                <Box   >
+                  <img src={selectedFile.url} width={'90px'} 
+                  style={{borderRadius:'50%',boxShadow:'20px'}}  />
+                </Box>
+
+                <Box>
+                  <IconButton onClick={()=>{
+                    setSelectedFile({
+                      picture: null,
+                      imageName: '',
+                      title: '',
+                      url: '',
+                    })
+                  }}   >
+                    <Delete/>
+                  </IconButton>
+                </Box>
+             
               </Stack>
             </>
-          ) : unauthorizedFiles !== null ? (
+          ) : authorizedFiles !== null ? (
             <Box
               textAlign={"center"}
               flexDirection={"column"}
@@ -260,10 +258,12 @@ const ImageSelector = ({
               height={"100%"}
             >
               {/* <DamageFileIcon style={{ width: "100px" }} /> */}
-              <Typography color={"red"} variant="button">
+              <Typography color={"red"} variant="button" >
                 {" "}
                 فایل غیر مجاز است
+                
               </Typography>
+              <ErrorOutlineIcon color="error"  />
             </Box>
           ) : (
             <>
@@ -273,10 +273,9 @@ const ImageSelector = ({
                 alignItems={"center"}
                 py={1}
               >
-                upload
                 {/* <ImageUploaderLogo width={"80px"} height={"80px"} /> */}
                 <Typography color={"gray"} fontSize={"12px"}>
-                  فایل های مجاز:PNG,SVG,JPG,JPGE
+                  فایل های مجاز:PNG
                 </Typography>
                 {disableSizeText ? (
                   ""
@@ -286,7 +285,7 @@ const ImageSelector = ({
                     className="font-num"
                     fontSize={"12px"}
                   >
-                    حداکثر حجم: 500 مگابایت
+                    حداکثر حجم: 200کیلو بایت
                   </Typography>
                 )}
               </Stack>

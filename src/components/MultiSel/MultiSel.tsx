@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react';
 export default function MultiSel({ data:pData, extractTag, tagSelected, editMode,length,label }:any) {
   const [selected, setSelected] = useState<any>(tagSelected || []);
   const[data,setData]=useState<any[]>(pData)
-  console.log(data)
+  // console.log(data)
 
   const menuItemStyle = {
     fontSize: '0.7rem',
@@ -33,7 +33,7 @@ export default function MultiSel({ data:pData, extractTag, tagSelected, editMode
 
 
     if (editMode) {
-      console.log(data, tagSelected)
+      // console.log(data, tagSelected)
       // console.log(tagSelected)
       setSelected(tagSelected)
       // const filteredList: string[] = data.filter(uuid => !tagSelected.has(uuid));
@@ -85,7 +85,7 @@ export default function MultiSel({ data:pData, extractTag, tagSelected, editMode
       filterSelectedOptions
       onChange={(_, data) => {
         // setMultiValue(data)
-        console.log(data)
+        // console.log(data)
         setSelected(data)
       }}
       renderOption={(props, option) => (

@@ -35,7 +35,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
     const location:any=useLocation();
     let{state:{objectiveId}}:any=location;
     const[pointingSystemType,setPointingSystemType]=useState<string>('Regularly');
-    const[idsValue,setIdsValue]=useState<any>([]);
+    const[idsValue,setIdsValue]=useState<any[]>([]);
     const tenantId: any = useSelector((state: any) => state.meetings.profileTenantId);
     const{data:teamsOptions,isLoading:teamOPloading}=useGetAllObjectiveDefinitionLevelByTenantId(tenantId);
     const {data:acPersOptions}=useGetAllActivePersonByTenantId(tenantId);
@@ -60,7 +60,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
         let totalData={tenantId:tenantId,objectiveId:objectiveId,onValue:'',...data};
         totalData.valuesDetailCommandDtos=ids;
         totalData.horizontalAlignments=horizontalAlignments.map((({value})=>value))      
-        console.log(totalData);
+        // console.log(totalData);
 
 
         addKeyResulttt(totalData)
@@ -110,6 +110,13 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
       
             }, [data,isSuccess]);
 
+            useEffect(() => {
+              
+                console.log(validationPIds)
+            
+            }, [validationPIds])
+            
+
          
             
 
@@ -134,6 +141,38 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
         // console.log(iniVal)
         setHundredValue(iniVal)
     }
+
+    useEffect(() => {
+      
+    let invalid=true;
+    if (idsValue) {
+        idsValue.forEach((item:any)=>{
+            let{value}=item;
+         if (value!=='') {
+            invalid=false;
+         }
+       
+        })
+    }
+
+    setValidationIds(invalid)
+     
+    }, [idsValue])
+
+    useEffect(() => {
+      
+ 
+    if (hundredValue.value==='') {
+        setValidationIds(true)
+    }
+    else{
+        setValidationIds(false)
+    }
+    
+     
+    }, [hundredValue,pointingSystemType])
+    
+    
 
 
 
@@ -208,6 +247,7 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                     onChange={({target}:any)=>{
                                        let{value}=target;
                                         setFieldValue('pointingSystemType',value)
+                                        setValidationIds(true)
                                     }}
                                     >
                                         {
@@ -383,8 +423,9 @@ export const CreateKeyResult = ({addKrSuccess,setShowToastMessage,setAddKrState,
                                         return   <Box width={'20%'}>
                                         <DyButton
                                             key={i}
+                                            // validationPIds
                                             // || validationPIds
-                                             disabled={!dirty || !isValid || AddKrLoading || validationPIds }
+                                             disabled={!dirty || !isValid || AddKrLoading ||  validationPIds  }
                                              type={'submit'}
                                              variant={'contained'}
                                              bgColor={'info'}
