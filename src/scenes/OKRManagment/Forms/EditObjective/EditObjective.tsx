@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
-import {Box,Grid,Typography,FormControl,InputLabel,Select,MenuItem, Button} from '@mui/material';
+import {Box,Grid,Typography,FormControl,InputLabel,Select,MenuItem, Button, TextField} from '@mui/material';
 import { Formik,Form } from 'formik';
 import { editObjectiveSchema } from '../../StaticData';
 import MultiSelect from '../../../../components/FormikControls/MultiSelect/MultiSelect';
@@ -171,18 +171,16 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                     <Form>
                         <Grid container  >
                             <Grid item xs={12} md={12}  >
-                                <FormikControl
-                                    control='textField'
-                                    type='text'
-                                    label='شرح هدف'
+                                <TextField
+                                    label={'شرح هدف'}
                                     name='name'
                                     fullWidth
-                                    values={values?.name || ''}
+                                    value={values?.name || ''}
                                 />
 
                             </Grid>
                                 <Grid item xs={12} md={4}  >
-                                      <Box sx={{padding:'8px'}}>
+                                      <Box sx={{padding:'16px'}}>
                                    <FormControl fullWidth>
                                     <InputLabel id="demo-simple-select-label">دوره زمانی</InputLabel>
                                     <Select
@@ -227,7 +225,8 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
                             <Grid item xs={12} md={4}  >
 
-                            <Box padding={'8px'} >
+                            
+                            <Box sx={{padding:'16px'}}  >
                                 <FormControl fullWidth size='small'  >
                                 <InputLabel id="demo-simple-select-label">تیم</InputLabel>
                                 <Select
@@ -291,6 +290,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
 
                             <Grid item xs={12} md={4}  >
+                            <Box sx={{padding:'8px'}}  >
                                 <FormikControl
                                     control='select'
                                     options={personsOptionds || []}
@@ -299,6 +299,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                                     fullWidth
                                     value ={values?.responsibleId || ''}
                                 />
+                                </Box>
                             </Grid>
 
 
@@ -316,7 +317,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                            value={values?.isPublic}
                            setFieldValue={setFieldValue}
                            propName={'isPublic'}
-                           options={[{label:'برای همه',value:'برای همه'},{label:'برای اشخاص خاص',value:'برای اشخاص خاص'}]}
+                           options={[{label:'برای همه',value:'برای همه'},{label:'برای اشخاص و تیم های خاص',value:'برای اشخاص و تیم های خاص'}]}
                              />
                             </Grid>
 
@@ -325,10 +326,10 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
 
                               {
-                                lIsPublic==='برای اشخاص خاص' ?  <MultiSel 
+                                lIsPublic==='برای اشخاص و تیم های خاص' ?  <MultiSel 
                                 data={allTeamAndPersonData||[]}
                                 extractTag={setAllIds}
-                                label={'یا اشخاص انتخاب تیم ها'}
+                                label={'برای اشخاص و تیم های خاص'}
                                 />:<></>
                               }
                  
@@ -380,13 +381,11 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
                                
                             <Grid item xs={12} md={12}  >
-                                <FormikControl
-                                    control='textField'
-                                    type='text'
+                                <TextField
                                     label='توضیحات'
                                     name='description'
                                     fullWidth
-                                    values={values?.description}
+                                    value={values?.description}
                                 />
 
                             </Grid>

@@ -150,6 +150,7 @@ export{
     getAllTeamsForSelByTenantId,
     getAllMeetingsTypeByTenantId,
     addMeeting,
+    getAllMyMeetingByIds,
     exportMeetingDetails,
     getMeetingKeyResultValueById,
     getMeetingDetailById,

@@ -6,6 +6,7 @@ import {addTeam,getAllTeams,getAllActivePersonByTenantId,
   getTeamDetail,
   editTeam,
   sendSms,
+  personByInvitationCode,
   checkForgetCode,
   addNewPassWord
 } from '../Api/index'
@@ -239,6 +240,15 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
   });
      }
 
+     const usePersonByInvitationCode=(sucessSend:any)=>{
+      return useMutation({
+    mutationFn: (body:any) =>personByInvitationCode(body),
+    onSuccess: (data:any) => {
+      sucessSend()
+    },
+  });
+     }
+
      const useCheckForgetCode=()=>{
       return useMutation({
         mutationFn: (body:any) =>checkForgetCode(body),
@@ -273,6 +283,7 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
        useGetTeamDetail,
        useEditTeam,
        useSendSms,
+       usePersonByInvitationCode,
        useCheckForgetCode,
        useAddNewPassWord
      }

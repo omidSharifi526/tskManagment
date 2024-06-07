@@ -11,6 +11,7 @@ import {
     getAllTeamsForSelByTenantId,
     getAllMeetingsTypeByTenantId, addMeeting,
     exportMeetingDetails,
+    getAllMyMeetingByIds,
     getMeetingKeyResultValueById,
     getMeetingDetailById,
     editMeeting,
@@ -45,7 +46,7 @@ const useGetAllMeetings = (meetIds: any | null) => {
 
 const useGetAllMyMeetings = (meetIds: any | null) => {
     const dispatch = useDispatch();
-    return useQuery(['getAllMyMeetingByIds', meetIds], getAllMeetingByIds, {
+    return useQuery(['getAllMyMeetingByIds', meetIds], getAllMyMeetingByIds, {
         // staleTime: 0,
         cacheTime:Infinity,
         enabled: !!meetIds,
@@ -399,5 +400,6 @@ export {
     useGetMeetingKeyResultValueById,
     useGetMeetingDetailById,
     useEditMeeting,
+    useGetAllMyMeetings,
     useDeleteMeeting
 }

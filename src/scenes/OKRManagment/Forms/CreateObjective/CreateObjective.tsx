@@ -331,7 +331,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                            value={values?.isPublic}
                            setFieldValue={setFieldValue}
                            propName={'isPublic'}
-                           options={[{label:'برای همه',value:'برای همه'},{label:'برای اشخاص خاص',value:'برای اشخاص خاص'}]}
+                           options={[{label:'برای همه',value:'برای همه'},{label:' برای اشخاص و تیم های خاص',value:'برای اشخاص و تیم های خاص'}]}
                              />
                             </Grid>
 
@@ -340,10 +340,10 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
 
                               {
-                                lIsPublic==='برای اشخاص خاص' ?  <MultiSel 
+                                lIsPublic==='برای اشخاص و تیم های خاص' ?  <MultiSel 
                                 data={allTeamAndPersonData||[]}
                                 extractTag={setAllIds}
-                                label={'یا اشخاص انتخاب تیم ها'}
+                                label={'برای اشخاص و تیم های خاص'}
                                 />:<></>
                               }
                  

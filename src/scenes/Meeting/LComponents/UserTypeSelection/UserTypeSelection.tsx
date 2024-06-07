@@ -79,13 +79,13 @@ useEffect(() => {
 
   return (
    
-    <Grid py={'1rem'}  item  xs={12} md={12} bgcolor={'white'} minHeight={'100vh'} mx={'auto'}  >
+    <Grid py={'1rem'}  item  xs={12} md={10} minHeight={'100vh'} mx={'auto'}  >
    <Grid container  >
   
    
    <Grid item xs={12} >
    <Box mx={'auto'}  >
-    <Typography fontSize={'25px'} color={'black'} variant='h6' fontWeight={900} textAlign={'center'}  >لطفا اکانت مورد نظر خود را انتخاب کنید.</Typography>
+    <Typography fontSize={'25px'} variant='h6' fontWeight={900} textAlign={'center'}  >لطفا اکانت مورد نظر خود را انتخاب کنید.</Typography>
    </Box>
    </Grid>
 
@@ -93,7 +93,6 @@ useEffect(() => {
    <Grid item xs={12}  >
    <Box textAlign={'center'} py={2}  >
     <Typography  fontSize={'20px'} fontWeight={900}
-    color={'black'}
     variant='button'>در صورت تمایل بعدا هم میتوانید از طریق پروفایل کاربری،  اکانت خود را تغییر دهید.
     </Typography>
    </Box>

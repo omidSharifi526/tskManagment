@@ -32,9 +32,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
    const MeetCart = (props:any) => {
-        const navigate=useNavigate()
+        const navigate=useNavigate();
+        const dispatch = useDispatch();
         let{obj}=props;
-        let{name,meetingDate,meetingNumber,status,fromTime,toTime,level,definitionLevel
+        let{name,meetingDate,meetingNumber,status,fromTime,toTime,level,definitionLevel,Id
         }=obj;
         //const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
     
@@ -44,7 +45,21 @@ import DeleteIcon from '@mui/icons-material/Delete';
           
     //   }
     
-
+    const LoginMeeting = () => {
+      //dispatch(setInitialTreeViewR())
+      // console.log(info)
+      //let { meetingDate, id } = info;
+      //  console.log(meetingDate)
+      //  setTenantId(id); 
+      //setMeetId(Id)
+      // console.log(id)
+      // let meetDetail = {
+      //   id: Id,
+      //   meetingDate: meetingDate
+      // }
+     // dispatch(setMeetingIdR(meetDetail))
+    
+    }
           
     // const initialEditObject=(perId:string|null)=>{
     //   setShowEditForm(true)
@@ -114,6 +129,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
               columnGap={1}
               alignItems={'center'}>
             <Typography color={'black'}>
+                زمان:
                 از {fromTime} تا {toTime}
               </Typography>
             </Box>
@@ -146,16 +162,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
     
                 
               </Box>
-            <Box  display={'flex'} justifyContent={'space-between'} alignItems={'center'} >
-              <Typography variant="button" color="gray">
-                {
-                  level
-                }
-    
-              </Typography>
-              
-              </Box>
-            <Box minHeight={'45px'}  >
+            
+            
+                <Box    minHeight={'45px'}>
+          
               {
                 definitionLevel.length > 120 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={definitionLevel}>
                   <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}   >{definitionLevel.slice(0, 120)}</Typography>
@@ -166,12 +176,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
     
                 </Typography>
               }
+              
+              </Box>
+              {/* {
+                definitionLevel.length > 120 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={definitionLevel}>
+                  <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}   >{definitionLevel.slice(0, 120)}</Typography>
+                </Tooltip> : <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}    >
+                  {
+                    definitionLevel
+                  }
     
-            </Box>
+                </Typography>
+              } */}
                 <Box   display={'flex'}  flexDirection={'row-reverse'} justifyContent={'space-between'} >
-                <Box  marginTop={1} display={'flex'}  justifyContent={'center'}  bgcolor={'#00387C'} borderRadius={2} maxHeight={'29px'} width={'95px'}>
+                {/* <Box  marginTop={1} display={'flex'}  justifyContent={'center'}  bgcolor={'#00387C'} borderRadius={2} maxHeight={'29px'} width={'95px'}>
     
-        {/* <Button
+        <Button
           variant='text'
           onClick={() => {
             LoginMeeting()
@@ -179,9 +199,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
           <Typography color={'white'} fontSize={'12px'}>        
           ورود به جلسه
           </Typography>  
-        </Button> */}
+        </Button>
     
-        </Box>
+        </Box> */}
                 
                 <Box display={'flex'}  justifyContent={'center'} alignItems={'center'}>
                     {/* <ProgressMeeting prog={info?.evaluationPercentage} /> */}

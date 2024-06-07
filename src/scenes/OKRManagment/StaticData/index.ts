@@ -5,6 +5,7 @@ import {AddKeyResultFace,
   addContractFace,
   addCompanyFace,
   resetPasswordFace,
+  registerByCodeFace,
   addObjectiveFace,
   
   
@@ -72,6 +73,12 @@ const resetFormValues:resetPasswordFace={
   newPassword:'',
   repeatPassword:''
 }
+const registerFormValues:registerByCodeFace={
+  jobType:'',
+  firstName:'',
+  lastName:''
+}
+
 
 
 
@@ -151,6 +158,7 @@ export   {
     addContractValues,
     addCompanyValues,
     resetFormValues,
+    registerFormValues,
     addObjectiveSchema,
     editObjectiveSchema,
     addKeyResultSchema

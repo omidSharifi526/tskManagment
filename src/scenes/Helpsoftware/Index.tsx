@@ -55,14 +55,6 @@ const Index = (props:any) => {
      
       <Grid  >
      <Grid container  >
-    
-{/*      
-     <Grid item xs={12} >
-     <Box mx={'auto'}  >
-      <Typography fontSize={'25px'} color={'black'} variant='h6' textAlign={'center'}  >لطفا اکانت مورد نظر خود را انتخاب کنید.</Typography>
-     </Box>
-     </Grid>
-         */}
   
     <Grid item xs={12} >
     <Box margin={2} borderRadius={10}

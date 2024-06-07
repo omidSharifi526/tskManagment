@@ -12,6 +12,7 @@ import OwnerRegistration from './OwnerRegistration/OwnerRegistration';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 import LyBackdrop from '../Layouts/BackDrop/BackDrop';
 import ResetPassword from '../../scenes/CompanyManagment/Forms/ResetPassword/ResetPassword';
+import RegisterByCode from '../../scenes/CompanyManagment/Forms/RegisterByCode/RegisterByCode';
 const LoginPage = () => {
 
   const [contentState, setContentState] = useState({ content: 'login' });
@@ -65,7 +66,10 @@ const LoginPage = () => {
       case 'resetPassword':
         return <ResetPassword setContentState={setContentState} />
         break;
-
+      
+        case 'registerByCode':
+          return <RegisterByCode setContentState={setContentState} />
+          break;
 
 
 

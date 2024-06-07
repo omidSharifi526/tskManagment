@@ -423,6 +423,11 @@ const LoginForm = ({ setContentState }: any) => {
     console.log('initialChangePass')
   }
 
+  const initialRegisterByCode=()=>{
+    setContentState((prev: any) => ({ ...prev, content: 'registerByCode' }))
+    console.log('registerByCode')
+  }
+
 
 
   if (isLoading) {
@@ -494,10 +499,10 @@ const LoginForm = ({ setContentState }: any) => {
              
                   
                 <Grid item xs={8} mx={'auto'} >
-                  <Box   >
+                  <Box  >
                     <DyButton
                       caption={'فراموشی رمز عبور'}
-                      color={'#00327C'}
+                      color={'#003287C'}
                       onClick={initialChangePass}
                       variant={'text'}
                       // bgColor={'#00347C'}
@@ -506,7 +511,18 @@ const LoginForm = ({ setContentState }: any) => {
                   </Box>
                 </Grid>
                
-
+                <Grid item xs={8} mx={'auto'} >
+                  <Box  >
+                    <DyButton
+                      caption={'ثبت نام با کد دعوت'}
+                      color={'#003287C'}
+                      onClick={initialRegisterByCode}
+                      variant={'text'}
+                      // bgColor={'#00347C'}
+                      // type={'submit'}
+                    />
+                  </Box>
+                </Grid>
                 {/* 00387C */}
 
                 <Grid item xs={8}  mx={'auto'} >

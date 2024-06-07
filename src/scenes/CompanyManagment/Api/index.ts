@@ -78,6 +78,16 @@ const sendSms=async(body:any)=>{
 return await axiosInstance.post('/Account/SendSMS',body)
 }
 
+const personByInvitationCode=async(body:any)=>{
+    return await axiosInstance.post('/Person/PersonByInvitationCode',body)
+    }
+    
+const getPersonByInvitationCode=async({body}:any)=>{
+    let code=body[0];
+    let phone=body[1];
+    return await axiosInstance.get(`/Person/GetPersonByInvitationCode?invitationCode=${code}&phoneNumber=${phone}`)
+}
+
 // 
 // https://api.myokr.ir/api/Account/CheckForgetCode
 
@@ -110,6 +120,8 @@ return await axiosInstance.post(`/Account/ForgetPassword`,body)
         getTeamDetail,
         editTeam,
         sendSms,
+        personByInvitationCode,
+        getPersonByInvitationCode,
         checkForgetCode,
         addNewPassWord
     }

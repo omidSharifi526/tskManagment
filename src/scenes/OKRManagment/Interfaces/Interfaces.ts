@@ -104,6 +104,12 @@ export interface resetPasswordFace{
   repeatPassword:string
 }
 
+export interface registerByCodeFace{
+  jobType:string,
+  firstName:string,
+  lastName:string
+}
+
 export interface AllOKRComponentFace{
   periodId:string | null,
   periodsData:any[]
