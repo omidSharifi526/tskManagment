@@ -164,15 +164,10 @@ const Index :React.FC=function(){
   
   <CustomTabPanel value={value} index={0}>
     <Suspense fallback={<Box width={'100%'} pt={5} textAlign={'center'} py={5}  ><CircularProgress/></Box>}  >
-     <AllOkRs {
-       ...setDashBoard && setDashBoard.map((d:any,i:number)=>{
-
-        
-      })
-     }
+     <AllOkRs 
      periodId={periodId}  
      periodsData={perData}
-    //  data={d}
+     data={dashBoardData}
      />
     </Suspense>
   </CustomTabPanel>
