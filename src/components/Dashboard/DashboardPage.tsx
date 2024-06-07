@@ -124,12 +124,12 @@ const itemsList = [
   //   to: "/dashboard/dashboard"                   
   // }
   // ,
-  // {
-  //   text: "داشبورد",
-  //   icon: <DashboardIcon fontSize='large' />,
-  //   to: "/dashboard/TenantDash" 
-  // }
-  // ,
+  {
+    text: "داشبورد",
+    icon: <DashboardIcon fontSize='large' />,
+    to: "/dashboard/TenantDash" 
+  }
+  ,
   {
     text: "مدیریت شرکت",
     icon: <CompanyManagmentIcon  />,
