@@ -168,7 +168,7 @@ const initialCreateKr=():void=>{
        <Typography variant='body1' fontWeight={800} mb={1} >
        {
           objectiveDetails?.responsibleName
-          // 'ایمنننن'
+        
         }
         
        </Typography>

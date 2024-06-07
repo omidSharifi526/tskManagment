@@ -12,9 +12,9 @@ const ObjKrs = (props:any) => {
 
     
     const initialShowDet=()=>{
-      console.log(krs)
+      // console.log(krs)
       let{okR_GradeDetails}=krs;
-  console.log(okR_GradeDetails)
+  // console.log(okR_GradeDetails)
      setShowKrDetails(true)
     }
 
@@ -23,8 +23,8 @@ const ObjKrs = (props:any) => {
       
       if (krs) {
         let{okR_GradeDetails}=krs;
-        console.log(krs)
-        console.log(okR_GradeDetails);
+        // console.log(krs)
+        // console.log(okR_GradeDetails);
         setokRGradeDetails(okR_GradeDetails)
       }
   

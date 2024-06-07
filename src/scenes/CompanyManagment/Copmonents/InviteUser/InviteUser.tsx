@@ -39,17 +39,7 @@ const InviteUser = () => {
         setShowAddStaff((prev: any) => !prev)
     }
 
-    useEffect(() => {
-      
-    console.log(personId)
-     
-    }, [personId])
-
-    useEffect(() => {
-      
-    console.log(asyncOpStatus)
-    
-    }, [asyncOpStatus])
+ 
     
     
 

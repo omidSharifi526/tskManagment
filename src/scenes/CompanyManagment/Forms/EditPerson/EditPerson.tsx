@@ -55,7 +55,7 @@ const{mutate:callEditPersonStaff,data:editUserData,isSuccess:editUserSuccess,isL
           id:id
       
         }
-        console.log(initVal)
+        // console.log(initVal)
         setEditPersonInitialValues(initVal)
        }
          
@@ -72,7 +72,7 @@ const handleClose=()=>{
 
 
 const initialSubmitForm=(data:any)=>{
-    console.log({...data,tenantId:tenantId,createById:userId})
+    // console.log({...data,tenantId:tenantId,createById:userId})
     callEditPersonStaff({...data,tenantId:tenantId,createById:userId})
 console.log(data)
 }
@@ -80,7 +80,7 @@ console.log(data)
 useEffect(() => {
   // setShowToastMessage,setAddStaffState
   if (editUserData) {
-    console.log(editUserData)
+    // console.log(editUserData)
     setShowToastMessage(true);
     setAddStaffState(editUserData?.data)
 

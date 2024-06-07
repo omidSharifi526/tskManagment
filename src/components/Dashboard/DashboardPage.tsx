@@ -19,7 +19,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import GuideIcon from '@mui/icons-material/Help';
 import TenantsList from './LComponents/TenantList/TenantList';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
-
+import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined';
 
 import { Link, Outlet,useLocation } from 'react-router-dom';
 import {SideBarLogo,OKRtext} from './StaticsData/index';
@@ -173,6 +173,12 @@ const itemsList = [
     icon: <AboutUsIcon fontSize='large'  />,
     to:"/dashboard/aboutus"
   }
+  ,
+  {
+    text:"پروفایل",
+    icon: <PersonOutlineOutlined fontSize='large'  />,
+    to:"/dashboard/companyManagment/profile"
+  }
   // SettingsIcon
 
 
@@ -188,7 +194,7 @@ const itemsList = [
 
 export default function MiniDrawer() {
   // const theme=useTheme();
-  const[activeIndex,setActiveIndex]=React.useState<number>(0)
+  const[activeIndex,setActiveIndex]=React.useState<number>(7)
 
 
   const { locale, setLocale, toggleColorMode }:any =

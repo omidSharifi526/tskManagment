@@ -104,7 +104,7 @@ if (getObjectiveAgainFetched) {
   useEffect(() => {
 
 if (objectiveSelectedData) {
-  console.log(objectiveSelectedData)
+  // console.log(objectiveSelectedData)
   let{name,id}=objectiveSelectedData;
   let ObjSelected={
     name:name,
@@ -138,7 +138,7 @@ if (rowSelectedData) {
     okR_KeyResultType:okR_KeyResultType
   }
   setKrMainInfo(krSelected)
-console.log(rowSelectedData)
+// console.log(rowSelectedData)
 }
   
   }, [rowSelectedData]);

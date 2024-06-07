@@ -68,11 +68,6 @@ useEffect(() => {
 }, [deleteOkrState])
 
 
-useEffect(() => {
-  
-console.log(deleteData)
-
-}, [deleteData])
 
 
 

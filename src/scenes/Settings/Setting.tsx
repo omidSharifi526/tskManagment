@@ -79,11 +79,7 @@ const Setting = () => {
         }, [isFetched])
 
 
-        useEffect(() => {
-          
-        console.log(settingData)
-        
-        }, [settingData])
+      
         
 
         const initialAddSetting=()=>{

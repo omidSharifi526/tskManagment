@@ -58,13 +58,13 @@ return  await  axiosInstance.post(`/Person/DeletePerson`,personDeletedBody)
 
 // api/Team/DeleteTeam
 const deleteTeam=async(teamDeletedBody:any|null)=>{
-    console.log(teamDeletedBody)
+    // console.log(teamDeletedBody)
 return await axiosInstance.post(`/Team/DeleteTeam`,teamDeletedBody)
 }
 
 // https://api.myokr.ir/api/Person/EditPerson
 const editPersonStaff=async(personEditedBody:any)=>{
-    console.log(personEditedBody)
+    // console.log(personEditedBody)
 return await axiosInstance.post('/Person/EditPerson',personEditedBody)
 }
 // https://api.myokr.ir/api/Team/EditTeam
@@ -104,6 +104,38 @@ return await axiosInstance.post(`/Account/CheckForgetCode`,body)
 const addNewPassWord=async(body:any)=>{
 return await axiosInstance.post(`/Account/ForgetPassword`,body)
 }
+
+// https://api.myokr.ir/api/OKR/GetUserProfileDetail/?personId=e76209ac-35c8-4e13-a85a-ebe0340588cd&tenantId=eb781974-3cb0-4c3a-881e-97af686ce7f5
+
+const getUserProfileDetail=async({queryKey}:any)=>{
+    let ids=queryKey[1];
+    // console.log(ids)
+return await axiosInstance.get(`/OKR/GetUserProfileDetail/?personId=${ids.personId}&tenantId=${ids.tenantId}`)
+}
+
+
+
+
+const getPersonPicture=async({queryKey}:any)=>{
+let personId=queryKey[1];
+return axiosInstance.get(`/Person/GetPersonPicture/?personId=${personId}`)
+
+}
+
+// axios.post('https://api.myokr.ir/api/Person/AddPersonPicture',body,{
+//     headers: {
+//       'Content-Type': 'application/json',    
+//          "Access-Control-Allow-Origin":'*',
+//          'Authorization': `Bearer ${existToken}`
+//     }
+// })
+
+const addPersonPicture=async(body:any)=>{
+return axiosInstance.post('/Person/AddPersonPicture',body)
+}
+
+
+
 // Api/Upload/Upload
 
     export{
@@ -123,5 +155,8 @@ return await axiosInstance.post(`/Account/ForgetPassword`,body)
         personByInvitationCode,
         getPersonByInvitationCode,
         checkForgetCode,
-        addNewPassWord
+        addNewPassWord,
+        getUserProfileDetail,
+        getPersonPicture,
+        addPersonPicture
     }

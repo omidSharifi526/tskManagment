@@ -40,7 +40,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,
 
  if (editMode && initialValue) {
   let{firstName,lastName,phoneNumber,jobTypeName,id}=initialValue;
-  console.log(initialValue)
+  // console.log(initialValue)
   let initVal={
     firstName:firstName,
     lastName:lastName,
@@ -50,7 +50,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,
     id:id
 
   }
-  console.log(initialValue)
+  // console.log(initialValue)
   setAddStaffInitialValues(initVal)
  }
    
@@ -81,7 +81,7 @@ const AddStaff = ({onSuccesss,initialValue,editMode,onClose,setShowToastMessage,
 
     const initialSubmitForm=(data:any)=>{ 
 
-          console.log({...data,tenantId:tenantId,createById:userId})
+          // console.log({...data,tenantId:tenantId,createById:userId})
           inviteUser({...data,tenantId:tenantId,createById:userId})
         
 

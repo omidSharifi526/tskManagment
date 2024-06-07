@@ -113,7 +113,7 @@ const{mutate:callEditMeeting,isLoading:editMeetLoading,data:meetUpdatedData,isSu
       setMeetingLRealDate(new Date(realMeetingDate));
     }
     if (realFromTime!==null) {
-      console.log(new Date(realFromTime))
+      // console.log(new Date(realFromTime))
       setLfromTime(new Date(realFromTime))
   
     }
@@ -180,7 +180,7 @@ setOkTotime(time_str)
 
   const initialUpdateMeeting=(data:any)=>{
     // let{,...rest}=data;
-    console.log(data);
+    // console.log(data);
     data.fromTime=okFromTime;
     data.toTime=okTotime;
     data.meetingDate=meetingjLRealDate;
@@ -188,7 +188,7 @@ setOkTotime(time_str)
       return value
     })
 
-  console.log(data)
+  // console.log(data)
     callEditMeeting(data)
 
   }
