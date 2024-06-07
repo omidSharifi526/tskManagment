@@ -34,12 +34,7 @@ import CoPresentIcon from '@mui/icons-material/CoPresent';
 import Divider from '@mui/material/Divider';
 import { useDispatch } from 'react-redux';
 import {resetMeetingSliceR} from '../../scenes/Meeting/MeetingsSlice/MeetingsSlice'
-// Link
-// userInfo:{
-//   userPhoneNumber:''
-// interface loginStatusFace{
-//   success:boolean,
-// }
+
 
 const LoginForm = ({ setContentState }: any) => {
 
@@ -496,10 +491,25 @@ const LoginForm = ({ setContentState }: any) => {
                   </FormControl>
 
                 </Grid>
+             
+                  
+                <Grid item xs={8} mx={'auto'} >
+                  <Box   >
+                    <DyButton
+                      caption={'فراموشی رمز عبور'}
+                      color={'#00327C'}
+                      onClick={initialChangePass}
+                      variant={'text'}
+                      // bgColor={'#00347C'}
+                      // type={'submit'}
+                    />
+                  </Box>
+                </Grid>
+               
 
                 {/* 00387C */}
 
-                <Grid item xs={8} columnGap={1} >
+                <Grid item xs={8}  mx={'auto'} >
                   <Box  py={2} px={2} >
                     <DyButton
                       caption={'ورود'}
@@ -515,18 +525,7 @@ const LoginForm = ({ setContentState }: any) => {
 
 
 
-                <Grid item xs={4} >
-                  <Box  py={2}  >
-                    <DyButton
-                      caption={'تغییر رمز عبور'}
-                      color={'#00327C'}
-                      onClick={initialChangePass}
-                      variant={'contained'}
-                      // bgColor={'#00347C'}
-                      // type={'submit'}
-                    />
-                  </Box>
-                </Grid>
+            
 
                 <Grid item xs={11} mt={1} mx={'auto'} >
                   <Box width={'100%'}

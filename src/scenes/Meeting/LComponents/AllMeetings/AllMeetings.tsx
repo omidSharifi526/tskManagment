@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react';
+import ImageSelector from '../../../../components/GlobalComponents/ImageSelector/ImageSelector';
 import PeriodSlider from '../../../../components/GlobalComponents/PeriodSlider/PeriodSlider';
 // import { useSelector } from 'react-redux';
 import { useGetPriodById } from '../../../../components/Login/Hooks/Index';
@@ -6,10 +7,11 @@ import {Box,Button,Grid, Typography, BottomNavigationAction,} from '@mui/materia
 import { useSelector } from 'react-redux';
 //import {LoginState} from '../../components/Login/Types/index'
 import MeetingCard from '../../MeetingCard/MeetingCard';
-import { useGetAllMyMeetings } from '../../Hooks';
+import { useGetAllMeetings } from '../../Hooks';
 import CircularProgress from '@mui/material/CircularProgress';
 //import Loading from '../../components/Loading/Loading';
 import Skeleton from '@mui/material/Skeleton';
+// import { useGetAllMeetings } from '../../Hooks';
 import { useDispatch } from 'react-redux';
 import { setLoadingR } from '../../MeetingsSlice/MeetingsSlice';
 import { UseGetWebCheckinMeetingDetailsByMeetingId } from '../../Hooks';
@@ -42,7 +44,7 @@ export const AllMeetings = () => {
     const profileTenantId=useSelector((state:any)=>state.meetings.profileTenantId);
     const priodId=useSelector((state:any)=>state.meetings.priodId);
     const userPhoneNumber:string=useSelector((state:any)=>state.loign.userPhoneNumber);
-    const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMyMeetings({tenantId:profileTenantId,priodId:priodId,userPhoneNumber:userPhoneNumber})
+    const{isLoading:meetLoadin,data:meetdata,isFetched}=useGetAllMeetings({tenantId:profileTenantId,priodId:priodId,userPhoneNumber:userPhoneNumber})
     const meetingsDataa=useSelector((state:any)=>state?.meetings?.meetingsList?.meetingsList);
     const periodList=useSelector((state:any)=>state.meetings.periodList);
     const meetingLoadState=useSelector((state:any)=>state?.meetings?.meetingsList);
@@ -127,55 +129,37 @@ export const AllMeetings = () => {
         <CircularProgress  />
        </Box>
     }
-  
-  
-  
-    return (
-      <Grid container  spacing={1} >
-        <Grid item xs={12}    >
-                       <Box display={'flex'}  flexDirection={'row-reverse'}>
-                      <Box width={'150px'}   >
-                      
-                      </Box>
-                       </Box>
-        </Grid>
-      
-     {
-   existData && existData.map((data:any,i:number):any=>{
-          return (<Grid item md={4} xs={12}  key={i}>
-  
+
+// }
+ 
+// }, [perData])
+
+
+
+
+
+
+
+
+
+
+
+  return (
+<Grid container   >
+<Grid item xs={12}   >
+
+  <ImageSelector/>
+    {/* <PeriodSlider 
+    setActiveIndex={setActiveIndex}
     
-            <MeetingCard 
-            setMeetId={setMeetId}
-            info={data}
-            prog={i}  
-            accessForReport={accessForReport}
-            setShowDownlodLink={setShowDownlodLink}
-            setPMeetingId={setMeetingId}
-            setshowEditMeeting={setshowEditMeeting}
-            showEditMeeting={showEditMeeting}
-             
-             
-             />
-            
-            
-            
-            </Grid>)
-        })
-      }
-  
-      {/* {
-        meetingsDataa?.length==0 && <Box sx={{ display: 'flex',alignItems:'center',justifyContent:'center',height:'100%',width:'100%' }}>
-        <Typography>
-          در این دوره جلسه ایی وجود ندارد
-        </Typography>
-        </Box>
-      } */}
-  
-        
-  
-        
-      </Grid>
-    )
-  }
-  //export default AllMeetings
+    activeIndex={perData?.findIndex(item=>item.isCurrent)}
+     slideData={perData || []}
+     dataLoading={false}
+     setPriodId={setPriodId}
+
+    
+    /> */}
+</Grid>
+</Grid>
+  )
+}

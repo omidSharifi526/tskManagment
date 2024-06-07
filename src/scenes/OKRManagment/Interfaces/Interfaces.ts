@@ -139,7 +139,8 @@ export interface addObjectiveFace{
   // calculateProgressType:string,
   keyResultParentIds:string[],
   allIds:string[],
-  answerRequest:string
+  answerRequest:string,
+  weight:null|number
 
 }
 

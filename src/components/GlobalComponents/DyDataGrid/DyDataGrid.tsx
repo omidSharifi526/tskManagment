@@ -144,10 +144,15 @@ const dispatch=useDispatch();
       let columnVisibilityModel=data?.columns?.columnVisibilityModel;
       // let columnVisibilityModel=columns?.columnVisibilityModel
       // console.log(columnVisibilityModel)
+      try {
+        dispatch(setinitialStateR({name:drName,colVis:columnVisibilityModel}))
+      } catch (error) {
+        console.log(error)
+      }
 
 
      
-      dispatch(setinitialStateR({name:drName,colVis:columnVisibilityModel}))
+    
      }
 
       }

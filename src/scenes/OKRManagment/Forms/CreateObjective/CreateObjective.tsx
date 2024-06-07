@@ -95,10 +95,10 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
         description:'',
         isPublic:false,
         keyResultParentIds:[],
-        // :'',
         responsibleId:'',
         allIds:[],
         tenantId:'',
+        weight:null,
         answerRequest:'',
   
       

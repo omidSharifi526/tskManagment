@@ -72,6 +72,29 @@ return await axiosInstance.post('/Person/EditPerson',personEditedBody)
 const editTeam=async(teamEditedBody:any)=>{
     return await axiosInstance.post('/Team/EditTeam',teamEditedBody)
 }
+// https://api.myokr.ir/api/Account/SendSMS
+
+const sendSms=async(body:any)=>{
+return await axiosInstance.post('/Account/SendSMS',body)
+}
+
+// 
+// https://api.myokr.ir/api/Account/CheckForgetCode
+
+// {"phoneNumber":"09911461820","code":"1111"}
+
+const checkForgetCode=async(body:any)=>{
+return await axiosInstance.post(`/Account/CheckForgetCode`,body)
+}
+// https://api.myokr.ir/api/Account/ForgetPassword
+// const forgetPassword=async(body:any)=>{
+//     return await axiosInstance.post(`/Account/ForgetPassword`,body)
+// }
+
+const addNewPassWord=async(body:any)=>{
+return await axiosInstance.post(`/Account/ForgetPassword`,body)
+}
+// Api/Upload/Upload
 
     export{
         addTeam,
@@ -85,5 +108,8 @@ const editTeam=async(teamEditedBody:any)=>{
         editPersonStaff,
         deleteInvitedPerson,
         getTeamDetail,
-        editTeam
+        editTeam,
+        sendSms,
+        checkForgetCode,
+        addNewPassWord
     }

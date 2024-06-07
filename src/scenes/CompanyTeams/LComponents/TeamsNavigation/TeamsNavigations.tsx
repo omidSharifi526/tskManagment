@@ -104,7 +104,7 @@ const TeamsNavigations = ({ setTeameInfo }: any) => {
       dispatch(decreaseCounterR())
       let item = allIteams[counter];
       console.log(item)
-      let id = allIteams[counter].id;
+      let id = allIteams[counter]?.id;
       setNodeId(id)
       setItemInfo(item)
 
