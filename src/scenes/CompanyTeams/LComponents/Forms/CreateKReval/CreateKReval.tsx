@@ -213,19 +213,19 @@ const KRHColumns: any = useMemo(()=>
       renderCell: (params:any) => params.api.getAllRowIds().indexOf(params.id)+1
     }
     
-    ,  
-     {
-      field: 'rrr' , 
-      headerName: 'نعننیذ', 
-      filterable: false,
-      renderCell:(index:any) => {
-   return     <Box width={'10px'} height={'10px'} bgcolor={'red'}  >
-          <IconButton>
-            <MoreVert />
-          </IconButton>
-        </Box>
-      }
-  }
+  //   ,  
+  //    {
+  //     field: 'rrr' , 
+  //     headerName: 'نعننیذ', 
+  //     filterable: false,
+  //     renderCell:(index:any) => {
+  //  return     <Box width={'10px'} height={'10px'} bgcolor={'red'}  >
+  //         <IconButton>
+  //           <MoreVert />
+  //         </IconButton>
+  //       </Box>
+  //     }
+  // }
     ,
     { field: 'meetingDate',
          headerName: 'تاریخ جلسه',
