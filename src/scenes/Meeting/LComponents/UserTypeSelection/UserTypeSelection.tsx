@@ -33,7 +33,7 @@ const UserTypeSelection = (props:any) => {
 
   const onSuccesss=():void=>{
   
-    navigate('/dashboard/companyManagment/profile',{replace:true})
+    navigate('dashboard/TenantDash',{replace:true})
   }
   
   const onFailed=():void=>{

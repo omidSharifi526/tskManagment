@@ -194,7 +194,7 @@ const itemsList = [
 
 export default function MiniDrawer() {
   // const theme=useTheme();
-  const[activeIndex,setActiveIndex]=React.useState<number>(7)
+  const[activeIndex,setActiveIndex]=React.useState<number>(0)
 
 
   const { locale, setLocale, toggleColorMode }:any =
