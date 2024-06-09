@@ -33,14 +33,14 @@ export default function NewMultiSelect(props: any) {
   }, [selectedItems])
 
   useEffect(() => {
-    console.log(selectedItems)
+    // console.log(selectedItems)
     setHorizontalAlignments(selectedItems)
   }, [selectedItems])
   
 
   useEffect(() => {
     
-  console.log(selected,selectedItems)
+  // console.log(selected,selectedItems)
   
   }, [selected])
   
@@ -54,7 +54,7 @@ export default function NewMultiSelect(props: any) {
     // let { onChangee } = props;
     // setHorizontalAlignments(value)
     setSelected(value);
-    console.log(value)
+    // console.log(value)
 
 
 
@@ -74,7 +74,7 @@ export default function NewMultiSelect(props: any) {
         disabled={disabled}
 
         onChange={(e: any, value: any) => {
-          console.log(value)
+          // console.log(value)
           initialSelectItem(value)
           
         }}

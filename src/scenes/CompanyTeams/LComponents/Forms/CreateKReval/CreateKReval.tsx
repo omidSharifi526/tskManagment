@@ -23,6 +23,8 @@ import IconButton from '@mui/material/IconButton';
 import sad from '../../../../../Asset/Svgs/Emojys/sad 1.svg';
 import meh from '../../../../../Asset/Svgs/Emojys/neutral 2.svg';
 import smile from '../../../../../Asset/Svgs/Emojys/smil.png';
+import MoreVert from '@mui/icons-material/MoreVert';
+// import IconButton from '@mui/material';
 // import { useSelector } from 'react-redux';
 // import {ReactComponent as Smile} from '../../../../../Asset/Svgs/Emojys/smile 1.svg';
 
@@ -98,6 +100,8 @@ export const CreateKReval = ({cancelo,objectiveManiInfo,krMainInfo,objectiveId, 
     // onsucces(true)
         
     //   }
+
+  
 
     const {data:historyData,isLoading:historyDataLoading}:any=useGetKeyResultHistoryCheckinByKeyResultId(formIds)
     const { mutate: addCheck, isSuccess,isLoading:AddChekinLoading,data:addCheckingData } = useAddCheckinMeeting();
@@ -207,7 +211,22 @@ const KRHColumns: any = useMemo(()=>
       align:'center',
       headerAlign:'center',
       renderCell: (params:any) => params.api.getAllRowIds().indexOf(params.id)+1
-    },
+    }
+    
+    ,  
+     {
+      field: 'rrr' , 
+      headerName: 'نعننیذ', 
+      filterable: false,
+      renderCell:(index:any) => {
+   return     <Box width={'10px'} height={'10px'} bgcolor={'red'}  >
+          <IconButton>
+            <MoreVert />
+          </IconButton>
+        </Box>
+      }
+  }
+    ,
     { field: 'meetingDate',
          headerName: 'تاریخ جلسه',
          sortable:false,
