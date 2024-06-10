@@ -92,6 +92,8 @@ const useAddCheckinMeeting=()=>{
       return useMutation({
     mutationFn: (data:any) =>addCheckinMeeting(data),
     onSuccess: (data) => {
+        // console.log(data)
+        // addSucess()
         // dispatch(setAddKrStatusDataR(data?.data))
         // addCheckinSuccess()
     },

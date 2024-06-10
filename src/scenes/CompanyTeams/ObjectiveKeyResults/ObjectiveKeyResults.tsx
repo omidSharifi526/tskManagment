@@ -88,8 +88,8 @@ if (getObjectiveAgainFetched) {
    
   }, [addEvalAsyncData])
   
-  const [objcSelectionModel, setObjSelectionModel] = useState<string>('')
-  const [krSelectionModel, setKrSelectionModel] = useState<string>('');
+  const [objcSelectionModel, setObjSelectionModel] = useState<string|any>(localStorage.getItem('objcSelectionModel'))
+  const [krSelectionModel, setKrSelectionModel] = useState<string|any>(localStorage.getItem('krSelectionModel'));
 
 
   const [getCustomerBody, setGetCustomerBody] = useState<any>({
@@ -115,6 +115,39 @@ if (objectiveSelectedData) {
 
   // objectiveManiInfo,setObjectiveMainInfo
   }, [objectiveSelectedData])
+
+  useEffect(() => {
+    
+  console.log(krSelectionModel)
+  localStorage.setItem('krSelectionModel',krSelectionModel);
+  console.log(localStorage.getItem('krSelectionModel'))
+   
+  }, [krSelectionModel])
+
+  useEffect(() => {
+    localStorage.setItem('objcSelectionModel',objcSelectionModel);    
+    }, [objcSelectionModel])
+
+  useEffect(() => {
+    const krSelectionModel = localStorage.getItem('krSelectionModel');
+    // console.log(krSelectionModel)
+    if (krSelectionModel) {
+      setKrSelectionModel(krSelectionModel)
+    }
+  }, [addEvalAsyncData]);
+
+  useEffect(() => {
+    const objcSelectionModel = localStorage.getItem('objcSelectionModel');
+    console.log(objcSelectionModel)
+    // const storedAge = localStorage.getItem('age');
+
+    if (krSelectionModel) {
+      setObjSelectionModel(objcSelectionModel)
+    }
+  }, [addEvalAsyncData]);
+
+  
+  
 
 
   useEffect(() => {
@@ -924,6 +957,7 @@ if (rowSelectedData) {
         </Grid>
         <Grid item xs={12}  >
           <DyDataGrid
+          // initialMount
             data={keyR || []}
             columns={keyResultColumn || []}
             initialOnRowClick={setKrRowData}
@@ -1038,7 +1072,7 @@ if (rowSelectedData) {
               hideFooter={true}
 
               setRowSelectedData={setObjectiveSelectedData}
-              //  objcSelectionModel,setObjSelectionModel
+               objcSelectionModel={objcSelectionModel}
               setSelectionModel={setObjSelectionModel}
               selectionModel={objcSelectionModel}
               initState={ObjctivieInitialState}

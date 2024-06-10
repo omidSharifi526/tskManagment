@@ -98,9 +98,13 @@ export default function DyDataGrid(
     }
 
       const initOnRowClick=(row:any)=>{
-        console.log(row)
+        // console.log(pram)
+        // console.log(row.api.getAllRowIds().indexOf(row.id)+1)
+        // params.api.getAllRowIds().indexOf(params.id)+1
         setSelectionModel(row.id)
+
         setSelectedRowData(row)
+
        initialOnRowClick(row)
      if (setPointSys) {
       setPointSys(row?.okR_KeyResultType)
@@ -114,13 +118,11 @@ export default function DyDataGrid(
       }
 
       useEffect(() => {
-        // console.log(data)
       if (initialMount) {
         setSelectedRowData(data[0])
-        setSelectionModel(data[0]?.id)
+        // setSelectionModel(data[0]?.id)
         initialOnRowClick(data[0])
        
-        // console.log(data[0]?.okR_KeyResultType)
       }
 
       if (setPointSys) {
@@ -133,26 +135,19 @@ export default function DyDataGrid(
       
       }, []);
 
-      // setinitialStateR
 const dispatch=useDispatch();
 
 
 
       const initialChangestate=(data:any)=>{
      if (drName && data) {
-      // console.log('existData')
       let columnVisibilityModel=data?.columns?.columnVisibilityModel;
-      // let columnVisibilityModel=columns?.columnVisibilityModel
-      // console.log(columnVisibilityModel)
+
       try {
         dispatch(setinitialStateR({name:drName,colVis:columnVisibilityModel}))
       } catch (error) {
         console.log(error)
       }
-
-
-     
-    
      }
 
       }

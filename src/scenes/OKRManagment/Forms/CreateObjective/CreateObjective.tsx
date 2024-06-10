@@ -117,7 +117,11 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
     let resIsPublic={isPublic:isPublic==='برای همه'?true:false};
     let total={...data,...resIsPublic,tenantId:tenantId,keyResultParentIds:[...horzinalAliIds],allIds:allIds.map(({value}:any)=>value)};
     // console.log(total)
+    let{weight}=total;
+     let fweight=weight!==''?weight:null;
     total.okRStateId=okrStateId;
+    total.weight=fweight;
+
     // console.log(total)
     addObjective(total)
 
@@ -137,11 +141,11 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
  
 
-  if (isLoading) {
-    return <Box width={'100%'} py={6} textAlign={'center'}   >
-        <CircularProgress/>
-    </Box>
-  }
+  // if (isLoading) {
+  //   return <Box width={'100%'} py={6} textAlign={'center'}   >
+  //       <CircularProgress/>
+  //   </Box>
+  // }
   
 
 
@@ -149,6 +153,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
     <>
     <Box width={'100%'} maxHeight={'50em'}  >
         <Formik 
+        enableReinitialize
         validationSchema={addObjectiveSchema}
              validate={(data)=>{
                 let{definitionLevelId,responsibleId,isPublic}:any=data;
@@ -372,10 +377,10 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                                     control='textField'
                                     // type='text'
                                     label='وزن'
-                                    name='Sweight'
+                                    name='weight'
                                     fullWidth
-                                    values={values?.Sweight||null}
-                                    type={'number'}
+                                    values={values?.weight || '' }
+                                    type={'text'}
                                 />
                             </Grid>
 

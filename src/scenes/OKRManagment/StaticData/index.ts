@@ -116,6 +116,7 @@ const addObjectiveSchema = yup.object().shape({
   periodId:yup.string().required(''),
   responsibleId:yup.string().required(''),
   definitionLevelId:yup.string().required(''),
+  weight:yup.number().nullable().min(0).max(100)
 
 });
 
