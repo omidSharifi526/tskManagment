@@ -171,13 +171,19 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                     <Form>
                         <Grid container  >
                             <Grid item xs={12} md={12}  >
+                             <Box sx={{padding:'1px'} }>
                                 <TextField
+                                  size='small'
                                     label={'شرح هدف'}
                                     name='name'
                                     fullWidth
                                     value={values?.name || ''}
+                                    onChange={({target}:any)=>{
+                                      let{value}=target;
+                                      setFieldValue('name',value)
+                                       }}
                                 />
-
+                             </Box>
                             </Grid>
                                 <Grid item xs={12} md={4}  >
                                       <Box sx={{padding:'16px'}}>
@@ -292,6 +298,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                             <Grid item xs={12} md={4}  >
                             <Box sx={{padding:'8px'}}  >
                                 <FormikControl
+                                
                                     control='select'
                                     options={personsOptionds || []}
                                     label='مسئول هدف'
@@ -310,7 +317,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                       expanded={showAdvanceOptions}  >
                      <Grid container  >
                         
-                         <Grid item xs={12} md={4}  >
+                         <Grid item xs={12} md={6}  >
                            <FormikControl 
                            control={'radio'}
                            mainLabel={'قابلیت نمایش'}
@@ -354,40 +361,58 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
 
                      <Grid container >
                        <Grid item xs={12} md={4}  >
-                                <FormikControl
-                                    control='textField'
+                        <Box sx={{padding:'8px'}}>
+                       <TextField
+                                    // control='textField'
                                     // type='text'
+                                      size='small'
                                     label='وزن'
                                     name='Sweight'
                                     fullWidth
-                                    values={values?.Sweight||null}
+                                    value={values?.Sweight|| ''}
                                     type={'number'}
+                                    onChange={({target}:any)=>{
+                                      let{value}=target;
+                                      setFieldValue('Sweight',value)
+                                       }}
                                 />
+                                </Box>
                             </Grid>
 
                               <Grid item xs={12} md={8}  >
-                                <FormikControl
-                                    control='textField'
+                              <Box sx={{padding:'8px'}}>
+                              <TextField
+                                     size='small'
                                     type='text'
                                     label='دلیل اهمیت'
                                     name='answerRequest'
                                     fullWidth
-                                    values={values?.answerRequest}
+                                    value={values?.answerRequest|| ''}
+                                    onChange={({target}:any)=>{
+                                      let{value}=target;
+                                      setFieldValue('answerRequest',value)
+                                       }}
                                 />
                                 {/* TheReasonImportant */}
-
+                                </Box>
                             </Grid>
 
 
                                
                             <Grid item xs={12} md={12}  >
+                            <Box sx={{padding:'8px'}}>
                                 <TextField
+                                  size='small'
                                     label='توضیحات'
                                     name='description'
                                     fullWidth
                                     value={values?.description}
+                                    onChange={({target}:any)=>{
+                                      let{value}=target;
+                                      setFieldValue('description',value)
+                                       }}
                                 />
-
+    </Box>
                             </Grid>
 
 

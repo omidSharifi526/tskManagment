@@ -118,7 +118,7 @@ const periodId=useSelector((state:any)=>state.meetings.priodId);
           <Box width={'100%'}  
           display={'flex'} justifyContent={'space-between'} 
           sx={{borderRadius:'5px',bgcolor:'#F5F5F5 !important',px:1}} >
-            <Box display={'flex'} alignItems={'center'} justifyContent={'center'}   >
+            <Box display={'flex'}  alignItems={'center'} justifyContent={'center'}   >
               <Typography  px={1} >شرکت ها </Typography>
               <MultipleStopIcon />
             </Box>

@@ -16,7 +16,7 @@ export const UserProfileTypeCart = (props:any) => {
   const navigate=useNavigate();
   let{item,tenantName}=props;
   // console.log(item)
-
+  const[imgSrc,setImgSrc]=useState<any>(null);
 const handleClickCart=()=>{
   // console.log(item.tenantId)
   setTenantId(item.tenantId);
@@ -44,26 +44,37 @@ useEffect(() => {
 
 
 
-
+useEffect(() => {
+    
+  if (item) {
+    setImgSrc(item?.pictureBase64String)
+  }
+    }, [item])
 
 
   return (
-    <Grid item xs={3} mx={'auto'}  md={6} p={3} onClick={()=>{
+    <Grid item xs={3} mx={'auto'}  md={6} p={2} onClick={()=>{
       handleClickCart()
     }}    >
     
-    <Box  borderRadius={15} bgcolor={'#f2f2f0'}  boxShadow={5} sx={{cursor:'pointer'}} >
+    <Box  borderRadius={18} bgcolor={'rgba(0, 0, 0, 0.13)'}  boxShadow={3} sx={{cursor:'pointer'}} >
    
-    <Box py={3}   >
-   
-    <Box  display={'flex'} flexDirection={'row-reverse'} justifyContent={'center'} borderRadius={1} width={'100%'} margin={1}  textAlign={'center'} minHeight={'40px'} >
+    <Box py={3} display={'flex'} flexDirection={'column'} height={'100%'}  >
+    <Box  display={'flex'} alignItems={'center'} flexDirection={'column'} justifyContent={'center'} 
+    borderRadius={1}   textAlign={'center'}  >
+ <img src={imgSrc} width={'125px'} height={'80px'}
+        style={{borderRadius:'50%',boxShadow:'20px'}}
+         />
+ </Box>
+    <Box  display={'flex'} flexDirection={'column'}  justifyContent={'center'} 
+       textAlign={'center'}  >
 
- <Typography fontSize={'25px'} fontWeight={900} variant='caption'  >
+ <Typography fontSize={'18px'} fontWeight={600} variant='caption'  >
   
     {item.tenantName}
  </Typography>
- <AccountCircleIcon fontSize='large' />
  </Box>
+
     </Box>
     </Box>
  

@@ -10,8 +10,12 @@ import {addTeam,getAllTeams,getAllActivePersonByTenantId,
   checkForgetCode,
   addNewPassWord,
   getUserProfileDetail,
+
   getPersonPicture,
-  addPersonPicture
+  getTenantPicture,
+  addPersonPicture,
+  addTenantPicture,
+  getTenantInfo,
 } from '../Api/index'
 
 
@@ -136,6 +140,28 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
       })
      
      }
+
+     
+    //  const useGetTenantInfo=(perId:string|null)=>{
+    //   console.log(perId)
+  
+    //   return useQuery(['GetTenantInfo',perId],editPerson,{
+    //    enabled:!!perId,
+    //    refetchOnWindowFocus:false,
+    //    cacheTime:Infinity,
+    //    onError:(err:any)=>{
+    //    console.log(err)
+    //    }
+    //    ,
+    //   select:(data)=>{
+    //     let rawData=data?.data.data;
+    //     return rawData
+    //   //  console.log(data)
+    //   }
+
+    //   })
+     
+    //  }
 
 
 
@@ -290,11 +316,47 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
 
       })
     }
+    const useGetTenantInfo=(ids:string|null)=>{
+      return useQuery(['getUserTenantInfo',ids],getTenantInfo,{
+       enabled:!!ids,
+       refetchOnWindowFocus:false,
+       cacheTime:Infinity,
+       onError:(err:any)=>{
+       console.log(err)
+       }
+       ,
+      select:(data)=>{
+        let rawData=data?.data?.data;
+        return rawData
+
+      }
+
+      })
+    }
     // getPersonPicture
 
     const useGetPersonPicture=(personId:string|null)=>{
       return useQuery(['getUserProfileImg',personId],getPersonPicture,{
        enabled:!!personId,
+       refetchOnWindowFocus:false,
+       cacheTime:Infinity,
+       onError:(err:any)=>{
+       console.log(err)
+       }
+       ,
+      select:(data)=>{
+        let rawData=data?.data?.data;
+        return rawData
+
+      }
+
+      })
+    }
+
+
+    const useGetTenantPicture=(tenantId:string|null)=>{
+      return useQuery(['getUserProfileImg',tenantId],getTenantPicture,{
+       enabled:!!tenantId,
        refetchOnWindowFocus:false,
        cacheTime:Infinity,
        onError:(err:any)=>{
@@ -329,6 +391,17 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
     },
   });
      }
+
+     const useAddTenantPicture=(sucessSendSms:any)=>{
+      const queryClient=useQueryClient()
+      return useMutation({
+     mutationFn: (body:any) =>addTenantPicture(body),
+     onSuccess: (data:any) => {
+      queryClient.invalidateQueries('getUserProfileImg')
+      sucessSendSms()
+    },
+  });
+     }
      
 
      export{
@@ -349,6 +422,9 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
        useCheckForgetCode,
        useAddNewPassWord,
        useGetUserProfileDetail,
+       useGetTenantInfo,
        useGetPersonPicture,
-       useAddPersonPicture
+       useAddPersonPicture,
+       useAddTenantPicture,
+       useGetTenantPicture
      }

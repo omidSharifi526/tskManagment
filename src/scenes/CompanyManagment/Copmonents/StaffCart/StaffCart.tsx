@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { Grid,Box, Typography, Button } from '@mui/material';
 import {IconButton} from '@mui/material';
 import {ReactComponent as StaffVector} from '../../StaticData/Vectors/staffVector.svg';
@@ -19,7 +19,8 @@ export const StaffCart = (props:any) => {
     // setAddStaffState={setUserAsyncOpState}
     let{item,setPersonId,setShowEditModal,setPersonIdFDelete,actived,setDeleteState,setShowToastMessage}=props;
     // console.log(item)
-    let{name,jobTypeName,activated,id,phoneNumber}=item;
+    let{name,jobTypeName,activated,id,phoneNumber,pictureBase64String}=item;
+    const[imgSrc,setImgSrc]=useState<any>(null);
 
 
 const initialEditPerson=(perId:string|null)=>{
@@ -76,8 +77,12 @@ useEffect(() => {
 
 }, [deletePersonData,deletePerSuccess])
 
-
-
+useEffect(() => {
+    
+    if (item) {
+      setImgSrc(pictureBase64String)
+    }
+      }, [item])
 
 
   return (
@@ -99,7 +104,9 @@ useEffect(() => {
     flexDirection={'column'}
     justifyContent={'cenetr'}
     >
-        <StaffVector fontSize='large'  />
+          <img src={imgSrc} width={'50px'} 
+        style={{borderRadius:'50%',boxShadow:'20px'}}
+         />
         </Box>
     </Box>
          </Grid>

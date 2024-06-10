@@ -124,12 +124,14 @@ const itemsList = [
   //   to: "/dashboard/dashboard"                   
   // }
   // ,
+
   {
     text: "داشبورد",
     icon: <DashboardIcon fontSize='large' />,
     to: "/dashboard/TenantDash" 
   }
   ,
+ 
   {
     text: "مدیریت شرکت",
     icon: <CompanyManagmentIcon  />,
@@ -147,6 +149,12 @@ const itemsList = [
     text: "جلسات",
     icon: <MeetingIcon  />,
     to: "/dashboard/meetings" 
+  }
+  ,
+  {
+    text:"پروفایل",
+    icon: <PersonOutlineOutlined fontSize='large'  />,
+    to:"/dashboard/companyManagment/profile"
   }
   ,
   // {
@@ -173,12 +181,7 @@ const itemsList = [
     icon: <AboutUsIcon fontSize='large'  />,
     to:"/dashboard/aboutus"
   }
-  ,
-  {
-    text:"پروفایل",
-    icon: <PersonOutlineOutlined fontSize='large'  />,
-    to:"/dashboard/companyManagment/profile"
-  }
+
   // SettingsIcon
 
 
@@ -194,7 +197,7 @@ const itemsList = [
 
 export default function MiniDrawer() {
   // const theme=useTheme();
-  const[activeIndex,setActiveIndex]=React.useState<number>(7)
+  const[activeIndex,setActiveIndex]=React.useState<number>(4)
 
 
   const { locale, setLocale, toggleColorMode }:any =
@@ -404,8 +407,8 @@ if (showTenantItem) {
                 fontWeight:600,
        
                 bgcolor:index===activeIndex?'#F85700':'#00387C',
-                borderRadius:4,
-               
+                borderRadius:4,width:'100%',
+
                 p:1
               }
                 

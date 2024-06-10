@@ -446,18 +446,18 @@ const LoginForm = ({ setContentState }: any) => {
       <Grid item xs={12} md={8} mx={'auto'} bgcolor={'white'} borderRadius={4}  >
         <Grid container rowGap={1} >
           <Grid item xs={12} >
-            <Typography px={4} fontWeight={900} fontSize={'1.4rem'} color={'blue'} sx={{ p: 4 }} textAlign={'left'}  >
+            <Typography px={4}  fontWeight={900} fontSize={'1.5rem'} color={'blue'} sx={{ p: 4 }} textAlign={'left'}  >
               خوش آمدید
             </Typography>
           </Grid>
 
           <Grid item xs={12}  >
             <Grid container px={3} >
-              <Grid item xs={12} display={'flex'} alignItems={'center'}  >
+              {/* <Grid item xs={12} display={'flex'} alignItems={'center'}  >
                 <Typography px={4} fontWeight={600} >سلام</Typography>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} my={1} display={'flex'} alignItems={'center'} >
-                <Typography px={4} >برای ورود /ثبت نام شماره موبایل خود را وارد کنید</Typography>
+                <Typography fontSize={'18px'} fontWeight={600}>برای ورود /ثبت نام شماره موبایل خود را وارد کنید</Typography>
               </Grid>
 
             </Grid>
@@ -496,22 +496,9 @@ const LoginForm = ({ setContentState }: any) => {
                   </FormControl>
 
                 </Grid>
-             
-                  
-                <Grid item xs={8} mx={'auto'} >
-                  <Box  >
-                    <DyButton
-                      caption={'فراموشی رمز عبور'}
-                      color={'#003287C'}
-                      onClick={initialChangePass}
-                      variant={'text'}
-                      // bgColor={'#00347C'}
-                      // type={'submit'}
-                    />
-                  </Box>
-                </Grid>
+           
                
-                <Grid item xs={8} mx={'auto'} >
+                {/* <Grid item xs={8} mx={'auto'} >
                   <Box  >
                     <DyButton
                       caption={'ثبت نام با کد دعوت'}
@@ -522,14 +509,43 @@ const LoginForm = ({ setContentState }: any) => {
                       // type={'submit'}
                     />
                   </Box>
-                </Grid>
+                </Grid> */}
                 {/* 00387C */}
+                <Grid item xs={12} mx={'auto'} >
+                  <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
+                  <Box py={1} px={2} display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
+                    <DyButton
+                      caption={'ثبت نام با کد دعوت'}
+                      onClick={initialRegisterByCode}
+                      variant={'text'}
+                      
+                    
+                      // bgColor={'#00347C'}
+                      // type={'submit'}
+                    />
+                  </Box>
+                  <Box   py={1} px={2} display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
+                    <DyButton
+                      caption={'فراموشی رمز عبور'}
+                    
+                      onClick={initialChangePass}
+                      variant={'text'}
+                      type={'submit'}
+                      // bgColor={'#00347C'}
+                      // type={'submit'}
+                    />
+                  </Box>
+                 </Box>
+                </Grid>
+
+
+
 
                 <Grid item xs={8}  mx={'auto'} >
-                  <Box  py={2} px={2} >
+                  <Box  py={1} px={2} >
                     <DyButton
                       caption={'ورود'}
-                      color={'#00387C'}
+                   
                       onClick={loginHandler}
                       disbled={userInfoState.phoneNumber.length < 11}
                       variant={'contained'}
@@ -538,12 +554,11 @@ const LoginForm = ({ setContentState }: any) => {
                     />
                   </Box>
                 </Grid>
-
-
+            
 
             
 
-                <Grid item xs={11} mt={1} mx={'auto'} >
+                <Grid item xs={12} mt={5} mx={'auto'} >
                   <Box width={'100%'}
                     display={'flex'}
                     justifyContent={'center'}
@@ -553,7 +568,7 @@ const LoginForm = ({ setContentState }: any) => {
                   >
 
 
-
+                    <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
 
                     {/* <Typography  fontSize={'0.7rem'} fontWeight={600} color={'blue'}  > */}
                     <Box
@@ -606,9 +621,10 @@ const LoginForm = ({ setContentState }: any) => {
                         <CreditCardIcon color='primary' />
                       </Box>
                     </Box>
+                    </Box>
                     <Divider variant="middle" />
 
-
+                    <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
                     <Box
                       width={'100%'}
                       display={'flex'}
@@ -654,9 +670,9 @@ const LoginForm = ({ setContentState }: any) => {
                         <HandshakeIcon color='primary' />
                       </Box>
                     </Box>
-
+                    </Box>
                     <Divider variant="middle" />
-
+                    <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
                     <Box
                       width={'100%'}
                       display={'flex'}
@@ -700,7 +716,7 @@ const LoginForm = ({ setContentState }: any) => {
                         <SchoolIcon color='primary' />
                       </Box>
                     </Box>
-
+                    </Box>
                     <Divider variant="middle" />
 
 

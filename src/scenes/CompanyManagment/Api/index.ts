@@ -102,8 +102,9 @@ return await axiosInstance.post(`/Account/CheckForgetCode`,body)
 // }
 
 const addNewPassWord=async(body:any)=>{
-return await axiosInstance.post(`/Account/ForgetPassword`,body)
-}
+    return await axiosInstance.post(`/Account/RegisterUserByCode`,body)
+    }
+   
 
 // https://api.myokr.ir/api/OKR/GetUserProfileDetail/?personId=e76209ac-35c8-4e13-a85a-ebe0340588cd&tenantId=eb781974-3cb0-4c3a-881e-97af686ce7f5
 
@@ -111,6 +112,12 @@ const getUserProfileDetail=async({queryKey}:any)=>{
     let ids=queryKey[1];
     // console.log(ids)
 return await axiosInstance.get(`/OKR/GetUserProfileDetail/?personId=${ids.personId}&tenantId=${ids.tenantId}`)
+}
+
+const getTenantInfo=async({queryKey}:any)=>{
+    let ids=queryKey[1];
+    // console.log(ids)
+return await axiosInstance.get(`/Tenant/GetTenantInfo/?tenantId=${ids.tenantId}`)
 }
 
 
@@ -122,6 +129,11 @@ return axiosInstance.get(`/Person/GetPersonPicture/?personId=${personId}`)
 
 }
 
+const getTenantPicture=async({queryKey}:any)=>{
+    let tenantId=queryKey[1];
+    return axiosInstance.get(`/Tenant/GetTenantPicture/?tenantId=${tenantId}`)
+    
+    }
 // axios.post('https://api.myokr.ir/api/Person/AddPersonPicture',body,{
 //     headers: {
 //       'Content-Type': 'application/json',    
@@ -134,7 +146,10 @@ const addPersonPicture=async(body:any)=>{
 return axiosInstance.post('/Person/AddPersonPicture',body)
 }
 
-
+const addTenantPicture=async(body:any)=>{
+    return axiosInstance.post('/Tenant/AddTenantPicture',body)
+    }
+    
 
 // Api/Upload/Upload
 
@@ -157,6 +172,9 @@ return axiosInstance.post('/Person/AddPersonPicture',body)
         checkForgetCode,
         addNewPassWord,
         getUserProfileDetail,
+        getTenantInfo,
         getPersonPicture,
-        addPersonPicture
+        getTenantPicture,
+        addPersonPicture,
+        addTenantPicture
     }

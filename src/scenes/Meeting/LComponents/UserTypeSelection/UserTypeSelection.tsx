@@ -79,7 +79,7 @@ useEffect(() => {
 
   return (
    
-    <Grid py={'1rem'}  item  xs={12} md={10} minHeight={'100vh'} mx={'auto'}  >
+    <Grid py={'1rem'}  item  xs={12} md={10} minHeight={'100vh'} mx={'auto'}   >
    <Grid container  >
   
    

@@ -41,6 +41,8 @@ const AllTenantDash = (props:any) => {
     const[objectiveAsynOpcState,setObjectiveAsyncOpState]=useState<any>(null);
     const dispatch=useDispatch()
     const [objectiveId,setObjectiveId]=useState<string|null>(null);
+    const[imgSrc,setImgSrc]=useState<any>(null);
+    const[tenantImgSrc,setTenantImgSrc]=useState<any>(null);
     const onSuccesss=():void=>{
       navigate('/dashboard/meetings',{replace:true})
     }
@@ -81,18 +83,53 @@ const AllTenantDash = (props:any) => {
 
   }, [meetingData])
 
+  useEffect(() => {
+    
+    if (data) {
+      setImgSrc(data?.pictureBase64String)
+    }
+      }, [data])
+
+      useEffect(() => {
+    
+        if (data) {
+          setTenantImgSrc(data?.tenantPictureBase64String)
+        }
+          }, [data])
+  
+  if (getObjectiveLoading) {
+    return  <Box py={5} textAlign={'center'} >
+    <CircularProgress/>
+    </Box>
+}
+
+if (getKeyresultLoading) {
+  return  <Box py={5} textAlign={'center'} >
+  <CircularProgress/>
+  </Box>
+}
+
+if (getMeetingLoading) {
+  return  <Box py={5} textAlign={'center'} >
+  <CircularProgress/>
+  </Box>
+}
+
       const initialClose=()=>{
           props.handleClose()
       }
+
   
-  
+     
     return (
     <Grid container>
 
     <Grid item xs={12} >
     <Box display={'flex'} marginTop={2} flexDirection={'row-reverse'} justifyContent={'space-around'}>
     <Box>
-    <PersonIcon width={'35px'} height={'35px'}  />
+    <img src={imgSrc} width={'60px'} 
+        style={{borderRadius:'50%',boxShadow:'20px'}}
+         />
      <Typography   variant='body1' fontSize={'15px'} fontWeight={900} >
       {data?.name}
      <Typography variant='body1' fontSize={'15px'} fontWeight={900} >
@@ -114,9 +151,11 @@ const AllTenantDash = (props:any) => {
     </Typography>
     </Box>
     </Box>
-    <Box>
+    <Box margin={1}>
       
-    <PersonIcon width={'35px'} height={'35px'}  />
+    <img src={tenantImgSrc} width={'80px'} 
+        style={{borderRadius:'50%',boxShadow:'20px'}}
+         />
     <Typography    variant='body1'fontSize={'15px'} fontWeight={900} >
       {data?.tenantName}
     </Typography> 
