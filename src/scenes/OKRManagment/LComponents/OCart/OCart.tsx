@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { Grid,Box,Typography,IconButton,Button } from '@mui/material';
 import { ReactComponent as Oflag } from '../../StaticData/Svgs/Oflag.svg';
 import {ReactComponent as CompanyManagmentIcon} from '../../../../components/Dashboard/StaticsData/Icons/companyManagmentIcon1.svg';
@@ -15,11 +15,11 @@ const OCart = (props:any) => {
     const navigate=useNavigate()
     let{obj,setObjectiveId,setShowEditForm,setShowToastMessage,setObjectiveAsyncOpState}=props;
     let{name,responsibleName,definitionLevelName,setShowEditModal,id,weight,evaluationPercentage
-        ,objectivesStateName,keyResultCount
+        ,objectivesStateName,keyResultCount, pictureBase64String,
     }=obj;
     const tenantId=useSelector((state:any)=>state.meetings.profileTenantId);
     const{mutate:deleteObjectve,isError,isSuccess,data:deleteData}=useDeleteObject()
-
+    const[imgSrc,setImgSrc]=useState<any>(null);
   const goObjectiveDetails=()=>{
 
         navigate('/dashboard/okrManagment/objectiveDetails',{replace:true,state:{objectiveId:id}})
@@ -47,7 +47,12 @@ const initialEditObject=(perId:string|null)=>{
   }
   
       
-
+  useEffect(() => {
+    
+    if (obj) {
+      setImgSrc(pictureBase64String)
+    }
+      }, [obj])
 
   return (  
     
@@ -111,7 +116,10 @@ const initialEditObject=(perId:string|null)=>{
       
         <Grid xs={12}  >
         <Box width={'100%'} marginLeft={1} display={'flex'} alignItems={'center'} justifyContent={'start'}>
-        <PersonIcon width={'15px'}  height={'15px'} />
+        {/* <PersonIcon width={'15px'}  height={'15px'} /> */}
+        <img src={imgSrc} width={'15px'}  height={'15px'}
+        style={{borderRadius:'50%',boxShadow:'20px'}}
+         />
         <Typography px={1} variant='button' fontWeight={900} color={'black'} >{
             responsibleName
             }</Typography>

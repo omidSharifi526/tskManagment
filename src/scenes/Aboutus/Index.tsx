@@ -57,21 +57,21 @@ const Index = (props:any) => {
      <Grid container  >
   
      <Grid item xs={12} >
-     <Box  padding={2}  margin={2}  borderRadius={10}
+     <Box  padding={2}  margin={1}  borderRadius={10}
    boxShadow={10} >
       <Box>
-      <Typography variant='h1' fontSize={'25px'} color={'red'} fontWeight={900}>
+      <Typography variant='h1' fontSize={'20px'} color={'red'} fontWeight={900}>
      معرفی ما:
       </Typography>
       </Box>
-     <Box marginTop={2}>
-      <Typography variant='h6' fontSize={'18px'} color={'block'}  >
+     <Box marginTop={1}>
+      <Typography variant='h6' fontSize={'17px'} color={'block'}  >
      برند OKRcoach یکی از برند های شرکت داده بینش خردمند است.مجموعه OKRcoach ارائه دهنده خدمات تخصصی حوزه OKRدر ایران است و تا به حال افتخار داشته ایم در شرکت های مختلف و بزرگ ایرانی ،این روش را با موفقیت پیاده سازی نماییم. 
      (<a target='-blank' href='https://okrcoach.ir/customers'> لیست مشتریان</a>)
      </Typography>
      </Box>
      <Box >
-     <Typography variant='h6' fontSize={'18px'} color={'block'} marginTop={1}>
+     <Typography variant='h6' fontSize={'17px'} color={'block'} marginTop={1}>
       یکی از مشکلاتی که ما در پیاده سازیOKR .داشتیم استفاده از یک نرم افزار مناسب برای شرکت های ایرانی بود تا بتوانیم چرخهOKR را بصورت بهینه ای پیاده سازی کنیم. طی دو نسل به نرم افزار حاضر رسیده ایم، در اولین قدم نرم افزاری ویندوزی روانه 
       بازار شد و در نسل دوم نسخه موبایل و وب که در حال حاضر در حال استفاده از آن هستید به بازار عرضه شده است. 
       </Typography>
@@ -79,26 +79,26 @@ const Index = (props:any) => {
      
       
       <Box>
-      <Typography variant='h6' fontSize={'18px'} color={'block'} marginTop={1}> 
+      <Typography variant='h6' fontSize={'17px'} color={'block'} marginTop={1}> 
       نقطه قوت این نرم افزار این است که تمام ویژگی های موجود بر مبنای تجربیات علمی 
       و نیاز های واقعی مشتریان طراحی و پیاده سازی شده است و ما علت موفقیت خود را تمرکز بر این موضوع می دانیم.
       </Typography>
       </Box>
       <Box textAlign={'justify'} marginTop={1}>
-        <Typography variant='h6' fontSize={'18PX'} color={'block'}>
+        <Typography variant='h6' fontSize={'17PX'} color={'block'}>
       مجموعه OKRcoach در سه زمینه فعالیت می کند:
-      <Box margin={2} >1-مربیگری OKRو کمک به شرکت ها جهت پیاده سازی صحیح روش OKRجهت بهره برداری  حداکثری از مزایای این روش </Box>
-      <Box margin={2} > 2-ارائه نرم افزار تخصصی مدیریت چرخهOKRتحت عنوانOKRcoach </Box>
-      <Box margin={2} > 3-ارائه آموزش های تخصصی شرکتی و عمومی مرتبط با OKRو مهارت های نرم مرتبط با این حوزه</Box>
+      <Box margin={1} >1-مربیگری OKRو کمک به شرکت ها جهت پیاده سازی صحیح روش OKRجهت بهره برداری  حداکثری از مزایای این روش </Box>
+      <Box margin={1} > 2-ارائه نرم افزار تخصصی مدیریت چرخهOKRتحت عنوانOKRcoach </Box>
+      <Box margin={1} > 3-ارائه آموزش های تخصصی شرکتی و عمومی مرتبط با OKRو مهارت های نرم مرتبط با این حوزه</Box>
       </Typography>
       </Box>
       <Box>
   <Box textAlign={'justify'}  >
-  <Typography variant='h6' fontSize={'18px'} color={'block'} marginTop={1}>
+  <Typography variant='h6' fontSize={'17px'} color={'block'} marginTop={1}>
     لطفا برای ارتباط با ما از روش های زیر اقدام نمایید:
-   <Box margin={2}>1-سایتOKRcoach</Box> 
-   <Box margin={2}> 2-ارتباط با پشتیبان مجموعه در شبکه های اجتماعی با شماره تلفن همراه 09370687641</Box>
-   <Box margin={2}> 3-مراجعه به باشگاه مشتریان به آدرس:   <a target='-blank' href='https://panel.myokr.ir'>https://panel.myokr.ir</a></Box>
+   <Box margin={1}>1-سایتOKRcoach</Box> 
+   <Box margin={1}> 2-ارتباط با پشتیبان مجموعه در شبکه های اجتماعی با شماره تلفن همراه 09370687641</Box>
+   <Box margin={1}> 3-مراجعه به باشگاه مشتریان به آدرس:   <a target='-blank' href='https://panel.myokr.ir'>https://panel.myokr.ir</a></Box>
 
         </Typography>
         </Box>

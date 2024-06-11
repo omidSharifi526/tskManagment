@@ -65,7 +65,7 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
   </Suspense>
 } />
 
-<Route index path="/dashboard/companyManagment/profile"  
+<Route path="/dashboard/companyManagment/profile"  
   element={<Suspense 
   fallback={<div>درحال بارگزاری...</div>} >
     <RequierAuth>
@@ -94,7 +94,7 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
 } />
 
 
-<Route  path="/dashboard/TenantDash"  
+<Route index path="/dashboard/TenantDash"  
   element={<Suspense 
   fallback={<div>درحال بارگزاری...</div>} >
     <RequierAuth>

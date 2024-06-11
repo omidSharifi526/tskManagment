@@ -57,43 +57,43 @@ const Index = (props:any) => {
      <Grid container  >
   
     <Grid item xs={12} >
-    <Box margin={2} borderRadius={10}
+    <Box margin={3} borderRadius={10}
    boxShadow={10} >
     <Box  padding={2}    >
     <Box >
-    <Typography variant='h1' fontWeight={900} fontSize={'25px'} color={'red'}>
+    <Typography variant='h1' fontWeight={900} fontSize={'20px'} color={'red'}>
         راهنمای نرم افزار:
     </Typography>
     </Box>
     <Box>
-    <Typography variant='h6' fontSize={'18px'} color={'block'} marginTop={2} >
+    <Typography variant='h6' fontSize={'17px'} color={'block'} marginTop={2} >
      برای استفاده از نرم افزارOKRcoachبهتر است به ترتیب زیر از نرم افزار استفاده کنید:
     </Typography>
     </Box>
     <Box >
-    <Typography variant='h6' fontSize={'18px'} color={'block'} marginLeft={2} marginTop={2}>
+    <Typography variant='h6' fontSize={'17px'} color={'block'} marginLeft={2} marginTop={3}>
       1- در قدم اول با ورود به بخش "مدیریت شرکت" و گزینه "دعوت همکاران" یا"ثبت پرسنل" اقدام به دعوت همکاران خود نمایید.دقت کنید در هر بخش تنها نیاز است شماره تلفن همراه هر کدام از همکاران، نام و نام خانوادگی و سمت ایشان را وارد نمایید. سپس پیامکی برای هر کدام از دعوت شدگان ارسال خواهد شد که می توانند اقدام به ثبت نام نمایند.
     </Typography>
     </Box>     
       <Box>
-      <Typography variant='h6' fontSize={'18px'} color={'block'} marginLeft={2}>
+      <Typography variant='h6' fontSize={'17px'} color={'block'} marginLeft={2} >
         حال برای ایجاد تیم مجدد به بخش مدیریت شرکت مراجعه کرده و در بخش تیم ها اقدام به ایجاد تیم نمایید. دقت کنید برای هر تیم نیاز به وارد کردن  نام آن تیم، تعیین مدیر و سپس تعیین اعضا تیم است. (از بین پرسنلی که دعوت شده اند و ثبت نام خود را تکمیل کرده اند)
       </Typography>
       </Box>
       <Box textAlign={'justify'}>
-        <Typography variant='h6' fontSize={'18PX'} color={'block'} marginLeft={2}>
+        <Typography variant='h6' fontSize={'17PX'} color={'block'} marginLeft={2} marginTop={1}>
             2-در قدم دوم می توانید به بخش مدیریت OKRها مراجعه کرده و اهداف و نتایج کلیدی مربوط به شرکت و تیم ها را وارد نمایید.
             دقت کنید بعد از تعریف هر هدف(O)می توانید تعدادی نتیجه کلیدی(KR)برای آن تعریف کنید. پیشنهاد می کنیم در هر تیم و در هر دوره زمانی حداکثر 5 هدف و برای هر هدف بین 3 الی 5 نتیجه کلیدی ایجاد نمایید تا تمرکز تیم افزایش یابد.
       </Typography>
       </Box>
 
   <Box textAlign={'justify'}  >
-  <Typography variant='h6' fontSize={'18px'} color={'block'} marginLeft={2}>
+  <Typography variant='h6' fontSize={'17px'} color={'block'} marginLeft={2} marginTop={1}>
     3-در نهایت و سومین قدم با مراجعه به بخش"جلسات" می توانید به تعداد دلخواه جلسه ایجاد کرده و با ورود به هر جلسه اقدام به تعیین مقدار جدید نتیجه کلیدی و ثبت ارزیابی نمایید.دقت کنید امتیاز نتایج کلیدی عددی و درصدی بصورت خودکار محاسبه می شود.
     </Typography>
     </Box>
 <Box textAlign={'justify'}>
-<Typography variant='h6' fontSize={'18px'} color={'block'} marginLeft={2}>
+<Typography variant='h6' fontSize={'17px'} color={'block'} marginLeft={2}>
 نکته: لازم است در هر دوره زمانی با تعیین اهداف و نتایج کلیدی آن دوره و ایجاد جلسات خاص(در زمان های دلخواه)در آن دوره،اقدام به مدیریت چرخه OKRنمایید.
 </Typography>
 </Box>

@@ -4,48 +4,25 @@ import { Formik, Form } from 'formik';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
 import { resetFormValues } from '../../../OKRManagment/StaticData';
-import {phoneNumberSchema,codeNumberSchema,passValidationSchema} from '../../StaticData/index'
-import { usePersonByInvitationCode,useCheckForgetCode,useAddNewPassWord } from '../../Hooks';
+import {phoneNumberSchema,passValidationSchema} from '../../StaticData/index'
+import { usePersonByInvitationCode,useAddNewPassWord } from '../../Hooks';
 import CloseIcon from '@mui/icons-material/Close';
 
-import LockResetIcon from '@mui/icons-material/LockReset';
+import LockResetIcon from '@mui/icons-material/Person';
 
 const RegisterByCode = (props: any) => {
-  const [StatusCheckCode,setStatusCheckCode]=useState<boolean|null>(false)
 const sucessSend=()=>{
-          
-  // setContent('enterCode')
-
-  if (true) {
-    setContent('enterCode')
-  }
-  // else{
- 
-  // }
 }
-
-// const successCheckForgetCode=()=>{
-//   if (StatusCheckCode) {
-//     setContent('enterNewPassword')
-//   } else {
-//        setContentMessage('کد وارد شده اشتباه است')
-//        setTimeout(() => {
-//         setStatusCheckCode(true)
-//        }, 1000);
-//   }
-
-// }
 
 const sucessForgetPassword=()=>{
   setContentState({ content: 'login' })
 }
 
   const{mutate:callAddNewPassWord,data:AddNewPassWordData,isLoading:addPassLoad}=useAddNewPassWord(sucessForgetPassword)
-  const{mutate:sendSms,isLoading:sendSmsLoading,data:sendSmsData,isSuccess:isSuccess}=usePersonByInvitationCode(sucessSend);
-  const{mutate:checkCode,isLoading:checkCodeLoading,data:checkCodeData}=useCheckForgetCode();
-  // const{mutata:callAddNewPassWord,isLoading:addPassLoading,data:addPassData}=useForgetPassword(sucessForgetPassword)
+  const{mutate:sendSms,isLoading:sendSmsLoading,data:sendPersonByInvitationCode,isSuccess:isSuccess}=usePersonByInvitationCode(sucessSend);
 
   const[userPhoneNumber,setUserPhoneNumber]=useState<string>('')
+  const[userInvitationCode,setUserInvitationCode]=useState<string>('')
   const [content, setContent] = useState<string>('getPhoneNumber');
   const [contentMessage, setContentMessage] = useState<string>('لطفا شماره همراه خود را وارد نمایید')
 
@@ -57,67 +34,38 @@ const sucessForgetPassword=()=>{
 
   useEffect(() => {
    switch (content) {
-    case 'enterCode':
-      setContentMessage('کد دریافتی را وارد کنید')
-      break;
-
-      case 'enterNewPassword':
-        setContentMessage('رمز جدید خود را وارد کنید')
+      case 'register':
+        setContentMessage('لطفا اطلاعات شخصی را کامل کنید')
         break;
-
    }
-  
-   
   }, [content])
 
   useEffect(() => {
 
-    if (isSuccess) {
-      // console.log(checkCodeData)
-
-      //let{message}=sendSmsData;
+    if (sendPersonByInvitationCode) {
+      let{data}=sendPersonByInvitationCode;
+      let{isSuccess, metaData}=data;
       if (isSuccess) {
-        setContent('enterNewPassword')
+        setContent('register')
       }
       else{
-        setContentMessage('کد وارد شده اشتباه است')
+        setContentMessage(metaData.message)
       }
-      
     }
-  }, [isSuccess])
-  
-  useEffect(() => {
-
-    if (checkCodeData) {
-      // console.log(checkCodeData)
-
-      let{data}=checkCodeData;
-      if (data) {
-        setContent('enterNewPassword')
-      }
-      else{
-        setContentMessage('کد وارد شده اشتباه است')
-      }
-      
-    }
-
-    
+  }, [sendPersonByInvitationCode])
 
 
-  }, [checkCodeData])
-  
-
-// phoneNumber
   const renderContent = () => {
     switch (content) {
       case 'getPhoneNumber':
         return <Formik 
         enableReinitialize
         validationSchema={phoneNumberSchema}
-        initialValues={{ phoneNumber: '',smsType:'Forget' }}
+        initialValues={{ phoneNumber: '',invitationCode:'' }}
           onSubmit={(data: any) => {
-            let{phoneNumber}=data;
+            let{phoneNumber, invitationCode}=data;
             setUserPhoneNumber(phoneNumber);
+            setUserInvitationCode(invitationCode);
             sendSms(data)
           }}
         >
@@ -126,7 +74,6 @@ const sucessForgetPassword=()=>{
               <Form>
                 <Grid container columnSpacing={1}
                   sx={{ bgcolor: 'background.paper', mx: 'auto', borderRadius: 3 }}   >
-
 
                   <Grid item xs={7} flexGrow={1} mx={'auto'}  >
                     <FormikControl
@@ -141,9 +88,8 @@ const sucessForgetPassword=()=>{
                     <FormikControl
                       control='textField'
                       label='کد دعوت'
-                      name='InvitationCode'
+                      name='invitationCode'
                       fullWidth
-                      //value={values.invitationCode || ''}
                     />
                   </Grid>
 
@@ -161,84 +107,23 @@ const sucessForgetPassword=()=>{
                     </Box>
                   </Grid>
                 </Grid>
-
-
               </Form>
           }
 
         </Formik>
         break;
 
-        case 'enterCode':
-          return <Formik 
-          enableReinitialize
-          validationSchema={codeNumberSchema}
-          initialValues={{phoneNumber:userPhoneNumber,code:'' }}
-          onSubmit={(data: any) => {
-            checkCode(data)
-          console.log(data)
-  
-          
-          
-          }}
-        >
-          {
-            ({ values, setFieldValue, dirty, isValid, touched, errors, setFieldTouched }) =>
-              <Form>
-                <Grid container columnSpacing={1}
-                  sx={{ bgcolor: 'background.paper', mx: 'auto', borderRadius: 3 }}   >
-
-
-                  <Grid item xs={7} flexGrow={1} mx={'auto'}  >
-                      <Box  sx={{padding:'8px'}}  >
-                     <TextField 
-                        fullWidth
-                        size='small'                     
-                        value={values.code}
-                        onChange={({target}:any)=>{
-                          let{value}:any=target;
-                          setFieldValue('code',value)
-                          // initialSetHunderdvalue(value)
-                        }}
-                        label={'کد دریافتی'}   />
-                     </Box>
-                  </Grid>
-
-                  <Grid item xs={6} flexGrow={1} mx={'auto'}>
-                    <Box >
-                      <DyButton
-                        caption={'تایید و ادامه'}
-                        color={'#00387C'}
-                        onClick={() => { }}
-                        disabled={checkCodeLoading || !isValid || !dirty  }
-                        variant={'contained'}
-                        bgColor={'#00387C'}
-                        type={'submit'}
-                      />
-                    </Box>
-                  </Grid>
-                </Grid>
-
-
-              </Form>
-          }
-
-        </Formik>
-
-        break;
-        
-        case 'enterNewPassword':
+       
+        case 'register':
           return <Formik 
           enableReinitialize
           validationSchema={passValidationSchema}
-          initialValues={{phoneNumber:userPhoneNumber,newPassword:'',confirmNewPassword:'' }}
+          initialValues={{phoneNumber:userPhoneNumber,invitationCode :userInvitationCode,
+            firstName : '', lastName : '', jobType : '',
+             newPassword:'',confirmNewPassword:'' }}
           onSubmit={(data: any) => {
            
             callAddNewPassWord(data)
-          // console.log(data)
-
-          
-          
           }}
         >
           {
@@ -246,7 +131,6 @@ const sucessForgetPassword=()=>{
               <Form>
                 <Grid container columnSpacing={1}
                   sx={{ bgcolor: 'background.paper', mx: 'auto', borderRadius: 3 }}   >
-
 
                   <Grid item xs={7} flexGrow={1} mx={'auto'}  >
        
@@ -254,16 +138,59 @@ const sucessForgetPassword=()=>{
                      <TextField 
                         fullWidth
                         size='small'                     
-                        value={values.newPassword}
+                        value={values.firstName}
                         onChange={({target}:any)=>{
                           let{value}:any=target;
-                          setFieldValue('newPassword',value)
-                          // initialSetHunderdvalue(value)
+                          setFieldValue('firstName',value)
                         }}
-                        label={'رمز عبور جدید'}   />
+                        label={'نام'}   />
                      </Box>
                   </Grid>
+                  <Grid item xs={7} flexGrow={1} mx={'auto'}  >
+       
+                    <Box  sx={{padding:'8px'}}  >
+                    <TextField 
+                      fullWidth
+                      size='small'                     
+                      value={values.lastName}
+                      onChange={({target}:any)=>{
+                        let{value}:any=target;
+                        setFieldValue('lastName',value)
+                      }}
+                      label={'نام خانوادگی'}   />
+                    </Box>
+                </Grid>
 
+                <Grid item xs={7} flexGrow={1} mx={'auto'}  >
+       
+                  <Box  sx={{padding:'8px'}}  >
+                  <TextField 
+                    fullWidth
+                    size='small'                     
+                    value={values.jobType}
+                    onChange={({target}:any)=>{
+                      let{value}:any=target;
+                      setFieldValue('jobType',value)
+                    }}
+                    label={'عنوان شغلی'}   />
+                  </Box>
+              </Grid>
+
+                  <Grid item xs={7} flexGrow={1} mx={'auto'}  >
+       
+                  <Box  sx={{padding:'8px'}}  >
+                  <TextField 
+                    fullWidth
+                    size='small'                     
+                    value={values.newPassword}
+                    onChange={({target}:any)=>{
+                      let{value}:any=target;
+                      setFieldValue('newPassword',value)
+                    }}
+                    label={'رمز عبور جدید'}   />
+                  </Box>
+                  </Grid>
+                  
                   <Grid item xs={7} flexGrow={1} mx={'auto'}  >
        
                     <Box  sx={{padding:'8px'}}  >
@@ -274,12 +201,10 @@ const sucessForgetPassword=()=>{
                       onChange={({target}:any)=>{
                         let{value}:any=target;
                         setFieldValue('confirmNewPassword',value)
-                      
-                        // initialSetHunderdvalue(value)
                       }}
                       label={'تکرار رمز عبور جدید'}   />
                     </Box>
-                </Grid>
+                  </Grid>
 
                   <Grid item xs={6} flexGrow={1} mx={'auto'}>
                     <Box >
@@ -295,21 +220,14 @@ const sucessForgetPassword=()=>{
                     </Box>
                   </Grid>
                 </Grid>
-
-
               </Form>
           }
-
         </Formik>
 
         break;
    
     }
   }
-
-
-
-
 
   return (
     <Grid container mt={10} >
@@ -329,13 +247,11 @@ const sucessForgetPassword=()=>{
         </Box>
       </Grid>
       <Grid item xs={12}   >
-
         {
           renderContent()
         }
 
       </Grid>
-
     </Grid>
   )
 }
