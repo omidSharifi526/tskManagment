@@ -447,8 +447,9 @@ const LoginForm = ({ setContentState }: any) => {
         <Grid container rowGap={1} >
           <Grid item xs={12} >
             <Typography px={4}  fontWeight={900} fontSize={'1.5rem'} color={'blue'} sx={{ p: 4 }} textAlign={'left'}  >
-              خوش آمدید
+              {/* خوش آمدید */}
             </Typography>
+            <Typography fontSize={'18px'} fontWeight={600}>برای ورود شماره موبایل خود را وارد کنید</Typography>
           </Grid>
 
           <Grid item xs={12}  >
@@ -457,7 +458,7 @@ const LoginForm = ({ setContentState }: any) => {
                 <Typography px={4} fontWeight={600} >سلام</Typography>
               </Grid> */}
               <Grid item xs={12} my={1} display={'flex'} alignItems={'center'} >
-                <Typography fontSize={'18px'} fontWeight={600}>برای ورود /ثبت نام شماره موبایل خود را وارد کنید</Typography>
+                {/* <Typography fontSize={'18px'} fontWeight={600}>برای ورود /ثبت نام شماره موبایل خود را وارد کنید</Typography> */}
               </Grid>
 
             </Grid>
@@ -568,7 +569,7 @@ const LoginForm = ({ setContentState }: any) => {
                   >
 
 
-                    <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
+                    <Box display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
 
                     {/* <Typography  fontSize={'0.7rem'} fontWeight={600} color={'blue'}  > */}
                     <Box
@@ -598,9 +599,32 @@ const LoginForm = ({ setContentState }: any) => {
                     <Divider variant="middle" />
 
                     {/* ////////////////////// */}
-
-
+                    
                     <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none' }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/okr-blog/">
+                          <Typography sx={linkStyle} color='primary'   >مجله OKR
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <NewspaperIcon color='primary' />
+                      </Box>
+                    </Box>
+                    
+
+
+
+
+                    {/* <Box
                       width={'100%'}
                       display={'flex'}
                       justifyContent={'center'}
@@ -613,19 +637,43 @@ const LoginForm = ({ setContentState }: any) => {
                           rel='noopener noreferrer' href="https://okrcoach.ir/okrcoach-software-online/">
                           <Typography sx={linkStyle} color='primary'   > خرید اشتراک نرم افزار
                             {/* <SchoolIcon   /> */}
-
+{/* 
                           </Typography>
                         </a>
                       </Box>
                       <Box>
                         <CreditCardIcon color='primary' />
                       </Box>
-                    </Box>
+                    </Box> */} 
                     </Box>
                     <Divider variant="middle" />
 
-                    <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
+                    <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
                     <Box
+                      width={'100%'}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      columnGap={1}
+                      alignItems={'center'}
+                    >
+                      <Box mt={0.5}>
+                        <a target='_blank'
+                          style={{ textDecoration: 'none' }}
+                          rel='noopener noreferrer' href="https://okrcoach.ir/services/course/">
+                          <Typography sx={linkStyle} color='primary'   >آموزش OKR
+                          </Typography>
+                        </a>
+                      </Box>
+                      <Box>
+                        <SchoolIcon color='primary' />
+                      </Box>
+                    </Box>
+                    </Box>
+                    
+
+
+
+                    {/* <Box
                       width={'100%'}
                       display={'flex'}
                       justifyContent={'center'}
@@ -639,16 +687,16 @@ const LoginForm = ({ setContentState }: any) => {
                           <Typography sx={linkStyle} color='primary'   > درخواست مربی
                             {/* <SchoolIcon   /> */}
 
-                          </Typography>
+                          {/* </Typography>
                         </a>
                       </Box>
                       <Box>
                         <SportsIcon color='primary' />
-                      </Box>
-                    </Box>
+                      </Box> 
+                    </Box> */}
 
                     <Divider variant="middle" />
-
+{/* 
                     <Box
                       width={'100%'}
                       display={'flex'}
@@ -669,10 +717,10 @@ const LoginForm = ({ setContentState }: any) => {
                       <Box>
                         <HandshakeIcon color='primary' />
                       </Box>
-                    </Box>
-                    </Box>
-                    <Divider variant="middle" />
-                    <Box display={'flex'} flexDirection={'row-reverse'} justifyContent={'space-between'}>
+                    </Box> */}
+                  
+                    {/* <Divider variant="middle" /> */}
+                    <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
                     <Box
                       width={'100%'}
                       display={'flex'}
@@ -697,7 +745,7 @@ const LoginForm = ({ setContentState }: any) => {
 
                     <Divider variant="middle" />
 
-                    <Box
+                    {/* <Box
                       width={'100%'}
                       display={'flex'}
                       justifyContent={'center'}
@@ -716,10 +764,10 @@ const LoginForm = ({ setContentState }: any) => {
                         <SchoolIcon color='primary' />
                       </Box>
                     </Box>
-                    </Box>
-                    <Divider variant="middle" />
+                    </Box> */}
+                    {/* <Divider variant="middle" /> */}
 
-
+{/* 
                     <Box
                       width={'100%'}
                       display={'flex'}
@@ -738,10 +786,10 @@ const LoginForm = ({ setContentState }: any) => {
                       <Box>
                         <NewspaperIcon color='primary' />
                       </Box>
+                    </Box> */}
+
+                    {/* <Divider variant="middle" /> */}
                     </Box>
-
-                    <Divider variant="middle" />
-
                   </Box>
                 </Grid>
 

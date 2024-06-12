@@ -73,7 +73,7 @@ type periodSliderProps = {
          slideData && slideData.map((prd:any,i:number)=>{
            return (
              <SwiperSlide key={i}  >
-             <Typography fontWeight={700}  >
+             <Typography fontWeight={700}  color={'#00387C'} fontSize={'20px'}>
             {
              prd?.name
             }

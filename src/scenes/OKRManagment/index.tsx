@@ -146,8 +146,8 @@ const Index :React.FC=function(){
 <Box sx={{ width: '100%' }}>
   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-      <Tab label="همه OKR ها" {...a11yProps(0)} />
-      <Tab label="OKR های من" {...a11yProps(1)} />
+      <Tab label="همه OKR ها" {...a11yProps(0)}  style={{color:'black', fontWeight:'700'}}/>
+      <Tab label="OKR های من" {...a11yProps(1)}  style={{color:'black', fontWeight:'700'}}/>
    
     </Tabs>
   </Box>

@@ -8,9 +8,9 @@ import {addTeam,getAllTeams,getAllActivePersonByTenantId,
   sendSms,
   personByInvitationCode,
   checkForgetCode,
-  addNewPassWord,
+  registerUserByCode,
   getUserProfileDetail,
-
+  addNewPassWord,
   getPersonPicture,
   getTenantPicture,
   addPersonPicture,
@@ -288,7 +288,17 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
      }
     //  forgetPassword
 
-    const useAddNewPassWord=(sucessForgetPassword:any)=>{
+    const useRegisterUserByCode=(sucessForgetPassword:any)=>{
+      return useMutation({
+        mutationFn: (body:any) =>registerUserByCode(body),
+        onSuccess: (data:any) => {
+          sucessForgetPassword()
+        },
+      });
+     }
+
+
+     const useAddNewPassWord=(sucessForgetPassword:any)=>{
       return useMutation({
         mutationFn: (body:any) =>addNewPassWord(body),
         onSuccess: (data:any) => {
@@ -420,8 +430,9 @@ const useGetAllActivePersonByTenantId=(tenantId:string|null)=>{
        useSendSms,
        usePersonByInvitationCode,
        useCheckForgetCode,
-       useAddNewPassWord,
+       useRegisterUserByCode,
        useGetUserProfileDetail,
+       useAddNewPassWord,
        useGetTenantInfo,
        useGetPersonPicture,
        useAddPersonPicture,

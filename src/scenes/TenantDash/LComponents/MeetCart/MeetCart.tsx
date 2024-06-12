@@ -113,12 +113,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
             <Box display={'flex'} justifyContent={'space-between'} flexDirection={'row-reverse'} py={1}>
           
             <Box display={'flex'} justifyContent={'space-between'} >
-                  <Typography sx={{ fontSize: '12px' }}  >
+                  <Typography sx={{fontWeight:'600' , fontSize: '13px' }}  >
                     {status}
                   </Typography>
-                  <Typography sx={{ fontSize: '12px' }}  >
-                    {meetingNumber}
-                  </Typography>
+                
                 </Box>
     
     
@@ -128,8 +126,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
               justifyContent={'space-between'}
               columnGap={1}
               alignItems={'center'}>
-            <Typography color={'black'}>
-                زمان:
+            <Typography  fontWeight={600} fontSize={'13px'} color={'black'}>
+                 زمان: 
                 از {fromTime} تا {toTime}
               </Typography>
             </Box>
@@ -152,7 +150,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
     
               
                 <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-                <Typography fontWeight={900} fontSize={'15px'}>
+                <Typography fontWeight={900} fontSize={'13px'}>
                   {
                     meetingNumber
                   }

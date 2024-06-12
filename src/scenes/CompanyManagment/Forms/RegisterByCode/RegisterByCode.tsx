@@ -4,8 +4,8 @@ import { Formik, Form } from 'formik';
 import DyButton from '../../../../components/GlobalComponents/DyButton/DyButton';
 import FormikControl from '../../../../components/FormikControls/FormikControl';
 import { resetFormValues } from '../../../OKRManagment/StaticData';
-import {phoneNumberSchema,passValidationSchema} from '../../StaticData/index'
-import { usePersonByInvitationCode,useAddNewPassWord } from '../../Hooks';
+import {phoneNumberSchema,registerByCodeValidationSchema} from '../../StaticData/index'
+import { usePersonByInvitationCode,useRegisterUserByCode } from '../../Hooks';
 import CloseIcon from '@mui/icons-material/Close';
 
 import LockResetIcon from '@mui/icons-material/Person';
@@ -18,7 +18,7 @@ const sucessForgetPassword=()=>{
   setContentState({ content: 'login' })
 }
 
-  const{mutate:callAddNewPassWord,data:AddNewPassWordData,isLoading:addPassLoad}=useAddNewPassWord(sucessForgetPassword)
+  const{mutate:callAddNewPassWord,data:AddNewPassWordData,isLoading:addPassLoad}=useRegisterUserByCode(sucessForgetPassword)
   const{mutate:sendSms,isLoading:sendSmsLoading,data:sendPersonByInvitationCode,isSuccess:isSuccess}=usePersonByInvitationCode(sucessSend);
 
   const[userPhoneNumber,setUserPhoneNumber]=useState<string>('')
@@ -117,12 +117,11 @@ const sucessForgetPassword=()=>{
         case 'register':
           return <Formik 
           enableReinitialize
-          validationSchema={passValidationSchema}
+          validationSchema={registerByCodeValidationSchema}
           initialValues={{phoneNumber:userPhoneNumber,invitationCode :userInvitationCode,
             firstName : '', lastName : '', jobType : '',
-             newPassword:'',confirmNewPassword:'' }}
+             password:'',confirmPassword:'' }}
           onSubmit={(data: any) => {
-           
             callAddNewPassWord(data)
           }}
         >
@@ -182,10 +181,10 @@ const sucessForgetPassword=()=>{
                   <TextField 
                     fullWidth
                     size='small'                     
-                    value={values.newPassword}
+                    value={values.password}
                     onChange={({target}:any)=>{
                       let{value}:any=target;
-                      setFieldValue('newPassword',value)
+                      setFieldValue('password',value)
                     }}
                     label={'رمز عبور جدید'}   />
                   </Box>
@@ -197,10 +196,10 @@ const sucessForgetPassword=()=>{
                     <TextField 
                       fullWidth
                       size='small'                     
-                      value={values.confirmNewPassword}
+                      value={values.confirmPassword}
                       onChange={({target}:any)=>{
                         let{value}:any=target;
-                        setFieldValue('confirmNewPassword',value)
+                        setFieldValue('confirmPassword',value)
                       }}
                       label={'تکرار رمز عبور جدید'}   />
                     </Box>

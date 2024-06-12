@@ -76,7 +76,9 @@ const resetFormValues:resetPasswordFace={
 const registerFormValues:registerByCodeFace={
   jobType:'',
   firstName:'',
-  lastName:''
+  lastName:'',
+  password:'',
+  confirmPassword:''
 }
 
 

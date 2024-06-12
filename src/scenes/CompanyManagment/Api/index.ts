@@ -101,9 +101,13 @@ return await axiosInstance.post(`/Account/CheckForgetCode`,body)
 //     return await axiosInstance.post(`/Account/ForgetPassword`,body)
 // }
 
-const addNewPassWord=async(body:any)=>{
+const registerUserByCode=async(body:any)=>{
     return await axiosInstance.post(`/Account/RegisterUserByCode`,body)
     }
+
+    const addNewPassWord=async(body:any)=>{
+        return await axiosInstance.post(`/Account/ForgetPassword`,body)
+        }
    
 
 // https://api.myokr.ir/api/OKR/GetUserProfileDetail/?personId=e76209ac-35c8-4e13-a85a-ebe0340588cd&tenantId=eb781974-3cb0-4c3a-881e-97af686ce7f5
@@ -170,11 +174,12 @@ const addTenantPicture=async(body:any)=>{
         personByInvitationCode,
         getPersonByInvitationCode,
         checkForgetCode,
-        addNewPassWord,
+        registerUserByCode,
         getUserProfileDetail,
         getTenantInfo,
         getPersonPicture,
         getTenantPicture,
         addPersonPicture,
+        addNewPassWord,
         addTenantPicture
     }

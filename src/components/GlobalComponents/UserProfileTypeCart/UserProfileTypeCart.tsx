@@ -57,18 +57,17 @@ useEffect(() => {
       handleClickCart()
     }}    >
     
-    <Box  borderRadius={18} bgcolor={'rgba(0, 0, 0, 0.13)'}  boxShadow={3} sx={{cursor:'pointer'}} >
+    <Box  borderRadius={18} bgcolor={'rgba(0, 0, 0, 0.10)'}  boxShadow={3} sx={{cursor:'pointer'}} >
    
-    <Box py={3} display={'flex'} flexDirection={'column'} height={'100%'}  >
-    <Box  display={'flex'} alignItems={'center'} flexDirection={'column'} justifyContent={'center'} 
-    borderRadius={1}   textAlign={'center'}  >
- <img src={imgSrc} width={'125px'} height={'80px'}
-        style={{borderRadius:'50%',boxShadow:'20px'}}
+    <Box py={3} display={'flex'} flexDirection={'column'} justifyContent={'center'}    >
+    <Box  display={'flex'} alignItems={'center'}width={'100%'} height={'120px'} justifyContent={'center'} 
+  textAlign={'center'}  >
+ <img src={imgSrc} width={'25%'} 
+        // style={{borderRadius:'10%',boxShadow:'20px'}}
          />
  </Box>
-    <Box  display={'flex'} flexDirection={'column'}  justifyContent={'center'} 
+    <Box  display={'flex'} flexDirection={'column'}  
        textAlign={'center'}  >
-
  <Typography fontSize={'18px'} fontWeight={600} variant='caption'  >
   
     {item.tenantName}

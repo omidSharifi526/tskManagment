@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import { Grid,Box, Typography, Button } from '@mui/material';
+import { Grid,Box, Typography, Button,Tooltip } from '@mui/material';
 import {IconButton} from '@mui/material';
 import {ReactComponent as StaffVector} from '../../StaticData/Vectors/staffVector.svg';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,6 +7,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import { useDeletePerson,useDeleteInvitedPerson} from '../../Hooks';
 import { useSelector } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
+
 export const StaffCart = (props:any) => {
     const userId=useSelector((state:any)=>state.loign.userInfo.userId);
     const tenantId:string|null=useSelector((state:any)=>state.meetings.profileTenantId);
@@ -86,7 +87,7 @@ useEffect(() => {
 
 
   return (
-    <Box width={'335px'} height={'100px'} marginRight={1} borderRadius={3} boxShadow={3}  >
+    <Box width={'335px'} height={'100px'} marginRight={1} borderRadius={3} boxShadow={2}  >
         <Grid container px={2} rowGap={1} >
             
         <Grid item xs={2}   >
@@ -113,20 +114,40 @@ useEffect(() => {
          <Grid item xs={10} px={1} >
          <Grid container   >
         <Grid item xs={8}  height={'70px'} >
-        <Box  p={1} pt={2}   >
-            <Typography color={'#001733'} fontSize={'18px'} fontWeight={900}  >
+        <Box  p={1} pt={2} minHeight={'20px'}  >
+            <Typography color={'#001733'} fontSize={'14px'} fontWeight={900}  >
             {
             name
             }
             </Typography>
         </Box>
-        <Box  p={1} display={'flex'} alignItems={'end'} justifyContent={'start'}>
+        {/* <Box  p={1} display={'flex'} alignItems={'end'} justifyContent={'start'}>
             <Typography fontSize={'0.7rem'} color={'#001733'} fontWeight={600}>
                 {
                  jobTypeName
                 }
             </Typography>
+        </Box> */}
+
+        <Box minHeight={'8px'}  p={1} display={'flex'} alignItems={'end'} justifyContent={'start'}  >
+          {
+             jobTypeName.length > 19? <Tooltip sx={{ fontSize: '0.75rem !important' }} title={ jobTypeName}>
+              <Typography sx={{ fontSize: '12px !important', color:'#001733', fontWeight:'600' ,cursor:'pointer',textAlign:'left' }}   >{ jobTypeName.slice(0, 19)}</Typography>
+            </Tooltip> : <Typography sx={{ fontSize: '12px !important',color:'#001733', fontWeight:'500' ,cursor:'pointer',textAlign:'left' }}    >
+              {
+               jobTypeName
+              }
+
+            </Typography>
+          }
+
         </Box>
+
+
+
+
+
+
         </Grid>
         <Grid item xs={4} height={'35px'} >
         <Box width={'90px'} textAlign={'end'} px={1} >

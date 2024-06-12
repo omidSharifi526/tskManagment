@@ -178,10 +178,10 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
         <Box display={'flex'} justifyContent={'space-between'} flexDirection={'row-reverse'} py={1}>
       
         <Box display={'flex'} justifyContent={'space-between'} >
-              <Typography sx={{ fontSize: '15px' }}  >
+              <Typography sx={{ fontSize: '13px' }}  >
                 {info.status}
               </Typography>
-              <Typography sx={{ fontSize: '15px' }}  >
+              <Typography sx={{ fontSize: '13px' }}  >
                 {info.MeetingNumber}
               </Typography>
             </Box>
@@ -216,7 +216,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
 
           
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-            <Typography fontWeight={900} fontSize={'18px'}>
+            <Typography fontWeight={900} fontSize={'13px'}>
               {
                 info?.meetingNumber
               }
@@ -255,8 +255,8 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
         </Box> */}
         <Box minHeight={'50px'}  >
           {
-            info?.definitionLevel.length > 120 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={info?.definitionLevel}>
-              <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}   >{info?.definitionLevel.slice(0, 120)}</Typography>
+            info?.definitionLevel.length > 110 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={info?.definitionLevel}>
+              <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}   >{info?.definitionLevel.slice(0, 110)}</Typography>
             </Tooltip> : <Typography sx={{ fontSize: '12px !important', color: 'black',cursor:'pointer',textAlign:'left' }}    >
               {
                 info?.definitionLevel
@@ -293,7 +293,7 @@ const MeetingCard = ({info,setMeetId,prog,accessForReport,setShowDownlodLink,set
          
             
             <Box   display={'flex'}  flexDirection={'row-reverse'} justifyContent={'space-between'} >
-            <Box  marginTop={1} display={'flex'}  justifyContent={'center'}  bgcolor={'#00387C'} borderRadius={2} maxHeight={'29px'} width={'95px'}>
+            <Box  marginTop={1} display={'flex'}  justifyContent={'center'}  bgcolor={'#00387C'} borderRadius={5} maxHeight={'25px'} width={'95px'}>
 
     <Button
       variant='text'

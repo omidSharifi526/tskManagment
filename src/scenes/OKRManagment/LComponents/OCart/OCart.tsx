@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import { Grid,Box,Typography,IconButton,Button } from '@mui/material';
+import { Grid,Box,Typography,IconButton,Button,Tooltip } from '@mui/material';
 import { ReactComponent as Oflag } from '../../StaticData/Svgs/Oflag.svg';
 import {ReactComponent as CompanyManagmentIcon} from '../../../../components/Dashboard/StaticsData/Icons/companyManagmentIcon1.svg';
 import {ReactComponent as PersonIcon} from '../../../../components/Dashboard/StaticsData/Icons/Person1.svg';
@@ -66,15 +66,34 @@ const initialEditObject=(perId:string|null)=>{
         width={'100%'}
         alignItems={'start'}
          
-        minHeight={'100px'} 
+        minHeight={'90px'} 
         justifyContent={'space-between'}  > 
         <Box display={'flex'}>
-        <Oflag fontSize={'0.9rem'}  />
+        <Oflag fontSize={'0.8rem'}  />
+
+           
+        {
+                  name.length > 65 ? <Tooltip  sx={{ fontSize: '1.5rem !important' }} title={name}>
+              <Typography px={1} variant='body1'sx={{ fontSize: '13px !important', fontWeight:'600',color: 'black',cursor:'pointer',textAlign:'left' }}   >{name.slice(0,65)}</Typography>
+            </Tooltip> : <Typography  px={1} sx={{ fontSize: '13px !important',fontWeight:'600', color: 'black',cursor:'pointer',textAlign:'left' }}    >
+              {
+                 name
+              }
+
+            </Typography>
+            }
+
+
+
+
+{/* 
+
+
         <Typography px={1} variant='body1' fontWeight={900} >
             {
                 name
             }
-        </Typography>
+        </Typography> */}
         </Box>
         <Box display={'flex'} justifyContent={'end'} >
         <Box >
@@ -117,7 +136,7 @@ const initialEditObject=(perId:string|null)=>{
         <Grid xs={12}  >
         <Box width={'100%'} marginLeft={1} display={'flex'} alignItems={'center'} justifyContent={'start'}>
         {/* <PersonIcon width={'15px'}  height={'15px'} /> */}
-        <img src={imgSrc} width={'15px'}  height={'15px'}
+        <img src={imgSrc} width={'20px'}  height={'20px'}
         style={{borderRadius:'50%',boxShadow:'20px'}}
          />
         <Typography px={1} variant='button' fontWeight={900} color={'black'} >{

@@ -70,11 +70,11 @@ export default function BasicTabs() {
     <Box sx={{ width: '100%' }}>
        
 
-      <Box sx={{ borderBottom: 1, borderColor: 'transparent',display:'flex',justifyContent:'space-between'}}  >
+      <Box sx={{ borderBottom: 1, borderColor: 'divider',display:'flex',justifyContent:'space-between'}}  >
         
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="جلسات همه" {...a11yProps(0)} />
-          <Tab label="جلسات من" {...a11yProps(1)} />
+        <Tabs value={value}  onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="جلسات همه" {...a11yProps(0)}  style={{color:'black', fontWeight:'700'}}/>
+          <Tab label="جلسات من" {...a11yProps(1)}  style={{color:'black', fontWeight:'700'}}/>
           {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
         </Tabs>
 

@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react';
 import ModalLyt from '../../../../components/Layouts/ModalLyt/ModalLyt';
-import { Grid,Box,Typography,Button } from '@mui/material';
+import { Grid,Box,Typography,Button,Tooltip  } from '@mui/material';
+
 // import KrGradeDetails from '../KrGradeDetails/KrGradeDetails';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {IconButton} from '@mui/material';
@@ -86,9 +87,23 @@ useEffect(() => {
             <Grid item xs={12}  >
            <Grid container p={1} alignItems={'center'} >
            <Grid item xs={12} sm={10}  >
-          <Box>
+             
+          {
+                  name.length > 45 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={name}>
+              <Typography sx={{ fontSize: '13px !important', fontWeight:'600',color: 'black',cursor:'pointer',textAlign:'left' }}   >{name.slice(0,45)}</Typography>
+            </Tooltip> : <Typography sx={{ fontSize: '13px !important',fontWeight:'600', color: 'black',cursor:'pointer',textAlign:'left' }}    >
+              {
+                 name
+              }
+
+            </Typography>
+            }
+
+
+
+          {/* <Box>
             <Typography fontSize={'0.85rem'} fontWeight={700}  >{name}</Typography>
-          </Box>
+          </Box> */}
             </Grid>
             <Grid item xs={12} sm={2}   >
                 <Box textAlign={'center'} width={'100%'} height={'100%'}  borderRadius={3}  bgcolor={okrStateName === 'فعال' ? '#D5f7D4':'#bfd3f5'} >
@@ -112,8 +127,8 @@ useEffect(() => {
             <Grid item xs={12}   >
             <Box display={'flex'} flexDirection={'column'} justifyContent={'start'}  >
             <Box display={'flex'}  justifyContent={'start'}  >
-             <Typography variant='body2' fontWeight={700} >سیستم امتیاز دهی : </Typography>
-             <Typography variant='button' fontWeight={500}  >
+             <Typography fontSize={'12px'} variant='body2' fontWeight={700} >سیستم امتیاز دهی : </Typography>
+             <Typography fontSize={'12px'}  variant='button' fontWeight={500}  >
                  {
                     pointingSystemType
                  }
@@ -124,8 +139,8 @@ useEffect(() => {
                 <Grid item xs={12}   >
                 <Box display={'flex'}  flexDirection={'column'} justifyContent={'start'}  >    
             <Box display={'flex'}  justifyContent={'start'}  >
-                <Typography variant='body2' fontWeight={700} >نوع نتیجه : </Typography>
-             <Typography variant='button' fontWeight={500}  >
+                <Typography fontSize={'12px'}  variant='body2' fontWeight={700} >نوع نتیجه : </Typography>
+             <Typography fontSize={'12px'}  variant='button' fontWeight={500}  >
                  {
                     okR_KeyResultType
                  }
@@ -151,8 +166,8 @@ useEffect(() => {
             
             <Box display={'flex'}  justifyContent={'start'}  >
                 
-             <Typography variant='body2' fontWeight={700} >سطح: </Typography>
-             <Typography variant='button' fontWeight={500}  >
+             <Typography fontSize={'12px'}  variant='body2' fontWeight={700} >سطح: </Typography>
+             <Typography fontSize={'12px'}  variant='button' fontWeight={500}  >
                  {
                     teamName
                  }
@@ -165,12 +180,29 @@ useEffect(() => {
             <Grid item xs={12}  >
             <Box display={'flex'} flexDirection={'column'} justifyContent={'start'}  >
             <Box display={'flex'}  justifyContent={'start'}  >
-             <Typography variant='body2' fontWeight={700} >هدف: </Typography>
-             <Typography variant='button' fontWeight={500}  >
+             <Typography fontSize={'12px'}  variant='body2' fontWeight={700} >هدف: </Typography>
+                
+          {
+                   objectiveName.length > 45 ? <Tooltip sx={{ fontSize: '1.5rem !important' }} title={ objectiveName}>
+              <Typography sx={{ fontSize: '12px !important', fontWeight:'500',color: 'black',cursor:'pointer',textAlign:'left' }}   >{ objectiveName.slice(0,45)}</Typography>
+            </Tooltip> : <Typography sx={{ fontSize: '12px !important',fontWeight:'500', color: 'black',cursor:'pointer',textAlign:'left' }}    >
+              {
+                objectiveName
+              }
+
+            </Typography>
+            }
+
+
+
+
+
+
+             {/* <Typography fontSize={'12px'}  variant='button' fontWeight={500}  >
                  {
                     objectiveName
                  }
-                </Typography>
+                </Typography> */}
             </Box>
             </Box>
             </Grid>

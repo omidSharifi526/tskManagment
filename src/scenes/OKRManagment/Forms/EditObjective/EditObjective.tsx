@@ -171,7 +171,7 @@ const{data:allTeamAndPersonData}:any=useGetAllTeamAndPersonNameByTenantId(tenant
                     <Form>
                         <Grid container  >
                             <Grid item xs={12} md={12}  >
-                             <Box sx={{padding:'1px'} }>
+                             <Box sx={{padding:'8px'} }>
                                 <TextField
                                   size='small'
                                     label={'شرح هدف'}

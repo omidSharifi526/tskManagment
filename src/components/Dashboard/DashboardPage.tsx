@@ -16,18 +16,21 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import SettingsIcon from '@mui/icons-material/Settings';
+import DashboardIcon from '@mui/icons-material/Pages';
+import AllIcon from '@mui/icons-material/Checklist';
 import GuideIcon from '@mui/icons-material/Help';
+import ExitIcon from '@mui/icons-material/ExitToApp';
 import TenantsList from './LComponents/TenantList/TenantList';
 import UserTypeSelection from '../../scenes/Meeting/LComponents/UserTypeSelection/UserTypeSelection';
 import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined';
-
+import ReportIcon from '@mui/icons-material/Report';
 import { Link, Outlet,useLocation } from 'react-router-dom';
 import {SideBarLogo,OKRtext} from './StaticsData/index';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {ReactComponent as BaseInfoIcon} from './StaticsData/Icons/BaseInfoIcon.svg';
 import {ReactComponent as MeetingIcon} from './StaticsData/Icons/MeetingIcon.svg';
 import {ReactComponent as CompanyManagmentIcon} from './StaticsData/Icons/companyManagmentIcon.svg';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import OKRIcon from '@mui/icons-material/Dashboard';
 import AboutUsIcon   from '@mui/icons-material/Info';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -124,7 +127,12 @@ const itemsList = [
   //   to: "/dashboard/dashboard"                   
   // }
   // ,
-
+  {
+    text: "نمای کلی",
+    icon: <AllIcon fontSize='large'/>,
+    to: "/dashboard/AllTenantOkrs" 
+  }
+  ,
   {
     text: "داشبورد",
     icon: <DashboardIcon fontSize='large' />,
@@ -140,11 +148,10 @@ const itemsList = [
   ,
   {
     text: "مدیریت OKR",
-    icon: <DashboardIcon fontSize='large'  />,
+    icon: <OKRIcon fontSize='large'  />,
     to: "/dashboard/okrManagment" 
   }
   ,
-  
   {
     text: "جلسات",
     icon: <MeetingIcon  />,
@@ -157,19 +164,21 @@ const itemsList = [
     to:"/dashboard/companyManagment/profile"
   }
   ,
-  // {
-  //   text: "نمای کلی",
-  //   icon: <DashboardIcon fontSize='large'/>,
-  //   to: "/dashboard/AllTenantOkrs" 
-  // }
-  // ,
-  
+
   {
     text: "تنظیمات",
     icon: <SettingsIcon fontSize='large'  />,
     to: "/dashboard/settings" 
   }
   ,
+
+  {
+    text: "گزارشات",
+    icon: <ReportIcon fontSize='large'  />,
+    to: "/dashboard/report" 
+  }
+  ,
+
   {
     text:"راهنمای نرم افزار",
     icon: <GuideIcon fontSize='large'  />,
@@ -197,7 +206,7 @@ const itemsList = [
 
 export default function MiniDrawer() {
   // const theme=useTheme();
-  const[activeIndex,setActiveIndex]=React.useState<number>(7)
+  const[activeIndex,setActiveIndex]=React.useState<number>(1)
 
 
   const { locale, setLocale, toggleColorMode }:any =
@@ -209,7 +218,8 @@ const[showTenantItem,setShowTenantItem]=React.useState(false)
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const location = useLocation();
   const { pathname} = location;
-  let meetingRoute=pathname.includes('meeting')
+  
+  let meetingRoute=pathname.includes('TenantDash')
   // console.log(pathname)
 
 const handleListItemClick = (
@@ -288,11 +298,23 @@ if (showTenantItem) {
             <MenuIcon />
           </IconButton>
 
-            <Box sx={{width:'100%',display:'flex',justifyContent:'space-between'}}  >
-                       <Box p={2} >
-                      <Typography component={'div'} fontWeight={700} color={theme.palette.mode==='dark'?'white':'black'} variant="body2"  >
-                      {now}
-                      </Typography>
+           
+            <Box sx={{width:'100%',display:'flex',flexDirection:'row-reverse',justifyContent:'space-between'}}  >
+                       <Box  >
+                       <ListItem onClick={()=>{
+              initiaLogOut()
+            
+             }} color='red' sx={{fontSize:'0.7 rem',cursor:'pointer'}}    >
+             < ExitIcon  fontSize='large' style={{color:'red'}}/>
+               {/* <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon> */}
+              {/* <Typography padding={1} variant='body2' sx={{color:'white',bgcolor:'red',fontSize:'13px',fontWeight:900}} >خروج</Typography> */}
+              {/* <Typography variant='body1' fontSize={'14px'} fontWeight={900} >
+              
+              {data?.name} </Typography> */}
+              </ListItem>
+               
+
+
 
                       </Box>
 
@@ -308,6 +330,18 @@ if (showTenantItem) {
                            ButtonCaption={tenantName} 
                             />
                       }
+                      </Box>
+                           <Box sx={{display:'flex'}} columnGap={2} alignItems={'center'} > 
+             
+                           <Typography component={'div'} fontWeight={700} color={theme.palette.mode==='dark'?'white':'black'} variant="body2"  >
+                      {now}
+                      </Typography>
+
+              </Box>        
+              
+
+
+
 {/* toooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolbar */}
 {/* <Toolbar >
             {locale?.title && (
@@ -361,7 +395,11 @@ if (showTenantItem) {
                       
                      
                       
-                      </Box>
+
+
+
+          
+                      
             </Box>
 
 
@@ -457,15 +495,15 @@ if (showTenantItem) {
 }
 
 
-
+{/* 
 
              <ListItem onClick={()=>{
               initiaLogOut()
-            
-             }} color='white ' sx={{fontSize:'0.7 rem',cursor:'pointer'}}    >
+             */}
+             {/* }} color='white ' sx={{fontSize:'0.7 rem',cursor:'pointer'}}    > */}
                {/* <ListItemIcon sx={{color:'white'}}  >{item.icon}</ListItemIcon> */}
-              <Typography variant='body2' sx={{color:'white',fontWeight:600}} >خروج</Typography>
-              </ListItem>
+              {/* <Typography variant='body2' sx={{color:'white',fontWeight:600}} >خروج</Typography>
+              </ListItem> */}
 
         </List>
       </Drawer>

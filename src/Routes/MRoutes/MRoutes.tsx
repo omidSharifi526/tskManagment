@@ -21,6 +21,7 @@ const CompanyManagment = lazy(() => import('../../scenes/CompanyManagment'));
 const NotFoundPage = lazy(() => import('../../components/NotFoundPage/NotFoundPage'));
 const Settings = lazy(() => import('../../scenes/Settings/Setting'));
 const Aboutus = lazy(() => import('../../scenes/Aboutus/Index'));
+const Reports = lazy(() => import('../../scenes/Reports/Reports'));
 const AllTenantOkrs = lazy(() => import('../../scenes/AllTenantOkrs/Index'));
 const Helpsoftware = lazy(() => import('../../scenes/Helpsoftware/Index'));
 const TenantDash = lazy(() => import('../../scenes/TenantDash/Index'));
@@ -52,6 +53,15 @@ const Mrouter=createBrowserRouter(createRoutesFromElements(
   fallback={<div>درحال بارگزاری...</div>} >
     <RequierAuth>
     <OkrManagmentContainer/>
+    </RequierAuth>
+  </Suspense>
+} />
+
+<Route  path="/dashboard/report"  
+  element={<Suspense 
+  fallback={<div>درحال بارگزاری...</div>} >
+    <RequierAuth>
+    <Reports/>
     </RequierAuth>
   </Suspense>
 } />

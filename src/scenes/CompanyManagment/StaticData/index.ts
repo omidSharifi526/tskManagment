@@ -49,6 +49,14 @@ const addTeamsinintialValues:addTeamsFace={
           .oneOf([yup.ref('newPassword')], '')
       });
 
+      const registerByCodeValidationSchema = yup.object().shape({
+        password: yup.string()
+          .required(''),
+          confirmPassword: yup.string()
+          .required('')
+          .oneOf([yup.ref('password')], '')
+      });
+
     export{
         addTeamsinintialValues,
         // addStaffInitialValues,
@@ -56,5 +64,6 @@ const addTeamsinintialValues:addTeamsFace={
         addTeamSchema,
         phoneNumberSchema,
         codeNumberSchema,
-        passValidationSchema
+        passValidationSchema,
+        registerByCodeValidationSchema
     }

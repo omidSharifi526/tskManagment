@@ -107,7 +107,9 @@ export interface resetPasswordFace{
 export interface registerByCodeFace{
   jobType:string,
   firstName:string,
-  lastName:string
+  lastName:string,
+  password:string,
+  confirmPassword:string
 }
 
 export interface AllOKRComponentFace{

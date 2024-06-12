@@ -80,9 +80,9 @@ const TenantInfo = () => {
 
    <Box sx={{bgcolor:'#E5F1FF',borderRadius:5,p:1,mx:'auto'}} width={'99%'}  >
     <Box display={'flex'} justifyContent={'start'}  >
-    <Box width={'80%'} >
-    <img src={imgSrc} width={'30%'} 
-    style={{borderRadius:'50%',boxShadow:'20px'}}
+    <Box width={'80%'} margin={1} >
+    <img src={imgSrc} width={'200px'}  
+    style={{borderRadius:'10%',boxShadow:'20px'}}
      />
     </Box>
     
@@ -93,16 +93,16 @@ const TenantInfo = () => {
     </Box>
     <Box width={'60%'} rowGap={2} margin={1}   >
          <Box mt={1} display={'flex'} flexDirection={'row-reverse'} justifyContent={'start'}> 
-            <Typography fontSize={'14px'} variant='h6' fontWeight={400}  >{profileDetials?.name}</Typography>
-            <Typography fontSize={'15px'} variant='h6' fontWeight={600} > نام شرکت:</Typography>
+            <Typography fontSize={'13px'} variant='h6' fontWeight={400}  >{profileDetials?.name}</Typography>
+            <Typography fontSize={'14px'} variant='h6' fontWeight={600} > نام شرکت:</Typography>
          </Box>
          <Box mt={2} display={'flex'} flexDirection={'row-reverse'} justifyContent={'start'} > 
-            <Typography fontSize={'14x'}   variant='h6' fontWeight={400}>{profileDetials?.code}</Typography>
-            <Typography fontSize={'15px'} variant='h6' fontWeight={600}>کد دعوت:</Typography>
+            <Typography fontSize={'11x'}   variant='h6' fontWeight={300}>{profileDetials?.code}</Typography>
+            <Typography fontSize={'14px'} variant='h6' fontWeight={600}>کد دعوت:</Typography>
          </Box>
          <Box mt={2}  display={'flex'} flexDirection={'row-reverse'} justifyContent={'start'}> 
-            <Typography fontSize={'14px'}   variant='h6' fontWeight={400}>{profileDetials?.mission}</Typography>
-            <Typography fontSize={'15px'} variant='h6' fontWeight={600}>ماموریت:</Typography>
+            <Typography fontSize={'13px'}   variant='h6' fontWeight={400}>{profileDetials?.mission}</Typography>
+            <Typography fontSize={'14px'} variant='h6' fontWeight={600}>ماموریت:</Typography>
          </Box>
     </Box>
    </Box>

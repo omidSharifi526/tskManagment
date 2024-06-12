@@ -31,7 +31,7 @@ const periodId=useSelector((state:any)=>state.meetings.priodId);
   const [Ids, setIds] = useState<any>(null);
   const onSuccesss=():void=>{
    
-    navigate('/dashboard/meetings',{replace:true})
+    navigate('/dashboard/TenantDash',{replace:true})
   }
   
   const onFailed=():void=>{
@@ -93,8 +93,8 @@ const periodId=useSelector((state:any)=>state.meetings.priodId);
 
   return (
     <div>
-      <Button variant='text' sx={{ color: '#00387C !important' }} onClick={handleClick}>
-        <Typography fontWeight={900} fontSize={'12px'}  >
+      <Button variant='text' sx={{ color: 'black !important' }} onClick={handleClick}>
+        <Typography fontWeight={900} fontSize={'13px'}  >
           {ButtonCaption}
         </Typography>
       </Button>
@@ -155,7 +155,7 @@ const periodId=useSelector((state:any)=>state.meetings.priodId);
                    }}
                     fontWeight={tenantName === ButtonCaption ? 700 : 500}
                     fontSize={'0.75rem'}
-                    color={tenantName === ButtonCaption ? '#00387C ' : 'gray'}
+                    color={tenantName === ButtonCaption ? 'black' : 'gray'}
                      
 
                   >

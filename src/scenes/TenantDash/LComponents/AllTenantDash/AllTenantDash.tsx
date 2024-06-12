@@ -97,69 +97,87 @@ const AllTenantDash = (props:any) => {
         }
           }, [data])
   
-  if (getObjectiveLoading) {
-    return  <Box py={5} textAlign={'center'} >
-    <CircularProgress/>
-    </Box>
-}
+//   if (getObjectiveLoading) {
+//     return  <Box py={5} textAlign={'center'} >
+//     <CircularProgress/>
+//     </Box>
+// }
 
-if (getKeyresultLoading) {
-  return  <Box py={5} textAlign={'center'} >
-  <CircularProgress/>
-  </Box>
-}
+// if (getKeyresultLoading) {
+//   return  <Box py={5} textAlign={'center'} >
+//   <CircularProgress/>
+//   </Box>
+// }
 
-if (getMeetingLoading) {
-  return  <Box py={5} textAlign={'center'} >
-  <CircularProgress/>
-  </Box>
-}
+// // if (getMeetingLoading) {
+// //   return  <Box py={5} textAlign={'center'} >
+// //   <CircularProgress/>
+// //   </Box>
+// // }
 
-      const initialClose=()=>{
-          props.handleClose()
-      }
+//       const initialClose=()=>{
+//           props.handleClose()
+//       }
 
   
-     
+      if (getMeetingLoading) {
+        return <Box width={'100%'} py={4} textAlign={'center'}  >
+          <CircularProgress sx={{color:'blue'}}  />
+        </Box>
+      }
+      
+  
+      if (getObjectiveLoading) {
+        return <Box width={'100%'} py={4} textAlign={'center'}  >
+          <CircularProgress sx={{color:'blue'}}  />
+        </Box>
+      }
+      
+  
+      if (getKeyresultLoading) {
+        return <Box width={'100%'} py={4} textAlign={'center'}  >
+          <CircularProgress sx={{color:'blue'}}  />
+        </Box>
+      }
+         
     return (
     <Grid container>
-
+        <Grid item xs={12} margin={2} >
     <Grid item xs={12} >
-    <Box display={'flex'} marginTop={2} flexDirection={'row-reverse'} justifyContent={'space-around'}>
-    <Box>
-    <img src={imgSrc} width={'60px'} 
-        style={{borderRadius:'50%',boxShadow:'20px'}}
+    <Box display={'flex'}  flexDirection={'row-reverse'} justifyContent={'space-between'}>
+    <Box textAlign={'center' } >
+    <img src={imgSrc} width={'70px'} 
+        style={{borderRadius:'50%'}}
          />
-     <Typography   variant='body1' fontSize={'15px'} fontWeight={900} >
+     <Typography textAlign={'center'}   variant='body1' fontSize={'13px'} fontWeight={900} >
       {data?.name}
-     <Typography variant='body1' fontSize={'15px'} fontWeight={900} >
+     <Typography variant='body1' textAlign={'center'} fontSize={'13px'} fontWeight={900} >
     {data?.jobName}
 
     </Typography>
     </Typography>
     </Box>
-    <Box display={'flex'}  marginTop={2} flexDirection={'row-reverse'}   justifyContent={'center'} >
+    <Box display={'flex'}  marginTop={2} marginRight={10} flexDirection={'row-reverse'}   justifyContent={'center'} >
 
-    <Box width={'180px'}  margin={2}  height={'60px'} boxShadow={5} borderRadius={5} >
-    <Typography variant='body1'  textAlign={'center'} fontSize={'14px'} fontWeight={900}>
+    <Box width={'180px'}  margin={2}  height={'60px'} boxShadow={3} borderRadius={5} >
+    <Typography variant='body1'  textAlign={'center'} fontSize={'13px'} fontWeight={900}>
      درصد امتیاز من در دوره: <Typography>{data?.score}</Typography>
     </Typography>
     </Box>
-    <Box width={'180px'}  margin={2} height={'60px'}  boxShadow={5} borderRadius={5}  >
-    <Typography variant='body1' textAlign={'center'} fontSize={'14px'} fontWeight={900}>
+    <Box width={'180px'}  margin={2}  height={'60px'}  boxShadow={3} borderRadius={5}  >
+    <Typography variant='body1' textAlign={'center'} fontSize={'13px'} fontWeight={900}>
      درصد ارزیابی من در دوره:<Typography>{data?.evaluation}</Typography>
     </Typography>
     </Box>
     </Box>
-    <Box margin={1}>
-      
-    <img src={tenantImgSrc} width={'80px'} 
-        style={{borderRadius:'50%',boxShadow:'20px'}}
-         />
-    <Typography    variant='body1'fontSize={'15px'} fontWeight={900} >
-      {data?.tenantName}
-    </Typography> 
     
+   <Box display={'flex'}   flexDirection={'row-reverse'} justifyContent={'space-between'} width={'180px'} height={'120px'}>
+    <img src={tenantImgSrc} width={'100%'} 
+        
+         />
+    {/* <Typography  textAlign={'center'}  variant='body1'fontSize={'13px'} fontWeight={900} >
+      {data?.tenantName}
+    </Typography>   */}
     </Box>
     </Box>
     </Grid>
@@ -303,9 +321,21 @@ if (getMeetingLoading) {
             show={showToastMessage}
               />
           }
+
+
+
+    </Grid>
+    <Grid item xs={12}>
+       <Box width={'100%'} height={'30px'} marginTop={8} >
+    {/* <Typography  textAlign={'right'} marginRight={'15%'}  color={'red'}  variant='body1'fontSize={'20px'} fontWeight={900} >
+      {data?.tenantName}
+    </Typography>  */}
+    </Box>
+    </Grid>
     </Grid>
     )
   }
+  
   
   export default AllTenantDash
 
