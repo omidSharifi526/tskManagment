@@ -124,7 +124,7 @@ const renderContentUi=()=>{
                   label={companyNode?.name} >
 
                    {
-                 teamList && teamList.map((team:any,i:number)=>{
+                 teamList && teamList?.map((team:any,i:number)=>{
                   return <TreeItem 
                 
                   onClick={()=>{     
@@ -200,7 +200,7 @@ const renderContentUi=()=>{
       sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto',minHeight:800}}
       >
         {
-          teams && teams.map((team:any,i:number)=>{
+          teams && teams?.map((team:any,i:number)=>{
             return <TreeItem 
            
              key={i}
